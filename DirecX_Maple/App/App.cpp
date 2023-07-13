@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <Windows.h>
+#include <memory>
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 

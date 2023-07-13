@@ -6,7 +6,7 @@
 class GameEngineTime
 {
 public:
-	static GameEngineTime MainTimer;
+
 
 	// constrcuter destructer
 	GameEngineTime();

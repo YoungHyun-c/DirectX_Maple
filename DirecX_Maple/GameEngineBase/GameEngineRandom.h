@@ -26,7 +26,7 @@
 class GameEngineRandom
 {
 public:
-	static GameEngineRandom MainRandom;
+	// static 남발하게 되면 절대로 안지워지고 프로그램과 함꼐하는 메모리가 되어버린다.
 
 	// constrcuter destructer
 	GameEngineRandom();
