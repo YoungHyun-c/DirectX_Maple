@@ -33,11 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib">
-      <Filter>FMOD\Release</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmodL_vc.lib">
       <Filter>FMOD\Debug</Filter>
     </CopyFileToFolders>
@@ -47,5 +42,6 @@
     <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod.dll">
       <Filter>FMOD\Release</Filter>
     </CopyFileToFolders>
+    <CopyFileToFolders Include="ThirdParty\FMOD\lib\x64\fmod_vc.lib" />
   </ItemGroup>
 </Project>

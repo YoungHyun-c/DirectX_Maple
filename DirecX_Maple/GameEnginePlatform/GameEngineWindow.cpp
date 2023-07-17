@@ -170,7 +170,11 @@ void GameEngineWindow::MyRegisterClass()
 	Check = true;
 }
 
-void GameEngineWindow::MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)())
+void GameEngineWindow::MessageLoop(HINSTANCE _Inst,
+	std::function<void(HINSTANCE)> _Start,
+	std::function<void()> _Update,
+	std::function<void()> _End
+)
 {
 	// 윈도우가 뜨기전에 로딩해야할 이미지나 사운드 등등을 처리하는 단계
 	if (nullptr != _Start)

@@ -1,7 +1,7 @@
 #pragma once
-#include <Windows.h>
-#include <string>
+
 #include "GameEngineWindowTexture.h"
+#include <functional>
 
 // Ό³Έν :
 class GameEngineWindow
@@ -21,7 +21,11 @@ public:
 
 	void Open(const std::string& _Title, HINSTANCE _hInstance);
 
-	static void MessageLoop(HINSTANCE _Inst, void(*_Start)(HINSTANCE), void(*_Update)(), void(*_End)());
+	static void MessageLoop(HINSTANCE _Inst,
+		std::function<void(HINSTANCE)> _Start,
+		std::function<void()> _Update,
+		std::function<void()> _End
+	);
 
 	HDC GetHDC() 
 	{
