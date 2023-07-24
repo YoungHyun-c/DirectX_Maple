@@ -17,13 +17,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	float4x4 Left;
-	float4x4 Right;
-
-	Left.Scale({ 3, 3, 3 });
-	Right.Pos({ 100, 100, 100 });
-
-	float4x4 Result = Left * Right;
 
 	GameEngineCore::EngineStart<ContentsCore>(hInstance);
 }

@@ -2,6 +2,11 @@
 #include "GameEngineDebug.h"
 #include <Windows.h>
 
+#include <d3d11_4.h>
+#include <d3dcompiler.h>
+#include <DirectXPackedVector.h>
+#include <DirectXCollision.h>
+
 // 설명 :
 class GameEngineMath
 {
@@ -501,6 +506,79 @@ public:
 		Arr2D[3][2] = _Value.Z;
 	}
 
+	void RotationXDegs(const float _Value)
+	{
+		RotationXRad(_Value * GameEngineMath::D2R);
+	}
+
+	void RotationXRad(const float _Value)
+	{
+		Identity();
+		// DirectX::XMMatrixRotationX
+		// 메모리를 더 쓰고, 연산을 한번만 하도록 위에서 cos, sin을 부른다.
+		float CosValue = cosf(_Value);
+		float SinValue = sinf(_Value);
+		Arr2D[1][1] = CosValue;
+		Arr2D[1][2] = SinValue;
+		Arr2D[2][1] = -SinValue;
+		Arr2D[2][2] = CosValue;
+	}
+
+	void RotationYDegs(const float _Value)
+	{
+		RotationYRad(_Value * GameEngineMath::D2R);
+	}
+	
+	void RotationYRad(const float _Value)
+	{
+		Identity();
+
+		// DirectX::XMMatrixRotationY
+		float CosValue = cosf(_Value);
+		float SinValue = sinf(_Value);
+		Arr2D[0][0] = CosValue;
+		Arr2D[0][2] = -SinValue;
+		Arr2D[2][0] = SinValue;
+		Arr2D[2][2] = CosValue;
+	}
+
+	void RotationZDegs(const float _Value)
+	{
+		RotationZRad(_Value * GameEngineMath::D2R);
+	}
+
+	void RotationZRad(const float _Value)
+	{
+		Identity();
+
+		// DirectX::XMMatrixRotationZ
+		float CosValue = cosf(_Value);
+		float SinValue = sinf(_Value);
+		Arr2D[0][0] = CosValue;
+		Arr2D[0][1] = SinValue;
+		Arr2D[1][0] = -SinValue;
+		Arr2D[1][1] = CosValue;
+
+		// 회전을 시킬 수 있는 행렬이 되어야 할것이다.
+
+		//								[cosf(_Rad)][sinf(_Rad)][02][03]
+		//								[-sinf(_Rad)][cosf(_Rad)[12][13]
+		//								[20][21][22][23]
+		//								[30][31][32][33]
+		// [x][y][z][w]				  =  rx  ry  rz  rw
+
+		// [x]*[00] + [y]*[10] + [z]*[20] + [w]*[30]
+
+		// float4 Rot * 행렬;
+
+		//////////// Z 축 회전 행렬.
+		/*Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
+		Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
+		Rot.Z = _Value.Z;*/
+		////////////
+	}
+
+
 	float4x4 operator*(const float4x4& _Other)
 	{
 		float4x4 Result;
@@ -531,7 +609,7 @@ public:
 		{
 			for (int X = 0; X < 4; X++)
 			{
-				Result.Arr2D[Y][X] = (A.Arr2D[0][0] * B.Arr2D[0][X]) + (A.Arr2D[Y][1] * B.Arr2D[1][X]) + (A.Arr2D[Y][2] * B.Arr2D[2][X]) + (A.Arr2D[Y][3] * B.Arr2D[3][X]);
+				Result.Arr2D[Y][X] = (A.Arr2D[Y][0] * B.Arr2D[0][X]) + (A.Arr2D[Y][1] * B.Arr2D[1][X]) + (A.Arr2D[Y][2] * B.Arr2D[2][X]) + (A.Arr2D[Y][3] * B.Arr2D[3][X]);
 			}
 		}
 

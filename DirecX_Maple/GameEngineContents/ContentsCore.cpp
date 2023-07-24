@@ -48,20 +48,31 @@ void ContentsCore::Update(float _Delta)
 		static float4 Scale = { 200.0f, 200.0f, 200.0f }; // 크기
 		static float4 Rotation = { 0, 0, 0 }; // 회전
 		static float4 Position = { 200.0f, 200.0f, 200.0f }; // 이동
-
-		//static float Dir = 1.0f;
-
-		//Scale -= float4(100.0f, 100.0f, 100.0f) * _Delta * Dir;
-
-		//if (100.0f <= abs(Scale.X))
-		//{
-		//	Dir *= -1.0f;
-		//}
-
-
 		Rotation.X += 360.0f * _Delta;
 		Rotation.Y += 360.0f * _Delta;
 		Rotation.Z += 360.0f * _Delta;
+
+		// 크기
+		float4x4 Scale4x4;
+		// 회전
+		float4x4 Rotation4x4X;
+		float4x4 Rotation4x4Y;
+		float4x4 Rotation4x4Z;
+		float4x4 Rotation4x4;
+		// 위치
+		float4x4 Position4x4;
+
+		Scale4x4.Scale({ 100, 100, 100 });
+
+
+		Rotation4x4X.RotationXDegs(Rotation.X);
+		Rotation4x4Y.RotationYDegs(Rotation.Y);
+		Rotation4x4Z.RotationZDegs(Rotation.Z);
+		Rotation4x4 = Rotation4x4X * Rotation4x4Y * Rotation4x4Z;
+		Position4x4.Pos({ 100, 100, 100 });
+
+		// 행렬의 곱셈은 교환법칙이 성립하지 않습니다.
+		float4x4 World4x4 = Scale4x4 * Rotation4x4 * Position4x4;
 
 		//Rotation.X = 30.0f;
 		//Rotation.Y = 45.0f;
@@ -193,11 +204,15 @@ void ContentsCore::Update(float _Delta)
 
 				// WorldPoint *= Wolrd;
 
-				WorldPoint *= Scale;
+				////////////////////////////////////////
+				//WorldPoint *= Scale;
 				//WorldPoint = WorldPoint.VectorRotationToDegX(Rotation.X);
 				//WorldPoint = WorldPoint.VectorRotationToDegY(Rotation.Y);
-				WorldPoint = WorldPoint.VectorRotationToDegZ(Rotation.Z);
-				WorldPoint += Position;
+				//WorldPoint = WorldPoint.VectorRotationToDegZ(Rotation.Z);
+				//WorldPoint += Position;
+				///////////////////////////////////////
+
+				WorldPoint = WorldPoint * World4x4;
 
 				Trifloat4[VertexCount] = WorldPoint;
 				Tri[VertexCount] = WorldPoint.WindowPOINT();
@@ -205,11 +220,12 @@ void ContentsCore::Update(float _Delta)
 
 			float4 Dir0 = Trifloat4[0] - Trifloat4[1];
 			float4 Dir1 = Trifloat4[1] - Trifloat4[2];
-			float4 Check = float4::Cross3D(Dir0, Dir1);
-			if (Check.Z > 1.0f)
+			float4 Check = float4::Cross3D(Dir1, Dir0);
+			if (Check.Z < 1.0f)
 			{
 				continue;
 			}
+			Polygon(DC, &Tri[0], Tri.size());
 
 			//float4 Dir0 = Trifloat4[1] - Trifloat4[0];
 			//float4 Dir1 = Trifloat4[2] - Trifloat4[1];
@@ -218,8 +234,6 @@ void ContentsCore::Update(float _Delta)
 			//{
 			//	continue;
 			//}
-
-			Polygon(DC, &Tri[0], Tri.size());
 		}
 
 		GameEngineCore::MainWindow.DoubleBuffering();
