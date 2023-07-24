@@ -27,10 +27,19 @@ public:
 	static const float4 UP;
 	static const float4 DOWN;
 
-	float X = 0.0f;
-	float Y = 0.0f;
-	float Z = 0.0f;
-	float W = 1.0f;
+	union
+	{
+		struct
+		{
+			float X;
+			float Y;
+			float Z;
+			float W;
+		};
+
+		float Arr1D[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+		float Arr2D[1][4];
+	};
 
 	inline int iX() const
 	{
@@ -237,10 +246,18 @@ public:
 		return Angle;
 	}
 
-
 	float4 VectorRotationToDegX(const float _Deg)
 	{
 		return VectorRotationToDegX(*this, _Deg);
+	}
+
+	static float4 Cross3D(const float4& _Left, const float4& _Right)
+	{
+		float4 Result;
+		Result.X = (_Left.Y * _Right.Z) - (_Left.Z * _Right.Y);
+		Result.Y = (_Left.Z * _Right.X) - (_Left.X * _Right.Z);
+		Result.Z = (_Left.X * _Right.Y) - (_Left.Y * _Right.X);
+		return Result;
 	}
 
 	static float4 VectorRotationToDegX(const float4& _Value, const float _Deg)
@@ -331,6 +348,7 @@ public:
 		return GetUnitVectorFromRad(_Degree * GameEngineMath::D2R);
 	}
 
+	float4 operator*(const class float4x4& _Other);
 };
 
 class GameEngineRect
@@ -398,5 +416,126 @@ public:
 	int iCenterBot()
 	{
 		return Pos.iY() + Scale.ihY();
+	}
+};
+
+class float4x4
+{
+public:
+	union
+	{
+		float Arr2D[4][4] =
+		{
+			// 00   01   02   03
+			{1.0f, 0.0f, 0.0f, 0.0f},
+			{0.0f, 1.0f, 0.0f, 0.0f},
+			{0.0f, 0.0f, 1.0f, 0.0f},
+			{0.0f, 0.0f, 0.0f, 1.0f}
+		};
+
+
+		struct
+		{
+			float _00;
+
+
+			float _01;
+
+
+			float _02;
+
+
+			float _03;
+
+			float _10;
+			float _11;
+			float _12;
+			float _13;
+
+			float _20;
+			float _21;
+			float _22;
+			float _23;
+
+			float _30;
+			float _31;
+			float _32;
+			float _33;
+		};
+
+		float Arr1D[16];
+	};
+
+	float4x4()
+	{
+		Identity();
+	}
+
+	void Identity()
+	{
+		memset(&Arr1D, 0, sizeof(Arr1D));
+
+		Arr2D[0][0] = 1.0f;
+		Arr2D[1][1] = 1.0f;
+		Arr2D[2][2] = 1.0f;
+		Arr2D[3][3] = 1.0f;
+		
+		return;
+	}
+
+	void Scale(const float4& _Value)
+	{
+		Identity();
+
+		Arr2D[0][0] = _Value.X;
+		Arr2D[1][1] = _Value.Y;
+		Arr2D[2][2] = _Value.Z;
+	}
+
+	void Pos(const float4& _Value)
+	{
+		Identity();
+
+		Arr2D[3][0] = _Value.X;
+		Arr2D[3][1] = _Value.Y;
+		Arr2D[3][2] = _Value.Z;
+	}
+
+	float4x4 operator*(const float4x4& _Other)
+	{
+		float4x4 Result;
+		const float4x4& A = *this;
+		const float4x4& B = _Other;
+
+		//Result.Arr2D[0][0] = (A.Arr2D[0][0] * B.Arr2D[0][0]) + (A.Arr2D[0][1] * B.Arr2D[1][0]) + (A.Arr2D[0][2] * B.Arr2D[2][0]) + (A.Arr2D[0][3] * B.Arr2D[3][0]);
+		//Result.Arr2D[0][1] = (A.Arr2D[0][0] * B.Arr2D[0][1]) + (A.Arr2D[0][1] * B.Arr2D[1][1]) + (A.Arr2D[0][2] * B.Arr2D[2][1]) + (A.Arr2D[0][3] * B.Arr2D[3][1]);
+		//Result.Arr2D[0][2] = (A.Arr2D[0][0] * B.Arr2D[0][2]) + (A.Arr2D[0][1] * B.Arr2D[1][2]) + (A.Arr2D[0][2] * B.Arr2D[2][2]) + (A.Arr2D[0][3] * B.Arr2D[3][2]);
+		//Result.Arr2D[0][3] = (A.Arr2D[0][0] * B.Arr2D[0][3]) + (A.Arr2D[0][1] * B.Arr2D[1][3]) + (A.Arr2D[0][2] * B.Arr2D[2][3]) + (A.Arr2D[0][3] * B.Arr2D[3][3]);
+
+		//Result.Arr2D[1][0] = (A.Arr2D[1][0] * B.Arr2D[0][0]) + (A.Arr2D[1][1] * B.Arr2D[1][0]) + (A.Arr2D[1][2] * B.Arr2D[2][0]) + (A.Arr2D[1][3] * B.Arr2D[3][0]);
+		//Result.Arr2D[1][1] = (A.Arr2D[1][0] * B.Arr2D[0][1]) + (A.Arr2D[1][1] * B.Arr2D[1][1]) + (A.Arr2D[1][2] * B.Arr2D[2][1]) + (A.Arr2D[1][3] * B.Arr2D[3][1]);
+		//Result.Arr2D[1][2] = (A.Arr2D[1][0] * B.Arr2D[0][2]) + (A.Arr2D[1][1] * B.Arr2D[1][2]) + (A.Arr2D[1][2] * B.Arr2D[2][2]) + (A.Arr2D[1][3] * B.Arr2D[3][2]);
+		//Result.Arr2D[1][3] = (A.Arr2D[1][0] * B.Arr2D[0][3]) + (A.Arr2D[1][1] * B.Arr2D[1][3]) + (A.Arr2D[1][2] * B.Arr2D[2][3]) + (A.Arr2D[1][3] * B.Arr2D[3][3]);
+
+		//Result.Arr2D[2][0] = (A.Arr2D[2][0] * B.Arr2D[0][0]) + (A.Arr2D[2][1] * B.Arr2D[1][0]) + (A.Arr2D[2][2] * B.Arr2D[2][0]) + (A.Arr2D[2][3] * B.Arr2D[3][0]);
+		//Result.Arr2D[2][1] = (A.Arr2D[2][0] * B.Arr2D[0][1]) + (A.Arr2D[2][1] * B.Arr2D[1][1]) + (A.Arr2D[2][2] * B.Arr2D[2][1]) + (A.Arr2D[2][3] * B.Arr2D[3][1]);
+		//Result.Arr2D[2][2] = (A.Arr2D[2][0] * B.Arr2D[0][2]) + (A.Arr2D[2][1] * B.Arr2D[1][2]) + (A.Arr2D[2][2] * B.Arr2D[2][2]) + (A.Arr2D[2][3] * B.Arr2D[3][2]);
+		//Result.Arr2D[2][3] = (A.Arr2D[2][0] * B.Arr2D[0][3]) + (A.Arr2D[2][1] * B.Arr2D[1][3]) + (A.Arr2D[2][2] * B.Arr2D[2][3]) + (A.Arr2D[2][3] * B.Arr2D[3][3]);
+
+		//Result.Arr2D[3][0] = (A.Arr2D[3][0] * B.Arr2D[0][0]) + (A.Arr2D[3][1] * B.Arr2D[1][0]) + (A.Arr2D[3][2] * B.Arr2D[2][0]) + (A.Arr2D[3][3] * B.Arr2D[3][0]);
+		//Result.Arr2D[3][1] = (A.Arr2D[3][0] * B.Arr2D[0][1]) + (A.Arr2D[3][1] * B.Arr2D[1][1]) + (A.Arr2D[3][2] * B.Arr2D[2][1]) + (A.Arr2D[3][3] * B.Arr2D[3][1]);
+		//Result.Arr2D[3][2] = (A.Arr2D[3][0] * B.Arr2D[0][2]) + (A.Arr2D[3][1] * B.Arr2D[1][2]) + (A.Arr2D[3][2] * B.Arr2D[2][2]) + (A.Arr2D[3][3] * B.Arr2D[3][2]);
+		//Result.Arr2D[3][3] = (A.Arr2D[3][0] * B.Arr2D[0][3]) + (A.Arr2D[3][1] * B.Arr2D[1][3]) + (A.Arr2D[3][2] * B.Arr2D[2][3]) + (A.Arr2D[3][3] * B.Arr2D[3][3]);
+
+		for (int Y = 0; Y < 4; Y++)
+		{
+			for (int X = 0; X < 4; X++)
+			{
+				Result.Arr2D[Y][X] = (A.Arr2D[0][0] * B.Arr2D[0][X]) + (A.Arr2D[Y][1] * B.Arr2D[1][X]) + (A.Arr2D[Y][2] * B.Arr2D[2][X]) + (A.Arr2D[Y][3] * B.Arr2D[3][X]);
+			}
+		}
+
+
+		return Result;
 	}
 };

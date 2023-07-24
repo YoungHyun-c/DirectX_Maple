@@ -13,7 +13,24 @@ ContentsCore::~ContentsCore()
 
 void ContentsCore::Start()
 {
+	// 회전 방향을 외적으로 알아내는 방법
+	float4 PlayerPos = { 3, 5 };
+	float4 MonsterPos = { 5, 5 };
 
+	float4 PlayerDir = { 0 , 1, 0 };
+	float4 PlayerLook = (PlayerPos - MonsterPos).NormalizeReturn();
+
+	float4 Check = float4::Cross3D(PlayerDir, PlayerLook);
+
+	//역벡터가 되면 문제가 되어일부러 약간의 오차를 줘 회전방향을 알아낸다.
+	// float4 Rev = float4::Cross3D({0, 10, 0}, { 0.01f, -10.0f, 0}); 
+
+	if (0 > Check.Z)
+	{
+		// 왼쪽으로 돌아라
+	}
+
+	int a = 0;
 }
 
 void ContentsCore::Update(float _Delta)
@@ -28,9 +45,9 @@ void ContentsCore::Update(float _Delta)
 
 	{
 		// 물체로서의 크기 회전 위치
-		static float4 Scale = { 100.0f, 100.0f, 100.0f }; // 크기
+		static float4 Scale = { 200.0f, 200.0f, 200.0f }; // 크기
 		static float4 Rotation = { 0, 0, 0 }; // 회전
-		static float4 Position = { 100.0f, 100.0f, 100.0f }; // 이동
+		static float4 Position = { 200.0f, 200.0f, 200.0f }; // 이동
 
 		//static float Dir = 1.0f;
 
@@ -45,6 +62,10 @@ void ContentsCore::Update(float _Delta)
 		Rotation.X += 360.0f * _Delta;
 		Rotation.Y += 360.0f * _Delta;
 		Rotation.Z += 360.0f * _Delta;
+
+		//Rotation.X = 30.0f;
+		//Rotation.Y = 45.0f;
+		//Rotation.Z = 45.0f;
 
 
 		// 로컬과 월드의 차이입니다.
@@ -68,7 +89,7 @@ void ContentsCore::Update(float _Delta)
 		Vertex[6] = float4::VectorRotationToDegX(Vertex[2], 180.0f);
 		Vertex[7] = float4::VectorRotationToDegX(Vertex[3], 180.0f);
 
-		//// 왼쪽이나 오른쪽
+		// 왼쪽이나 오른쪽
 		Vertex[8] = float4::VectorRotationToDegY(Vertex[0], 90.0f);
 		Vertex[9] = float4::VectorRotationToDegY(Vertex[1], 90.0f);
 		Vertex[10] = float4::VectorRotationToDegY(Vertex[2], 90.0f);
@@ -137,6 +158,7 @@ void ContentsCore::Update(float _Delta)
 			ArrIndex[1] = Index[indexCount * 3 + 1];
 			ArrIndex[2] = Index[indexCount * 3 + 2];
 
+			float4 Trifloat4[3];
 			std::vector<POINT> Tri;
 			Tri.resize(3);
 			for (size_t VertexCount = 0; VertexCount < Tri.size(); VertexCount++)
@@ -148,13 +170,55 @@ void ContentsCore::Update(float _Delta)
 				// 절대적인 기준이 있습니다.
 				// 크기 회전 위치 순서대로 적용시켜야 합니다.
 
+				// 모든걸 다 행렬이라는 것으로 처리한다.
+				// 이렇게 벡터식으로 처리하지 않고
+				// 전부다 행렬이라는 것을 사용해서 복잡한 변환을 수행한다.
+				// 그럼 행렬은 뭔가?
+				// x열 y행의 숫자가 모여있는 2차원 배열이다.
+				// 우리가 사용하는 flaot4 4열 1행 행렬이다.
+				// 행렬의 기준으로 본다면 행렬이 아닌것이 없다.
+				// 1 <= 숫자하나가 덩그러니 있으면 1행 1열짜리 행렬일 것이다.
+
+				// 당연히 float4 행렬이 다른 행렬끼리 연산이 되므로
+				// 더 큰 행렬도 이에 사용될 수 있을 것이다.
+
+				// 보통은 4x4 행렬을 사용해서
+				// 크기 회전 위치를 표현하는 변환행렬을 만든다.
+
+				// 로컬 => 월드 => 뷰 => 투영 => 뷰토프 => 모니터
+
+				// 일단 연산량의 차이
+				// 힝렬이 훨씬 연산이 작다.
+				// 다양한 변환을 한번에 할 수 가 있다.
+
+				// WorldPoint *= Wolrd;
+
 				WorldPoint *= Scale;
-				WorldPoint = WorldPoint.VectorRotationToDegX(Rotation.X);
-				WorldPoint = WorldPoint.VectorRotationToDegY(Rotation.Y);
+				//WorldPoint = WorldPoint.VectorRotationToDegX(Rotation.X);
+				//WorldPoint = WorldPoint.VectorRotationToDegY(Rotation.Y);
 				WorldPoint = WorldPoint.VectorRotationToDegZ(Rotation.Z);
 				WorldPoint += Position;
+
+				Trifloat4[VertexCount] = WorldPoint;
 				Tri[VertexCount] = WorldPoint.WindowPOINT();
 			}
+
+			float4 Dir0 = Trifloat4[0] - Trifloat4[1];
+			float4 Dir1 = Trifloat4[1] - Trifloat4[2];
+			float4 Check = float4::Cross3D(Dir0, Dir1);
+			if (Check.Z > 1.0f)
+			{
+				continue;
+			}
+
+			//float4 Dir0 = Trifloat4[1] - Trifloat4[0];
+			//float4 Dir1 = Trifloat4[2] - Trifloat4[1];
+			//float4 Check = float4::Cross3D(Dir1, Dir0);
+			//if (Check.Z < 1.0f)
+			//{
+			//	continue;
+			//}
+
 			Polygon(DC, &Tri[0], Tri.size());
 		}
 
