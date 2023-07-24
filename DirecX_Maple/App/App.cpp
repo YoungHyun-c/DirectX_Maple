@@ -17,6 +17,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
+	float4x4 Rot;
+
+	Rot.RotationZDegs(90.0f);
 
 	GameEngineCore::EngineStart<ContentsCore>(hInstance);
 }

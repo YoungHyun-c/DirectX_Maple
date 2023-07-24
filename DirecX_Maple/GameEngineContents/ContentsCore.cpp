@@ -65,11 +65,11 @@ void ContentsCore::Update(float _Delta)
 		Scale4x4.Scale({ 100, 100, 100 });
 
 
-		Rotation4x4X.RotationXDegs(Rotation.X);
-		Rotation4x4Y.RotationYDegs(Rotation.Y);
-		Rotation4x4Z.RotationZDegs(Rotation.Z);
-		Rotation4x4 = Rotation4x4X * Rotation4x4Y * Rotation4x4Z;
-		Position4x4.Pos({ 100, 100, 100 });
+		//Rotation4x4X.RotationXDegs(Rotation.X);
+		//Rotation4x4Y.RotationYDegs(Rotation.Y);
+		//Rotation4x4Z.RotationZDegs(Rotation.Z);
+		//Rotation4x4 = Rotation4x4X * Rotation4x4Y * Rotation4x4Z;
+		//Position4x4.Pos({ 100, 100, 100 });
 
 		// 행렬의 곱셈은 교환법칙이 성립하지 않습니다.
 		float4x4 World4x4 = Scale4x4 * Rotation4x4 * Position4x4;

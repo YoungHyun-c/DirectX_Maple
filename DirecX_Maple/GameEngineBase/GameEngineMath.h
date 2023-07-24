@@ -270,15 +270,15 @@ public:
 		return VectorRotationToRadX(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadX(const float4& _Value, const float _Rad)
-	{
-		// 왜 이 공식인지를 이해해야 합니다.
-		float4 Rot;
-		Rot.X = _Value.X;
-		Rot.Y = _Value.Z * sinf(_Rad) + _Value.Y * cosf(_Rad);
-		Rot.Z = _Value.Z * cosf(_Rad) - _Value.Y * sinf(_Rad);
-		return Rot;
-	}
+	static float4 VectorRotationToRadX(const float4& _Value, const float _Rad);
+	//{
+	//	// 왜 이 공식인지를 이해해야 합니다.
+	//	float4 Rot;
+	//	Rot.X = _Value.X;
+	//	Rot.Y = _Value.Z * sinf(_Rad) + _Value.Y * cosf(_Rad);
+	//	Rot.Z = _Value.Z * cosf(_Rad) - _Value.Y * sinf(_Rad);
+	//	return Rot;
+	//}
 
 	float4 VectorRotationToDegY(const float _Deg)
 	{
@@ -291,15 +291,15 @@ public:
 		return VectorRotationToRadY(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadY(const float4& _Value, const float _Rad)
-	{
-		// 왜 이 공식인지를 이해해야 합니다.
-		float4 Rot;
-		Rot.X = _Value.X * cosf(_Rad) - _Value.Z * sinf(_Rad);
-		Rot.Y = _Value.Y;
-		Rot.Z = _Value.X * sinf(_Rad) + _Value.Z * cosf(_Rad);
-		return Rot;
-	}
+	static float4 VectorRotationToRadY(const float4& _Value, const float _Rad);
+	//{
+	//	// 왜 이 공식인지를 이해해야 합니다.
+	//	float4 Rot;
+	//	Rot.X = _Value.X * cosf(_Rad) - _Value.Z * sinf(_Rad);
+	//	Rot.Y = _Value.Y;
+	//	Rot.Z = _Value.X * sinf(_Rad) + _Value.Z * cosf(_Rad);
+	//	return Rot;
+	//}
 
 	float4 VectorRotationToDegZ(const float _Deg)
 	{
@@ -311,14 +311,14 @@ public:
 		return VectorRotationToRadZ(_Value, _Deg * GameEngineMath::D2R);
 	}
 
-	static float4 VectorRotationToRadZ(const float4& _Value, const float _Rad)
-	{
-		float4 Rot;
-		Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
-		Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
-		Rot.Z = _Value.Z;
-		return Rot;
-	}
+	static float4 VectorRotationToRadZ(const float4& _Value, const float _Rad);
+	//{
+	//	float4 Rot;
+	//	Rot.X = _Value.X * cosf(_Rad) - _Value.Y * sinf(_Rad);
+	//	Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
+	//	Rot.Z = _Value.Z;
+	//	return Rot;
+	//}
 
 
 	//                                       90.0f
@@ -353,7 +353,7 @@ public:
 		return GetUnitVectorFromRad(_Degree * GameEngineMath::D2R);
 	}
 
-	float4 operator*(const class float4x4& _Other);
+	float4 operator*(const class float4x4& _Other) const;
 };
 
 class GameEngineRect
