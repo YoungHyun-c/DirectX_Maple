@@ -256,6 +256,12 @@ public:
 		return VectorRotationToDegX(*this, _Deg);
 	}
 
+	static float DotProduct3D(const float4& _Left, const float4& _Right)
+	{
+		float Result = (_Left.X * _Right.X) + (_Left.Y * _Right.Y) + (_Left.Z * _Right.Z);
+		return Result;
+	}
+
 	static float4 Cross3D(const float4& _Left, const float4& _Right)
 	{
 		float4 Result;
@@ -438,6 +444,7 @@ public:
 			{0.0f, 0.0f, 0.0f, 1.0f}
 		};
 
+		float4 ArrVector[4];
 
 		struct
 		{
@@ -497,14 +504,7 @@ public:
 		Arr2D[2][2] = _Value.Z;
 	}
 
-	void Pos(const float4& _Value)
-	{
-		Identity();
 
-		Arr2D[3][0] = _Value.X;
-		Arr2D[3][1] = _Value.Y;
-		Arr2D[3][2] = _Value.Z;
-	}
 
 	void RotationXDegs(const float _Value)
 	{
@@ -576,6 +576,61 @@ public:
 		Rot.Y = _Value.X * sinf(_Rad) + _Value.Y * cosf(_Rad);
 		Rot.Z = _Value.Z;*/
 		////////////
+	}
+
+	void Pos(const float4& _Value)
+	{
+		Identity();
+
+		Arr2D[3][0] = _Value.X;
+		Arr2D[3][1] = _Value.Y;
+		Arr2D[3][2] = _Value.Z;
+	}
+
+	void LookAtLH(const float4& _EyePos, const float4& _EyeDir, const float4& _EyeUp)
+	{
+		Identity();
+
+		float4 EyePos = _EyePos;
+		float4 EyeForward = _EyeDir;
+		float4 EyeUp = _EyeUp;
+
+		// 카메라의 Z
+		EyeForward.Normalize();
+
+		// 카메라의 Y
+		EyeUp.Normalize();
+
+		// 카메라의 X
+		float4 EyeRight = float4::Cross3D(EyeUp, EyeForward);
+		// 회전 행렬의 축을 구성하는 규칙
+		// 그 두벡터에 수직인 벡터일 수 밖에 없다. (외적 사용해서 구하기)
+		// [?][?][?][0]   // ?
+		// [0][1][0][0]	  // Y
+		// [0][0][1][0]	  // Z
+		// [0][0][0][1]
+
+		// 회전행렬을 벡터만으로 만드는 방법.
+		// float4x4 RotMAt;
+		ArrVector[0] = EyeRight;
+		ArrVector[1] = EyeUp;
+		ArrVector[2] = EyeForward;
+
+		// XYZ만큼 돌아서 어떤 물체를 바라보고 있는 카메라.
+		// 회전행렬을 역으로 돌려야 한다.
+		// -X-Y-Z만큼 돌아서 어떤 물체를 원점으로 돌리게 만들어야 하는데.
+
+		float4 NegEyePos = -EyePos;
+
+		// 모든 물체가 이동해야할 방향을 구하고 있다.
+		// 여기서 내적을 공부해야 하는 이유
+		// 내적 사용
+		// 내적을 통해서, 회전한 각도도 구할 수 있고 물체가 얼만큼 이동했는지도 구할 수 있다.
+		float XValue = float4::DotProduct3D(EyeRight, NegEyePos); // X의 Normalize 값과, 움직인 거리의 내적.
+		float YValue = float4::DotProduct3D(EyeUp, NegEyePos);
+		float ZValue = float4::DotProduct3D(EyeForward, NegEyePos);
+		
+		int a = 0;
 	}
 
 
