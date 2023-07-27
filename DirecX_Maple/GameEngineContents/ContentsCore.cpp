@@ -133,9 +133,9 @@ void ContentsCore::Update(float _Delta)
 		// 월드의 영역
 		static float4 Scale = { 100.0f, 100.0f, 100.0f }; //크기
 		static float4 Rotation = { 0, 0, 0 }; // 회전
-		static float4 Position = { 100.0f, 100.0f, 100.0f }; // 이동
-		Rotation.X += 360.0f * _Delta;
-		Rotation.Y += 360.0f * _Delta;
+		static float4 Position = { 200.0f, 200.0f, 200.0f }; // 이동
+		//Rotation.X += 360.0f * _Delta;
+		//Rotation.Y += 360.0f * _Delta;
 		Rotation.Z += 360.0f * _Delta;
 
 		float4x4 Scale4x4;
@@ -149,25 +149,78 @@ void ContentsCore::Update(float _Delta)
 
 		Scale4x4.Scale(Scale);
 
-		Rotation4x4X.RotationXDegs(Rotation.X);
-		Rotation4x4Y.RotationYDegs(Rotation.Y);
-		Rotation4x4Z.RotationZDegs(Rotation.Z);
-		Rotation4x4 = Rotation4x4X * Rotation4x4Y * Rotation4x4Z;
+		//Rotation4x4X.RotationXDegs(Rotation.X);
+		//Rotation4x4Y.RotationYDegs(Rotation.Y);
+		//Rotation4x4Z.RotationZDegs(Rotation.Z);
+		//Rotation4x4 = Rotation4x4X * Rotation4x4Y * Rotation4x4Z;
 
 		Position4x4.Pos(Position);
 
 		// 행렬의곱셉은 교환법칙이 성립하지 않는다.
-		float4x4 World4x4 = Scale4x4 * Rotation4x4 * Position4x4;
+		float4x4 World4x4 = Scale4x4 * Position4x4 * Rotation4x4;
 
 		// 카메라의 영역
-		float4x4 View4x4;
-		float4 EyePos = { 0.0f, 0.0f, -1000.0f, 1.0f };
-		float4 EyeDir = { 0.0f, 0.0f, 1.0f, 1.0f };
-		float4 EyeUp = { 0.0f, 1.0f, 0.0f, 1.0f };
 
+		static float4 EyePos = { 0.0f, 0.0f, -500.0f, 1.0f };
+		static float4 EyeDir = { 0.0f, 0.0f, 1.0f, 1.0f };
+		// View4x4.LookToLH
+		// float4 EyeLookpos = {0.0f, 0.0f, 0.0f, 1.0f};
+		// 내부에서 계산된다.
+		// float4 EyeDir = EyePos - EyeLookPos;
+		static float4 EyeUp = { 0.0f, 1.0f, 0.0f, 1.0f };
+
+		float CamSpeed = 300.0f;
+		if (GameEngineInput::IsPress(VK_NUMPAD4))
+		{
+			EyePos -= float4::LEFT * _Delta * CamSpeed;
+		}
+
+		if (GameEngineInput::IsPress(VK_NUMPAD6))
+		{
+			EyePos -= float4::RIGHT * _Delta * CamSpeed;
+		}
+
+		if (GameEngineInput::IsPress(VK_NUMPAD8))
+		{
+			EyePos -= float4::FORWARD * _Delta * CamSpeed;
+		}
+
+		if (GameEngineInput::IsPress(VK_NUMPAD5))
+		{
+			EyePos -= float4::BACKWARD * _Delta * CamSpeed;
+		}
+
+		if (GameEngineInput::IsPress(VK_NUMPAD7))
+		{
+			EyeUp.VectorRotationToDegZ(360.0f * _Delta);
+		}
+
+		if (GameEngineInput::IsPress(VK_NUMPAD9))
+		{
+			EyeUp.VectorRotationToDegZ(-360.0f * _Delta);
+		}
+
+		float4x4 View4x4;
 		View4x4.LookAtLH(EyePos, EyeDir, EyeUp);
 
-		float4x4 WorldView4x4 = World4x4 * View4x4;
+		float4x4 Projection4x4;
+
+		//
+		//						윈도우창(1280,720) 안에 띄우고싶은(보고싶은) 화면의 너비
+		// 윈도우 크기가 아니라 내가 세상을 바라보고 싶은 크기
+		// 줌인 줌아웃을 아주 쉽게 만들 수 있다.
+
+		static float Zoom = 1.0f;
+		//Zoom += _Delta;
+
+		Projection4x4.OrthographicLH(GetStartWindowSize().X * Zoom, GetStartWindowSize().Y * Zoom, 1000.0f, 0.1f);
+
+		float4x4 ViewPort4x4;
+		//					확장 시키려는 화면 크기고, 윈도우의 크기
+		//ViewPort4x4.ViewPort(GetStartWindowSize().X, GetStartWindowSize().Y, 0.0f, 0.0f);
+		ViewPort4x4.ViewPort(1680, GetStartWindowSize().Y, 0.0f, 0.0f);
+
+		float4x4 WorldProjection4x4 = World4x4 * View4x4 * Projection4x4;
 
 		for (size_t indexCount = 0; indexCount < Index.size() / 3; indexCount++)
 		{
@@ -185,42 +238,9 @@ void ContentsCore::Update(float _Delta)
 				float4 WorldPoint = Vertex[ArrIndex[VertexCount]];
 
 				// 변환식은 이제 딱 한가지 인 것.
-				WorldPoint = WorldPoint * WorldView4x4;
+				WorldPoint = WorldPoint * WorldProjection4x4;
 
-				// 위치 크기 회전을 적용시킬때 수학적으로 증명된
-				// 절대적인 기준이 있습니다.
-				// 크기 회전 위치 순서대로 적용시켜야 합니다.
-
-				// 모든걸 다 행렬이라는 것으로 처리한다.
-				// 이렇게 벡터식으로 처리하지 않고
-				// 전부다 행렬이라는 것을 사용해서 복잡한 변환을 수행한다.
-				// 그럼 행렬은 뭔가?
-				// x열 y행의 숫자가 모여있는 2차원 배열이다.
-				// 우리가 사용하는 flaot4 4열 1행 행렬이다.
-				// 행렬의 기준으로 본다면 행렬이 아닌것이 없다.
-				// 1 <= 숫자하나가 덩그러니 있으면 1행 1열짜리 행렬일 것이다.
-
-				// 당연히 float4 행렬이 다른 행렬끼리 연산이 되므로
-				// 더 큰 행렬도 이에 사용될 수 있을 것이다.
-
-				// 보통은 4x4 행렬을 사용해서
-				// 크기 회전 위치를 표현하는 변환행렬을 만든다.
-
-				// 로컬 => 월드 => 뷰 => 투영 => 뷰토프 => 모니터
-
-				// 일단 연산량의 차이
-				// 힝렬이 훨씬 연산이 작다.
-				// 다양한 변환을 한번에 할 수 가 있다.
-
-				// WorldPoint *= Wolrd;
-
-				////////////////////////////////////////
-				//WorldPoint *= Scale;
-				//WorldPoint = WorldPoint.VectorRotationToDegX(Rotation.X);
-				//WorldPoint = WorldPoint.VectorRotationToDegY(Rotation.Y);
-				//WorldPoint = WorldPoint.VectorRotationToDegZ(Rotation.Z);
-				//WorldPoint += Position;
-				///////////////////////////////////////
+				WorldPoint = WorldPoint * ViewPort4x4;
 
 				Trifloat4[VertexCount] = WorldPoint;
 				Tri[VertexCount] = WorldPoint.WindowPOINT();
@@ -243,6 +263,9 @@ void ContentsCore::Update(float _Delta)
 			//	continue;
 			//}
 		}
+		
+		// 화면에 3d 물체를 구별하고 선별하기 위한 변환은 다 끝났고,
+		// 어떤 모니터에 뿌릴까만이 남게 된다. 최종적으로 화면에 어떻게 뿌릴것인가만이 남아있다.
 
 		GameEngineCore::MainWindow.DoubleBuffering();
 	}
