@@ -50,6 +50,8 @@ void ContentsCore::Update(float _Delta)
 		// 바로 월드로 바로만든것
 		// 로컬이 존재하지 않는다.
 
+		// 다이렉트 X로
+
 		// 로컬상태
 		std::vector<float4> Vertex;
 		Vertex.resize(4 * 6);
@@ -227,7 +229,7 @@ void ContentsCore::Update(float _Delta)
 		}
 
 		float4x4 View4x4;
-		View4x4.LookAtLH(EyePos, EyeDir, EyeUp);
+		View4x4.LookToLH(EyePos, EyeDir, EyeUp);
 
 		float4x4 Projection4x4;
 
@@ -239,9 +241,9 @@ void ContentsCore::Update(float _Delta)
 		static float Zoom = 1.0f;
 		//Zoom += _Delta;
 
-		//Projection4x4.OrthographicLH(GetStartWindowSize().X * Zoom, GetStartWindowSize().Y * Zoom, 1000.0f, 0.1f);
+		Projection4x4.OrthographicLH(GetStartWindowSize().X, GetStartWindowSize().Y, 1000.0f, 0.1f);
 
-		Projection4x4.PerspectiveFovLH(60.0f, GetStartWindowSize().X, GetStartWindowSize().Y, 1000.0f, 0.1f);
+		//Projection4x4.PerspectiveFovLH(60.0f, GetStartWindowSize().X, GetStartWindowSize().Y, 1000.0f, 0.1f);
 
 		float4x4 ViewPort4x4;
 		//					확장 시키려는 화면 크기고, 윈도우의 크기
