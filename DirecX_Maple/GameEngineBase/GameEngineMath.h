@@ -538,6 +538,11 @@ public:
 		Identity();
 	}
 
+	float4x4(const float4x4& _Matrix)
+		: DirectXMatrix(_Matrix.DirectXMatrix)
+	{
+	}
+
 	float4x4(const DirectX::FXMMATRIX& _Matrix)
 		: DirectXMatrix(_Matrix)
 	{
@@ -560,9 +565,26 @@ public:
 		DirectXMatrix = DirectX::XMMatrixScalingFromVector(_Value.DirectXVector);
 	}
 
+	void RotationDeg(const float4& _Value)
+	{
+		RotationRad(_Value * GameEngineMath::D2R);
+	}
+
+	void RotationRad(const float4& _Value)
+	{
+		float4x4 X;
+		float4x4 Y;
+		float4x4 Z;
+
+		X.RotationXRad(_Value.X);
+		Y.RotationXRad(_Value.Y);
+		Z.RotationXRad(_Value.Z);
+
+		DirectXMatrix = (X * Y * Z).DirectXMatrix;
+	}
 
 
-	void RotationXDegs(const float _Value)
+	void RotationXDeg(const float _Value)
 	{
 		RotationXRad(_Value * GameEngineMath::D2R);
 	}
@@ -581,7 +603,7 @@ public:
 		//Arr2D[2][2] = CosValue;
 	}
 
-	void RotationYDegs(const float _Value)
+	void RotationYDeg(const float _Value)
 	{
 		RotationYRad(_Value * GameEngineMath::D2R);
 	}
@@ -600,7 +622,7 @@ public:
 		//Arr2D[2][2] = CosValue;
 	}
 
-	void RotationZDegs(const float _Value)
+	void RotationZDeg(const float _Value)
 	{
 		RotationZRad(_Value * GameEngineMath::D2R);
 	}
@@ -637,7 +659,7 @@ public:
 		////////////
 	}
 
-	void Pos(const float4& _Value)
+	void Position(const float4& _Value)
 	{
 
 		DirectXMatrix = DirectX::XMMatrixTranslationFromVector(_Value.DirectXVector);

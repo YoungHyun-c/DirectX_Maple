@@ -37,6 +37,16 @@ public:
 		return std::dynamic_pointer_cast<ObjectType>(NewChild);
 	}
 
+	std::shared_ptr<GameEngineCamera> GetMainCamera()
+	{
+		return Cameras[0];
+	}
+
+	std::shared_ptr<GameEngineCamera> GetCamera(int _Select)
+	{
+		return Cameras[_Select];
+	}
+
 protected:
 
 private:
@@ -54,6 +64,8 @@ private:
 	void ActorRelease();
 
 	void ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order);
+
+	void Render(float _Delta);
 
 	// 이미 엑터가 child로 관리하고 있지만
 	// 따로 카메라도 들고 있을 것이다.

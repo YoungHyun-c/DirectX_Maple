@@ -22,10 +22,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Rot.RotationZDegs(90.0f);*/
 
 	float4x4 Rot0;
-	Rot0.RotationZDegs(20.0f);
+	Rot0.RotationZDeg(20.0f);
 
 	float4x4 Rot1;
-	Rot1.RotationZDegs(-20.0f);
+	Rot1.RotationZDeg(-20.0f);
 
 	GameEngineCore::EngineStart<ContentsCore>(hInstance);
 }

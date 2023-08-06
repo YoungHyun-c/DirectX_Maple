@@ -8,6 +8,9 @@ class GameEngineCore
 	friend class GameEngineLevel;
 
 public:
+	static GameEngineTime MainTime;
+	static GameEngineWindow MainWindow;
+
 	// constructer destructer
 	GameEngineCore();
 	~GameEngineCore();
@@ -62,8 +65,7 @@ public:
 protected:
 
 private:
-	static GameEngineTime MainTime;
-	static GameEngineWindow MainWindow;
+
 
 	static void EngineProcess(HINSTANCE _Inst, const std::string& _Name, float4 _Pos, float4 _Size);
 	static std::shared_ptr<GameEngineObject> CoreObject;
