@@ -93,9 +93,13 @@ public:
 
 	virtual void AllUpdate(float _Delta);
 
-	void SetParent(GameEngineObject* _Parent)
+	void SetParent(GameEngineObject* _Parent, int _Order)
 	{
 		Parent = _Parent;
+		Parent->Childs[_Order].push_back(shared_from_this());
+		// 부모가 있는지 확인하고 있으면 부모를 지정,
+		// 엑터를 움직여도 렌더러가 안움직일 것인데, 어떤 Transform이 움직일 때 자식인 렌더러를 트랜스폼 해주어야 한다.
+		Transform.SetParent(_Parent->Transform);
 		// Parent->Transform.SetParent(_Parent->Transform);
 	}
 

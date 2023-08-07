@@ -20,6 +20,12 @@ public:
 
 	std::shared_ptr<class GameEngineCamera> CreateCamera(int _Order, int _CameraOrder);
 
+	template<typename ObjectType, typename EnumType>
+	std::shared_ptr<ObjectType> CreateActor(EnumType _Order)
+	{
+		return CreateActoy<ObjectType>(static_cast<int>(_Order));
+	}
+
 	template<typename ObjectType>
 	std::shared_ptr<ObjectType> CreateActor(int _Order = 0)
 	{
