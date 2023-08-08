@@ -21,9 +21,7 @@ public:
 	std::shared_ptr<ObjectType> CreateComponent(int _Order = 0)
 	{
 		std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared <ObjectType>();
-		NewChild->SetParent(this);
-		NewChild->Start();
-		Childs[_Order].push_back(NewChild);
+		ComponentInit(NewChild, _Order);
 
 		return std::dynamic_pointer_cast<ObjectType>(NewChild);
 	}
@@ -33,6 +31,7 @@ public:
 protected:
 
 private:
+	void ComponentInit(std::shared_ptr<class GameEngineComponent> _Component, int _Order);
 	// 다형성은 무조건 위쪽을 가질수록 범용성이 높아진다.
 	// 그리고 + 이런 기능은
 	// Renderer와 Collision : GameEngineComponenet
