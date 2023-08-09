@@ -1,6 +1,7 @@
 #include "Precompile.h"
 #include "GameEngineDevice.h"
-#include "GameEngineWindow.h"
+#include <GameEnginePlatform/GameEngineWindow.h>
+#include "GameEngineTexture.h"
 
 #pragma comment(lib, "d3d11")
 #pragma comment(lib, "d3dcompiler")
@@ -116,6 +117,9 @@ void GameEngineDevice::Initiallize(const GameEngineWindow& _Window)
 	// 아예 화면에 출력을 위한 더블 버퍼링까지 지원하는 화면출력용 이미지 + 더블버퍼링 인터페이스를
 	// 모니터에 출력하는 기능 자체를 지원한다.
 	// 그걸 스왑체인이라고 한다.
+
+	Window = &_Window;
+
 	CreateSwapChain();
 
 	//Adapter->Release();
@@ -178,5 +182,111 @@ IDXGIAdapter* GameEngineDevice::GetHighPerformanceAdapter()
 
 void GameEngineDevice::CreateSwapChain()
 {
+	// 스왑체인
+	float4 WindowScale = Window->GetScale();
 
+	// _DESC <= ~을 담고잇는 설정(구조체, 크기, 포멧)
+	// TEXTURE_DESC <= 이미지의 크기 이미지의 포맷 이미지의 구조체
+
+	DXGI_SWAP_CHAIN_DESC ScInfo = { 0, };
+
+	// 더블버퍼링
+	ScInfo.BufferCount = 2;
+	ScInfo.BufferDesc.Width = WindowScale.iX();
+	ScInfo.BufferDesc.Height = WindowScale.iY();
+	ScInfo.OutputWindow = Window->GetHWND();
+
+	// 최소주사율
+	ScInfo.BufferDesc.RefreshRate.Denominator = 1;
+	ScInfo.BufferDesc.RefreshRate.Numerator = 60;
+
+	// R8G8B8A8
+	// 적색 표현하는데 8비트
+	// 녹색 표현하는데 8비트
+	// 청색 표현하는데 8비트
+	// 알파 표현하는데 8비트
+	// 4바이트
+	// 이색상에는 보통 큰 의미가 없다.	
+	// 우리가 32바이트짜리 색상으로 해봐야
+	// HDR이 아니면 안된다.
+	ScInfo.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	// 모니터를 그릴 때 어떤 픽셀부터 갱신할거냐.
+	ScInfo.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+	ScInfo.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+
+	// 스왑체인을 무슨 용도로 쓸것인지
+	// DXGI_USAGE_RENDER_TARGET_OUTPUT <= 화면에 보이게 해주세요.
+	// 쉐이더에서 쓸 수 있게 해주세요. <= 아무도 안씀.
+	ScInfo.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT | DXGI_USAGE_SHADER_INPUT;
+
+	// 이녀석을 쉐이더에서 사용할때
+	// 쉐이더에서 이걸 사용하면 이 샘플링 퀄리티가 중요해지는데
+	// 이녀석은 쉐이더에서 사용되는 녀석이 아니기 때문에 더더더더욱 중요하지 않다.
+
+	// 그 갯수당 퀄리티
+	ScInfo.SampleDesc.Quality = 0;
+	// 점 개수
+	ScInfo.SampleDesc.Count = 1;
+
+	// ScInfo.BufferCount = 2;
+	// 교체순서와 방식을 정의한다.
+	ScInfo.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+	// 전체화면이냐 아니냐
+	// 전제화면시 당연히 그래픽프레임이 더 빨라져야 한다.
+	ScInfo.Windowed = true;
+
+	// 스왑체인을 만들어 내기 위해서는 _Device가 필요하다.
+	IDXGIDevice* pD = nullptr;
+	IDXGIAdapter* pA = nullptr;
+	IDXGIFactory* pF = nullptr;
+
+	// 다이렉트 라이브러를 사용하는 객체들을 만들면 그 객체들은 자신을 책임지고 있는
+	// 장치와 자신을 만드는데 사용된 객체들을 가지고 있다.
+	Device->QueryInterface(__uuidof(IDXGIDevice), reinterpret_cast<void**>(&pD));
+	if (nullptr == pD)
+	{
+		MsgBoxAssert("디바이스 추출에 실패했습니다.");
+		return;
+	}
+
+	pD->GetParent(__uuidof(IDXGIAdapter), reinterpret_cast<void**>(&pA));
+	if (nullptr == pD)
+	{
+		MsgBoxAssert("어뎁더 추출에 실패했습니다.");
+		return;
+	}
+
+	pA->GetParent(__uuidof(IDXGIFactory), reinterpret_cast<void**>(&pF));
+	if (nullptr == pF)
+	{
+		MsgBoxAssert("팩토리 추출에 실패했습니다.");
+	}
+
+	// 이 장치와 관련된 요소들을 만들 수 있는 기능을 가지고 있다.
+	pF->CreateSwapChain(Device, &ScInfo, &SwapChain);
+
+	pF->Release();
+	pA->Release();
+	pD->Release();
+
+	// 배열로 보고 있다는 것을 알수가 있다.
+
+	ID3D11Texture2D* DXBackBufferTexture = nullptr;
+	if (S_OK != SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&DXBackBufferTexture)))
+	{
+		MsgBoxAssert("벡버퍼 텍스처를 얻어오지 못 했습니다.");
+	}
+
+	// 다이렉트x는 무언가 그릴 수 있는 권한을
+	
+	// 렌더타겟을 만들어야한다.
+	// 텍스처로는 안된다.
+	BackBufferTexture = GameEngineTexture::Create(DXBackBufferTexture);
+
+	//BackBufferTexture->Release();
+
+	// 스왑체인이지 텍스처가 아니다.
+	// 뭔가를 그리려면 텍스처가 존재해야 하는데
+	// 그 텍스처를
 }

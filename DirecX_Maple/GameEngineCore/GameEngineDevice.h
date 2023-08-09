@@ -27,6 +27,8 @@ public:
 protected:
 
 private:
+	const GameEngineWindow* Window;
+
 	IDXGIAdapter* GetHighPerformanceAdapter();
 
 	// 그래픽카드의 메모리 관련 접근권한 인터페이스
@@ -41,6 +43,8 @@ private:
 
 	// 화면 출력 처리용 인터페이스
 	IDXGISwapChain* SwapChain = nullptr;
+
+	std::shared_ptr<class GameEngineTexture> BackBufferTexture;
 
 	void CreateSwapChain();
 
