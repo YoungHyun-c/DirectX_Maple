@@ -8,6 +8,8 @@
 // 설명 :
 class GameEngineDevice
 {
+	friend class GameEngineCore;
+
 public:
 	// constructer destructer
 	GameEngineDevice();
@@ -23,6 +25,16 @@ public:
 	// 근간인 HWND를 많이 요구한다.
 	// WINDOW를 감싸는 구조로 만든다.
 	void Initiallize(const class GameEngineWindow& _Window);
+
+	ID3D11Device* GetDevice()
+	{
+		return Device;
+	}
+
+	ID3D11DeviceContext* GetContext()
+	{
+		return Context;
+	}
 
 protected:
 
@@ -45,6 +57,11 @@ private:
 	IDXGISwapChain* SwapChain = nullptr;
 
 	std::shared_ptr<class GameEngineTexture> BackBufferTexture;
+
+	std::shared_ptr<class GameEngineRenderTarget> BackBufferRenderTarget;
+
+	void RenderStart();
+	void RenderEnd();
 
 	void CreateSwapChain();
 
