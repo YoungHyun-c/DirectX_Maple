@@ -123,7 +123,7 @@ void GameEngineDevice::Initiallize(const GameEngineWindow& _Window)
 
 	CreateSwapChain();
 
-	//Adapter->Release();
+	ResourcesInit();
 }
 
 IDXGIAdapter* GameEngineDevice::GetHighPerformanceAdapter()

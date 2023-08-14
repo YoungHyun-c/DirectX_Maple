@@ -7,6 +7,8 @@
 #include "GameEngineCore.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
 
+#include "GameEngineVertexBuffer.h"
+
 GameEngineRenderer::GameEngineRenderer()
 {
 
@@ -48,67 +50,70 @@ int A = 0;
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
+	std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
+	VertexBuffer->Setting();
+	
 	// 아래있는 이녀석들이 리소스라면
 	// 이녀석들은 지금
 
 	
 
-	// 로컬상태
-	std::vector<float4> Vertex;
-	Vertex.resize(4 * 6);
+	//// 로컬상태
+	//std::vector<float4> Vertex;
+	//Vertex.resize(4 * 6);
 
-	// 앞면
-	Vertex[0] = { -0.5f, -0.5f, -0.5f, 1.0f };
-	Vertex[1] = { 0.5f, -0.5f, -0.5f, 1.0f };
-	Vertex[2] = { 0.5f, 0.5f, -0.5f, 1.0f };
-	Vertex[3] = { -0.5f, 0.5f, -0.5f, 1.0f };
+	//// 앞면
+	//Vertex[0] = { -0.5f, -0.5f, -0.5f, 1.0f };
+	//Vertex[1] = { 0.5f, -0.5f, -0.5f, 1.0f };
+	//Vertex[2] = { 0.5f, 0.5f, -0.5f, 1.0f };
+	//Vertex[3] = { -0.5f, 0.5f, -0.5f, 1.0f };
 
-	// 뒷면
-	Vertex[4] = float4::VectorRotationToDegX(Vertex[0], 180.0f);
-	Vertex[5] = float4::VectorRotationToDegX(Vertex[1], 180.0f);
-	Vertex[6] = float4::VectorRotationToDegX(Vertex[2], 180.0f);
-	Vertex[7] = float4::VectorRotationToDegX(Vertex[3], 180.0f);
+	//// 뒷면
+	//Vertex[4] = float4::VectorRotationToDegX(Vertex[0], 180.0f);
+	//Vertex[5] = float4::VectorRotationToDegX(Vertex[1], 180.0f);
+	//Vertex[6] = float4::VectorRotationToDegX(Vertex[2], 180.0f);
+	//Vertex[7] = float4::VectorRotationToDegX(Vertex[3], 180.0f);
 
-	// 왼쪽이나 오른쪽
-	Vertex[8] = float4::VectorRotationToDegY(Vertex[0], 90.0f);
-	Vertex[9] = float4::VectorRotationToDegY(Vertex[1], 90.0f);
-	Vertex[10] = float4::VectorRotationToDegY(Vertex[2], 90.0f);
-	Vertex[11] = float4::VectorRotationToDegY(Vertex[3], 90.0f);
+	//// 왼쪽이나 오른쪽
+	//Vertex[8] = float4::VectorRotationToDegY(Vertex[0], 90.0f);
+	//Vertex[9] = float4::VectorRotationToDegY(Vertex[1], 90.0f);
+	//Vertex[10] = float4::VectorRotationToDegY(Vertex[2], 90.0f);
+	//Vertex[11] = float4::VectorRotationToDegY(Vertex[3], 90.0f);
 
-	// 왼쪽이나 오른쪽
-	Vertex[12] = float4::VectorRotationToDegY(Vertex[0], -90.0f);
-	Vertex[13] = float4::VectorRotationToDegY(Vertex[1], -90.0f);
-	Vertex[14] = float4::VectorRotationToDegY(Vertex[2], -90.0f);
-	Vertex[15] = float4::VectorRotationToDegY(Vertex[3], -90.0f);
+	//// 왼쪽이나 오른쪽
+	//Vertex[12] = float4::VectorRotationToDegY(Vertex[0], -90.0f);
+	//Vertex[13] = float4::VectorRotationToDegY(Vertex[1], -90.0f);
+	//Vertex[14] = float4::VectorRotationToDegY(Vertex[2], -90.0f);
+	//Vertex[15] = float4::VectorRotationToDegY(Vertex[3], -90.0f);
 
-	// 위거나 아래
-	Vertex[16] = float4::VectorRotationToDegX(Vertex[0], 90.0f);
-	Vertex[17] = float4::VectorRotationToDegX(Vertex[1], 90.0f);
-	Vertex[18] = float4::VectorRotationToDegX(Vertex[2], 90.0f);
-	Vertex[19] = float4::VectorRotationToDegX(Vertex[3], 90.0f);
+	//// 위거나 아래
+	//Vertex[16] = float4::VectorRotationToDegX(Vertex[0], 90.0f);
+	//Vertex[17] = float4::VectorRotationToDegX(Vertex[1], 90.0f);
+	//Vertex[18] = float4::VectorRotationToDegX(Vertex[2], 90.0f);
+	//Vertex[19] = float4::VectorRotationToDegX(Vertex[3], 90.0f);
 
-	Vertex[20] = float4::VectorRotationToDegX(Vertex[0], -90.0f);
-	Vertex[21] = float4::VectorRotationToDegX(Vertex[1], -90.0f);
-	Vertex[22] = float4::VectorRotationToDegX(Vertex[2], -90.0f);
-	Vertex[23] = float4::VectorRotationToDegX(Vertex[3], -90.0f);
+	//Vertex[20] = float4::VectorRotationToDegX(Vertex[0], -90.0f);
+	//Vertex[21] = float4::VectorRotationToDegX(Vertex[1], -90.0f);
+	//Vertex[22] = float4::VectorRotationToDegX(Vertex[2], -90.0f);
+	//Vertex[23] = float4::VectorRotationToDegX(Vertex[3], -90.0f);
 
 
 
-	std::vector<int> Index =
-	{
-		0, 1, 2,
-		0, 2, 3,
-		0 + 4, 1 + 4, 2 + 4,
-		0 + 4, 2 + 4, 3 + 4,
-		0 + 8, 1 + 8, 2 + 8,
-		0 + 8, 2 + 8, 3 + 8,
-		0 + 12, 1 + 12, 2 + 12,
-		0 + 12, 2 + 12, 3 + 12,
-		0 + 16, 1 + 16, 2 + 16,
-		0 + 16, 2 + 16, 3 + 16,
-		0 + 20, 1 + 20, 2 + 20,
-		0 + 20, 2 + 20, 3 + 20,
-	};
+	//std::vector<int> Index =
+	//{
+	//	0, 1, 2,
+	//	0, 2, 3,
+	//	0 + 4, 1 + 4, 2 + 4,
+	//	0 + 4, 2 + 4, 3 + 4,
+	//	0 + 8, 1 + 8, 2 + 8,
+	//	0 + 8, 2 + 8, 3 + 8,
+	//	0 + 12, 1 + 12, 2 + 12,
+	//	0 + 12, 2 + 12, 3 + 12,
+	//	0 + 16, 1 + 16, 2 + 16,
+	//	0 + 16, 2 + 16, 3 + 16,
+	//	0 + 20, 1 + 20, 2 + 20,
+	//	0 + 20, 2 + 20, 3 + 20,
+	//};
 
 	// 0   1
 	// 3   2
@@ -248,50 +253,50 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	//					확장 시키려는 화면 크기고, 윈도우의 크기
 	//ViewPort4x4.ViewPort(GetStartWindowSize().X, GetStartWindowSize().Y, 0.0f, 0.0f);
-		float4x4 ViewPort4x4;
-		ViewPort4x4.ViewPort(1280.0f, 720.0f, 0.0f, 0.0f);
+		//float4x4 ViewPort4x4;
+		//ViewPort4x4.ViewPort(1280.0f, 720.0f, 0.0f, 0.0f);
 
 
 
-		HDC DC = GameEngineCore::MainWindow.GetBackBuffer()->GetImageDC();
+		//HDC DC = GameEngineCore::MainWindow.GetBackBuffer()->GetImageDC();
 
-		for (size_t indexCount = 0; indexCount < Index.size() / 3; indexCount++)
-		{
-			int ArrIndex[3];
-			ArrIndex[0] = Index[indexCount * 3 + 0];
-			ArrIndex[1] = Index[indexCount * 3 + 1];
-			ArrIndex[2] = Index[indexCount * 3 + 2];
+		//for (size_t indexCount = 0; indexCount < Index.size() / 3; indexCount++)
+		//{
+		//	int ArrIndex[3];
+		//	ArrIndex[0] = Index[indexCount * 3 + 0];
+		//	ArrIndex[1] = Index[indexCount * 3 + 1];
+		//	ArrIndex[2] = Index[indexCount * 3 + 2];
 
-			const TransformData& TransDataRef = Transform.GetConstTransformDataRef();
+		//	const TransformData& TransDataRef = Transform.GetConstTransformDataRef();
 
-			float4 Trifloat4[3];
-			std::vector<POINT> Tri;
-			Tri.resize(3);
-			for (size_t VertexCount = 0; VertexCount < Tri.size(); VertexCount++)
-			{
-				// 위치를 더해줌으로해서 월드 상태로 이전시켰다고 한다.
-				float4 WorldPoint = Vertex[ArrIndex[VertexCount]];
+		//	float4 Trifloat4[3];
+		//	std::vector<POINT> Tri;
+		//	Tri.resize(3);
+		//	for (size_t VertexCount = 0; VertexCount < Tri.size(); VertexCount++)
+		//	{
+		//		// 위치를 더해줌으로해서 월드 상태로 이전시켰다고 한다.
+		//		float4 WorldPoint = Vertex[ArrIndex[VertexCount]];
 
-				// 변환식은 이제 딱 한가지 인 것.
-				WorldPoint = WorldPoint * TransDataRef.WorldViewProjectionMatrix;
+		//		// 변환식은 이제 딱 한가지 인 것.
+		//		WorldPoint = WorldPoint * TransDataRef.WorldViewProjectionMatrix;
 
-				WorldPoint /= WorldPoint.W;
-				WorldPoint.W = 1.0f;
+		//		WorldPoint /= WorldPoint.W;
+		//		WorldPoint.W = 1.0f;
 
-				WorldPoint = WorldPoint * ViewPort4x4;
+		//		WorldPoint = WorldPoint * ViewPort4x4;
 
-				Trifloat4[VertexCount] = WorldPoint;
-				Tri[VertexCount] = WorldPoint.WindowPOINT();
-			}
-			float4 Dir0 = Trifloat4[0] - Trifloat4[1];
-			float4 Dir1 = Trifloat4[1] - Trifloat4[2];
-			float4 Check = float4::Cross3D(Dir1, Dir0);
-			if (Check.Z < 1.0f)
-			{
-				continue;
-			}
-			Polygon(DC, &Tri[0], static_cast<int>(Tri.size()));
-			}
+		//		Trifloat4[VertexCount] = WorldPoint;
+		//		Tri[VertexCount] = WorldPoint.WindowPOINT();
+		//	}
+		//	float4 Dir0 = Trifloat4[0] - Trifloat4[1];
+		//	float4 Dir1 = Trifloat4[1] - Trifloat4[2];
+		//	float4 Check = float4::Cross3D(Dir1, Dir0);
+		//	if (Check.Z < 1.0f)
+		//	{
+		//		continue;
+		//	}
+		//	Polygon(DC, &Tri[0], static_cast<int>(Tri.size()));
+		//	}
 	// 화면에 3d 물체를 구별하고 선별하기 위한 변환은 다 끝났고,
 	// 어떤 모니터에 뿌릴까만이 남게 된다. 최종적으로 화면에 어떻게 뿌릴것인가만이 남아있다.
 

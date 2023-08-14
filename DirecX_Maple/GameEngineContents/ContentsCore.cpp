@@ -33,6 +33,8 @@ void ContentsCore::Start()
 	//{
 	//	// 왼쪽으로 돌아라
 	//}
+
+	// 자기 텍스처 로드하기.
 }
 
 void ContentsCore::Update(float _Delta)

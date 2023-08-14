@@ -11,12 +11,12 @@ public:
 	~GameEngineResources() {}
 
 	// delete Function
-	GameEngineResources(const GameEngineResources& _Other) = delete;
-	GameEngineResources(GameEngineResources&& _Other) noexcept = delete;
-	GameEngineResources& operator = (const GameEngineResources& _Other) = delete;
-	GameEngineResources& operator = (GameEngineResources&& _Other) noexcept = delete;
+	//GameEngineResources(const GameEngineResources& _Other) = delete;
+	//GameEngineResources(GameEngineResources&& _Other) noexcept = delete;
+	//GameEngineResources& operator = (const GameEngineResources& _Other) = delete;
+	//GameEngineResources& operator = (GameEngineResources&& _Other) noexcept = delete;
 
-protected:
+
 	static std::shared_ptr<ResourcesType> Find(const std::string_view& _Name)
 	{
 		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
@@ -30,8 +30,10 @@ protected:
 			return nullptr;
 		}
 
-		return FindIter.second;
+		return FindIter->second;
 	}
+
+protected:
 
 	static std::shared_ptr<ResourcesType> CreateRes()
 	{
@@ -40,15 +42,14 @@ protected:
 		return NewRes;
 	}
 
-	static std::shared_ptr<ResourcesType> CreateRes(const std::string_view& _Path)
+	static std::shared_ptr<ResourcesType> CreateRes(const std::string_view& _Name)
 	{
-		GameEnginePath Path = _Path;
+		std::string UpperName = GameEngineString::ToUpperReturn(_Name);
+		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>();
 
-		std::shared_ptr<ResourcesType> NewRes = std::make_shared<ResourcesType>(ResourcesType);
-		std::string UpperName = GameEngineString::ToUpperReturn(Path.GetFileName());
-		NewRes->Path = _Path.data();
 		NewRes->Name = UpperName;
-		NameRes.insert(UpperName, NewRes);
+		NameRes.insert(std::pair<std::string, std::shared_ptr<ResourcesType>>(UpperName, NewRes));
+		return NewRes;		
 	}
 
 	static std::shared_ptr<ResourcesType> CreateRes(const std::string_view& _Name, const std::string_view& _Path)
