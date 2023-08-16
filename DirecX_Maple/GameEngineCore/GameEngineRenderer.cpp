@@ -3,6 +3,7 @@
 #include "GameEngineLevel.h"
 #include "GameEngineActor.h"
 #include "GameEngineCamera.h"
+#include "GameEngineVertex.h"
 
 #include "GameEngineCore.h"
 #include <GameEnginePlatform/GameEngineWindow.h>
@@ -51,7 +52,10 @@ int A = 0;
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
 	std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
-	VertexBuffer->Setting();
+	if (nullptr != VertexBuffer)
+	{
+		VertexBuffer->Setting();
+	}
 	
 	// 아래있는 이녀석들이 리소스라면
 	// 이녀석들은 지금
