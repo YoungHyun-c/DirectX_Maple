@@ -19,13 +19,14 @@ void GameEngineDevice::ResourcesInit()
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("GameEngineCoreShader");
 		Dir.MoveChild("GameEngineCoreShader");
-		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
+		std::vector<GameEngineFile> Files = Dir.GetAllFile({".fx"});
 
-		for (size_t i = 0; Files.size(); i++)
+		for (size_t i = 0; i < Files.size(); i++)
 		{
-			GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
-
-			// GameEngineShader::AutoCompile();
+			//GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
+			// 구조적으로 잘 이해하고 있는지를 자신이 명확하게 인지하기 위해서 (ex)File을 한번에 삭제, File관리
+			GameEngineFile& File = Files[i];
+			GameEngineShader::AutoCompile(File);
 		}
 	}
 

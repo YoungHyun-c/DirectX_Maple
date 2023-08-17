@@ -16,6 +16,9 @@ enum class ShaderType
 class GameEngineShader
 {
 public:
+	static bool AutoCompile(GameEngineFile& _File);
+
+public:
 	// constructer destructer
 	GameEngineShader();
 	~GameEngineShader();
