@@ -9,6 +9,7 @@
 #include <GameEnginePlatform/GameEngineWindow.h>
 
 #include "GameEngineVertexBuffer.h"
+#include "GameEngineIndexBuffer.h"
 #include "GameEngineInputLayOut.h"
 #include "GameEngineVertexShader.h"
 
@@ -66,41 +67,12 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 		if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
 		{
 			LayOut = std::make_shared<GameEngineInputLayOut>();
+			LayOut->ResCreate(VertexBuffer, VertexShader);
+		}
 
-			std::vector<D3D11_INPUT_ELEMENT_DESC> ArrLayOutInfo;
-
-			{
-				D3D11_INPUT_ELEMENT_DESC Data;
-				Data.SemanticName = "POSITION";
-				// 0 바이트부터 시작하는
-				Data.AlignedByteOffset = 0;
-				// 16 바이트짜리 자료형이야
-				Data.Format = DXGI_FORMAT::DXGI_FORMAT_R32G32B32A32_FLOAT;
-				// 버텍스 데이터용 레이아웃이다.
-				// 점세팅의 구조를 설명하기 위한 레이아웃이다.
-				Data.InputSlotClass = D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA;
-
-				// 지금은 알아도 모를만한 것.
-				Data.SemanticIndex = 0;
-				Data.InputSlot = 0;
-				Data.InstanceDataStepRate = 0;
-				ArrLayOutInfo.push_back(Data);
-			}
-
-			{
-				D3D11_INPUT_ELEMENT_DESC Data;
-				Data.SemanticName = "COLOR";
-				Data.AlignedByteOffset = 16;
-				Data.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-				Data.InputSlotClass = D3D11_INPUT_CLASSIFICATION::D3D11_INPUT_PER_VERTEX_DATA;
-
-				Data.SemanticIndex = 0;
-				Data.InputSlot = 0;
-				Data.InstanceDataStepRate = 0;
-				ArrLayOutInfo.push_back(Data);
-			}
-
-			LayOut->ResCreate(ArrLayOutInfo, VertexShader);
+		if (nullptr != LayOut)
+		{
+			LayOut->Setting();
 
 			// 레이아웃
 		}
@@ -110,6 +82,19 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 		{
 			VertexShader->Setting();
 		}
+
+		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+		if (nullptr != IndexBuffer)
+		{
+			IndexBuffer->Setting();
+		}
+
+		// 인덱스버퍼를 어떻게 사용할 것이냐에 대한 옵션이다.
+		// 삼각형의 배열로 보고 그려라
+		// D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
+		// 선의 배열로 보고 그려라.
+		// D3D11_PRIMITIVE_TOPOLOGY_LINELIST
+		GameEngineCore::MainDevice.GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	}
 	
 	// 아래있는 이녀석들이 리소스라면

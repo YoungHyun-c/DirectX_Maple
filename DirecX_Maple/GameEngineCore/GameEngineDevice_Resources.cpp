@@ -3,6 +3,7 @@
 
 #include "GameEngineVertex.h"
 #include "GameEngineVerTexBuffer.h"
+#include "GameEngineIndexBuffer.h"
 #include "GameEngineShader.h"
 #include "GameEngineVertexShader.h"
 
@@ -91,5 +92,13 @@ void GameEngineDevice::ResourcesInit()
 		BaseVertexs[3] = { { -0.5f, 0.5f, -0.5f, 1.0f} };
 
 		GameEngineVertexBuffer::Create("Rect", Vertex);
+
+		std::vector<unsigned int> Index =
+		{
+			0, 1, 2,
+			0, 2, 3
+		};
+
+		GameEngineIndexBuffer::Create("Rect", Index);
 	}
 }
