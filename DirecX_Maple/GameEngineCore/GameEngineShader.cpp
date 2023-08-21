@@ -47,6 +47,7 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 
 // 부모가 자식클래스를 알고 있는 경우라 애매함
 #include "GameEngineVertexShader.h"
+#include "GameEnginePixelShader.h"
 
 bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 {
@@ -87,7 +88,10 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 		// 못 찾았을때 나온다.
 		if (EntryIndex != std::string::npos)
 		{
-			int a = 0;
+			// 내가 지정한 위치에서부터 앞으로 찾기 아서 
+			size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
+			std::string_view EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex + 2);
+			GameEnginePixelShader::Load(_File.GetStringPath(), EntryName);
 		}
 	}
 

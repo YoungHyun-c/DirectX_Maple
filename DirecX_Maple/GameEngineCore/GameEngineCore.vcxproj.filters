@@ -31,6 +31,9 @@
     <Filter Include="Resources\Shader">
       <UniqueIdentifier>{68b4778f-92cf-495b-950e-51640457ebd0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\RenderingSetting">
+      <UniqueIdentifier>{ad73412c-8205-4d7f-b81c-2e07415e93aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -94,7 +97,12 @@
     <ClInclude Include="GameEngineIndexBuffer.h">
       <Filter>Resources\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="GameEngineRasterizer.h" />
+    <ClInclude Include="GameEngineRasterizer.h">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnginePixelShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -161,6 +169,11 @@
     <ClCompile Include="GameEngineIndexBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="GameEngineRasterizer.cpp" />
+    <ClCompile Include="GameEngineRasterizer.cpp">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnginePixelShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

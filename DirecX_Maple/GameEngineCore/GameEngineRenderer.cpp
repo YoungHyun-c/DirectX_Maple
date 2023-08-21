@@ -12,6 +12,9 @@
 #include "GameEngineIndexBuffer.h"
 #include "GameEngineInputLayOut.h"
 #include "GameEngineVertexShader.h"
+#include "GameEngineRasterizer.h"
+#include "GameEnginePixelShader.h"
+#include "GameEngineRenderTarget.h"
 
 GameEngineRenderer::GameEngineRenderer()
 {
@@ -95,6 +98,40 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 		// 선의 배열로 보고 그려라.
 		// D3D11_PRIMITIVE_TOPOLOGY_LINELIST
 		GameEngineCore::MainDevice.GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		// 나중에 아웃풋머저 떄문에 그렇다.
+		D3D11_VIEWPORT ViewPort = {};
+
+		// 좀 더 식이 있어야 하는데 그건 다이렉트가 알아서 한다.
+		// ViewPort 만들었던거 들어감
+		ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
+		ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
+		ViewPort.MinDepth = 0.0f;
+		ViewPort.MaxDepth = 1.0f;
+		ViewPort.TopLeftX = 0.0f;
+		ViewPort.TopLeftY = 0.0f;
+
+		GameEngineCore::MainDevice.GetContext()->RSSetViewports(1, &ViewPort);
+
+		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
+		if (nullptr != Rasterizer)
+		{
+			Rasterizer->Setting();
+		}
+
+		std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("ColorShader_PS");
+		if (nullptr != PixelShader)
+		{
+			PixelShader->Setting();
+		}
+
+		std::shared_ptr<class GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::MainDevice.GetBackBufferRenderTarget();
+		if (nullptr != BackBufferRenderTarget)
+		{
+			BackBufferRenderTarget->Setting();
+		}
+
+		// 다음 남은 것 (그린다)
 	}
 	
 	// 아래있는 이녀석들이 리소스라면

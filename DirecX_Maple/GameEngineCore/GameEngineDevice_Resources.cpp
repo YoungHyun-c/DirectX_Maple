@@ -5,6 +5,7 @@
 #include "GameEngineVerTexBuffer.h"
 #include "GameEngineIndexBuffer.h"
 #include "GameEngineShader.h"
+#include "GameEngineRasterizer.h"
 #include "GameEngineVertexShader.h"
 
 void GameEngineDevice::ResourcesInit()
@@ -100,5 +101,39 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("Rect", Index);
+	}
+
+	{
+		// 렌더링 할 때 채우기 모드를 결정한다.
+		//D3D11_FILL_MODE FillMode;
+
+		// 외적했는데 Z방향이 어디냐?
+		//D3D11_CULL_MODE => 방향이 어디든 건져낸다.
+		//D3D11_CULL_BACK => Z가 앞쪽인 픽셀들은 안건져 낸다.
+		//D3D11_CULL_FRONT => Z가 뒤쪽인 픽셀들은 안건져 낸다.
+
+		// 0, 1, 2,
+		// 0, 2, 3
+		// 인덱스 버퍼의 그리는 순서와 연관이 크다.
+
+		// 이녀석은 인덱스 버퍼
+
+		/*D3D11_CULL_MODE CullMode;
+		BOOL FrontCounterClockwise;
+		INT DepthBias;
+		FLOAT DepthBiasClamp;
+		FLOAT SlopeScaleDepthBias;
+		BOOL DepthClipEnable;
+		BOOL ScissorEnable;
+		BOOL MulitsampleEnable;
+		BOOL AntialiasedLineEnable;*/
+
+		D3D11_RASTERIZER_DESC Desc = {};
+		Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID; // 픽셀에 닿은 전체 면적
+		//Desc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME; // 픽셀에 닿은 테두리
+		Desc.CullMode = D3D11_CULL_NONE;
+		Desc.DepthClipEnable = TRUE; // 화면 바깥의 물체 그림 그릴지
+		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Create("EngineRasterizer", Desc);
+
 	}
 }
