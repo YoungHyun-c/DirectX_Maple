@@ -68,7 +68,7 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 	// 내부에 어떤 쉐이더가 있는지 분석하기 시작할 것
 	{
 		// find 앞에서 부터 뒤져서 바이트 위치를 알려준다.
-		size_t EntryIndex = ShaderCode.find("_Vs(");
+		size_t EntryIndex = ShaderCode.find("_VS(");
 		// 못찾았을 때 나온다.
 		if (EntryIndex != std::string::npos)
 		{
