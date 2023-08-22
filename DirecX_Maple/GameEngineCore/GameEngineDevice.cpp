@@ -231,10 +231,13 @@ void GameEngineDevice::CreateSwapChain()
 
 	// ScInfo.BufferCount = 2;
 	// 교체순서와 방식을 정의한다.
+	ScInfo.SwapEffect = DXGI_SWAP_EFFECT::DXGI_SWAP_EFFECT_FLIP_DISCARD;
+
+	// 잘 모름
 	ScInfo.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
 	// 전체화면이냐 아니냐
-	// 전제화면시 당연히 그래픽프레임이 더 빨라져야 한다.
+	// 전제화면시 당연히 그래픽프레임이 더 빨라져야 한다. false는 전체화면.
 	ScInfo.Windowed = true;
 
 	// 스왑체인을 만들어 내기 위해서는 _Device가 필요하다.

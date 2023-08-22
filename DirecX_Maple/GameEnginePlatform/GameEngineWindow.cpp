@@ -195,7 +195,7 @@ void GameEngineWindow::MessageLoop(HINSTANCE _Inst,
 		// PeekMessage는 윈도우 메세지가 없으면 0이 리턴되고 그냥 리턴합니다.
 
 		// 프레임과 데드타임이 완성됐다.
-		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+ 		if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 		{
 			//if (nullptr != _Update)
 			//{

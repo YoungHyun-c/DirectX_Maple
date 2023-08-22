@@ -1,10 +1,10 @@
-// 파일명과 함수명을 일치시키고 버텍스 쉐이더면 무조건 뒤에 _VS를 붙인다.
-// 의미있는 버텍스 쉐이더이다.
-// WorldProjection
-float4 ColorShader_VS( float4 pos : POSITION ) : SV_POSITION
-{
+//#include "Transform.fx"
 
-	return pos;
+float4 ColorShader_VS(float4 pos : POSITION) : SV_Position
+{
+    return pos /* * WorldviewProjection */;
+    // mul은 Multiply
+    //return mul(pos, worldViewProjectionMatrx);
 }
 
 float4 ColorShader_PS(float4 pos : SV_Position) : SV_Target0
