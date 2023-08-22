@@ -13,8 +13,8 @@ GameEngineVertexBuffer::~GameEngineVertexBuffer()
 
 void GameEngineVertexBuffer::ResCreate(const void* _Data, size_t _VertexSize, size_t _VertexCount)
 {
-	VertexSize = _VertexSize;
-	VertexCount = _VertexCount;
+	VertexSize = static_cast<UINT>(_VertexSize);
+	VertexCount = static_cast<UINT>(_VertexCount);
 
 	D3D11_SUBRESOURCE_DATA Data;
 	Data.pSysMem = _Data;

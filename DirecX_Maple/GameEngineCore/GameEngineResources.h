@@ -33,6 +33,11 @@ public:
 		return FindIter->second;
 	}
 
+	void SetName(std::string_view _Name)
+	{
+		Name = _Name;
+	}
+
 protected:
 
 	static std::shared_ptr<ResourcesType> CreateRes()

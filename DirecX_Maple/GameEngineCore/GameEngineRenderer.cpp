@@ -15,6 +15,7 @@
 #include "GameEngineRasterizer.h"
 #include "GameEnginePixelShader.h"
 #include "GameEngineRenderTarget.h"
+#include "GameEngineConstantBuffer.h"
 
 GameEngineRenderer::GameEngineRenderer()
 {
@@ -61,7 +62,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 		float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
 
 		// 인풋어셈블러1 버텍스 버퍼 세팅
-		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
+		std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("FullRect");
 		if (nullptr != VertexBuffer)
 		{
 			VertexBuffer->Setting();
@@ -74,6 +75,12 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 			LayOut = std::make_shared<GameEngineInputLayOut>();
 			LayOut->ResCreate(VertexBuffer, VertexShader);
 		}
+
+		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+
+		const TransformData& Data = Transform.GetConstTransformDataRef();
+
+		Buffer->Setting();
 
 		if (nullptr != LayOut)
 		{
@@ -88,7 +95,7 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 			VertexShader->Setting();
 		}
 
-		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+		std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("FullRect");
 		if (nullptr != IndexBuffer)
 		{
 			IndexBuffer->Setting();

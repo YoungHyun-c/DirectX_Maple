@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "GameEngineDevice.h"
+#include "GameEngineTransform.h"
 
 #include "GameEngineVertex.h"
 #include "GameEngineVerTexBuffer.h"
@@ -7,6 +8,7 @@
 #include "GameEngineShader.h"
 #include "GameEngineRasterizer.h"
 #include "GameEngineVertexShader.h"
+#include "GameEngineConstantBuffer.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -101,25 +103,35 @@ void GameEngineDevice::ResourcesInit()
 		GameEngineIndexBuffer::Create("Rect", Index);
 	}
 
-	//{
-	//	std::vector<GameEngineVertex2D> Vertex;
-	//	Vertex.resize(4);
+	{
+		std::vector<GameEngineVertex2D> Vertex;
+		Vertex.resize(4);
 
-	//	Vertex[0] = { { -1.0f, -1.0f, 0.0f, 1.0f} };
-	//	Vertex[1] = { { 1.0f, -1.0f, 0.0f, 1.0f} };
-	//	Vertex[2] = { { 1.0f, 1.0f, 0.0f, 1.0f} };
-	//	Vertex[3] = { { -1.0f, 1.0f, 0.0f, 1.0f} };
+		Vertex[0] = { { -1.0f, -1.0f, 0.0f, 1.0f} };
+		Vertex[1] = { { 1.0f, -1.0f, 0.0f, 1.0f} };
+		Vertex[2] = { { 1.0f, 1.0f, 0.0f, 1.0f} };
+		Vertex[3] = { { -1.0f, 1.0f, 0.0f, 1.0f} };
 
-	//	GameEngineVertexBuffer::Create("FullRect", Vertex);
+		GameEngineVertexBuffer::Create("FullRect", Vertex);
 
-	//	std::vector<unsigned int> Index =
-	//	{
-	//		0, 1, 2,
-	//		0, 2, 3
-	//	};
-	//	
-	//	GameEngineIndexBuffer::Create("FullRect", Index);
-	//}
+		std::vector<unsigned int> Index =
+		{
+			0, 1, 2,
+			0, 2, 3
+		};
+		
+		GameEngineIndexBuffer::Create("FullRect", Index);
+	}
+	
+	// 나중에 사라질 것임
+	{
+		// 약간위험할 수 있다.
+		// 그래픽카드에서의 바이트 패딩규칙과
+		// sizeof(TransformData) 바이트패딩 규칙이
+		// 달라서 그리기 다르다고 인식할 수 있다.
+		// 주의 해야 한다.
+		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TrasformData", ShaderType::Vertex, 0);
+	}
 
 	{
 		// 렌더링 할 때 채우기 모드를 결정한다.

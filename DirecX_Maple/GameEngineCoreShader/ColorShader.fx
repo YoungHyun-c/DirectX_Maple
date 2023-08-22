@@ -1,10 +1,10 @@
-//#include "Transform.fx"
+#include "Transform.fx"
 
 float4 ColorShader_VS(float4 pos : POSITION) : SV_Position
 {
-    return pos /* * WorldviewProjection */;
+    //return pos /* * WorldviewProjection */;
     // mul¿∫ Multiply
-    //return mul(pos, worldViewProjectionMatrx);
+    return mul(pos, WorldViewProjectionMatrix);
 }
 
 float4 ColorShader_PS(float4 pos : SV_Position) : SV_Target0
