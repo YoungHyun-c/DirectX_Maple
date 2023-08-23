@@ -58,6 +58,12 @@ int A = 0;
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
+	ResSetting();
+	Draw();
+}
+
+void GameEngineRenderer::ResSetting()
+{
 	{
 		float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
 
@@ -76,9 +82,15 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 			LayOut->ResCreate(VertexBuffer, VertexShader);
 		}
 
-		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex, 0);
+		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 
-		const TransformData& Data = Transform.GetConstTransformDataRef();
+		if (nullptr != Buffer)
+		{
+			const TransformData& Data = Transform.GetConstTransformDataRef();
+			Buffer->ChangeData(Data);
+			Buffer->Setting();
+		}
+
 
 		Buffer->Setting();
 
@@ -147,7 +159,18 @@ void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 		// 이게 찍는 버튼이다.
 		// 그걸 다시 옵션을 줄 수 있는데.
 		// 인덱스 버퍼를 사용하는 경우 호출하는 Draw함수이다.
-		GameEngineCore::GetContext()->DrawIndexed(6, 0, 0);
+		//GameEngineCore::GetContext()->DrawIndexed(6, 0, 0);
 
 	}
+}
+
+void GameEngineRenderer::Draw()
+{
+	std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
+	if (nullptr == IndexBuffer)
+	{
+		return;
+	}
+
+	GameEngineCore::GetContext()->DrawIndexed(IndexBuffer->GetIndexCount(), 0, 0);
 }

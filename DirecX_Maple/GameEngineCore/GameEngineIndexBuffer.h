@@ -28,6 +28,11 @@ public:
 
 	void Setting();
 
+	inline int GetIndexCount()
+	{
+		return IndexCount;
+	}
+
 protected:
 
 private:

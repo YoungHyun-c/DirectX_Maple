@@ -34,6 +34,18 @@
     <Filter Include="Resources\RenderingSetting">
       <UniqueIdentifier>{ad73412c-8205-4d7f-b81c-2e07415e93aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThirdParty">
+      <UniqueIdentifier>{f4e5e499-72c0-43d8-a39c-7991af7b131f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Debug">
+      <UniqueIdentifier>{11ef67f1-4eb5-4cdc-8e8d-8d0479f51d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\inc">
+      <UniqueIdentifier>{5bb17b2a-5f00-4d67-9358-87595856b89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\Release">
+      <UniqueIdentifier>{584e3f8e-313d-427d-97a3-d79bcd0b7203}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -105,6 +117,12 @@
     </ClInclude>
     <ClInclude Include="GameEngineConstantBuffer.h">
       <Filter>Resources\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineSpriteRenderer.h">
+      <Filter>Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineSprite.h">
+      <Filter>Resources\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +198,12 @@
     </ClCompile>
     <ClCompile Include="GameEngineConstantBuffer.cpp">
       <Filter>Resources\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSpriteRenderer.cpp">
+      <Filter>Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineSprite.cpp">
+      <Filter>Resources\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

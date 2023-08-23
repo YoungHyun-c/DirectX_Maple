@@ -43,6 +43,15 @@ public:
 		return Res;
 	}
 
+	template<typename DataType>
+	void ChangeData(const DataType& _Data)
+	{
+		ChangeData(&_Data, sizeof(DataType));
+	}
+
+	// 1바이트 자료형
+	void ChangeData(const void* _Data, UINT _Size);
+
 	void Setting();
 
 protected:
