@@ -4,5 +4,5 @@
 // 의미있는 버텍스 쉐이더이다.
 float4 TextureShader_VS( float4 pos : POSITION ) : SV_POSITION
 {
-	return mul(pos, WorldViewProjetionMatrix);
+    return mul(pos, WorldViewProjectionMatrix);
 }
