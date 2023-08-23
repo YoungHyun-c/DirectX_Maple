@@ -87,10 +87,10 @@ void GameEngineDevice::ResourcesInit()
 		std::vector<GameEngineVertex2D> Vertex;
 		Vertex.resize(4);
 
-		Vertex[0] = { { -0.5f, -0.5f, -0.5f, 1.0f} };
-		Vertex[1] = { { 0.5f, -0.5f, -0.5f, 1.0f} };
-		Vertex[2] = { { 0.5f, 0.5f, -0.5f, 1.0f} };
-		Vertex[3] = { { -0.5f, 0.5f, -0.5f, 1.0f} };
+		Vertex[0] = { { -0.5f, -0.5f, 0.0f, 1.0f } };
+		Vertex[1] = { { 0.5f, -0.5f, 0.0f, 1.0f } };
+		Vertex[2] = { { 0.5f, 0.5f, 0.0f, 1.0f } };
+		Vertex[3] = { { -0.5f, 0.5f, 0.0f, 1.0f } };
 
 		GameEngineVertexBuffer::Create("Rect", Vertex);
 

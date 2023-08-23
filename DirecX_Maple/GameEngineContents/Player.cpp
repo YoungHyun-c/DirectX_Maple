@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
+#include <GameEngineCore/GameEngineTexture.h>
 
 Player::Player()
 {
@@ -15,6 +16,8 @@ Player::~Player()
 void Player::Start()
 {
 	{
+		GameEngineTexture::Load("힝", "응애");
+
 		Renderer0 = CreateComponent<GameEngineSpriteRenderer>(0);
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
