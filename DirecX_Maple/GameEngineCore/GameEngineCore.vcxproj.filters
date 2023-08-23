@@ -35,16 +35,16 @@
       <UniqueIdentifier>{ad73412c-8205-4d7f-b81c-2e07415e93aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty">
-      <UniqueIdentifier>{f4e5e499-72c0-43d8-a39c-7991af7b131f}</UniqueIdentifier>
+      <UniqueIdentifier>{e8f1e395-88e9-441d-aca4-7c90db0edff5}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Debug">
-      <UniqueIdentifier>{11ef67f1-4eb5-4cdc-8e8d-8d0479f51d2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThirdParty\inc">
-      <UniqueIdentifier>{5bb17b2a-5f00-4d67-9358-87595856b89b}</UniqueIdentifier>
+      <UniqueIdentifier>{dec512d6-4718-4fdc-add0-7b1caef638c6}</UniqueIdentifier>
     </Filter>
     <Filter Include="ThirdParty\Release">
-      <UniqueIdentifier>{584e3f8e-313d-427d-97a3-d79bcd0b7203}</UniqueIdentifier>
+      <UniqueIdentifier>{4de71fe5-e39a-4f0a-8612-496668ab4523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThirdParty\inc">
+      <UniqueIdentifier>{9edf14a8-1449-4778-988f-699f5c47ba81}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -205,5 +205,25 @@
     <ClCompile Include="GameEngineSprite.cpp">
       <Filter>Resources\Texture</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Debug\DirectXTex.lib">
+      <Filter>ThirdParty\Debug</Filter>
+    </Library>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Release\DirectXTex.lib">
+      <Filter>ThirdParty\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Release\DirectXTex.pdb">
+      <Filter>ThirdParty\Release</Filter>
+    </Library>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.inl">
+      <Filter>ThirdParty\inc</Filter>
+    </Library>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h">
+      <Filter>ThirdParty\inc</Filter>
+    </Library>
+    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Debug\DirectXTex.pdb">
+      <Filter>ThirdParty\Debug</Filter>
+    </Library>
   </ItemGroup>
 </Project>

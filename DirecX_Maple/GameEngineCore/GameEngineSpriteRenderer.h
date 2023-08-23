@@ -15,10 +15,12 @@ public:
 	GameEngineSpriteRenderer& operator = (const GameEngineSpriteRenderer& _Other) = delete;
 	GameEngineSpriteRenderer& operator = (GameEngineSpriteRenderer&& _Other) noexcept = delete;
 
+	void SetSprite(std::string_view _Name);
+
 protected:
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
 private:
-	void SetSprite(std::string_view _Name);
+	
 };
 

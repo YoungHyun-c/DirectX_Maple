@@ -21,3 +21,8 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	// 내꺼 조금더 넣고,
 	GameEngineRenderer::Draw();
 }
+
+void GameEngineSpriteRenderer::SetSprite(std::string_view _Name)
+{
+
+}

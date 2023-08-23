@@ -44,3 +44,8 @@ void GameEngineTexture::CreateRenderTargetView()
 		return;
 	}
 }
+
+void GameEngineTexture::ResLoad(std::string_view _Path)
+{
+	int a = 0;
+}
