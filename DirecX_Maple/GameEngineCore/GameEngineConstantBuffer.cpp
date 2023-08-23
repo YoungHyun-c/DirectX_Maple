@@ -37,7 +37,7 @@ void GameEngineConstantBuffer::Setting()
 	case ShaderType::None:
 		break;
 	case ShaderType::Vertex:
-		GameEngineCore::GetContext()->VSGetConstantBuffers(Slot, 1, &Buffer);
+		GameEngineCore::GetContext()->VSSetConstantBuffers(Slot, 1, &Buffer);
 		break;
 	case ShaderType::Hull:
 		break;
