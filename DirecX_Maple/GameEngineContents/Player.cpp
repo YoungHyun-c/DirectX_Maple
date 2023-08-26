@@ -16,7 +16,7 @@ Player::~Player()
 void Player::Start()
 {
 	{
-		GameEngineTexture::Load("Èş", "ÀÀ¾Ö");
+		//GameEngineTexture::Load("Èş", "ÀÀ¾Ö");
 
 		Renderer0 = CreateComponent<GameEngineSpriteRenderer>(0);
 
