@@ -109,10 +109,10 @@ void GameEngineDevice::ResourcesInit()
 		Vertex.resize(4);
 
 		// 이미지를 자르려면 TEXCORRD값이 바뀌어야 하는데,
-		Vertex[0] = { { -0.5f, -0.5f, 0.0f, 1.0f }, {0.0f, 0.0f} };
-		Vertex[1] = { { 0.5f, -0.5f, 0.0f, 1.0f }, {0.0f, 0.0f} };
-		Vertex[2] = { { 0.5f, 0.5f, 0.0f, 1.0f } , {0.0f, 0.0f} };
-		Vertex[3] = { { -0.5f, 0.5f, 0.0f, 1.0f }, {0.0f, 0.0f} };
+		Vertex[0] = { { -0.5f, 0.5f, 0.0f, 1.0f }, {0.0f, 0.0f} };
+		Vertex[1] = { { 0.5f, 0.5f, 0.0f, 1.0f }, {1.0f, 0.0f} };
+		Vertex[2] = { { 0.5f, -0.5f, 0.0f, 1.0f } , {1.0f, 1.0f} };
+		Vertex[3] = { { -0.5f, -0.5f, 0.0f, 1.0f }, {0.0f, 1.0f} };
 
 		GameEngineVertexBuffer::Create("Rect", Vertex);
 
@@ -196,17 +196,21 @@ void GameEngineDevice::ResourcesInit()
 		// 그 밉맵에서 색상가져올떄 다 뭉개는 방식으로 가져오겠다.
 		//Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 		Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
-		//D3D11_TEXTURE_ADDRESS_BORDER;
-		//D3D11_TEXTURE_ADDRESS_MIRROR;
 		//D3D11_TEXTURE_ADDRESS_CLAMP;
+		//D3D11_TEXTURE_ADDRESS_WRAP;
+		//D3D11_TEXTURE_ADDRESS_MIRROR;
 
 		Desc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
 		Desc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
 		Desc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 
-		/*Desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
-		Desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
-		Desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;*/
+		/*Desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		Desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		Desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;*/
+
+		/*Desc.AddressU = D3D11_TEXTURE_ADDRESS_MIRROR;
+		Desc.AddressV = D3D11_TEXTURE_ADDRESS_MIRROR;
+		Desc.AddressW = D3D11_TEXTURE_ADDRESS_MIRROR;*/
 
 		Desc.MipLODBias = 0.0f;
 		Desc.MaxAnisotropy = 1;
