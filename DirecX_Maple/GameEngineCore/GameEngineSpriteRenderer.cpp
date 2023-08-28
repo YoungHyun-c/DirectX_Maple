@@ -27,7 +27,7 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	{
 		MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
 	}
-	TestTexture->PSSetting(0);
+	CurSprite.Texture->PSSetting(0);
 
 	std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Find("EngineBaseSampler");
 	if (nullptr == Sampler)
@@ -40,7 +40,15 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	GameEngineRenderer::Draw();
 }
 
-void GameEngineSpriteRenderer::SetSprite(std::string_view _Name)
+void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int index /*=0*/)
 {
+	Sprite = GameEngineSprite::Find(_Name);
 
+	if (nullptr == Sprite)
+	{
+		MsgBoxAssert("존재하지 않는 스프라이트를 사용하려고 했습니다.");
+	}
+
+	CurSprite = Sprite->GetSpriteData(index);
+	Transform.SetLocalScale(CurSprite.GetScale());
 }

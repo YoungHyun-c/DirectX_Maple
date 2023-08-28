@@ -75,7 +75,7 @@ void GameEngineRenderer::ResSetting()
 		}
 
 
-		std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("ColorShader_VS");
+		std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("TextureShader_VS");
 		if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
 		{
 			LayOut = std::make_shared<GameEngineInputLayOut>();

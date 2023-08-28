@@ -18,10 +18,10 @@ void Player::Start()
 	{
 		//GameEngineTexture::Load("힝", "응애");
 
-		Renderer0 = CreateComponent<GameEngineSpriteRenderer>(0);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
-		Renderer0->SetSprite("NSet.png");
+		MainSpriteRenderer->SetSprite("TestPlayer.png", 5);
 
 		//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
 		/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
