@@ -43,7 +43,6 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     //DiffuseTex.Load(int3);
     
     // 샘플러의 설정에 의해서 dx가 알아서 계산해주는 방식으로 처리하는 것.
-    // 스위즐링 문법
     float4 Color = DiffuseTex.Sample(Sampler, _Input.TEXCORRD.xy);
     // 블렌드 처리를 해줘야 배경 투명값을 제거 할 수 있다.
     // 일단은 배경값 0이하는 없애게 처리

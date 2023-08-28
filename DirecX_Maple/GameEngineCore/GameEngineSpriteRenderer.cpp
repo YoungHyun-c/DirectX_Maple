@@ -22,12 +22,11 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	// 용도에 의해서
 	// 여기에서 세팅되는것이 순서상 여기가 맞다.
-	//std::shared_ptr<GameEngineTexture> TestTexture = GameEngineTexture::Find("nset.png");
-	//if (nullptr == TestTexture)
-	//{
-	//	MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
-	//}
-	//TestTexture->PSSetting(0);
+	std::shared_ptr<GameEngineTexture> TestTexture = GameEngineTexture::Find("nset.png");
+	if (nullptr == TestTexture)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
+	}
 	CurSprite.Texture->PSSetting(0);
 
 	std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Find("EngineBaseSampler");
