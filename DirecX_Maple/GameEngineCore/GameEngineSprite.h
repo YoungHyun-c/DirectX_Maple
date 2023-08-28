@@ -8,7 +8,7 @@ class SpriteData
 public :
 	std::shared_ptr<GameEngineTexture> Texture;
 	// 이미지를 자르는 용도로 사용한다.
-	//float4 SpriteData;
+	float4 SpriteData;
 
 	float4 GetScale();
 };
