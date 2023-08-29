@@ -82,17 +82,15 @@ void GameEngineRenderer::ResSetting()
 			LayOut->ResCreate(VertexBuffer, VertexShader);
 		}
 
-		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
+		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", ShaderType::Vertex);
 
 		if (nullptr != Buffer)
 		{
 			const TransformData& Data = Transform.GetConstTransformDataRef();
 			Buffer->ChangeData(Data);
-			Buffer->Setting();
+			Buffer->Setting(0);
 		}
 
-
-		Buffer->Setting();
 
 		if (nullptr != LayOut)
 		{

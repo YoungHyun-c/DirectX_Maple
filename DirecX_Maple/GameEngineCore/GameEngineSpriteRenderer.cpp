@@ -2,6 +2,7 @@
 #include "GameEngineSpriteRenderer.h"
 #include "GameEngineTexture.h"
 #include "GameEngineSampler.h"
+#include "GameEngineConstantBuffer.h"
 
 GameEngineSpriteRenderer::GameEngineSpriteRenderer()
 {
@@ -19,6 +20,14 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	// 부모쪽에서 대부분의 일은 해주고,
 	GameEngineRenderer::ResSetting();
+
+	std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData", ShaderType::Vertex);
+	if (nullptr != Buffer)
+	{
+		Buffer->ChangeData(CurSprite.SpritePivot);
+		Buffer->Setting(1);
+	}
+
 
 	// 용도에 의해서
 	// 여기에서 세팅되는것이 순서상 여기가 맞다.
