@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "ContentsCore.h"
 #include "PlayLevel.h"
+#include "TitleLevel.h"
 
 ContentsCore::ContentsCore()
 {
@@ -15,7 +16,8 @@ ContentsCore::~ContentsCore()
 void ContentsCore::Start()
 {
 	GameEngineCore::CreateLevel<PlayLevel>("PlayLevel");
-	GameEngineCore::ChangeLevel("PlayLevel");
+	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
+	GameEngineCore::ChangeLevel("TitleLevel");
 
 	//// 회전 방향을 외적으로 알아내는 방법
 	//float4 PlayerPos = { 3, 5 };

@@ -1,8 +1,7 @@
 #include "PreCompile.h"
 #include "PlayLevel.h"
 #include "Player.h"
-#include <GameEngineCore/GameEngineRenderer.h>
-#include <GameEngineCore/GameEngineSprite.h>
+
 
 PlayLevel::PlayLevel()
 {
