@@ -24,3 +24,13 @@ void TitleLevel::Update(float _Delta)
 		GameEngineCore::ChangeLevel("PlayLevel");
 	}
 }
+
+void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	int a = 0;
+}
+
+void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	int a = 0;
+}

@@ -20,6 +20,9 @@ protected:
 
 	void Update(float _Delta) override;
 
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
+
 private:
 
 };
