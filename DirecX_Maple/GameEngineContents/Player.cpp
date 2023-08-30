@@ -19,32 +19,20 @@ void Player::Start()
 		//GameEngineTexture::Load("힝", "응애");
 
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
+		MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f);
+		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
+		MainSpriteRenderer->ChangeAnimation("Attack");
+		MainSpriteRenderer->AutoSpriteSizeOn();
+
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
-		MainSpriteRenderer->SetSprite("TestPlayer.png", 5);
+		//MainSpriteRenderer->SetSprite("TestPlayer.png", 5);
 
 		//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
 		/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
 	}
 
-	//{
-	//	std::shared_ptr<GameEngineSpriteRenderer> Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
-	//	Renderer->Transform.SetLocalPosition({ 0, -150, 0 });
-	//	Renderer->Transform.SetLocalScale({ 50, 50, 100 });
-	//}
-
-	//{
-	//	std::shared_ptr<GameEngineSpriteRenderer> Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
-	//	Renderer->Transform.SetLocalPosition({ -150, 0, 0 });
-	//	Renderer->Transform.SetLocalScale({ 50, 50, 100 });
-	//}
-
-	//{
-	//	std::shared_ptr<GameEngineSpriteRenderer> Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
-	//	Renderer->Transform.SetLocalPosition({ 150, 0, 0 });
-	//	Renderer->Transform.SetLocalScale({ 50, 50, 100 });
-	//}
 }
 
 void Player::Update(float _Delta)

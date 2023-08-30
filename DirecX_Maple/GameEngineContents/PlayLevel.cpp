@@ -31,6 +31,22 @@ void PlayLevel::Start()
 		GameEngineSprite::CreateCut("TestPlayer.png", 6, 6);
 	}
 
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+
+		}
+	}
+
 	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Perspective);
 
