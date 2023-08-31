@@ -132,6 +132,11 @@ public:
 		return TransData.WorldMatrix.ArrVector[2].NormalizeReturn();
 	}
 
+	float4 GetLocalScale()
+	{
+		return TransData.LocalScale;
+	}
+
 	float4 GetWorldBackVector()
 	{
 		return -(TransData.WorldMatrix.ArrVector[2].NormalizeReturn());

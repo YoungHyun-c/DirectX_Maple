@@ -57,18 +57,18 @@ public:
 		return Parent == nullptr ? IsDeathValue : Parent->IsDeathValue && IsDeathValue;
 	}
 
-	int GetUpdateOrder()
+	int GetOrder()
 	{
 		return UpdateOrder;
 	}
 
 	template<typename EnumType>
-	void SetOreder(EnumType _Order)
+	void SetOrder(EnumType _Order)
 	{
-		SetUpdateOrder(static_cast<int>(_Order));
+		SetOrder(static_cast<int>(_Order));
 	}
 
-	virtual void SetUpdateOrder(int _Order)
+	virtual void SetOrder(int _Order)
 	{
 		UpdateOrder = _Order;
 	}

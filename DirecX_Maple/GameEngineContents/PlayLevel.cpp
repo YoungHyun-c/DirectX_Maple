@@ -1,7 +1,7 @@
 #include "PreCompile.h"
 #include "PlayLevel.h"
 #include "Player.h"
-
+#include "PlayMap.h"
 
 PlayLevel::PlayLevel()
 {
@@ -41,16 +41,22 @@ void PlayLevel::Start()
 		for (size_t i = 0; i < Directorys.size(); i++)
 		{
 			GameEngineDirectory& Dir = Directorys[i];
-
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-
 		}
+
+		GameEngineSprite::CreateSingle("TestMap.png");
 	}
+	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
 
-	GetMainCamera()->Transform.SetLocalPosition({ 0.0f, 0.0f, -500.0f });
-	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Perspective);
+	GetMainCamera()->Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
+	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
-	std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	{
+		std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+	}
+	{
+		std::shared_ptr<PlayMap> NewMap = CreateActor<PlayMap>();
+	}
 
 	// GetMainCamera()->SetParent(NewPlayer);
 	//CreateActor<Player>();

@@ -57,6 +57,11 @@ public:
 	void AutoSpriteSizeOn();
 	void AutoSpriteSizeOff();
 
+	void SetAutoScaleRatio(float _Ratio)
+	{
+		AutoScaleRatio = _Ratio;
+	}
+
 protected:
 	void Update(float _Delta) override;
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
@@ -72,5 +77,6 @@ private:
 	SpriteData CurSprite;
 
 	bool IsImageSize = false;
+	float AutoScaleRatio = 1.0f;
 };
 
