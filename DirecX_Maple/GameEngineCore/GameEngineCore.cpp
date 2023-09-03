@@ -55,8 +55,15 @@ void GameEngineCore::Update()
 
 	MainTime.Update();
 	float DeltaTime = MainTime.GetDeltaTime();
+
+	// 디버그중 화면이 내려갔어도 시간이 많이 흘러가 있지 않도록.
+	if (DeltaTime > 1.0f / 60.0f)
+	{
+		DeltaTime = 1.0f / 60.0f;
+	}
+
 	GameEngineSound::Update();
-	GameEngineInput::Update(DeltaTime);
+
 	CoreObject->Update(DeltaTime);
 
 	if (true == GameEngineWindow::IsFocus())

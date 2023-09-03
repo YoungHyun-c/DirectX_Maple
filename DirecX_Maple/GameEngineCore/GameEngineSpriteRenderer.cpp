@@ -22,6 +22,11 @@ void GameEngineFrameAnimation::Reset()
 
 SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
 {
+	if (true == Parent->IsPause)
+	{
+		return Sprite->GetSpriteData(Index[CurIndex]);
+	}
+
 	if (true == Loop)
 	{
 		IsEnd = false;
@@ -290,4 +295,19 @@ void GameEngineSpriteRenderer::SetEndEvent(std::string_view _AnimationName, std:
 	}
 
 	Animation->EndEvent = _Function;
+}
+
+void GameEngineSpriteRenderer::AnimationPauseSwitch()
+{
+	IsPause = !IsPause;
+}
+
+void GameEngineSpriteRenderer::AnimationPauseOn()
+{
+	IsPause = true;
+}
+
+void GameEngineSpriteRenderer::AnimationPauseOff()
+{
+	IsPause = false;
 }

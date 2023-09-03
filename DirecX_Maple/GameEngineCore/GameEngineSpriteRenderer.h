@@ -45,6 +45,8 @@ enum class SamplerOption
 // Ό³Έν :
 class GameEngineSpriteRenderer : public GameEngineRenderer
 {
+	friend GameEngineFrameAnimation;
+
 public:
 	// constructer destructer
 	GameEngineSpriteRenderer();
@@ -85,6 +87,10 @@ public:
 		return CurFrameAnimations->IsEnd;
 	}
 
+	void AnimationPauseSwitch();
+	void AnimationPauseOn();
+	void AnimationPauseOff();
+
 	void SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
@@ -107,5 +113,6 @@ private:
 
 	bool IsImageSize = false;
 	float AutoScaleRatio = 1.0f;
+	bool IsPause = false;
 };
 

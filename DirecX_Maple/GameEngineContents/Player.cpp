@@ -55,6 +55,11 @@ void Player::Update(float _Delta)
 {
 	float Speed = 100.0f;
 
+	if (GameEngineInput::IsDown('P'))
+	{
+		MainSpriteRenderer->AnimationPauseSwitch();
+	}
+
 	if (GameEngineInput::IsPress('A'))
 	{
 		Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
