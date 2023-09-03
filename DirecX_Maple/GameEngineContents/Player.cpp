@@ -20,9 +20,15 @@ void Player::Start()
 		//GameEngineTexture::Load("Èþ", "ÀÀ¾Ö");
 
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
-		MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f);
+		//MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f);
+		MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f, -1, -1, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
 		MainSpriteRenderer->ChangeAnimation("Attack");
+		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
+		MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
+
+		MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
+
 		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetAutoScaleRatio(0.8f);
 
@@ -38,6 +44,11 @@ void Player::Start()
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
 	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 
+}
+
+void Player::TestEvent(GameEngineRenderer* _Renderer)
+{
+	int a = 0;
 }
 
 void Player::Update(float _Delta)
