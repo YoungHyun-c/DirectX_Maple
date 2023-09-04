@@ -24,6 +24,6 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-
+	std::shared_ptr<class PlayMap> Map;
 };
 

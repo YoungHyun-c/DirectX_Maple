@@ -92,6 +92,8 @@ void GameEngineCore::Update()
 
 	MainDevice.RenderEnd();
 
+	CurLevel->AllReleaseCheck();
+
 	//GameEngineCore::MainWindow.DoubleBuffering();
 
 	// GameEngineWindow::MainWindow.ClearBackBuffer();

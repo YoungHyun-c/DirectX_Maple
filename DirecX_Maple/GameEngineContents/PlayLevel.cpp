@@ -56,6 +56,7 @@ void PlayLevel::Start()
 	}
 	{
 		std::shared_ptr<PlayMap> NewMap = CreateActor<PlayMap>();
+		Map = NewMap;
 	}
 
 	// GetMainCamera()->SetParent(NewPlayer);

@@ -69,7 +69,9 @@ private:
 
 	//void Render(float _Delta);
 
-	void ActorRelease();
+	void Release() override;
+
+	void AllReleaseCheck() override;
 
 	void ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order);
 
