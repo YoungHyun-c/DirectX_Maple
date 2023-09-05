@@ -98,7 +98,6 @@ public:
 protected:
 	void Update(float _Delta) override;
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
-
 	int Index = 0;
 
 private:

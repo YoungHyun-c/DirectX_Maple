@@ -3,6 +3,7 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineTexture.h>
 #include "PlayMap.h"
+#include "Monster.h"
 
 Player::Player()
 {
@@ -17,11 +18,10 @@ Player::~Player()
 void Player::Start()
 {
 	{
-		//GameEngineTexture::Load("힝", "응애");
-
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>();
-		//MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f);
-		MainSpriteRenderer->CreateAnimation("Attack", "Divide3.frames", 0.05f, -1, -1, true);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
+		MainSpriteRenderer->CreateAnimation("Attack", "Divideframes", 0.1f, -1, -1, false);
+		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
+		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
 		MainSpriteRenderer->ChangeAnimation("Attack");
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
@@ -29,8 +29,9 @@ void Player::Start()
 
 		MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
 
-		MainSpriteRenderer->AutoSpriteSizeOn();
-		MainSpriteRenderer->SetAutoScaleRatio(0.8f);
+		//MainSpriteRenderer->AutoSpriteSizeOn();
+		//MainSpriteRenderer->SetAutoScaleRatio(0.8f);
+		MainSpriteRenderer->Transform.SetLocalScale({ -100.0f, 100.0f, 1.0f });
 
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
@@ -60,16 +61,23 @@ void Player::Update(float _Delta)
 	}*/
 
 	// 충돌했냐 안했냐만 보면 (만들어질 인터페이스 형식일뿐)
-	//std::list<std::shared_ptr<Monster>> MonsterList =
-	//	GetLevel()->GetObjectGroup<Monster>(ContentsType::Monster);
+	std::list<std::shared_ptr<Monster>> MonsterList =
+		GetLevel()->GetObjectGroupConvert<Monster>(ContentsObjectType::Monster);
 
-	//for (std::shared_ptr<Monster> Monster : MonsterList)
-	//{
-	//	if (Renderer->Transform.Collision(MonsterPtr->Renderer->Transform))
-	//	{
-	//		// 충돌 했다.
-	//	}
-	//}
+	for (std::shared_ptr<Monster> MonsterPtr : MonsterList)
+	{
+		// 렌더러로 하는 이유 => 엑터로도 할 수 있는데
+		// 보통 엑터는 위치와 기준을 잡아주는 용도로 사용됩니다.
+		// MainSpriteRenderer->Transform.Collision(MonsterPtr->Renderer->Transform);
+
+		GameEngineTransform& Left = MainSpriteRenderer->Transform;
+		GameEngineTransform& Right = MonsterPtr->Renderer->Transform;
+				
+		if (GameEngineTransform::Collision({Left, Right}))
+		{
+		//	// 충돌 했다.
+		}
+	}
 
 
 	float Speed = 100.0f;

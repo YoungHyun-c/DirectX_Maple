@@ -59,7 +59,7 @@ public:
 
 	int GetOrder()
 	{
-		return UpdateOrder;
+		return Order;
 	}
 
 	template<typename EnumType>
@@ -70,7 +70,7 @@ public:
 
 	virtual void SetOrder(int _Order)
 	{
-		UpdateOrder = _Order;
+		Order = _Order;
 	}
 
 	float GetLiveTime()
@@ -135,10 +135,30 @@ public:
 
 		if (nullptr == CameraPtr)
 		{
-			MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
+			//MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
+			return nullptr;
 		}
 		
 		return CameraPtr;
+	}
+
+	template<typename EnumType>
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(EnumType _GroupIndex)
+	{
+		return GetObjectGroup(static_cast<int>(_GroupIndex));
+	}
+
+	template<typename ObjectType>
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(int _GroupIndex)
+	{
+		std::list<std::shared_ptr<class GameEngineObject>>& Group = Childs[_GroupIndex];
+		return Group;
+	}
+
+	template<typename ObjectType, typename EnumType>
+	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(EnumType _GroupIndex)
+	{
+		return GetObjectGroupConvert<ObjectType>(static_cast<int>(_GroupIndex));
 	}
 
 	template<typename ObjectType>
@@ -199,7 +219,7 @@ private:
 
 	std::string Name;
 	float LiveTime = 0.0f;
-	int UpdateOrder = 0;
+	int Order = 0;
 	bool IsUpdateValue = true; // 이걸 false로 만들면 된다.
 	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
 

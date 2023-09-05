@@ -23,7 +23,7 @@ public:
 	template<typename ObjectType, typename EnumType>
 	std::shared_ptr<ObjectType> CreateActor(EnumType _Order)
 	{
-		return CreateActoy<ObjectType>(static_cast<int>(_Order));
+		return CreateActor<ObjectType>(static_cast<int>(_Order));
 	}
 
 	template<typename ObjectType>

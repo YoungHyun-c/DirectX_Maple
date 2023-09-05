@@ -15,6 +15,9 @@
     <ClCompile Include="PlayMap.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -31,6 +34,12 @@
     <ClInclude Include="PlayMap.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -38,6 +47,9 @@
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{351a7ff5-563c-40d3-b9ea-f84da193695f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{32233c47-b570-4ae9-9c89-4dc2a5224b3f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -27,10 +27,30 @@ GameEngineRenderer::~GameEngineRenderer()
 
 }
 
+// 카메라 내부에서의 순서 변경
+void GameEngineRenderer::SetRenderOrder(int _Order)
+{
+	if (nullptr == Camera)
+	{
+		MsgBoxAssert("카메라가 존재하지 않는 렌더러 입니다. 카메라부터 지정해주세요");
+		return;
+	}
+
+	Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
+	GameEngineObject::SetOrder(_Order);
+	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
+}
+
+// 날 바라보는 카메라 변경
+void GameEngineRenderer::SetCameraOrder(int _Order)
+{
+	SetViewCameraSelect(_Order);
+}
+
 void GameEngineRenderer::Start()
 {
 	// 메인카메라에 들어갔다.
-	SetViewCameraSelect(0);
+	SetCameraOrder(0);
 
 	// 카메라를 찾아서 들어가야 한다.
 	// 카메라를 찾으려면 GameEngineLevel
@@ -42,16 +62,16 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 {
 	GameEngineLevel* Level = GetLevel();
 
-	std::shared_ptr<GameEngineCamera> Camera = Level->GetCamera(_Order);
+	std::shared_ptr<GameEngineCamera> FindCamera = Level->GetCamera(_Order);
 
-	if (nullptr == Camera)
+	if (nullptr == FindCamera)
 	{
-		MsgBoxAssert("카메라가 존재하지 않는데 렌더러를 넣으려고 했습니다.");
-		return;
+		Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
 	}
 
+	Camera = FindCamera.get();
 	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
-	ViewInfo[Camera.get()] = _Order;
+	
 }
 
 int A = 0;

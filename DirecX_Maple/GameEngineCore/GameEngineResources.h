@@ -48,7 +48,7 @@ public:
 			return;
 		}
 
-		return NameRes.erase(FindIter);
+		NameRes.erase(FindIter);
 	}
 
 

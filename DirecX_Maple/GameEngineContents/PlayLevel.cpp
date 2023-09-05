@@ -2,6 +2,7 @@
 #include "PlayLevel.h"
 #include "Player.h"
 #include "PlayMap.h"
+#include "Monster.h"
 
 PlayLevel::PlayLevel()
 {
@@ -52,17 +53,26 @@ void PlayLevel::Start()
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
 	{
-		std::shared_ptr<Player> NewPlayer = CreateActor<Player>();
+		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 	}
 	{
-		std::shared_ptr<PlayMap> NewMap = CreateActor<PlayMap>();
-		Map = NewMap;
+		GameEngineRandom NewRandom;
+		for (size_t i = 0; i < 10; i++)
+		{
+			std::shared_ptr<Monster> Object = CreateActor<Monster>(ContentsObjectType::Monster);
+			Object->Transform.SetLocalPosition(NewRandom.RandomVectorBox2D(0, 1280, 0, -720));
+		}
+
+		std::shared_ptr<PlayMap> Object0 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+		std::shared_ptr<PlayMap> Object1 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+		std::shared_ptr<PlayMap> Object2 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+		std::shared_ptr<PlayMap> Object3 = CreateActor<PlayMap>(ContentsObjectType::Monster);
 	}
 
-	// GetMainCamera()->SetParent(NewPlayer);
-	//CreateActor<Player>();
-
-	//CreateChild<GameEngineRenderer>(); 이렇게 하면 좋지 않아서 고민
+	{
+		std::shared_ptr<PlayMap> Object = CreateActor<PlayMap>(ContentsObjectType::BackGround);
+		Map = Object;
+	}
 }
 
 void PlayLevel::Update(float _Delta)

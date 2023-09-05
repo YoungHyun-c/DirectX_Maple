@@ -2,6 +2,50 @@
 
 // 기하구조를 표현하고
 // 부모자식관계를 처리한다.
+
+enum class ColType
+{
+	// 캡슐
+	// 2D에서의 충돌은 모두가 한축이 같아야 한다.
+	// 우리는 충돌이 2D가 더 느리다.
+	SPHERE2D, // z를 0으로 만들고 충돌 (연산량으로)구 50 60개를 돌릴수가 있다.
+	AABBBOX2D, // z를 0으로 만들고 충돌 Axis-Aligned Bounding 회전하지 않은 박스
+	OBBOX2D, // z를 0으로 만들고 충돌 Oriented Bounding Box 회전한 박스 <= 을 1번할 연산량으로(구 50 60)
+	SPHERE3D,
+	AABBBOX3D,
+	OBBBOX3D,
+	MAX,
+};
+
+class GameEngineTransform;
+class CollisionParameter
+{
+public:
+	GameEngineTransform& Left;
+	GameEngineTransform& Right;
+	ColType LeftType = ColType::AABBBOX2D;
+	ColType RightType = ColType::AABBBOX2D;
+};
+
+class CollisionData
+{
+public:
+	union
+	{
+		// 공용체, 클래스 바이트패딩, 클래스나 구조체에 바이트패딩을 추가하여 CPU접근을 더 용이하게 해주는 것.
+		// 젤 큰 바이트 크기로 나머지 순서대로 있는 바이트 크기들의 크기도 조정 후 구조체의 크기 결정.
+		// 다이렉트 X에서 지원해주는 충돌용 도형
+		DirectX::BoundingSphere SPHERE;
+		DirectX::BoundingBox AABB;
+		DirectX::BoundingOrientedBox OBB;
+	};
+
+	CollisionData()
+		: OBB()
+	{
+
+	}
+};
  
 // 왜
 class TransformData
@@ -181,9 +225,18 @@ public:
 		return TransData.WorldViewProjectionMatrix;
 	}
 
+	// 트랜스폼은 충돌 타입이 정해져 있지 않는다.
+	//					 내 타입,  나랑,  상대타입,  상대
+	static bool Collision(const CollisionParameter& _Data);
+
+	//ColType _ThisTpye, GameEngineTransform& _LeftTrans, ColType _OtherType, GameEngineTransform& _RightTrans
+
+
 protected:
 
 private:
+	CollisionData ColData;
+
 	GameEngineTransform* Parent = nullptr;
 	std::list<GameEngineTransform*> Childs;
 	TransformData TransData;
