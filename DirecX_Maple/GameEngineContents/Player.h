@@ -25,5 +25,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> MainSpriteRenderer;
 	std::shared_ptr<class GameEngineComponenet> TestCollision;
 	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
+
+	std::shared_ptr<GameEngineCollision> Col;
 };
 

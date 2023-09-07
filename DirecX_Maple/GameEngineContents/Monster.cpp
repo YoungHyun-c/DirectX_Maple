@@ -22,5 +22,9 @@ void Monster::Start()
 
 		Renderer->SetSprite("HoHoYee_AttackABC2");
 		Renderer->Transform.SetLocalScale(NewRandom.RandomVectorBox2D(10, 100, 10, 100));
+		float4 Scale = NewRandom.RandomVectorBox2D(10, 100, 10, 100);
+		std::shared_ptr<GameEngineCollision> Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+		Col->Transform.SetLocalScale(Scale);
 	}
+
 }

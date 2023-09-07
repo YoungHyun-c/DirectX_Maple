@@ -7,6 +7,8 @@ class GameEngineLevel : public GameEngineObject
 {
 	friend class GameEngineCore;
 	friend class GameEngineCamera;
+	friend class GameEngineCollision;
+
 public:
 	// constructer destructer
 	GameEngineLevel();
@@ -77,9 +79,13 @@ private:
 
 	void Render(float _Delta);
 
+	void PushCollision(std::shared_ptr<class GameEngineCollision> _Collision);
+
 	// 이미 엑터가 child로 관리하고 있지만
 	// 따로 카메라도 들고 있을 것이다.
 	std::map<int, std::shared_ptr<class GameEngineCamera>> Cameras;
+
+	std::map<int, std::shared_ptr<class GameEngineCollisionGroup>> Collisions;
 
 	// 이렇게도 전방선언 할 수 있다.
 	// 근데 모든 클래스가 Object에 종속되어있다면 이렇게 안해도 되지 않을까 해서 주석
