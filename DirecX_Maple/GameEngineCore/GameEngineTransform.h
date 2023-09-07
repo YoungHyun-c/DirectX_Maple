@@ -1,4 +1,6 @@
 #pragma once
+#include <GameEngineBase/GameEngineMath.h>
+#include <list>
 
 // 기하구조를 표현하고
 // 부모자식관계를 처리한다.
@@ -10,7 +12,7 @@ enum class ColType
 	// 우리는 충돌이 2D가 더 느리다.
 	SPHERE2D, // z를 0으로 만들고 충돌 (연산량으로)구 50 60개를 돌릴수가 있다.
 	AABBBOX2D, // z를 0으로 만들고 충돌 Axis-Aligned Bounding 회전하지 않은 박스
-	OBBOX2D, // z를 0으로 만들고 충돌 Oriented Bounding Box 회전한 박스 <= 을 1번할 연산량으로(구 50 60)
+	OBBBOX2D, // z를 0으로 만들고 충돌 Oriented Bounding Box 회전한 박스 <= 을 1번할 연산량으로(구 50 60)
 	SPHERE3D,
 	AABBBOX3D,
 	OBBBOX3D,
@@ -25,6 +27,32 @@ public:
 	GameEngineTransform& Right;
 	ColType LeftType = ColType::AABBBOX2D;
 	ColType RightType = ColType::AABBBOX2D;
+
+	inline int GetLeftTypeToInt() const
+	{
+		return static_cast<int>(LeftType);
+	}
+
+	inline int GetRightTypeToInt() const
+	{
+		return static_cast<int>(RightType);
+	}
+
+	CollisionParameter(
+		GameEngineTransform& _Left,
+		GameEngineTransform& _Right,
+		ColType _LeftType = ColType::AABBBOX2D,
+		ColType _RightType = ColType::AABBBOX2D
+	)
+		:
+		Left(_Left),
+		Right(_Right),
+		LeftType(_LeftType),
+		RightType(_RightType)
+	{
+
+	}
+
 };
 
 class CollisionData
@@ -57,15 +85,18 @@ public:
 
 	float4 Scale = float4::ONENULL;
 	float4 Rotation = float4::ZERONULL;
+	float4 Quaternion = float4::ZERO;
 	float4 Position = float4::ZERO;
 
 	float4 LocalScale;
 	float4 LocalRotation;
+	float4 LocalQuaternion;
 	float4 LocalPosition;
 
 	float4 WorldScale;
 	float4 WorldRotation;
-	float4 WordlPosition;
+	float4 WorldQuaternion;
+	float4 WorldPosition;
 
 	float4x4 ScaleMatrix;	// 크
 	float4x4 RotationMatrix;// 자
@@ -229,13 +260,14 @@ public:
 	//					 내 타입,  나랑,  상대타입,  상대
 	static bool Collision(const CollisionParameter& _Data);
 
+	CollisionData ColData;
 	//ColType _ThisTpye, GameEngineTransform& _LeftTrans, ColType _OtherType, GameEngineTransform& _RightTrans
 
 
 protected:
 
 private:
-	CollisionData ColData;
+
 
 	GameEngineTransform* Parent = nullptr;
 	std::list<GameEngineTransform*> Childs;

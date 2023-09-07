@@ -18,7 +18,7 @@ public:
 	PlayMap& operator = (const PlayMap& _Other) = delete;
 	PlayMap& operator = (PlayMap&& _Other) noexcept = delete;
 
-	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 });
+	//GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 });
 
 protected:
 	void Start() override;

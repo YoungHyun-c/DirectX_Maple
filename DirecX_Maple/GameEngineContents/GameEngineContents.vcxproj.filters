@@ -18,6 +18,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="BackGround.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGround.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -69,13 +69,15 @@ void Player::Update(float _Delta)
 		// 렌더러로 하는 이유 => 엑터로도 할 수 있는데
 		// 보통 엑터는 위치와 기준을 잡아주는 용도로 사용됩니다.
 		// MainSpriteRenderer->Transform.Collision(MonsterPtr->Renderer->Transform);
-
+		
 		GameEngineTransform& Left = MainSpriteRenderer->Transform;
 		GameEngineTransform& Right = MonsterPtr->Renderer->Transform;
-				
+		Right.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
 		if (GameEngineTransform::Collision({Left, Right}))
 		{
-		//	// 충돌 했다.
+			MonsterPtr->Death();
+			int a = 0;
+			// 충돌 했다.
 		}
 	}
 
@@ -112,15 +114,15 @@ void Player::Update(float _Delta)
 		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	}
 
-	GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
+	//GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
 
-	if (GameEngineColor::RED != Color)
-	{
-		GravityForce.Y -= _Delta * 10.0f;
-		Transform.AddLocalPosition(GravityForce * _Delta);
-	}
-	else
-	{
-		GravityForce = 0.0f;
-	}
+	//if (GameEngineColor::RED != Color)
+	//{
+	//	GravityForce.Y -= _Delta * 10.0f;
+	//	Transform.AddLocalPosition(GravityForce * _Delta);
+	//}
+	//else
+	//{
+	//	GravityForce = 0.0f;
+	//}
 }
