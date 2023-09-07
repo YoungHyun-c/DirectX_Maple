@@ -46,6 +46,7 @@ void PlayLevel::Start()
 		}
 
 		GameEngineSprite::CreateSingle("EntranceMap.png");
+		GameEngineSprite::CreateSingle("JinHilla.png");
 	}
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
 
@@ -71,6 +72,7 @@ void PlayLevel::Start()
 		for (size_t i = 0; i < 10; i++)
 		{
 			std::shared_ptr<Monster> Object = CreateActor<Monster>(ContentsObjectType::Monster);
+			//Object->Transform.SetLocalPosition({ 0, 0 });
 			Object->Transform.SetLocalPosition(NewRandom.RandomVectorBox2D(0, 1280, 0, -720));
 		}
 

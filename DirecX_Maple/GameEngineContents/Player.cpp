@@ -21,7 +21,7 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-		MainSpriteRenderer->CreateAnimation("Attack", "Divideframes", 0.1f, -1, -1, false);
+		MainSpriteRenderer->CreateAnimation("Attack", "Divide3frames", 0.1f, 0, 8, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
@@ -33,7 +33,7 @@ void Player::Start()
 
 		//MainSpriteRenderer->AutoSpriteSizeOn();
 		//MainSpriteRenderer->SetAutoScaleRatio(0.8f);
-		MainSpriteRenderer->Transform.SetLocalScale({ -100.0f, 100.0f, 1.0f });
+		MainSpriteRenderer->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
 
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
@@ -46,7 +46,7 @@ void Player::Start()
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalScale({ -100.0f, 100.0f, 1.0f });
+		Col->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
 	}
 
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
@@ -139,6 +139,11 @@ void Player::Update(float _Delta)
 	if (GameEngineInput::IsPress('E'))
 	{
 		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
+	}
+
+	if (GameEngineInput::IsDown(SHIFT_PRESSED))
+	{
+		MainSpriteRenderer->ChangeAnimation("Attack");
 	}
 
 	//GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
