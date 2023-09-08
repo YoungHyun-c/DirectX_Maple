@@ -26,7 +26,8 @@ void Player::Start()
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
 		MainSpriteRenderer->ChangeAnimation("Attack");
-		MainSpriteRenderer->SetImageScale({ 200.0f, 200.0f });
+		//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
+		MainSpriteRenderer->SetImageScale({ 100.0f, 100.0f });
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
@@ -56,7 +57,7 @@ void Player::Start()
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
+		Col->Transform.SetLocalScale({ -100.0f, 100.0f, 1.0f });
 	}
 
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
