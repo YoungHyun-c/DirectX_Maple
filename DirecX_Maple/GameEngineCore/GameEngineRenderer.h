@@ -50,6 +50,8 @@ protected:
 	void ResSetting();
 	void Draw();
 
+	GameEngineTransform* DataTransform;
+
 private:
 	class GameEngineCamera* Camera = nullptr;
 	std::shared_ptr<class GameEngineInputLayOut> LayOut = nullptr;

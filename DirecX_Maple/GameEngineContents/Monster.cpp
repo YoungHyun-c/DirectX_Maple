@@ -27,7 +27,7 @@ void Monster::Start()
 		//Renderer->Transform.SetLocalScale(NewRandom.RandomVectorBox2D(100, 100, 100, 100));
 		//float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
 		std::shared_ptr<GameEngineCollision> Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-		Col->Transform.SetLocalScale({ 300.0f, 300.0f, 0.0f });
+		//Col->Transform.SetLocalScale({ 300.0f, 300.0f, 0.0f });
 		//Col->Transform.SetLocalScale(Scale);
 	}
 

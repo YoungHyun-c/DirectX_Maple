@@ -79,6 +79,19 @@ GameEngineSpriteRenderer::~GameEngineSpriteRenderer()
 
 }
 
+void GameEngineSpriteRenderer::Start()
+{
+	GameEngineRenderer::Start();
+
+	DataTransform = &ImageTransform;
+
+	ImageTransform.SetParent(Transform);
+
+	// CerateChild<GameEngineComponent>(0);
+
+	// CreateChild();
+}
+
 void GameEngineSpriteRenderer::Update(float _Delta)
 {
 	if (nullptr != CurFrameAnimations)
@@ -91,15 +104,38 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 		float4 Scale = float4(CurSprite.GetScale());
 		Scale.Z = 1.0f;
 		Scale.W = 0.0f;
-		Transform.SetLocalScale(Scale * AutoScaleRatio);
+		SetImageScale(Scale * AutoScaleRatio);
 	}
+}
+
+void GameEngineSpriteRenderer::SetImageScale(const float4& _Scale)
+{
+	ImageTransform.SetLocalScale(_Scale);
+}
+
+void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
+{
+	ImageTransform.AddLocalScale(_Scale);
 }
 
 void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	// 렌더러는 뭐든지 그릴 수 있다. 세팅만 잘 해준다면,
+	float4 ParentScale = Transform.GetLocalScale();
+	float4 Scale = ImageTransform.GetLocalScale();
 
-	// 부모쪽에서 대부분의 일은 해주고,
+	float4 CalPivot = Pivot;
+	CalPivot.X -= 0.5f;
+	CalPivot.Y -= 0.5f;
+
+	float4 PivotPos;
+	PivotPos.X = Scale.X * CalPivot.X;
+	PivotPos.Y = Scale.Y * CalPivot.Y;
+
+	ImageTransform.SetLocalPosition(PivotPos);
+
+	ImageTransform.TransformUpdate();
+	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
+
 	GameEngineRenderer::ResSetting();
 
 	std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData", ShaderType::Vertex);
@@ -310,4 +346,23 @@ void GameEngineSpriteRenderer::AnimationPauseOn()
 void GameEngineSpriteRenderer::AnimationPauseOff()
 {
 	IsPause = false;
+}
+
+void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
+{
+	switch (_Type)
+	{
+	case PivotType::Center:
+		Pivot = { 0.5f, 0.5f };
+		break;
+	case PivotType::Bottom:
+		Pivot = { 0.5f, 0.0f };
+		break;
+	case PivotType::Left:
+		Pivot = { 1.0f, 0.5f };
+		break;
+	default:
+		break;
+	}
+
 }

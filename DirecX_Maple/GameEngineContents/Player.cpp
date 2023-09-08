@@ -21,19 +21,20 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-		MainSpriteRenderer->CreateAnimation("Attack", "Divide3frames", 0.1f, 0, 8, false);
+		MainSpriteRenderer->CreateAnimation("Attack", "blosomframe", 0.1f, -1, -1, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
 		MainSpriteRenderer->ChangeAnimation("Attack");
+		MainSpriteRenderer->SetImageScale({ 200.0f, 200.0f });
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
-		MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
+		//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
-		MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
+		//MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
 
 		//MainSpriteRenderer->AutoSpriteSizeOn();
 		//MainSpriteRenderer->SetAutoScaleRatio(0.8f);
-		MainSpriteRenderer->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
+		//MainSpriteRenderer->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
 
 
 		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
@@ -43,6 +44,15 @@ void Player::Start()
 		/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
 	}
+
+	{
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
+		MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
+		MainSpriteRenderer->Transform.SetLocalPosition({ 0, 70, 1.0f });
+		MainSpriteRenderer->SetImageScale({ 100.0f, 20.0f });
+		MainSpriteRenderer->SetPivotType(PivotType::Left);
+	}
+
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
@@ -61,6 +71,7 @@ void Player::TestEvent(GameEngineRenderer* _Renderer)
 
 void Player::Update(float _Delta)
 {
+	MainSpriteRenderer->AddImageScale(float4{ -10.0f, 0.0f, 0.0f } * _Delta);
 	/*if (xxxx 상황이 되면)
 	{
 		MainSpriteRenderer->Death();
@@ -141,7 +152,7 @@ void Player::Update(float _Delta)
 		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	}
 
-	if (GameEngineInput::IsDown(SHIFT_PRESSED))
+	if (GameEngineInput::IsDown(VK_SHIFT))
 	{
 		MainSpriteRenderer->ChangeAnimation("Attack");
 	}

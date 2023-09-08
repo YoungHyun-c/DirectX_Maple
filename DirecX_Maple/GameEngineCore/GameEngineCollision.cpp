@@ -46,11 +46,22 @@ bool GameEngineCollision::Collision(int _Order, const float4& _Next, std::functi
 bool GameEngineCollision::CollisionEvent(int _Order, const EventParameter& _Event)
 {
 	std::shared_ptr<GameEngineCollisionGroup> OtherGroup = GetLevel()->Collisions[_Order];
+
+	if (nullptr == OtherGroup)
+	{
+		return false;
+	}
+
 	return OtherGroup->CollisionEvent(GetDynamic_Cast_This<GameEngineCollision>(), _Event);
 }
 
 
 void GameEngineCollision::Release()
 {
-	int a = 0;
+	// 내가 지금 사라질 것인데. 예전에 나랑 충돌했던 충돌체들에게
+	// 내가 죽으니 날 굳이 들고 있을 필요가 없다. 알려줘야한다
+	for (GameEngineCollision* Collision : Others)
+	{
+		Collision->Others.erase(this);
+	}
 }

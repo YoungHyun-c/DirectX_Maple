@@ -42,6 +42,13 @@ enum class SamplerOption
 	POINT,
 };
 
+enum class PivotType
+{
+	Center,
+	Bottom,
+	Left,
+};
+
 // Ό³Έν :
 class GameEngineSpriteRenderer : public GameEngineRenderer
 {
@@ -95,7 +102,13 @@ public:
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
 
+	void SetPivotType(PivotType _Type);
+
+	void SetImageScale(const float4& _Scale);
+	void AddImageScale(const float4& _Scale);
+
 protected:
+	void Start() override;
 	void Update(float _Delta) override;
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 	int Index = 0;
@@ -113,5 +126,9 @@ private:
 	bool IsImageSize = false;
 	float AutoScaleRatio = 1.0f;
 	bool IsPause = false;
+
+	float4 Pivot = { 0.5f, 0.5f };
+
+	GameEngineTransform ImageTransform;
 };
 

@@ -26,10 +26,10 @@ public:
 	template<typename ObjectType>
 	std::shared_ptr<ObjectType> CreateComponent(int _Order = 0)
 	{
-		std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared <ObjectType>();
-		ComponentInit(NewChild, _Order);
+		/*std::shared_ptr<class GameEngineComponent> NewChild = std::make_shared <ObjectType>();
+		ComponentInit(NewChild, _Order);*/
 
-		return std::dynamic_pointer_cast<ObjectType>(NewChild);
+		return std::dynamic_pointer_cast<ObjectType>(CreateChild<ObjectType>(_Order)); //std::dynamic_pointer_cast<ObjectType>(NewChild);
 	}
 
 	class GameEngineLevel* GetLevel();
