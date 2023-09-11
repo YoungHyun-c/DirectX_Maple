@@ -107,6 +107,8 @@ public:
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);
 
+	static void SetDefaultSampler(std::string_view _SamplerName);
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -121,6 +123,7 @@ private:
 	std::shared_ptr<GameEngineSprite> Sprite;
 	SpriteData CurSprite;
 
+	static std::shared_ptr<class GameEngineSampler> DefaultSampler;
 	std::shared_ptr<class GameEngineSampler> Sampler;
 
 	bool IsImageSize = false;
