@@ -4,6 +4,8 @@
 #include "GameEngineSampler.h"
 #include "GameEngineConstantBuffer.h"
 
+std::shared_ptr<class GameEngineSampler> GameEngineSpriteRenderer::DefaultSampler;
+
 void GameEngineFrameAnimation::EventCall(int _Frame)
 {
 	if (true == FrameEventFunction.contains(Index[_Frame]))
@@ -71,7 +73,12 @@ SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
 
 GameEngineSpriteRenderer::GameEngineSpriteRenderer()
 {
-	Sampler = GameEngineSampler::Find("LINEAR");
+	if (nullptr == DefaultSampler)
+	{
+		MsgBoxAssert("SpriteRenderer에 설정할 기본 샘플러가 없습니다.");
+	}
+
+	Sampler = DefaultSampler;
 }
 
 GameEngineSpriteRenderer::~GameEngineSpriteRenderer()
@@ -116,6 +123,11 @@ void GameEngineSpriteRenderer::SetImageScale(const float4& _Scale)
 void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
 {
 	ImageTransform.AddLocalScale(_Scale);
+}
+
+void GameEngineSpriteRenderer::SetDefaultSampler(std::string_view _SamplerName)
+{
+	DefaultSampler = GameEngineSampler::Find(_SamplerName);
 }
 
 void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
@@ -238,7 +250,7 @@ void GameEngineSpriteRenderer::CreateAnimation(
 	NewAnimation->CurIndex = 0;
 }
 
-void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force /*=false*/)
+void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _Force /*=false*/, unsigned int _FrameIndex /*=0*/)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
 
@@ -258,6 +270,7 @@ void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, 
 
 	CurFrameAnimations = FrameAnimations[UpperName];
 	CurFrameAnimations->Reset();
+	CurFrameAnimations->CurIndex = _FrameIndex;
 }
 
 void GameEngineSpriteRenderer::AutoSpriteSizeOn()
@@ -356,7 +369,7 @@ void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
 		Pivot = { 0.5f, 0.5f };
 		break;
 	case PivotType::Bottom:
-		Pivot = { 0.5f, 0.0f };
+		Pivot = { 0.5f, 1.0f };
 		break;
 	case PivotType::Left:
 		Pivot = { 1.0f, 0.5f };
