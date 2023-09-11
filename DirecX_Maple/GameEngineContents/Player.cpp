@@ -21,13 +21,14 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-		MainSpriteRenderer->CreateAnimation("Attack", "blosomframe", 0.1f, -1, -1, false);
+		MainSpriteRenderer->CreateAnimation("Attack", "Dike", 0.1f, -1, -1, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
 		MainSpriteRenderer->ChangeAnimation("Attack");
 		//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
-		MainSpriteRenderer->SetImageScale({ 100.0f, 100.0f });
+		MainSpriteRenderer->SetImageScale({ 500.0f, 500.0f });
+		//MainSpriteRenderer->SetImageScale({ 1000.0f,1000.0f });
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
@@ -46,13 +47,13 @@ void Player::Start()
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
 	}
 
-	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-		MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
-		MainSpriteRenderer->Transform.SetLocalPosition({ 0, 70, 1.0f });
-		MainSpriteRenderer->SetImageScale({ 100.0f, 20.0f });
-		MainSpriteRenderer->SetPivotType(PivotType::Left);
-	}
+	//{
+	//	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
+	//	MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
+	//	MainSpriteRenderer->Transform.SetLocalPosition({ 0, 70, 1.0f });
+	//	MainSpriteRenderer->SetImageScale({ 100.0f, 20.0f });
+	//	MainSpriteRenderer->SetPivotType(PivotType::Left);
+	//}
 
 
 	{
@@ -72,7 +73,7 @@ void Player::TestEvent(GameEngineRenderer* _Renderer)
 
 void Player::Update(float _Delta)
 {
-	MainSpriteRenderer->AddImageScale(float4{ -10.0f, 0.0f, 0.0f } * _Delta);
+	//MainSpriteRenderer->AddImageScale(float4{ -10.0f, 0.0f, 0.0f } * _Delta);
 	/*if (xxxx 상황이 되면)
 	{
 		MainSpriteRenderer->Death();

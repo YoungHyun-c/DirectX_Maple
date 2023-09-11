@@ -37,6 +37,7 @@ void PlayLevel::Start()
 		Dir.MoveParentToExistsChild("ContentsResources");
 		Dir.MoveChild("ContentsResources");
 		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Skill");
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)
