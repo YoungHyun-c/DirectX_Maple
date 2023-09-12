@@ -10,3 +10,8 @@ TileMap::~TileMap()
 {
 
 }
+
+void TileMap::Start()
+{
+	TileRenderer = CreateComponent<GameEngineTileMap>();
+}
