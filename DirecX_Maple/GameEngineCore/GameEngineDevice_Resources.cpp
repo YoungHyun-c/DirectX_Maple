@@ -12,6 +12,7 @@
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineTexture.h"
 #include "GameEngineSprite.h"
+#include "GameEngineBlend.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -192,6 +193,46 @@ void GameEngineDevice::ResourcesInit()
 		//Desc.DepthClipEnable = TRUE; // 화면 바깥의 물체 그림 그릴지
 		std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Create("EngineRasterizer", Desc);
 
+	}
+
+	{
+		D3D11_BLEND_DESC Desc = {};
+
+		// 이건 좀 느린데
+		// 깊이버퍼라는 것과 관련이 있다.
+		// 나중에 함.
+		//Desc.AlphaToCoverageEnable;
+
+		// 렌더타겟을 세팅하는것과 관련이 있는데.
+		// 렌더타겟은 한번에 8개를 세팅할 수 있다.
+		// 그걸 1개 이상을 세팅했을때 각기 다른 세팅을 너가 일일히 넣어줄거냐 라는 옵션이다.
+		// 안한다하면 0번째 꺼로 나머지 모두를 세팅한다.
+		Desc.IndependentBlendEnable = false;
+
+		// 블랜드 켤거냐.
+		Desc.RenderTarget[0].BlendEnable = true;
+
+		// 색깔 전체를 대상으로 삼겠다.
+		Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+		// + 외엔 쓸일이 거의 없다.
+		Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+
+		// https://learn.microsoft.com/ko-kr/windows/win32/api/d3d11/ne-d3d11-d3d11_blend
+
+		// src srcColor * src의 알파
+		// 1, 0, 0(, 1) * 1.0f;
+		Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA; // src펙터
+
+		// src 1, 0, 0, 1 * ( 1- src의 알파)
+		Desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+
+		// ONE으로 사용 ZERO도 있는데 일단은 원색깔 그대로 ONE (*1.0f)
+		Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
+
+		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("EngineBlend", Desc);
 	}
 
 	{

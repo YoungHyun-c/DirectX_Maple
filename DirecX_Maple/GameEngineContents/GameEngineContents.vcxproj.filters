@@ -21,6 +21,9 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -45,6 +48,9 @@
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
