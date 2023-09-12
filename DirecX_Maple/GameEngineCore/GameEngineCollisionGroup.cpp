@@ -150,16 +150,16 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			continue;
 		}
 
-		GameEngineCollision* Other = Collision.get();
+
 
 		// ¾ê´Â Ãæµ¹À» ³ª¶û ¾ÈÇß³×.
-		if (true == Collision->Others.contains(Other))
+		if (true == _Collision->Others.contains(Collision))
 		{
 			if (_Event.Exit)
 			{
-				_Event.Exit(Other);
-				Other->Others.erase(_Collision.get());
-				_Collision->Others.erase(Other);
+				_Event.Exit(Collision.get());
+				//Other->Others.erase(_Collision.get());
+				_Collision->Others.erase(Collision);
 			}
 		}
 	}
@@ -170,13 +170,13 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 
 		for (size_t i = 0; i < ResultCollision.size(); i++)
 		{
-			GameEngineCollision* Other = ResultCollision[i].get();
+			std::shared_ptr<GameEngineCollision> Other = ResultCollision[i];
 			if (false == _Collision->Others.contains(Other))
 			{
 				if (_Event.Enter)
 				{
-					_Event.Enter(Other);
-					Other->Others.insert(_Collision.get());
+					_Event.Enter(Other.get());
+					//Other->Others.insert(_Collision.get());
 					_Collision->Others.insert(Other);
 				}
 			}
@@ -184,7 +184,7 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			{
 				if (_Event.Stay)
 				{
-					_Event.Stay(Other);
+					_Event.Stay(Other.get());
 				}
 			}
 		}
