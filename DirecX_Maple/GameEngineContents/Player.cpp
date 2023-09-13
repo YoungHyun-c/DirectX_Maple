@@ -21,13 +21,30 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-		MainSpriteRenderer->CreateAnimation("Attack", "Dike", 0.1f, -1, -1, false);
+		MainSpriteRenderer->CreateAnimation("Attack2", "Battle_Alert", 0.1f, -1, -1, true);
+
+
+		MainSpriteRenderer->CreateAnimation("Alert", "Alert", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Attack", "Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Impale", "Impale", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Dead", "Dead", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Fly", "Fly", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Jump", "Jump", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Prone", "Prone", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Rope", "Rope", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Stand", "Stand", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Walk", "Walk", 0.1f, -1, -1, true);
+
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
-		MainSpriteRenderer->ChangeAnimation("Attack");
+		MainSpriteRenderer->ChangeAnimation("Stand");
+		MainSpriteRenderer->AutoSpriteSizeOn();
+		MainSpriteRenderer->SetPivotType(PivotType::Bottom);
+		
 		//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
-		MainSpriteRenderer->SetImageScale({ 500.0f, 500.0f });
+		//MainSpriteRenderer->SetImageScale({ 91.0f, 80.0f });
 		//MainSpriteRenderer->SetImageScale({ 1000.0f,1000.0f });
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
 		//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
@@ -122,7 +139,7 @@ void Player::Update(float _Delta)
 	//}
 
 
-	float Speed = 100.0f;
+	float Speed = 1000.0f;
 
 	if (GameEngineInput::IsDown('P'))
 	{
@@ -132,18 +149,22 @@ void Player::Update(float _Delta)
 	if (GameEngineInput::IsPress('A'))
 	{
 		Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
+		MainSpriteRenderer->ChangeAnimation("Walk");
 	}
 	if (GameEngineInput::IsPress('D'))
 	{
 		Transform.AddLocalPosition(float4::RIGHT * _Delta * Speed);
+		MainSpriteRenderer->ChangeAnimation("Walk");
 	}
 	if (GameEngineInput::IsPress('W'))
 	{
 		Transform.AddLocalPosition(float4::UP * _Delta * Speed);
+		MainSpriteRenderer->ChangeAnimation("Walk");
 	}
 	if (GameEngineInput::IsPress('S'))
 	{
 		Transform.AddLocalPosition(float4::DOWN * _Delta * Speed);
+		MainSpriteRenderer->ChangeAnimation("Walk");
 	}
 	if (GameEngineInput::IsPress('Q'))
 	{
@@ -158,6 +179,49 @@ void Player::Update(float _Delta)
 	{
 		MainSpriteRenderer->ChangeAnimation("Attack");
 	}
+
+	if (GameEngineInput::IsDown('1'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Alert");
+	}
+
+	if (GameEngineInput::IsDown('2'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Dead");
+	}
+	if (GameEngineInput::IsDown('3'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Fly");
+	}
+	if (GameEngineInput::IsDown('4'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Impale");
+	}
+	if (GameEngineInput::IsDown('5'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Jump");
+	}
+	if (GameEngineInput::IsDown('6'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Prone");
+	}
+	if (GameEngineInput::IsDown('7'))
+	{
+		MainSpriteRenderer->ChangeAnimation("ProneAttack");
+	}
+	if (GameEngineInput::IsDown('8'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Rope");
+	}
+	if (GameEngineInput::IsDown('9'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Stand");
+	}
+	if (GameEngineInput::IsDown('0'))
+	{
+		MainSpriteRenderer->ChangeAnimation("Walk");
+	}
+
 
 	//GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
 
