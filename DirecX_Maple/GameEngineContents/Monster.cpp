@@ -23,6 +23,7 @@ void Monster::Start()
 		Renderer->SetSprite("JinHilla.png");
 		//Renderer->Transform.SetLocalPosition({ 1300.0f, -500.0f, 0 });
 		Renderer->SetImageScale({ 50.0f, 50.0f, 0.0f });
+		Renderer->SetSamplerState(SamplerOption::POINT);
 		
 		Renderer->SetImageScale(NewRandom.RandomVectorBox2D(300, 500, 300, 500));
 		float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
