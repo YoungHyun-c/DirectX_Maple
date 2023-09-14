@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "PlayMap.h"
 #include "Monster.h"
+#include "TileMap.h"
 
 PlayLevel::PlayLevel()
 {
@@ -63,9 +64,28 @@ void PlayLevel::Start()
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 	}
 
+	//{
+	//	std::shared_ptr<PlayMap> Object = CreateActor<PlayMap>(ContentsObjectType::BackGround);
+	//	Map = Object;
+	//}
+
 	{
-		std::shared_ptr<PlayMap> Object = CreateActor<PlayMap>(ContentsObjectType::BackGround);
-		Map = Object;
+		std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
+		
+		size_t TileX = 100;
+		size_t TileY = 100;
+
+		Object->TileRenderer->CreateTileMap({ TileX, TileY, {80, 80}, "HoHoYee_AttackABC" });
+
+		for (size_t y = 0; y < TileY; y++)
+		{
+			for (size_t x = 0; x < TileX; x++)
+			{
+				Object->TileRenderer->SetTile({ y, x });
+			}
+		}
+
+		TileMapObject = Object;
 	}
 
 	{
@@ -86,6 +106,13 @@ void PlayLevel::Start()
 
 void PlayLevel::Update(float _Delta)
 {
+	static size_t X = 0;
+
+	if (GameEngineInput::IsDown('Y'))
+	{
+		TileMapObject->TileRenderer->SetTile({ ++X, 0, 1 });
+	}
+
 	int a = 0;
 
 	float Speed = 100.0f;

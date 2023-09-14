@@ -29,7 +29,7 @@ void PlayMap::Update(float _DeltaTime)
 void PlayMap::Start()
 {
 	{
-		Renderer = CreateComponent<GameEngineSpriteRenderer>(0);
+		Renderer = CreateComponent<GameEngineSpriteRenderer>(-30);
 		Renderer->SetSprite("EntranceMap.png");
 
 		std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("EntranceMap.png");

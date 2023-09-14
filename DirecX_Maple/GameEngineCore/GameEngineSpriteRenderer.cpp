@@ -91,9 +91,7 @@ void GameEngineSpriteRenderer::Start()
 
 	ImageTransform.SetParent(Transform);
 
-	// CerateChild<GameEngineComponent>(0);
-
-	// CreateChild();
+	Sampler = GameEngineSampler::Find("POINT");
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
