@@ -17,6 +17,8 @@ PlayLevel::~PlayLevel()
 
 void PlayLevel::Start()
 {
+	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
+
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
