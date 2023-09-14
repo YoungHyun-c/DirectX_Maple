@@ -121,7 +121,7 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 
 	if (TileData.TileCountY < EndY)
 	{
-		EndY = TileData.TileCountY - 1;
+		EndX = TileData.TileCountX - 1;
 	}
 
 	TransformData Data;
