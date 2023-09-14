@@ -98,7 +98,10 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 	}
 
 	return false;
+
 }
+
+
 bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _Collision, const float4& _NextPos, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
 {
 	static std::vector<std::shared_ptr<GameEngineCollision>> ResultCollision;
@@ -158,9 +161,9 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 			if (_Event.Exit)
 			{
 				_Event.Exit(_Collision.get(), Collision.get());
-				//Other->Others.erase(_Collision.get());
-				_Collision->Others.erase(Collision);
 			}
+
+			_Collision->Others.erase(Collision);
 		}
 	}
 
@@ -176,9 +179,9 @@ bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollisio
 				if (_Event.Enter)
 				{
 					_Event.Enter(_Collision.get(), Other.get());
-					//Other->Others.insert(_Collision.get());
-					_Collision->Others.insert(Other);
 				}
+				
+				_Collision->Others.insert(Other);
 			}
 			else
 			{
