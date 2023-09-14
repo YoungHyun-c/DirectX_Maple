@@ -69,24 +69,24 @@ void PlayLevel::Start()
 	//	Map = Object;
 	//}
 
-	{
-		std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
-		
-		size_t TileX = 100;
-		size_t TileY = 100;
+	//{
+	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
+	//	
+	//	size_t TileX = 100;
+	//	size_t TileY = 100;
 
-		Object->TileRenderer->CreateTileMap({ TileX, TileY, {16, 16}, "HoHoYee_AttackABC" });
+	//	Object->TileRenderer->CreateTileMap({ TileX, TileY, {16, 16}, "HoHoYee_AttackABC" });
 
-		for (size_t y = 0; y < TileY; y++)
-		{
-			for (size_t x = 0; x < TileX; x++)
-			{
-				Object->TileRenderer->SetTileIndex({ y, x });
-			}
-		}
+	//	for (size_t y = 0; y < TileY; y++)
+	//	{
+	//		for (size_t x = 0; x < TileX; x++)
+	//		{
+	//			Object->TileRenderer->SetTileIndex({ y, x });
+	//		}
+	//	}
 
-		TileMapObject = Object;
-	}
+	//	TileMapObject = Object;
+	//}
 
 	{
 		GameEngineRandom NewRandom;
