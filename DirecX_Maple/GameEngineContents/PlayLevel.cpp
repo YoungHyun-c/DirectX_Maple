@@ -75,13 +75,13 @@ void PlayLevel::Start()
 		size_t TileX = 100;
 		size_t TileY = 100;
 
-		Object->TileRenderer->CreateTileMap({ TileX, TileY, {80, 80}, "HoHoYee_AttackABC" });
+		Object->TileRenderer->CreateTileMap({ TileX, TileY, {16, 16}, "HoHoYee_AttackABC" });
 
 		for (size_t y = 0; y < TileY; y++)
 		{
 			for (size_t x = 0; x < TileX; x++)
 			{
-				Object->TileRenderer->SetTile({ y, x });
+				Object->TileRenderer->SetTileIndex({ y, x });
 			}
 		}
 
@@ -106,11 +106,16 @@ void PlayLevel::Start()
 
 void PlayLevel::Update(float _Delta)
 {
+	std::string FPS;
+	FPS = std::to_string(static_cast<int>(1.0f / _Delta));
+	FPS += "\n";
+	OutputDebugStringA(FPS.c_str());
+
 	static size_t X = 0;
 
 	if (GameEngineInput::IsDown('Y'))
 	{
-		TileMapObject->TileRenderer->SetTile({ ++X, 0, 1 });
+		TileMapObject->TileRenderer->SetTilePos({ PlayerObject->Transform.GetWorldPosition(), 1 });
 	}
 
 	int a = 0;

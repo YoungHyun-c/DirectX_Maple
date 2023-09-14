@@ -2,6 +2,7 @@
 #include "GameEngineTileMap.h"
 #include "GameEngineTransform.h"
 #include "GameEngineConstantBuffer.h"
+#include "GameEngineCamera.h"
 
 GameEngineTileMap::GameEngineTileMap()
 {
@@ -28,7 +29,18 @@ void GameEngineTileMap::CreateTileMap(const CreateTileParameter& _Parameter)
 	TileData.TileScale.Z = 1.0f;
 }
 
-void GameEngineTileMap::SetTile(const SetTileParameter& _Parameter)
+void GameEngineTileMap::SetTilePos(const SetTileParameterPos& _Parameter)
+{
+	SetTileParameterIndex Parameter;
+	Parameter.X = static_cast<size_t>(_Parameter.Pos.X / TileData.TileScale.X);
+	Parameter.Y = static_cast<size_t>(_Parameter.Pos.Y / TileData.TileScale.Y);
+	Parameter.Index = _Parameter.Index;
+	Parameter.SpriteName = _Parameter.SpriteName;
+
+	SetTileIndex(Parameter);
+}
+
+void GameEngineTileMap::SetTileIndex(const SetTileParameterIndex& _Parameter)
 {
 	if (Tiles.size() <= _Parameter.Y)
 	{
@@ -59,10 +71,63 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 {
 	ResSetting();
 
-	TransformData Data;
-	for (size_t y = 0; y < Tiles.size(); y++)
+	float4 CameraPos = _Camera->Transform.GetWorldPosition();
+	float4 WindowScale = GameEngineCore::MainWindow.GetScale();
+
+	float4 ScreenLeftTop;
+
+	ScreenLeftTop.X = CameraPos.X - WindowScale.hX();
+	ScreenLeftTop.Y = CameraPos.Y + WindowScale.hY();
+
+	int StartX = static_cast<size_t>(ScreenLeftTop.X / TileData.TileScale.X) - 1;
+	int StartY = static_cast<size_t>(ScreenLeftTop.Y / TileData.TileScale.Y) - 1;
+	int EndX = StartX + (WindowScale.X / TileData.TileScale.X) + 1;
+	int EndY = StartY + (WindowScale.Y / TileData.TileScale.Y) + 1;
+
+	if (0 >= StartX)
 	{
-		for (size_t x = 0; x < Tiles[y].size(); x++)
+		StartX = 0;
+	}
+
+	if (0 >= EndX)
+	{
+		EndX = 0;
+	}
+
+	if (TileData.TileCountX < StartX)
+	{
+		StartX = TileData.TileCountX - 1;
+	}
+
+	if (TileData.TileCountX < EndX)
+	{
+		EndX = TileData.TileCountX - 1;
+	}
+
+	if (0 >= StartY)
+	{
+		StartY = 0;
+	}
+
+	if (0 >= EndY)
+	{
+		EndY = 0;
+	}
+
+	if (TileData.TileCountX < StartY)
+	{
+		StartX = TileData.TileCountX - 1;
+	}
+
+	if (TileData.TileCountY < EndY)
+	{
+		EndY = TileData.TileCountY - 1;
+	}
+
+	TransformData Data;
+	for (size_t y = StartY ; y < EndY; y++)
+	{
+		for (size_t x = StartX; x < EndX; x++)
 		{
 			// 이게 100 x 100번 만큼
 			//if (카메라에 나오지 않는다면)

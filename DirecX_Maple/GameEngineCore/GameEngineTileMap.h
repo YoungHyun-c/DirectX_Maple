@@ -18,13 +18,27 @@ public:
 	std::string_view SpriteName = "";
 };
 
-class SetTileParameter
+class SetTileParameterIndex
 {
 public:
-	size_t X;
-	size_t Y;
+	size_t X = -1;
+	size_t Y = -1;
 	unsigned int Index = 0;
 	std::string_view SpriteName = "";
+};
+
+class SetTileParameterPos
+{
+public:
+	float4 Pos;
+	unsigned int Index = 0;
+	std::string_view SpriteName = "";
+
+	SetTileParameterPos(float4 _Pos, unsigned int _Index = 0, std::string_view _SpriteName = "")
+		: Pos(_Pos), Index(_Index), SpriteName(SpriteName)
+	{
+	}
+
 };
 
 // Ό³Έν :
@@ -48,7 +62,9 @@ public:
 	// size_t Y;
 	// unsigned int Index = 0;
 	// std::string_view SpriteName ="";
-	void SetTile(const SetTileParameter& _Parameter);
+	void SetTileIndex(const SetTileParameterIndex& _Parameter);
+
+	void SetTilePos(const SetTileParameterPos& _Parameter);
 
 protected:
 	void Render(GameEngineCamera* _Camera, float _Delta) override;

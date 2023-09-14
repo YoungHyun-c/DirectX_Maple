@@ -24,6 +24,7 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
+	std::shared_ptr<class Player> PlayerObject;
 	std::shared_ptr<class PlayMap> Map;
 	std::shared_ptr<class TileMap> TileMapObject;
 };
