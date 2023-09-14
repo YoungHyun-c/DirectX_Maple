@@ -7,9 +7,9 @@
 class EventParameter
 {
 public:
-	std::function<void(class GameEngineCollision* _Collision)> Enter = nullptr;
-	std::function<void(class GameEngineCollision* _Collision)> Stay = nullptr;
-	std::function<void(class GameEngineCollision* _Collsion)> Exit = nullptr;
+	std::function<void(class GameEngineCollision*, class GameEngineCollision* _Collisions)> Enter = nullptr;
+	std::function<void(class GameEngineCollision*, class GameEngineCollision* _Collisions)> Stay = nullptr;
+	std::function<void(class GameEngineCollision*, class GameEngineCollision* _Collisions)> Exit = nullptr;
 
 };
 
