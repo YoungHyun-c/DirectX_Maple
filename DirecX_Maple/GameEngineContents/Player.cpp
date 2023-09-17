@@ -3,7 +3,7 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineCollision.h>
-#include "PlayMap.h"
+#include "BackGroundMap.h"
 #include "Monster.h"
 #include "ContentsEnum.h"
 
@@ -20,12 +20,11 @@ Player::~Player()
 void Player::Start()
 {
 	{
-		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
+		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		MainSpriteRenderer->CreateAnimation("Attack2", "Battle_Alert", 0.1f, -1, -1, true);
 
-
 		MainSpriteRenderer->CreateAnimation("Alert", "Alert", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Attack", "Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Attack", "Attack", 0.3f, -1, -1, false);
 		MainSpriteRenderer->CreateAnimation("Impale", "Impale", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Dead", "Dead", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Fly", "Fly", 0.1f, -1, -1, true);

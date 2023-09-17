@@ -2,18 +2,18 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
-class TitleLevel : public GameEngineLevel
+class BossRewardLevel : public GameEngineLevel
 {
 public:
 	// constructer destructer
-	TitleLevel();
-	~TitleLevel();
+	BossRewardLevel();
+	~BossRewardLevel();
 
 	// delete Function
-	TitleLevel(const TitleLevel& _Other) = delete;
-	TitleLevel(TitleLevel&& _Other) noexcept = delete;
-	TitleLevel& operator = (const TitleLevel& _Other) = delete;
-	TitleLevel& operator = (TitleLevel&& _Other) noexcept = delete;
+	BossRewardLevel(const BossRewardLevel& _Other) = delete;
+	BossRewardLevel(BossRewardLevel&& _Other) noexcept = delete;
+	BossRewardLevel& operator = (const BossRewardLevel& _Other) = delete;
+	BossRewardLevel& operator = (BossRewardLevel&& _Other) noexcept = delete;
 
 protected:
 	void Start() override;
@@ -24,5 +24,6 @@ protected:
 
 private:
 	std::shared_ptr<class BackGroundMap> Map;
+
 };
 

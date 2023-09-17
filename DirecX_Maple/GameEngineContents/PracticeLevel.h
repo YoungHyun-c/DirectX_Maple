@@ -2,30 +2,29 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
-class PlayLevel : public GameEngineLevel
+class PracticeLevel : public GameEngineLevel
 {
 public:
 	// constructer destructer
-	PlayLevel();
-	~PlayLevel();
+	PracticeLevel();
+	~PracticeLevel();
 
 	// delete Function
-	PlayLevel(const PlayLevel& _Other) = delete;
-	PlayLevel(PlayLevel&& _Other) noexcept = delete;
-	PlayLevel& operator = (const PlayLevel& _Other) = delete;
-	PlayLevel& operator = (PlayLevel&& _Other) noexcept = delete;
+	PracticeLevel(const PracticeLevel& _Other) = delete;
+	PracticeLevel(PracticeLevel&& _Other) noexcept = delete;
+	PracticeLevel& operator = (const PracticeLevel& _Other) = delete;
+	PracticeLevel& operator = (PracticeLevel&& _Other) noexcept = delete;
 
 protected:
 	void Start() override;
-
 	void Update(float _Delta) override;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
+	std::shared_ptr<class BackGroundMap> Map;
 	std::shared_ptr<class Player> PlayerObject;
-	std::shared_ptr<class PlayMap> Map;
 	std::shared_ptr<class TileMap> TileMapObject;
 };
 

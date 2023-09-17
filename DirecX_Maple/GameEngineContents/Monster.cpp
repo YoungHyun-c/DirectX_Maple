@@ -20,7 +20,7 @@ void Monster::Start()
 
 		NewRandom.SetSeed(reinterpret_cast<long long>(this));
 
-		Renderer->SetSprite("JinHilla.png");
+		//Renderer->SetSprite("JinHillaN001.png");
 		//Renderer->Transform.SetLocalPosition({ 1300.0f, -500.0f, 0 });
 		Renderer->SetImageScale({ 50.0f, 50.0f, 0.0f });
 		Renderer->SetSamplerState(SamplerOption::POINT);

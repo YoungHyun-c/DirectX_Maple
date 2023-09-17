@@ -2,18 +2,18 @@
 #include <GameEngineCore/GameEngineLevel.h>
 
 // Ό³Έν :
-class TitleLevel : public GameEngineLevel
+class BossLevel : public GameEngineLevel
 {
 public:
 	// constructer destructer
-	TitleLevel();
-	~TitleLevel();
+	BossLevel();
+	~BossLevel();
 
 	// delete Function
-	TitleLevel(const TitleLevel& _Other) = delete;
-	TitleLevel(TitleLevel&& _Other) noexcept = delete;
-	TitleLevel& operator = (const TitleLevel& _Other) = delete;
-	TitleLevel& operator = (TitleLevel&& _Other) noexcept = delete;
+	BossLevel(const BossLevel& _Other) = delete;
+	BossLevel(BossLevel&& _Other) noexcept = delete;
+	BossLevel& operator = (const BossLevel& _Other) = delete;
+	BossLevel& operator = (BossLevel&& _Other) noexcept = delete;
 
 protected:
 	void Start() override;

@@ -3,7 +3,7 @@
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="ContentsCore.cpp" />
-    <ClCompile Include="PlayLevel.cpp">
+    <ClCompile Include="PracticeLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
@@ -12,23 +12,32 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="PlayMap.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Monster.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="BackGround.cpp">
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossEntranceLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BossRewardLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundMap.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="TileMap.cpp">
+    <ClCompile Include="JinHillaAnime.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="ContentsCore.h" />
-    <ClInclude Include="PlayLevel.h">
+    <ClInclude Include="PracticeLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
@@ -37,19 +46,28 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
-    <ClInclude Include="PlayMap.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="BackGround.h">
+    <ClInclude Include="TileMap.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEntranceLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BossRewardLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundMap.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="TileMap.h">
+    <ClInclude Include="JinHillaAnime.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
