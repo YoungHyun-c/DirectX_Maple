@@ -32,29 +32,30 @@ void GameEngineConstantBuffer::ResCreate(int _ByteSize)
 
 void GameEngineConstantBuffer::Setting(UINT _Slot)
 {
-	switch (Type)
-	{
-	case ShaderType::None:
-		break;
-	case ShaderType::Vertex:
-		GameEngineCore::GetContext()->VSSetConstantBuffers(_Slot, 1, &Buffer);
-		break;
-	case ShaderType::Hull:
-		break;
-	case ShaderType::Tessellator:
-		break;
-	case ShaderType::Domain:
-		break;
-	case ShaderType::Geometry:
-		break;
-	case ShaderType::Pixel:
-		GameEngineCore::GetContext()->PSSetConstantBuffers(_Slot, 1, &Buffer);
-		break;
-	case ShaderType::Max:
-		break;
-	default:
-		break;
-	}
+	GameEngineCore::GetContext()->VSSetConstantBuffers(_Slot, 1, &Buffer);
+	//switch (Type)
+	//{
+	//case ShaderType::None:
+	//	break;
+	//case ShaderType::Vertex:
+	//	GameEngineCore::GetContext()->VSSetConstantBuffers(_Slot, 1, &Buffer);
+	//	break;
+	//case ShaderType::Hull:
+	//	break;
+	//case ShaderType::Tessellator:
+	//	break;
+	//case ShaderType::Domain:
+	//	break;
+	//case ShaderType::Geometry:
+	//	break;
+	//case ShaderType::Pixel:
+	//	GameEngineCore::GetContext()->PSSetConstantBuffers(_Slot, 1, &Buffer);
+	//	break;
+	//case ShaderType::Max:
+	//	break;
+	//default:
+	//	break;
+	//}
 
 	// GameEngineCore::GetContext()->VSSetConstatnBuffers()
 }

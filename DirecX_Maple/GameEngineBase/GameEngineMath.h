@@ -357,6 +357,10 @@ public:
 		return POINT{ iX(), iY() };
 	}
 
+	std::string ToString(std::string_view _Next = "")
+	{
+		return "X : " + std::to_string(X) + " Y : " + std::to_string(Y) + " Z : " + std::to_string(Z) + _Next.data();
+	}
 
 
 public:
@@ -696,6 +700,13 @@ public:
 	void RotationYDeg(const float _Value)
 	{
 		RotationYRad(_Value * GameEngineMath::D2R);
+	}
+
+	float4x4 InverseReturn() const
+	{
+		float4x4 Result;
+		Result.DirectXMatrix = DirectX::XMMatrixInverse(nullptr, DirectXMatrix);
+		return Result;
 	}
 	
 	void RotationYRad(const float _Value)

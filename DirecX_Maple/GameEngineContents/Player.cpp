@@ -75,7 +75,7 @@ void Player::Start()
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalScale({ -100.0f, 100.0f, 1.0f });
+		Col->Transform.SetLocalScale({ 100.0f, 100.0f, 1.0f });
 	}
 
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
@@ -222,6 +222,11 @@ void Player::Update(float _Delta)
 		MainSpriteRenderer->ChangeAnimation("Walk");
 	}
 
+
+	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(Transform.GetWorldPosition());
+
+	float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
+	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
 
 	//GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameEngineDirectBuffer.h"
-#include "GameEngineShader.h"
+//#include "GameEngineShader.h"
 
 // 설명 :
 class GameEngineConstantBuffer :
@@ -17,7 +17,7 @@ public:
 	GameEngineConstantBuffer& operator = (const GameEngineConstantBuffer& _Other) = delete;
 	GameEngineConstantBuffer& operator = (GameEngineConstantBuffer&& _Other) noexcept = delete;
 
-	static std::shared_ptr<GameEngineConstantBuffer> CreateAndFind(int _Byte, std::string_view _Name, ShaderType _Type = ShaderType::None, int Slot = 0)
+	static std::shared_ptr<GameEngineConstantBuffer> CreateAndFind(int _Byte, std::string_view _Name, int Slot = 0)
 	{
 		if (ConstantBuffers.end() == ConstantBuffers.find(_Byte))
 		{
@@ -36,8 +36,7 @@ public:
 
 		std::shared_ptr<GameEngineConstantBuffer> Res = GameEngineResources::CreateRes();
 		Res->SetName(UpperName);
-		Res->Type = _Type;
-		Res->Slot = Slot;
+
 		ConstantBuffers[_Byte][UpperName] = Res;
 		Res->ResCreate(_Byte);
 		return Res;
@@ -57,8 +56,8 @@ public:
 protected:
 
 private:
-	ShaderType Type = ShaderType::None;
-	int Slot = 0;
+	//ShaderType Type = ShaderType::None;
+	//int Slot = 0;
 
 	// 자료구조를 Resource랑 다르게 따로따로 가지고 있어야 한다.
 	//				500byte			transformdata

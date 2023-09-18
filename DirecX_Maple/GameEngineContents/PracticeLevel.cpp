@@ -68,8 +68,8 @@ void PracticeLevel::Start()
 
 void PracticeLevel::Update(float _Delta)
 {
-	std::string FPS;
-	FPS = std::to_string(static_cast<int>(1.0f / _Delta));
+	std::string FPS = "FPS : ";
+	FPS += std::to_string(static_cast<int>(1.0f / _Delta));
 	FPS += "\n";
 	OutputDebugStringA(FPS.c_str());
 

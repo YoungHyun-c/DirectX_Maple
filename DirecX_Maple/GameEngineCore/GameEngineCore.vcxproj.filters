@@ -145,6 +145,9 @@
     <ClInclude Include="GameEngineTileMap.h">
       <Filter>Rendering\Contents</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineShaderResHelper.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -240,6 +243,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineTileMap.cpp">
       <Filter>Rendering\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineShaderResHelper.cpp">
+      <Filter>Resources\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
