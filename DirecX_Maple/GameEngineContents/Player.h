@@ -1,6 +1,25 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
 
+enum class PlayerState
+{
+	Idle,
+	Run,
+	Jump,
+	DoubleJump,
+	Prone,
+	ProneAttack,
+	Attack,
+	Max,
+};
+
+enum class PlayerDir
+{
+	Right,
+	Left,
+	Max,
+};
+
 // Ό³Έν :
 class Player : public GameEngineActor
 {

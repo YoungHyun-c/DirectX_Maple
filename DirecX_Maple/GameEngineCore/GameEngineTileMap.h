@@ -41,6 +41,12 @@ public:
 
 };
 
+enum class SAMPLER_OBJECT
+{
+	POINT,
+	LINEAR,
+};
+
 // Ό³Έν :
 class GameEngineTileMap : public GameEngineRenderer
 {
@@ -66,6 +72,14 @@ public:
 
 	void SetTilePos(const SetTileParameterPos& _Parameter);
 
+	void ExpandRenderedTileMap(int _Size)
+	{
+		TileMapExpansionSize = _Size;
+	}
+
+	void SetSamplerState(SAMPLER_OBJECT _Option);
+	std::shared_ptr<class GameEngineSampler> Sampler;
+
 protected:
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
@@ -76,5 +90,6 @@ private:
 
 	std::vector<std::vector<Tile>> Tiles;
 
+	int TileMapExpansionSize = 0;
 };
 
