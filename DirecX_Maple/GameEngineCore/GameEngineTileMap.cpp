@@ -127,6 +127,10 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	{
 		for (size_t x = StartX; x < EndX; x++)
 		{
+			if (0 > Tiles[y][x].Index)
+			{
+				continue;
+			}
 			// 이게 100 x 100번 만큼
 			//if (카메라에 나오지 않는다면)
 			//{
