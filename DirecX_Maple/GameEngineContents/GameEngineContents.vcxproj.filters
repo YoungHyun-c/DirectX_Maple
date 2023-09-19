@@ -6,9 +6,6 @@
     <ClCompile Include="PracticeLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -33,15 +30,15 @@
     <ClCompile Include="JinHillaAnime.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="ContentsCore.h" />
     <ClInclude Include="PracticeLevel.h">
       <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
       <Filter>Level</Filter>
@@ -70,6 +67,9 @@
     <ClInclude Include="JinHillaAnime.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -80,6 +80,9 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{32233c47-b570-4ae9-9c89-4dc2a5224b3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{d7d60562-48c1-4a10-8629-509501139502}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@ void Player::Start()
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		MainSpriteRenderer->CreateAnimation("Attack2", "Battle_Alert", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Attack3", "Divide1Hit", 0.1f, -1, -1, true);
 
 		MainSpriteRenderer->CreateAnimation("Alert", "Alert", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Attack", "Attack", 0.3f, -1, -1, false);
@@ -39,7 +40,7 @@ void Player::Start()
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
 		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
-		MainSpriteRenderer->ChangeAnimation("Stand");
+		MainSpriteRenderer->ChangeAnimation("Attack3");
 		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 		

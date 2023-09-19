@@ -121,18 +121,64 @@ void GameEngineTransform::TransformUpdate()
 	TransData.LocalCalculation();
 	TransData.WorldMatrix = TransData.LocalWorldMatrix;
 
+	// World Local
+
+	// position
+	// 부모
+	// 100, 100
+	// 나도
+	// 100, 100
+	// 나의 Local 100, 100
+	// 나의 World 200, 200
+
+	// SetWorldPosition(300, 300) 지금 내가 어디에 있건
+	// 나의 위치가 300, 300으로 고정된다는것. 그치만 위치를 바꾸고, 부모를 따라다니게 만드려함.
+
+	// 단순하게 생각해보면 부모의 위치에서 나의 위치를 빼면
+	// 회전하고
+
 	if (nullptr != Parent)
 	{
 		TransData.ParentMatrix = Parent->TransData.WorldMatrix;
-		TransData.WorldMatrix = TransData.LocalWorldMatrix * TransData.ParentMatrix;
+		TransData.WorldMatrix = TransData.WorldMatrix * TransData.ParentMatrix;
+
+		// 나는 부모의 행렬을 곱해서 나의 행렬이 나오게 되었다.
+		// 기존의 요소들은 유지해
+
+		if (true == AbsoluteScale || true == AbsoluteRotation || true == AbsolutePosition)
+		{
+			// 수치를 고정시키려는 명령이 내려왔다.
+			float4 WScale, WRotation, WPosition;
+			float4 LScale, LRotation, LPosition;
+
+			TransData.WorldMatrix.Decompose(WScale, WRotation, WPosition);
+
+			if (true == AbsoluteScale)
+			{
+				WScale = TransData.Scale;
+			}
+
+			if (true == AbsoluteRotation)
+			{
+				WRotation = TransData.Rotation.EulerToQuaternion();
+			}
+
+			if (true == AbsolutePosition)
+			{
+				WPosition = TransData.Position;
+			}
+
+			TransData.WorldMatrix.Decompose(WScale, WRotation, WPosition);
+			TransData.LocalWorldMatrix = TransData.WorldMatrix * TransData.ParentMatrix.InverseReturn();
+		}
 	}
 
-	//TransData.WorldMatrix.ArrVector[3];
+	// 내부에서 디컴포즈를 해주기 때문에
 	TransData.WorldMatrix.Decompose(TransData.WorldScale, TransData.WorldRotation, TransData.WorldPosition);
 	TransData.WorldRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();
 
 	TransData.LocalWorldMatrix.Decompose(TransData.LocalScale, TransData.LocalQuaternion, TransData.LocalPosition);
-	TransData.LocalRotation = TransData.WorldQuaternion.QuaternionToEulerDeg();
+	TransData.LocalRotation = TransData.LocalQuaternion.QuaternionToEulerDeg();
 
 	// 반지름
 	ColData.OBB.Extents = TransData.WorldScale.ToABS().Half().Float3;
@@ -153,6 +199,10 @@ void GameEngineTransform::TransformUpdate()
 	//ColData.AABB
 
 	CalChilds();
+
+	AbsoluteScale = false;
+	AbsoluteRotation = false;
+	AbsolutePosition = false;
 }
 
 void GameEngineTransform::CalculationViewAndProjection(const TransformData& _Transform)
