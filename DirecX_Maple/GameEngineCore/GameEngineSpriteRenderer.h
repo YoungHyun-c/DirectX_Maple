@@ -121,7 +121,7 @@ public:
 		AutoScaleRatio.X = -abs(AutoScaleRatio.X);
 	}
 
-	void SetSamplerState(SamplerOption _Option);
+
 
 	bool IsCurAnimationEnd()
 	{

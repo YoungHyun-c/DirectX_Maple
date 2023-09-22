@@ -17,7 +17,6 @@ void JinHillaAnime::Start()
 		JinHillaAnimeSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::JinHillaAnime);
 		JinHillaAnimeSpriteRenderer->CreateAnimation("JinHillaTitle", "JinHillaTitle", 0.2f, 0, 7, true);
 		JinHillaAnimeSpriteRenderer->CreateAnimation("JinHillaAnime", "JinHillaAnime", 0.1f, -1, -1, false);
-		JinHillaAnimeSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
 		JinHillaAnimeSpriteRenderer->ChangeAnimation("JinHillaTitle");
 		//JinHillaAnimeSpriteRenderer->Transform.SetLocalPosition({})

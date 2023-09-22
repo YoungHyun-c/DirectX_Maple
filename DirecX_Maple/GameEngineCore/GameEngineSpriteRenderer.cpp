@@ -87,11 +87,25 @@ void GameEngineSpriteRenderer::Start()
 {
 	GameEngineRenderer::Start();
 
-	DataTransform = &ImageTransform;
+	//DataTransform = &ImageTransform;
 
 	ImageTransform.SetParent(Transform);
 
-	Sampler = GameEngineSampler::Find("POINT");
+	SetMesh("RECT");
+	SetMaterial("2DTexture");
+
+	const TransformData& Data = ImageTransform.GetConstTransformDataRef();
+	ShaderResHelper.ConstantBufferLink("TransformData", Data);
+
+	ShaderResHelper.ConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+
+	//std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
+	//if (nullptr != Buffer)
+	//{
+	//	Buffer->ChangeData(CurSprite.SpritePivot);
+	//	Buffer->Setting(1);
+	//}
+	// CurSprite.Texture->PSSetting(0);
 }
 
 void GameEngineSpriteRenderer::Update(float _Delta)
@@ -124,23 +138,25 @@ void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
 
 void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	float4 ParentScale = Transform.GetLocalScale();
-	float4 Scale = ImageTransform.GetLocalScale();
+	//float4 ParentScale = Transform.GetLocalScale();
+	//float4 Scale = ImageTransform.GetLocalScale();
 
-	float4 CalPivot = Pivot;
-	CalPivot.X -= 0.5f;
-	CalPivot.Y -= 0.5f;
+	//float4 CalPivot = Pivot;
+	//CalPivot.X -= 0.5f;
+	//CalPivot.Y -= 0.5f;
 
-	float4 PivotPos;
-	PivotPos.X = Scale.X * CalPivot.X;
-	PivotPos.Y = Scale.Y * CalPivot.Y;
+	//float4 PivotPos;
+	//PivotPos.X = Scale.X * CalPivot.X;
+	//PivotPos.Y = Scale.Y * CalPivot.Y;
 
-	ImageTransform.SetLocalPosition(PivotPos);
+	//ImageTransform.SetLocalPosition(PivotPos);
 
-	ImageTransform.TransformUpdate();
-	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
+	//ImageTransform.TransformUpdate();
+	//ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 
-	GameEngineRenderer::ResSetting();
+	GameEngineRenderer::Render(_Camera, _Delta);
+
+	//GameEngineRenderer::ResSetting();
 
 	//std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
 
@@ -162,14 +178,14 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 	//CurSprite.Texture->PSSetting(0);
 
 	//std::shared_ptr<GameEngineSampler> Sampler = GameEngineSampler::Find("EngineBaseSampler");
-	if (nullptr == Sampler)
-	{
-		MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
-	}
-	Sampler->PSSetting(0);
+	//if (nullptr == Sampler)
+	//{
+	//	MsgBoxAssert("존재하지 않는 텍스처를 사용하려고 했습니다.");
+	//}
+	//Sampler->PSSetting(0);
 
-	// 내꺼 조금더 넣고,
-	GameEngineRenderer::Draw();
+	//// 내꺼 조금더 넣고,
+	//GameEngineRenderer::Draw();
 }
 
 void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int index /*=0*/)

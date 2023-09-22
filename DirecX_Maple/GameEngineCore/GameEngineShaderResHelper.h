@@ -23,6 +23,9 @@ class GameEngineConstantBufferSetter : public GameEngineShaderResources
 public:
 	std::shared_ptr<GameEngineConstantBuffer> Res;
 
+	const void* CPUDataPtr = nullptr;
+	UINT DataSize = -1;
+
 	void Setting() override;
 	void Reset() override;
 };
@@ -68,9 +71,30 @@ public:
 	// 쉐이더의 컴파일된 코드 결과물
 	void ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode);
 
+	void ShaderResCopy(GameEngineShader* _Shader);
+
+	void AllShaderResourcesSetting();
+	
+	bool IsConstantBuffer(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return ConstantBufferSetters.contains(UpperString);
+	}
+
+	// 여기에 값형만 들어간다.
+	template<typename DataType>
+	void ConstantBufferLink(std::string_view _Name, const DataType& _Data)
+	{
+		ConstantBufferLink(_Name, &_Data, sizeof(_Data));
+	}
+
+	void ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
+
 protected:
 
 private:
+	// std::shared_ptr로 만들고
 	// 그걸 기억을 해놔야 하기 때문에.
 	std::multimap<std::string, GameEngineConstantBufferSetter> ConstantBufferSetters;
 	std::multimap<std::string, GameEngineTextureSetter> TextureSetters;

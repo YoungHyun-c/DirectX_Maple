@@ -31,6 +31,11 @@ public:
 	GameEngineShader& operator = (GameEngineShader&& _Other) noexcept = delete;
 
 	GameEngineShaderResHelper ResHelper;
+	
+	ShaderType GetShaderType()
+	{
+		return ShaderTypeValue;
+	}
 
 protected:
 	void CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _VersionLow);

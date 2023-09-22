@@ -13,6 +13,8 @@
 #include "GameEngineTexture.h"
 #include "GameEngineSprite.h"
 #include "GameEngineBlend.h"
+#include "GameEngineMesh.h"
+#include "GameEngineMaterial.h"
 
 void GameEngineDevice::ResourcesInit()
 {
@@ -129,6 +131,8 @@ void GameEngineDevice::ResourcesInit()
 		};
 
 		GameEngineIndexBuffer::Create("Rect", Index);
+		
+		GameEngineMesh::Create("Rect");
 	}
 
 	{
@@ -233,7 +237,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 
-		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("EngineBlend", Desc);
+		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("AlphaBlend", Desc);
 	}
 
 	{
@@ -305,5 +309,11 @@ void GameEngineDevice::ResourcesInit()
 			GameEngineFile& File = Files[i];
 			GameEngineShader::AutoCompile(File);
 		}
+	}
+
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTexture");
+		Mat->SetVertexShader("TextureShader_VS");
+		Mat->SetPixelShader("TextureShader_PS");
 	}
 }
