@@ -50,8 +50,11 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 // 보통 샘플러의 텍스처는 1쌍으로 사용되기 때문에
 // 샘플러는 텍스처의 색상을 가져올때 보간을 해주거나 특수한 공식들을 내부에서
 // 사용해주는 용도가 있다.
+
+// 우리 규칙
+
 Texture2D DiffuseTex : register(t0);
-SamplerState Sampler : register(s0);
+SamplerState DiffuseTexSampler : register(s0);
 
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
@@ -60,7 +63,7 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     
     // 샘플러의 설정에 의해서 dx가 알아서 계산해주는 방식으로 처리하는 것.
     // 스위즐링 문법
-    float4 Color = DiffuseTex.Sample(Sampler, _Input.TEXCORRD.xy);
+    float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCORRD.xy);
     // 블렌드 처리를 해줘야 배경 투명값을 제거 할 수 있다.
     // 일단은 배경값 0이하는 없애게 처리
     if (0.0f >= Color.a)

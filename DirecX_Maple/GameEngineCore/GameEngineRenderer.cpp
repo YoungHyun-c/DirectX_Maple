@@ -104,14 +104,14 @@ void GameEngineRenderer::ResSetting()
 			LayOut->ResCreate(VertexBuffer, VertexShader);
 		}
 
-		std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
+		//std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 
-		if (nullptr != Buffer)
-		{
-			const TransformData& Data = DataTransform->GetConstTransformDataRef();
-			Buffer->ChangeData(Data);
-			Buffer->Setting(0);
-		}
+		//if (nullptr != Buffer)
+		//{
+		//	const TransformData& Data = DataTransform->GetConstTransformDataRef();
+		//	Buffer->ChangeData(Data);
+		//	Buffer->Setting(0);
+		//}
 
 
 		if (nullptr != LayOut)

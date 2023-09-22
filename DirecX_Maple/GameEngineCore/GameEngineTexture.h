@@ -1,6 +1,6 @@
 #pragma once
 #include "GameEngineResources.h"
-
+#include "GameEngineSampler.h"
 #include "..\\GameEngineCore\\ThirdParty\\DirectXTex\\inc\\DirectXTex.h"
 
 class GameEngineColor
@@ -42,17 +42,22 @@ public:
 		return NewRes;
 	}
 
-	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path)
+	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path,
+		D3D11_FILTER _Filter = D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT,
+		D3D11_TEXTURE_ADDRESS_MODE _Address = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_CLAMP)
 	{
 		GameEnginePath Path = _Path;
 
 		return Load(Path.GetStringPath(), Path.GetFileName());
 	}
 
-	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path, std::string_view _Name)
+	static std::shared_ptr<GameEngineTexture> Load(std::string_view _Path, std::string_view _Name,
+		D3D11_FILTER _Filter = D3D11_FILTER::D3D11_FILTER_MIN_MAG_MIP_POINT,
+		D3D11_TEXTURE_ADDRESS_MODE _Address = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_CLAMP)
 	{
 		std::shared_ptr<GameEngineTexture> NewRes = CreateRes(_Name);
 		NewRes->ResLoad(_Path);
+		NewRes->Sampler = GameEngineSampler::Create(_Filter, _Address);
 		return NewRes;
 	}
 
@@ -94,6 +99,8 @@ private:
 
 	DirectX::TexMetadata Data;
 	DirectX::ScratchImage Image;
+
+	std::shared_ptr<GameEngineSampler> Sampler;
 
 	void ResLoad(std::string_view _Path);
 };

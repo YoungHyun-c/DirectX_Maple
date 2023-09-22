@@ -39,12 +39,6 @@ public:
 	std::vector<float> Inter;
 };
 
-enum class SamplerOption
-{
-	LINEAR,
-	POINT,
-};
-
 enum class PivotType
 {
 	Center,

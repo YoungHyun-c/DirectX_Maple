@@ -16,9 +16,13 @@ public:
 };
 
 // 이 쉐이더가 상수버퍼를 몇개 사용하냐
+// 상수버퍼가 아니라
+// 상수버퍼를 이용하는 클래스
 class GameEngineConstantBufferSetter : public GameEngineShaderResources
 {
 public:
+	std::shared_ptr<GameEngineConstantBuffer> Res;
+
 	void Setting() override;
 	void Reset() override;
 };
@@ -26,6 +30,8 @@ public:
 class GameEngineTextureSetter : public GameEngineShaderResources
 {
 public:
+	std::shared_ptr<GameEngineTexture> Res;
+
 	void Setting() override;
 	void Reset() override;
 };
@@ -33,6 +39,8 @@ public:
 class GameEngineSamplerSetter : public GameEngineShaderResources
 {
 public:
+	std::shared_ptr<GameEngineSampler> Res;
+
 	void Setting() override;
 	void Reset() override;
 };
@@ -58,11 +66,12 @@ public:
 	GameEngineShaderResHelper& operator = (GameEngineShaderResHelper&& _Other) noexcept = delete;
 
 	// 쉐이더의 컴파일된 코드 결과물
-	void ShaderResCheck(std::string _FunctionName, ID3DBlob* _CompileCode);
+	void ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode);
 
 protected:
 
 private:
+	// 그걸 기억을 해놔야 하기 때문에.
 	std::multimap<std::string, GameEngineConstantBufferSetter> ConstantBufferSetters;
 	std::multimap<std::string, GameEngineTextureSetter> TextureSetters;
 	std::multimap<std::string, GameEngineSamplerSetter> SamplerSetters;

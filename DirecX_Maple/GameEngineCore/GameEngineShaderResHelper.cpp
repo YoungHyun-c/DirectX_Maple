@@ -41,7 +41,7 @@ GameEngineShaderResHelper::~GameEngineShaderResHelper()
 
 }
 
-void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, ID3DBlob* _CompileCode)
+void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode)
 {
 	if (nullptr == _CompileCode)
 	{
@@ -70,4 +70,103 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, ID3DBl
 	// 엔진 => 딸깍
 	// 엔진에는 이미 갖춰진 데다가 + 노드가 된다. 언리얼 같은 경우에는
 	CompileInfo->GetDesc(&Info);
+
+	D3D11_SHADER_INPUT_BIND_DESC ResDesc;
+	// SetTexture("MyTexture" "AAAA.png");
+
+	// 텍스처 쉐이더 샘플러 다 합쳐서 몇개냐?
+	for (UINT i = 0; i < Info.BoundResources; i++)
+	{
+		// 텍스처를 10개 썼다. 10
+		// 텍스처 2개 상수버퍼 3개 썼다.
+		CompileInfo->GetResourceBindingDesc(i, &ResDesc);
+
+		std::string UpperName = GameEngineString::ToUpperReturn(ResDesc.Name);
+
+		D3D_SHADER_INPUT_TYPE Type = ResDesc.Type;
+		//D3D_SIT_CBUFFER = 0,
+		//D3D_SIT_TBUFFER = (D3D_SIT_CBUFFER + 1),
+		//D3D_SIT_TEXTURE = (D3D_SIT_TBUFFER + 1),
+		//D3D_SIT_SAMPLER = (D3D_SIT_TEXTURE + 1),
+		//D3D_SIT_UAV_RWTYPED = (D3D_SIT_SAMPLER + 1),
+		//D3D_SIT_STRUCTURED = (D3D_SIT_UAV_RWTYPED + 1),
+		//D3D_SIT_UAV_RWSTRUCTURED = (D3D_SIT_STRUCTURED + 1),
+		//D3D_SIT_BYTEADDRESS = (D3D_SIT_UAV_RWSTRUCTURED + 1),
+		//D3D_SIT_UAV_RWBYTEADDRESS = (D3D_SIT_BYTEADDRESS + 1),
+		//D3D_SIT_UAV_APPEND_STRUCTURED = (D3D_SIT_UAV_RWBYTEADDRESS + 1),
+		//D3D_SIT_UAV_CONSUME_STRUCTURED = (D3D_SIT_UAV_APPEND_STRUCTURED + 1),
+		//D3D_SIT_UAV_RWSTRUCTURED_WITH_COUNTER = (D3D_SIT_UAV_CONSUME_STRUCTURED + 1),
+		//D3D_SIT_RTACCELERATIONSTRUCTURE = (D3D_SIT_UAV_RWSTRUCTURED_WITH_COUNTER + 1),
+		//D3D_SIT_UAV_FEEDBACKTEXTURE = (D3D_SIT_RTACCELERATIONSTRUCTURE + 1),
+		//D3D10_SIT_CBUFFER = D3D_SIT_CBUFFER,
+		//D3D10_SIT_TBUFFER = D3D_SIT_TBUFFER,
+		//D3D10_SIT_TEXTURE = D3D_SIT_TEXTURE,
+		//D3D10_SIT_SAMPLER = D3D_SIT_SAMPLER,
+		//D3D11_SIT_UAV_RWTYPED = D3D_SIT_UAV_RWTYPED,
+		//D3D11_SIT_STRUCTURED = D3D_SIT_STRUCTURED,
+		//D3D11_SIT_UAV_RWSTRUCTURED = D3D_SIT_UAV_RWSTRUCTURED,
+		//D3D11_SIT_BYTEADDRESS = D3D_SIT_BYTEADDRESS,
+		//D3D11_SIT_UAV_RWBYTEADDRESS = D3D_SIT_UAV_RWBYTEADDRESS,
+		//D3D11_SIT_UAV_APPEND_STRUCTURED = D3D_SIT_UAV_APPEND_STRUCTURED,
+		//D3D11_SIT_UAV_CONSUME_STRUCTURED = D3D_SIT_UAV_CONSUME_STRUCTURED,
+		//D3D11_SIT_UAV_RWSTRUCTURED_WITH_COUNTER = D3D_SIT_UAV_RWSTRUCTURED_WITH_COUNTER
+
+		switch (Type)
+		{
+		case D3D_SIT_CBUFFER:
+		{
+			ID3D11ShaderReflectionConstantBuffer* BufferInfo = CompileInfo->GetConstantBufferByName(ResDesc.Name);
+
+			D3D11_SHADER_BUFFER_DESC BufferDesc;
+			BufferInfo->GetDesc(&BufferDesc);
+
+			// 당연히 상수버퍼를 만들어야 한다.
+			std::shared_ptr<GameEngineConstantBuffer> CBuffer = GameEngineConstantBuffer::CreateAndFind(BufferDesc.Size, UpperName, BufferDesc);
+
+			_FunctionName;
+			GameEngineConstantBufferSetter NewSetter;
+			NewSetter.ParentShader = _Shader;
+			NewSetter.Res = CBuffer;
+			NewSetter.Name = UpperName;
+			NewSetter.BindPoint = ResDesc.BindPoint;
+
+			ConstantBufferSetters.insert(std::make_pair(UpperName, NewSetter));
+
+			break;
+		}
+		case D3D_SIT_TEXTURE:
+		{
+			std::shared_ptr<GameEngineTexture> Res
+				= GameEngineTexture::Find("Nset.png");
+
+			_FunctionName;
+			GameEngineTextureSetter NewSetter;
+			NewSetter.ParentShader = _Shader;
+			NewSetter.Res = Res;
+			NewSetter.Name = UpperName;
+			NewSetter.BindPoint = ResDesc.BindPoint;
+
+			TextureSetters.insert(std::make_pair(UpperName, NewSetter));
+			break;
+		}
+		case D3D_SIT_SAMPLER:
+		{
+			std::shared_ptr<GameEngineSampler> Res
+				= GameEngineSampler::Find("EngineBaseSampler");
+
+			_FunctionName;
+			GameEngineSamplerSetter NewSetter;
+			NewSetter.ParentShader = _Shader;
+			NewSetter.Res = Res;
+			NewSetter.Name = UpperName;
+			NewSetter.BindPoint = ResDesc.BindPoint;
+
+			SamplerSetters.insert(std::make_pair(UpperName, NewSetter));
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
 }

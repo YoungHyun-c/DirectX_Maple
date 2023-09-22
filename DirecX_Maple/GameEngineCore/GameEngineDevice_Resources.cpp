@@ -22,21 +22,21 @@ void GameEngineDevice::ResourcesInit()
 	// 기본 쉐이더
 	// 여기에서 자기 텍스처 로드하지않기.
 
-	{
-		// 엔진용 쉐이더를 전부다 로드하는 코드를 친다.
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("GameEngineCoreShader");
-		Dir.MoveChild("GameEngineCoreShader");
-		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
+	//{
+	//	// 엔진용 쉐이더를 전부다 로드하는 코드를 친다.
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("GameEngineCoreShader");
+	//	Dir.MoveChild("GameEngineCoreShader");
+	//	std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
 
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			//GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
-			// 구조적으로 잘 이해하고 있는지를 자신이 명확하게 인지하기 위해서 (ex)File을 한번에 삭제, File관리
-			GameEngineFile& File = Files[i];
-			GameEngineShader::AutoCompile(File);
-		}
-	}
+	//	for (size_t i = 0; i < Files.size(); i++)
+	//	{
+	//		//GameEngineVertexShader::Load(Files[i].GetStringPath(), "ColorShader_VS");
+	//		// 구조적으로 잘 이해하고 있는지를 자신이 명확하게 인지하기 위해서 (ex)File을 한번에 삭제, File관리
+	//		GameEngineFile& File = Files[i];
+	//		GameEngineShader::AutoCompile(File);
+	//	}
+	//}
 
 	{
 		// 엔진용 쉐이더를 전부다 로드하는 코드를 친다.
@@ -158,7 +158,8 @@ void GameEngineDevice::ResourcesInit()
 		// sizeof(TransformData) 바이트패딩 규칙이
 		// 달라서 그리기 다르다고 인식할 수 있다.
 		// 주의 해야 한다.
-		GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
+		// 이제 없어짐
+		// GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData");
 	}
 
 	{
@@ -240,8 +241,8 @@ void GameEngineDevice::ResourcesInit()
 		// 일반적인 보간형식 <= 뭉개진다.
 		// D3D11_FilTER_MIN_MAG_MIP_
 		// 그 밉맵에서 색상가져올떄 다 뭉개는 방식으로 가져오겠다.
-		Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
-		//Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		//Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		Desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 		//D3D11_TEXTURE_ADDRESS_CLAMP;
 		//D3D11_TEXTURE_ADDRESS_WRAP;
 		//D3D11_TEXTURE_ADDRESS_MIRROR;
@@ -264,7 +265,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MinLOD = -FLT_MAX;
 		Desc.MaxLOD = FLT_MAX;
 
-		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("LINEAR", Desc);
+		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("EngineBaseSampler", Desc);
 	}
 
 	{
@@ -284,5 +285,25 @@ void GameEngineDevice::ResourcesInit()
 		Desc.MaxLOD = FLT_MAX;
 
 		std::shared_ptr<GameEngineSampler> Rasterizer = GameEngineSampler::Create("POINT", Desc);
+	}
+
+	// 엔진수준에서 지원해주는 가장 기초적인 리소스들은 여기에서 만들어질 것이다.
+	// 기본 매쉬
+	// 기본 텍스처
+	// 기본 쉐이더
+	// 여기에서 자기 텍스처 로드 하지 않기
+	{
+		// 엔진용 쉐이더를 전부다 로드하는 코드를 친다.
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("GameEngineCoreShader");
+		Dir.MoveChild("GameEngineCoreShader");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
+
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			// 구조적으로 잘 이해하고 있는지를 자신이 명확하게 인지하기 위해서
+			GameEngineFile& File = Files[i];
+			GameEngineShader::AutoCompile(File);
+		}
 	}
 }

@@ -37,7 +37,6 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Rope", "Rope", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Stand", "Stand", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Walk", "Walk", 0.1f, -1, -1, true);
-		MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
 		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
