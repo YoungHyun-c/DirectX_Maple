@@ -3,24 +3,10 @@
 #include <assert.h>
 
 //// Ό³Έν :
-class GameEngineDebug
+namespace GameEngineDebug
 {
-public:
-	// constrcuter destructer
-	GameEngineDebug();
-	~GameEngineDebug();
+	void LeakCheck();
 
-	// delete Function
-	GameEngineDebug(const GameEngineDebug& _Other) = delete;
-	GameEngineDebug(GameEngineDebug&& _Other) noexcept = delete;
-	GameEngineDebug& operator=(const GameEngineDebug& _Other) = delete;
-	GameEngineDebug& operator=(GameEngineDebug&& _Other) noexcept = delete;
-
-	static void LeakCheck();
-
-protected:
-
-private:
 
 };
 

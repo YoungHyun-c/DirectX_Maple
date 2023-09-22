@@ -203,6 +203,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineDebugCore.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineDevice.cpp" />
     <ClCompile Include="GameEngineDevice_Resources.cpp" />
     <ClCompile Include="GameEngineDirectBuffer.cpp" />
@@ -335,6 +339,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineCoreObject.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineDebugCore.h">
       <SubType>
       </SubType>
     </ClInclude>

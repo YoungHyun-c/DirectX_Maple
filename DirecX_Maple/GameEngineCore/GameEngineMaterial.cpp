@@ -31,6 +31,7 @@ void GameEngineMaterial::Rasterizer()
 	{
 		MsgBoxAssert("존재하지 않는 레스터 라이저를 사용하려고 했습니다.");
 	}
+	RasterizerPtr->Setting();
 }
 
 void GameEngineMaterial::PixelShader()

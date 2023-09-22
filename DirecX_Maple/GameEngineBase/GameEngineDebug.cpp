@@ -2,13 +2,6 @@
 #include "GameEngineDebug.h"
 #include <crtdbg.h>
 
-GameEngineDebug::GameEngineDebug() 
-{
-}
-
-GameEngineDebug::~GameEngineDebug() 
-{
-}
 
 
 void GameEngineDebug::LeakCheck() 

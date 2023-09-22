@@ -23,6 +23,7 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
+		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 		MainSpriteRenderer->CreateAnimation("Attack2", "Battle_Alert", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Attack3", "Divide1Hit", 0.1f, -1, -1, true);
 
@@ -241,10 +242,10 @@ void Player::Update(float _Delta)
 	}
 	else
 	{
-		if (Color != GameEngineColor::White)
-		{
-			Transform.AddLocalPosition(float4::UP);
-		}
+		//if (Color != GameEngineColor::White)
+		//{
+		//	Transform.AddLocalPosition(float4::UP);
+		//}
 		GravityForce = 0.0f;
 	}
 }

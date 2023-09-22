@@ -58,6 +58,9 @@
     <Filter Include="Resources\Mesh">
       <UniqueIdentifier>{cf6b7878-cc75-491f-b1df-def8a7ff3a68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{fc66afd3-56bc-4633-b88d-60cc8ad15bf2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -159,6 +162,9 @@
     </ClInclude>
     <ClInclude Include="GameEngineMesh.h">
       <Filter>Resources\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineDebugCore.h">
+      <Filter>Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +270,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineMesh.cpp">
       <Filter>Resources\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDebugCore.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
