@@ -302,3 +302,71 @@ void GameEngineShaderResHelper::ConstantBufferLink(std::string_view _Name, const
 		Setter.CPUDataPtr = _Data;
 	}
 }
+
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_view _TextureName)
+{
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(_TextureName);
+	if (nullptr == Tex)
+	{
+		MsgBoxAssert("존재하지 않는 텍스처 입니다.");
+	}
+
+	SetTexture(_Name, Tex);
+}
+
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture)
+{
+	if (false == IsTexture(_Name))
+	{
+		MsgBoxAssert("존재하지 않는 상수버퍼에 링크를 걸려고 했습니다.");
+		return;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	// 중복되는 이름의 시작 이터레이터와 끝 이터레이터를 찾는법
+	std::multimap<std::string, GameEngineTextureSetter>::iterator NameStartiter
+		= TextureSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineTextureSetter>::iterator NameEnditer
+		= TextureSetters.upper_bound(UpperString);
+
+	std::string SamplerName = NameStartiter->first + "SAMPLER";
+
+	for (; NameStartiter != NameEnditer; ++NameStartiter)
+	{
+		GameEngineTextureSetter& Setter = NameStartiter->second;
+
+		Setter.Res = _Texture;
+
+		if (true == IsSampler(SamplerName))
+		{
+			std::shared_ptr<GameEngineSampler> Sampler = Setter.Res->GetBaseSampler();
+			
+			SetSampler(SamplerName, Sampler);
+		}
+	}
+}
+
+void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler)
+{
+	if (false == IsSampler(_Name))
+	{
+		MsgBoxAssert("존재하지 않는 상수버퍼에 링크를 걸려고 했습니다.");
+		return;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	// 중복되는 이름의 시작 이터레이터와 끝 이터레이터를 찾는법
+	std::multimap<std::string, GameEngineSamplerSetter>::iterator NameStartiter
+		= SamplerSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineSamplerSetter>::iterator NameEnditer
+		= SamplerSetters.upper_bound(UpperString);
+
+	for (; NameStartiter != NameEnditer; ++NameStartiter)
+	{
+		GameEngineSamplerSetter& Setter = NameStartiter->second;
+
+		Setter.Res = _TextureSampler;
+	}
+}

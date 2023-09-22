@@ -98,6 +98,7 @@ void GameEngineSpriteRenderer::Start()
 	ShaderResHelper.ConstantBufferLink("TransformData", Data);
 
 	ShaderResHelper.ConstantBufferLink("SpriteData", CurSprite.SpritePivot);
+	ShaderResHelper.SetTexture("DiffuseTex", "Nset.Png");
 
 	//std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
 	//if (nullptr != Buffer)
@@ -138,21 +139,23 @@ void GameEngineSpriteRenderer::AddImageScale(const float4& _Scale)
 
 void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	//float4 ParentScale = Transform.GetLocalScale();
-	//float4 Scale = ImageTransform.GetLocalScale();
+	float4 ParentScale = Transform.GetLocalScale();
+	float4 Scale = ImageTransform.GetLocalScale();
 
-	//float4 CalPivot = Pivot;
-	//CalPivot.X -= 0.5f;
-	//CalPivot.Y -= 0.5f;
+	float4 CalPivot = Pivot;
+	CalPivot.X -= 0.5f;
+	CalPivot.Y -= 0.5f;
 
-	//float4 PivotPos;
-	//PivotPos.X = Scale.X * CalPivot.X;
-	//PivotPos.Y = Scale.Y * CalPivot.Y;
+	float4 PivotPos;
+	PivotPos.X = Scale.X * CalPivot.X;
+	PivotPos.Y = Scale.Y * CalPivot.Y;
 
-	//ImageTransform.SetLocalPosition(PivotPos);
+	ImageTransform.SetLocalPosition(PivotPos);
 
-	//ImageTransform.TransformUpdate();
-	//ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
+	ImageTransform.TransformUpdate();
+	ImageTransform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
+
+	ShaderResHelper.SetTexture("DiffuseTex", CurSprite.Texture);
 
 	GameEngineRenderer::Render(_Camera, _Delta);
 

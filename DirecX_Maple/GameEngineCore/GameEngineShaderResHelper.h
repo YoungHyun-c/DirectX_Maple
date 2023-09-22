@@ -82,6 +82,20 @@ public:
 		return ConstantBufferSetters.contains(UpperString);
 	}
 
+	bool IsTexture(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return TextureSetters.contains(UpperString);
+	}
+
+	bool IsSampler(std::string_view _Name)
+	{
+		std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+		return SamplerSetters.contains(UpperString);
+	}
+
 	// 여기에 값형만 들어간다.
 	template<typename DataType>
 	void ConstantBufferLink(std::string_view _Name, const DataType& _Data)
@@ -90,6 +104,12 @@ public:
 	}
 
 	void ConstantBufferLink(std::string_view _Name, const void* _Data, size_t _Size);
+
+	void SetTexture(std::string_view _Name, std::string_view _TextureName);
+
+	void SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture);
+
+	void SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler);
 
 protected:
 
