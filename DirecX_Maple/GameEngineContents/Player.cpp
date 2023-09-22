@@ -3,9 +3,11 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 #include <GameEngineCore/GameEngineTexture.h>
 #include <GameEngineCore/GameEngineCollision.h>
+
 #include "BackGroundMap.h"
 #include "Monster.h"
 #include "ContentsEnum.h"
+
 
 Player::Player()
 {
@@ -229,15 +231,21 @@ void Player::Update(float _Delta)
 	float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
 	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
 
-	//GameEngineColor Color = PlayMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED);
+	BackGroundMap::MainMap->GetLevel()->GetName();
 
-	//if (GameEngineColor::RED != Color)
-	//{
-	//	GravityForce.Y -= _Delta * 10.0f;
-	//	Transform.AddLocalPosition(GravityForce * _Delta);
-	//}
-	//else
-	//{
-	//	GravityForce = 0.0f;
-	//}
+	GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
+
+	if (GameEngineColor::RED != Color)
+	{
+		GravityForce.Y -= _Delta * 100.0f;
+		Transform.AddLocalPosition(GravityForce * _Delta);
+	}
+	else
+	{
+		if (Color != GameEngineColor::White)
+		{
+			Transform.AddLocalPosition(float4::UP);
+		}
+		GravityForce = 0.0f;
+	}
 }

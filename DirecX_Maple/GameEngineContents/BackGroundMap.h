@@ -18,7 +18,7 @@ public:
 	BackGroundMap& operator = (const BackGroundMap& _Other) = delete;
 	BackGroundMap& operator = (BackGroundMap&& _Other) noexcept = delete;
 
-	//GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 });
+	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = { 255, 255, 255, 255 }, std::string_view _DebugMapName ="");
 
 	void Init(const std::string& _FileName, const std::string& _DebugFileName);
 
@@ -31,6 +31,7 @@ protected:
 private:
 	bool SwitchRenderValue = true;
 	std::string FileName;
+	std::string DebugFileName;
 
 	std::shared_ptr<class GameEngineSpriteRenderer> Renderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;

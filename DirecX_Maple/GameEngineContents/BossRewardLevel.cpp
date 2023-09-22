@@ -46,6 +46,7 @@ void BossRewardLevel::Start()
 
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		NewPlayer->SetDebugMap("RewardDebugMap.png");
 	}
 }
 

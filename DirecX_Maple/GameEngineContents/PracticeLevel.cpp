@@ -50,10 +50,6 @@ void PracticeLevel::Start()
 		//GameEngineSprite::CreateSingle("JinHilla.png");
 	}
 
-	{
-		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
-	}
-
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
@@ -63,6 +59,11 @@ void PracticeLevel::Start()
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
 		Map->Init("PracticeMap.png", "PracticeDebugMap.png");
+	}
+
+	{
+		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		NewPlayer->SetDebugMap("PracticeDebugMap.png");
 	}
 }
 

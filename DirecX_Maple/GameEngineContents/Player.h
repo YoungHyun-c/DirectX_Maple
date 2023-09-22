@@ -36,6 +36,17 @@ public:
 
 	void TestEvent(GameEngineRenderer* _Renderer);
 
+	void SetDebugMap(std::string_view _DebugMapName)
+	{
+		//DebugMap = GameEngineTexture::Find(_DebugMapName);
+		DebugMapName = _DebugMapName;
+	}
+
+	void AddPos(float4 _Pos)
+	{
+		Pos += _Pos;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -43,8 +54,13 @@ protected:
 private:
 	std::shared_ptr<class GameEngineSpriteRenderer> MainSpriteRenderer;
 	std::shared_ptr<class GameEngineComponenet> TestCollision;
+
+	std::shared_ptr<GameEngineTexture> DebugMap;
+	std::string DebugMapName;
 	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	std::shared_ptr<GameEngineCollision> Col;
+
+	float4 Pos;
 };
 

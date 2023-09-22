@@ -63,6 +63,7 @@ void BossLevel::Start()
 
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		NewPlayer->SetDebugMap("BossDebugMap.png");
 	}
 
 	// ÁøÈú¶ó ³´º£±â

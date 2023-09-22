@@ -46,6 +46,7 @@ void BossEntranceLevel::Start()
 
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		NewPlayer->SetDebugMap("EntranceDebugMap.png");
 	}
 }
 
