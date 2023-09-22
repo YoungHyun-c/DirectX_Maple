@@ -29,11 +29,23 @@ void GameEngineCollisionGroup::AllReleaseCheck()
 	}
 }
 
+
+
 bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _Collision)
 {
+	if (false == _Collision->IsUpdate())
+	{
+		return false;
+	}
+
 	for (std::shared_ptr<class GameEngineCollision> Collision : Collisions)
 	{
 		if (Collision == _Collision)
+		{
+			continue;
+		}
+
+		if (false == Collision->IsUpdate())
 		{
 			continue;
 		}
@@ -49,6 +61,11 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 
 bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _Collision, const float4& _NextPos)
 {
+	if (false == _Collision->IsUpdate())
+	{
+		return false;
+	}
+
 	CollisionData Data = _Collision->Transform.ColData;
 
 	Data.OBB.Center.x += _NextPos.X;
@@ -73,6 +90,11 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 
 bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _Collision, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
 {
+	if (false == _Collision->IsUpdate())
+	{
+		return false;
+	}
+	
 	// static 지역변수로 만들면
 	// std::list Nodes delete를 한다.
 	// 쓰레드나 이런것에서 위험하지만
@@ -82,6 +104,11 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 	for (std::shared_ptr<class GameEngineCollision> Collision : Collisions)
 	{
 		if (Collision == _Collision)
+		{
+			continue;
+		}
+
+		if (false == Collision->IsUpdate())
 		{
 			continue;
 		}
@@ -104,6 +131,11 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 
 bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _Collision, const float4& _NextPos, std::function<void(std::vector<std::shared_ptr<GameEngineCollision>>& _Collisions)> _Function)
 {
+	if (false == _Collision->IsUpdate())
+	{
+		return false;
+	}
+
 	static std::vector<std::shared_ptr<GameEngineCollision>> ResultCollision;
 	ResultCollision.clear();
 
@@ -116,6 +148,11 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 	for (std::shared_ptr<class GameEngineCollision> Collision : Collisions)
 	{
 		if (Collision == _Collision)
+		{
+			continue;
+		}
+
+		if (false == Collision->IsUpdate())
 		{
 			continue;
 		}
@@ -137,12 +174,22 @@ bool GameEngineCollisionGroup::Collision(std::shared_ptr<GameEngineCollision> _C
 
 bool GameEngineCollisionGroup::CollisionEvent(std::shared_ptr<GameEngineCollision> _Collision, const EventParameter& _Event)
 {
+	if (false == _Collision->IsUpdate())
+	{
+		return false;
+	}
+
 	static std::vector<std::shared_ptr<GameEngineCollision>> ResultCollision;
 	ResultCollision.clear();
 
 	for (std::shared_ptr<class GameEngineCollision> Collision : Collisions)
 	{
 		if (Collision == _Collision)
+		{
+			continue;
+		}
+
+		if (false == Collision->IsUpdate())
 		{
 			continue;
 		}
