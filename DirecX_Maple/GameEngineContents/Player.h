@@ -3,13 +3,16 @@
 
 enum class PlayerState
 {
-	Idle,
-	Run,
+	Stand,
+	Walk,
+	Alert,
+	Prone,
+	Attack,
+	ProneAttack,
 	Jump,
 	DoubleJump,
-	Prone,
-	ProneAttack,
-	Attack,
+	Fly,
+	Dead,
 	Max,
 };
 
@@ -24,6 +27,14 @@ enum class PlayerDir
 class Player : public GameEngineActor
 {
 public:
+	static Player* MainPlayer;
+
+public:
+	static Player* GetMainPlyer()
+	{
+		return MainPlayer;
+	}
+
 	// constructer destructer
 	Player();
 	~Player();
@@ -48,10 +59,53 @@ public:
 	}
 
 protected:
+	void StateUpdate(float _Delta);
+
+	void StandStart();
+	void StandUpdate(float _Delta);
+
+	void WalkStart();
+	void WalkUpdate(float _Delta);
+
+	void AlertStart();
+	void AlertUpdate(float _Delta);
+
+	void ProneStart();
+	void ProneUpdate(float _Delta);
+
+	void AttackStart();
+	void AttackUpdate(float _Delta);
+
+	void ProneAttackStart();
+	void ProneAttackUpdate(float _Delta);
+
+	void JumpStart();
+	void JumpUpdate(float _Delta);
+
+	void DoubleJumpStart();
+	void DoubleJumpUpdate(float _Delta);
+
+	void FlyStart();
+	void FlyUpdate(float _Delta);
+
+	void DeadStart();
+	void DeadUpdate(float _Delta);
+
+	void ChangeState(PlayerState _State);
+
+	PlayerState State = PlayerState::Max;
+	PlayerDir Dir = PlayerDir::Max;
+	std::string CurState = "";
+	std::string AnimationName = "";
+
+	void DirCheck();
+
+	void ChangeAnimationState(const std::string& _StateName);
+
+private:
 	void Start() override;
 	void Update(float _Delta) override;
 
-private:
 	std::shared_ptr<class GameEngineSpriteRenderer> MainSpriteRenderer;
 	std::shared_ptr<class GameEngineComponenet> TestCollision;
 
@@ -62,5 +116,9 @@ private:
 	std::shared_ptr<GameEngineCollision> Col;
 
 	float4 Pos;
+	float4 GroundCheck = { 0.0f, -10.0f };
+
+	float WalkSpeed = 400.0f;
+
 };
 

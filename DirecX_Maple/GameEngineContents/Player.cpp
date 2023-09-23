@@ -8,6 +8,7 @@
 #include "Monster.h"
 #include "ContentsEnum.h"
 
+Player* Player::MainPlayer = nullptr;
 
 Player::Player()
 {
@@ -24,25 +25,22 @@ void Player::Start()
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
-		MainSpriteRenderer->CreateAnimation("Attack2", "Battle_Alert", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Attack3", "Divide1Hit", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Alert", "Battle_Alert", 0.1f, -1, -1, true);
 
-		MainSpriteRenderer->CreateAnimation("Alert", "Alert", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Attack", "Attack", 0.3f, -1, -1, false);
-		MainSpriteRenderer->CreateAnimation("Impale", "Impale", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Dead", "Dead", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Fly", "Fly", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Jump", "Jump", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Prone", "Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Rope", "Rope", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Stand", "Stand", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Walk", "Walk", 0.1f, -1, -1, true);
 
-		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 14, false);
-		//MainSpriteRenderer->CreateAnimation("Attack", "blosom.frames", 0.1f, 0, 39, true);
-		//MainSpriteRenderer->CreateAnimation("Run", "9833020.img.skill1.frames"); 
-		MainSpriteRenderer->ChangeAnimation("Attack3");
+		MainSpriteRenderer->CreateAnimation("Normal_Stand", "Stand", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Walk", "Walk", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Alert", "Alert", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Prone", "Prone", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Jump", "Jump", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Fly", "Fly", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Impale", "Impale", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Dead", "Dead", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Rope", "Rope", 0.1f, -1, -1, true);
+
+		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Bottom);
 		
@@ -75,15 +73,16 @@ void Player::Start()
 	//	MainSpriteRenderer->SetPivotType(PivotType::Left);
 	//}
 
+	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
+	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
 		Col->Transform.SetLocalScale({ 100.0f, 100.0f, 1.0f });
 	}
 
-	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
-	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
-
+	ChangeState(PlayerState::Stand);
+	Dir = PlayerDir::Left;
 }
 
 void Player::TestEvent(GameEngineRenderer* _Renderer)
@@ -141,41 +140,11 @@ void Player::Update(float _Delta)
 	//	}
 	//}
 
-
-	float Speed = 1000.0f;
+	StateUpdate(_Delta);
 
 	if (GameEngineInput::IsDown('P'))
 	{
 		MainSpriteRenderer->AnimationPauseSwitch();
-	}
-
-	if (GameEngineInput::IsPress('A'))
-	{
-		Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
-		MainSpriteRenderer->ChangeAnimation("Walk");
-	}
-	if (GameEngineInput::IsPress('D'))
-	{
-		Transform.AddLocalPosition(float4::RIGHT * _Delta * Speed);
-		MainSpriteRenderer->ChangeAnimation("Walk");
-	}
-	if (GameEngineInput::IsPress('W'))
-	{
-		Transform.AddLocalPosition(float4::UP * _Delta * Speed);
-		MainSpriteRenderer->ChangeAnimation("Walk");
-	}
-	if (GameEngineInput::IsPress('S'))
-	{
-		Transform.AddLocalPosition(float4::DOWN * _Delta * Speed);
-		MainSpriteRenderer->ChangeAnimation("Walk");
-	}
-	if (GameEngineInput::IsPress('Q'))
-	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
-	}
-	if (GameEngineInput::IsPress('E'))
-	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
 	}
 
 	if (GameEngineInput::IsDown(VK_SHIFT))
@@ -231,13 +200,13 @@ void Player::Update(float _Delta)
 	float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
 	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
 
-	BackGroundMap::MainMap->GetLevel()->GetName();
+	//BackGroundMap::MainMap->GetLevel()->GetName();
 
 	GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
 
 	if (GameEngineColor::RED != Color)
 	{
-		GravityForce.Y -= _Delta * 100.0f;
+		GravityForce.Y -= _Delta * 900.0f;
 		Transform.AddLocalPosition(GravityForce * _Delta);
 	}
 	else
@@ -248,4 +217,128 @@ void Player::Update(float _Delta)
 		//}
 		GravityForce = 0.0f;
 	}
+}
+
+void Player::StateUpdate(float _Delta)
+{
+	switch (State)
+	{
+	case PlayerState::Stand:
+		return StandUpdate(_Delta);
+		break;
+	case PlayerState::Walk:
+		return WalkUpdate(_Delta);
+		break;
+	case PlayerState::Alert:
+		return AlertUpdate(_Delta);
+		break;
+	case PlayerState::Prone:
+		return ProneUpdate(_Delta);
+		break;
+	case PlayerState::Attack:
+		return AttackUpdate(_Delta);
+		break;
+	case PlayerState::ProneAttack:
+		return ProneAttackUpdate(_Delta);
+		break;
+	case PlayerState::Jump:
+		return JumpUpdate(_Delta);
+		break;
+	case PlayerState::DoubleJump:
+		return DoubleJumpUpdate(_Delta);
+		break;
+	case PlayerState::Fly:
+		return FlyUpdate(_Delta);
+		break;
+	case PlayerState::Dead:
+		return DeadUpdate(_Delta);
+		break;
+	default:
+		break;
+	}
+}
+
+void Player::ChangeState(PlayerState _State)
+{
+	if (_State != State)
+	{
+		switch (_State)
+		{
+		case PlayerState::Stand:
+			StandStart();
+			break;
+		case PlayerState::Walk:
+			WalkStart();
+			break;
+		case PlayerState::Alert:
+			AlertStart();
+			break;
+		case PlayerState::Prone:
+			ProneStart();
+			break;
+		case PlayerState::Attack:
+			AttackStart();
+			break;
+		case PlayerState::ProneAttack:
+			ProneAttackStart();
+			break;
+		case PlayerState::Jump:
+			JumpStart();
+			break;
+		case PlayerState::DoubleJump:
+			DoubleJumpStart();
+			break;
+		case PlayerState::Fly:
+			FlyStart();
+			break;
+		case PlayerState::Dead:
+			DeadStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	State = _State;
+}
+
+void Player::DirCheck()
+{
+	if (true == GameEngineInput::IsFree(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
+	{
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown(VK_LEFT) )//|| true == GameEngineInput::IsFree(VK_RIGHT))
+	{
+		Dir = PlayerDir::Left;
+		ChangeAnimationState(CurState);
+		return;
+	}
+
+	if (true == GameEngineInput::IsDown(VK_RIGHT))// || true == GameEngineInput::IsFree(VK_LEFT))
+	{
+		Dir = PlayerDir::Right;
+		ChangeAnimationState(CurState);
+		return;
+	}
+}
+
+void Player::ChangeAnimationState(const std::string& _StateName)
+{
+	switch (Dir)
+	{
+	case PlayerDir::Left:
+		Transform.SetLocalScale({ 1.0f, 1.0f, 1.0f});
+		break;
+	case PlayerDir::Right:
+		Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+		break;
+	default:
+		break;
+	}
+
+	CurState = _StateName;
+
+	MainSpriteRenderer->ChangeAnimation(CurState);
 }
