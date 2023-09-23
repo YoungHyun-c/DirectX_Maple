@@ -18,3 +18,4 @@
 // Contents
 #include <GameEngineCore/GameEngineTileMap.h>
 #include "ContentsEnum.h"
+#include "GlobalValue.h"

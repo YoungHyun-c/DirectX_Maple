@@ -6,7 +6,6 @@
 
 #include "BackGroundMap.h"
 #include "Monster.h"
-#include "ContentsEnum.h"
 
 Player* Player::MainPlayer = nullptr;
 
@@ -26,7 +25,6 @@ void Player::Start()
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 		//MainSpriteRenderer->CreateAnimation("Battle_Alert", "Battle_Alert", 0.1f, -1, -1, true);
-
 
 		MainSpriteRenderer->CreateAnimation("Normal_Stand", "Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Walk", "Walk", 0.3f, -1, -1, true);
@@ -149,74 +147,76 @@ void Player::Update(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_SHIFT))
 	{
-		MainSpriteRenderer->ChangeAnimation("Attack");
+		MainSpriteRenderer->ChangeAnimation("Normal_Attack");
 	}
 
 	if (GameEngineInput::IsDown('1'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Alert");
+		MainSpriteRenderer->ChangeAnimation("Normal_Alert");
 	}
 
 	if (GameEngineInput::IsDown('2'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Dead");
+		MainSpriteRenderer->ChangeAnimation("Normal_Dead");
 	}
 	if (GameEngineInput::IsDown('3'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Fly");
+		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
 	}
 	if (GameEngineInput::IsDown('4'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Impale");
+		MainSpriteRenderer->ChangeAnimation("Normal_Impale");
 	}
 	if (GameEngineInput::IsDown('5'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Jump");
+		MainSpriteRenderer->ChangeAnimation("Normal_Jump");
 	}
 	if (GameEngineInput::IsDown('6'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Prone");
+		MainSpriteRenderer->ChangeAnimation("Normal_Prone");
 	}
 	if (GameEngineInput::IsDown('7'))
 	{
-		MainSpriteRenderer->ChangeAnimation("ProneAttack");
+		MainSpriteRenderer->ChangeAnimation("Normal_ProneAttack");
 	}
 	if (GameEngineInput::IsDown('8'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Rope");
+		MainSpriteRenderer->ChangeAnimation("Normal_Rope");
 	}
 	if (GameEngineInput::IsDown('9'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Stand");
+		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 	}
 	if (GameEngineInput::IsDown('0'))
 	{
-		MainSpriteRenderer->ChangeAnimation("Walk");
+		MainSpriteRenderer->ChangeAnimation("Normal_Walk");
 	}
 
 
-	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(Transform.GetWorldPosition());
+	//GetLevel()->GetMainCamera()->Transform.SetLocalPosition(Transform.GetWorldPosition());
 
 	float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
 	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
 
 	//BackGroundMap::MainMap->GetLevel()->GetName();
 
-	GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
+	//GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
+	//if (GameEngineColor::RED != Color)
+	//{
+	//	GravityForce.Y -= _Delta * 900.0f;
+	//	Transform.AddLocalPosition(GravityForce * _Delta);
+	//}
+	//else
+	//{
+	//	//if (Color != GameEngineColor::White)
+	//	//{
+	//	//	Transform.AddLocalPosition(float4::UP);
+	//	//}
+	//	GravityForce = 0.0f;
+	//}
 
-	if (GameEngineColor::RED != Color)
-	{
-		GravityForce.Y -= _Delta * 900.0f;
-		Transform.AddLocalPosition(GravityForce * _Delta);
-	}
-	else
-	{
-		//if (Color != GameEngineColor::White)
-		//{
-		//	Transform.AddLocalPosition(float4::UP);
-		//}
-		GravityForce = 0.0f;
-	}
+	PlayerActor::Update(_Delta);
+	PlayerActor::CameraFocus(_Delta);
 }
 
 void Player::StateUpdate(float _Delta)

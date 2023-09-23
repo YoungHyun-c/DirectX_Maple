@@ -27,21 +27,6 @@ void Player::WalkUpdate(float _Delta)
 {
 	DirCheck();
 
-	//GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
-
-	//if (GameEngineColor::RED != Color)
-	//{
-	//	GravityForce.Y -= _Delta * 900.0f;
-	//	Transform.AddLocalPosition(GravityForce * _Delta);
-	//}
-	//else
-	//{
-	//	//if (Color != GameEngineColor::White)
-	//	//{
-	//	//	Transform.AddLocalPosition(float4::UP);
-	//	//}
-	//	GravityForce = 0.0f;
-	//}
 	float4 MovePos = float4::ZERO;
 
 	if (GameEngineInput::IsPress(VK_LEFT) && Dir == PlayerDir::Left)
@@ -125,8 +110,22 @@ void Player::JumpStart()
 }
 void Player::JumpUpdate(float _Delta)
 {
-	
 	DirCheck();
+
+	float4 MovePos = float4::ZERO;
+
+	//Transform.AddLocalPosition(float4::RIGHT * _Delta * WalkSpeed);
+	//MovePos = { float4::UP * 400.0f * _Delta};
+	
+	if (MovePos == float4::ZERO)
+	{
+		DirCheck();
+		ChangeState(PlayerState::Stand);
+		return;
+	}
+
+	Transform.AddLocalPosition(MovePos);
+
 }
 void Player::DoubleJumpStart()
 {

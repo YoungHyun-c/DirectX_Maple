@@ -47,15 +47,14 @@ void PracticeLevel::Start()
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 
-		//GameEngineSprite::CreateSingle("JinHilla.png");
 	}
 
-	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
-	float4 HScale = Tex->GetScale().Half();
-	HScale.Y *= -1.0f;
-	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
-	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
-
+	//std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
+	//GlobalValue::MapScale = Tex->GetScale();
+	//float4 HScale = Tex->GetScale().Half();
+	//HScale.Y *= -1.0f;
+	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	//GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
 		Map->Init("PracticeMap.png", "PracticeDebugMap.png");
@@ -78,22 +77,6 @@ void PracticeLevel::Update(float _Delta)
 
 	float Speed = 100.0f;
 
-	if (GameEngineInput::IsPress('A'))
-	{
-		GetMainCamera()->Transform.AddLocalPosition(float4::LEFT * _Delta * Speed);
-	}
-	if (GameEngineInput::IsPress('D'))
-	{
-		GetMainCamera()->Transform.AddLocalPosition(float4::RIGHT * _Delta * Speed);
-	}
-	if (GameEngineInput::IsPress('W'))
-	{
-		GetMainCamera()->Transform.AddLocalPosition(float4::UP * _Delta * Speed);
-	}
-	if (GameEngineInput::IsPress('S'))
-	{
-		GetMainCamera()->Transform.AddLocalPosition(float4::DOWN * _Delta * Speed);
-	}
 
 	if (GameEngineInput::IsDown('B'))
 	{
@@ -108,7 +91,12 @@ void PracticeLevel::Update(float _Delta)
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	int a = 0;
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
+	GlobalValue::MapScale = Tex->GetScale();
+	float4 HScale = Tex->GetScale().Half();
+	HScale.Y *= -1.0f;
+	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 }
 
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)

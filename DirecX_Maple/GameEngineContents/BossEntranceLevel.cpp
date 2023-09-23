@@ -33,11 +33,12 @@ void BossEntranceLevel::Start()
 		GameEngineSprite::CreateSingle("EntranceDebugMap.png");
 	}
 
-	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("EntranceMap.png");
-	float4 HScale = Tex->GetScale().Half();
-	HScale.Y *= -1.0f;
-	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
-	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+	//std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("EntranceMap.png");
+	//float4 HScale = Tex->GetScale().Half();
+	//GlobalValue::MapScale = Tex->GetScale();
+	//HScale.Y *= -1.0f;
+	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	//GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
@@ -65,7 +66,12 @@ void BossEntranceLevel::Update(float _Delta)
 
 void BossEntranceLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("EntranceMap.png");
+	float4 HScale = Tex->GetScale().Half();
+	GlobalValue::MapScale = Tex->GetScale();
+	HScale.Y *= -1.0f;
+	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 }
 
 void BossEntranceLevel::LevelEnd(GameEngineLevel* _NextLevel)
