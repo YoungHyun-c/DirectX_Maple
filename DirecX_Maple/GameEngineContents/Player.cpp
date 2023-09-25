@@ -140,6 +140,16 @@ void Player::Update(float _Delta)
 
 	StateUpdate(_Delta);
 
+	// ÁÜÀÎ ÁÜ¾Æ¿ô
+	if (GameEngineInput::IsPress('I'))
+	{
+		GetLevel()->GetMainCamera()->AddZoomValue(-_Delta);
+	}
+	if (GameEngineInput::IsPress('O'))
+	{
+		GetLevel()->GetMainCamera()->AddZoomValue(_Delta);
+	}
+
 	if (GameEngineInput::IsDown('P'))
 	{
 		MainSpriteRenderer->AnimationPauseSwitch();
