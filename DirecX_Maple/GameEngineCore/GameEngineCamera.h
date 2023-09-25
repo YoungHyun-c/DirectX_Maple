@@ -4,11 +4,6 @@
 #include <list>
 #include <memory>
 
-enum EPROJECTIONTYPE
-{
-	Perspective,
-	Orthographic,
-};
 
 // 카메라는 이제는 엑터의 계열이다.
 // 설명 :

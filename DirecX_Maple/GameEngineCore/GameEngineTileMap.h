@@ -41,14 +41,10 @@ public:
 
 };
 
-enum class SAMPLER_OBJECT
-{
-	POINT,
-	LINEAR,
-};
+
 
 // Ό³Έν :
-class GameEngineTileMap : public GameEngineRenderer
+class GameEngineTileMap : public GameEngineSpriteRenderer
 {
 public:
 	// constructer destructer
@@ -77,10 +73,11 @@ public:
 		TileMapExpansionSize = _Size;
 	}
 
-	void SetSamplerState(SAMPLER_OBJECT _Option);
+
 	std::shared_ptr<class GameEngineSampler> Sampler;
 
 protected:
+	void Start();
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
 private:

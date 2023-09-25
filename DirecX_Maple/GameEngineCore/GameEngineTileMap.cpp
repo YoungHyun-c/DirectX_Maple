@@ -30,6 +30,11 @@ void GameEngineTileMap::CreateTileMap(const CreateTileParameter& _Parameter)
 	TileData.TileScale.Z = 1.0f;
 }
 
+void GameEngineTileMap::Start()
+{
+	GameEngineSpriteRenderer::Start();
+}
+
 void GameEngineTileMap::SetTilePos(const SetTileParameterPos& _Parameter)
 {
 	SetTileParameterIndex Parameter;
@@ -70,7 +75,7 @@ void GameEngineTileMap::SetTileIndex(const SetTileParameterIndex& _Parameter)
 
 void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	ResSetting();
+	
 
 	float4 CameraPos = _Camera->Transform.GetWorldPosition();
 	float4 WindowScale = GameEngineCore::MainWindow.GetScale();
@@ -80,12 +85,17 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	ScreenLeftTop.X = CameraPos.X - WindowScale.hX();
 	ScreenLeftTop.Y = CameraPos.Y + WindowScale.hY();
 
-	int StartX = static_cast<int>(ScreenLeftTop.X / TileData.TileScale.X) - 1;
-	int StartY = static_cast<int>(ScreenLeftTop.Y / TileData.TileScale.Y) - 1;
+	int StartX = static_cast<int>(ScreenLeftTop.X / TileData.TileScale.X);
+	int StartY = static_cast<int>(-ScreenLeftTop.Y / TileData.TileScale.Y);
 	int EndX = StartX + static_cast<int>(WindowScale.X / TileData.TileScale.X) + TileMapExpansionSize;
 	int EndY = StartY + static_cast<int>(WindowScale.Y / TileData.TileScale.Y) + TileMapExpansionSize;
 	StartX -= TileMapExpansionSize;
 	StartY -= TileMapExpansionSize;
+
+	if (0 > StartX)
+	{
+		StartX = 0;
+	}
 
 	if (0 > StartY)
 	{
@@ -123,6 +133,8 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	}
 
 	TransformData Data;
+	ShaderResHelper.SetConstantBufferLink("TransformData", Data);
+
 	for (size_t y = StartY ; y < EndY; y++)
 	{
 		for (size_t x = StartX; x < EndX; x++)
@@ -138,62 +150,30 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 			//}
 
 
-			std::shared_ptr<GameEngineConstantBuffer> TransBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", {});
 
-			if (nullptr != TransBuffer)
-			{
-				float4 Pos;
-				Pos = Transform.GetWorldPosition();
-				Pos.X += TileData.TileScale.X * x + TileData.TileScale.hX();
-				Pos.Y -= TileData.TileScale.Y * y + TileData.TileScale.hX();
+			float4 Pos;
+			Pos = Transform.GetWorldPosition();
+			Pos.X += TileData.TileScale.X * x + TileData.TileScale.hX();
+			Pos.Y -= TileData.TileScale.Y * y + TileData.TileScale.hX();
 
-				Data = Transform.GetConstTransformDataRef();
-				Data.Position = Pos;
-				Data.Scale = TileData.TileScale;
-				Data.LocalCalculation(); // 로컬 월드 생성
+			Data = Transform.GetConstTransformDataRef();
+			Data.Position = Pos;
+			Data.Scale = TileData.TileScale;
+			Data.LocalCalculation(); // 로컬 월드 생성
 
-				Data.ParentMatrix = Transform.GetConstTransformDataRef().WorldMatrix;
-				Data.WorldMatrix = Data.LocalWorldMatrix * Data.ParentMatrix;
-				Data.WorldViewProjectionCalculation();
-				// 내 행렬을 전부다 계산하고 넘긴다.
+			Data.ParentMatrix = Transform.GetConstTransformDataRef().WorldMatrix;
+			Data.WorldMatrix = Data.LocalWorldMatrix * Data.ParentMatrix;
+			Data.WorldViewProjectionCalculation();
+			// 내 행렬을 전부다 계산하고 넘긴다.
 
-				TransBuffer->ChangeData(Data);
-				TransBuffer->VSSetting(0);
-			}
+
+			
 
 			SpriteData& TileSprite = Tiles[y][x].Data;
 
-			//std::shared_ptr<GameEngineConstantBuffer> SpriteBuffer = GameEngineConstantBuffer::CreateAndFind(sizeof(float4), "SpriteData");
-			//if (nullptr != SpriteBuffer)
-			//{
-			//	SpriteBuffer->ChangeData(TileSprite.SpritePivot);
-			//	SpriteBuffer->Setting(1);
-			//}
-
-			//Tiles[y][x].Data.Texture->PSSetting(0);
-
-			if (nullptr == Sampler)
-			{
-				MsgBoxAssert("존재하지 않는 샘플러를 사용하려고 했습니다.");
-			}
-			Sampler->PSSetting(0);
+			ResSetting();
 
 			Draw();
 		}
-	}
-}
-
-void GameEngineTileMap::SetSamplerState(SAMPLER_OBJECT _Option)
-{
-	switch (_Option)
-	{
-	case SAMPLER_OBJECT::LINEAR:
-		Sampler = GameEngineSampler::Find("LINEAR");
-		break;
-	case SAMPLER_OBJECT::POINT:
-		Sampler = GameEngineSampler::Find("POINT");
-		break;
-	default:
-		break;
 	}
 }

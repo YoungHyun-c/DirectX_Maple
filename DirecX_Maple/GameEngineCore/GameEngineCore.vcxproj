@@ -284,6 +284,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineUIRenderer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GameEngineVertex.cpp">
       <SubType>
       </SubType>
@@ -310,6 +314,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </Library>
+    <ClInclude Include="EngineEnum.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
       </SubType>
@@ -426,6 +431,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEngineTransform.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GameEngineUIRenderer.h">
       <SubType>
       </SubType>
     </ClInclude>

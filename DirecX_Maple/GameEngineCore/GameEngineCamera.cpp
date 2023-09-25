@@ -47,10 +47,10 @@ void GameEngineCamera::Update(float _Delta)
 
 	switch (ProjectionType)
 	{
-	case Perspective:
+	case EPROJECTIONTYPE::Perspective:
 		Transform.PerspectiveFovLHDeg(FOV, WindowScale.X, WindowScale.Y, Near, Far);
 		break;
-	case Orthographic:
+	case EPROJECTIONTYPE::Orthographic:
 		Transform.OrthographicLH(WindowScale.X, WindowScale.Y, Near, Far);
 		break;
 	}

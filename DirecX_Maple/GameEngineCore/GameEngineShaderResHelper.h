@@ -69,9 +69,9 @@ public:
 	GameEngineShaderResHelper& operator = (GameEngineShaderResHelper&& _Other) noexcept = delete;
 
 	// 쉐이더의 컴파일된 코드 결과물
-	void ShaderResCheck(std::string _FunctionName, GameEngineShader* _Shader, ID3DBlob* _CompileCode);
+	void ShaderResCheck(std::string _FunctionName, class GameEngineShader* _Shader, ID3DBlob* _CompileCode);
 
-	void ShaderResCopy(GameEngineShader* _Shader);
+	void ShaderResCopy(class GameEngineShader* _Shader);
 
 	void AllShaderResourcesSetting();
 	
@@ -110,6 +110,8 @@ public:
 	void SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture);
 
 	void SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler);
+
+	void ResClear();
 
 protected:
 

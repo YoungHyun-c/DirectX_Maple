@@ -20,6 +20,7 @@ protected:
 	void Update(float _Delta)override;
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> AtereGage;
+	std::shared_ptr<GameEngineUIRenderer> AtereGage;
+	std::shared_ptr<GameEngineUIRenderer> AtereAnime;
 };
 

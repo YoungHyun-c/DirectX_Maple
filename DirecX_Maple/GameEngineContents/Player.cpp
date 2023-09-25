@@ -1,8 +1,6 @@
 #include "PreCompile.h"
 #include "Player.h"
-#include <GameEngineCore/GameEngineSpriteRenderer.h>
-#include <GameEngineCore/GameEngineTexture.h>
-#include <GameEngineCore/GameEngineCollision.h>
+
 
 #include "BackGroundMap.h"
 #include "Monster.h"
