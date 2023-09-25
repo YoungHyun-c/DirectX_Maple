@@ -6,6 +6,13 @@
 #include "GameEngineShaderResHelper.h"
 
 // 설명 : GameEngineRenderer에게 Order는 랜더링 되는 순서를 의미한다.
+// 엔진에서 지원해주는 렌더링
+// 코드를 짜다보면 그냥 렌더링 그자체를 이용해야 하는 경우가 많아진다.
+// 렌더러가 컴포넌트인게 문제이다.
+// 그래서 렌더링의 최소단위 렌더링에 가장 중요한 요소만 모아놓은
+// 렌더 유니트가 주체가 되고
+// 값형으로도 사용할 수 있을 정도로
+// 간단한 구조를 가질 것이다.
 class GameEngineRenderer : public GameEngineComponent
 {
 	friend class GameEngineCamera;
@@ -65,6 +72,8 @@ protected:
 	std::shared_ptr<class GameEngineMesh> Mesh;
 	std::shared_ptr<class GameEngineMaterial> Material;
 	GameEngineShaderResHelper ShaderResHelper;
+
+	//std::vector<std::shared_ptr<GameEngineRenderUnit>> Units;
 
 private:
 	class GameEngineCamera* Camera = nullptr;
