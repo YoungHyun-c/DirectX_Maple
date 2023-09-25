@@ -42,6 +42,9 @@
     <ClCompile Include="PlayerActor.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="MainUIActor.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -84,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="PlayerActor.h">
       <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="MainUIActor.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,7 @@ protected:
 private:
 	std::shared_ptr<class BackGroundMap> Map;
 	std::shared_ptr<class Player> PlayerObject;
+	std::shared_ptr<class MainUIActor> UIObject;
 	std::shared_ptr<class TileMap> TileMapObject;
 };
 

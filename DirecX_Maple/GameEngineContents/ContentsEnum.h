@@ -11,7 +11,8 @@ enum class ContentsObjectType
 	BackGround,
 	Player,
 	Monster,
-	JinHillaAnime
+	JinHillaAnime,
+	UI,
 };
 
 enum class ContentsCollisionType

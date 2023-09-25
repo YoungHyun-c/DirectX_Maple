@@ -47,6 +47,14 @@ enum class PivotType
 	LeftTop,
 };
 
+struct SpriteRendererInfo
+{
+	int FlipLeft = 0;
+	int FlipUp = 0;
+	float Temp1;
+	float Temp2;
+};
+
 // Ό³Έν :
 class GameEngineSpriteRenderer : public GameEngineRenderer
 {
@@ -98,30 +106,23 @@ public:
 
 	void RightFlip()
 	{
-		AutoScaleRatio.X = abs(AutoScaleRatio.X);
+		SpriteRendererInfoValue.FlipLeft = 0;
 	}
 
 	void LeftFlip()
 	{
-		AutoScaleRatio.X = -abs(AutoScaleRatio.X);
+		SpriteRendererInfoValue.FlipLeft = 1;
 	}
 
-	void Flip()
+	void UpFlip()
 	{
-		AutoScaleRatio.X = -AutoScaleRatio.X;
+		SpriteRendererInfoValue.FlipUp = 1;
 	}
 
-	void FlipOff()
+	void DownFlip()
 	{
-		AutoScaleRatio.X = abs(AutoScaleRatio.X);
+		SpriteRendererInfoValue.FlipUp = 0;
 	}
-
-	void FlipOn()
-	{
-		AutoScaleRatio.X = -abs(AutoScaleRatio.X);
-	}
-
-
 
 	bool IsCurAnimationEnd()
 	{
@@ -193,7 +194,7 @@ private:
 
 	std::shared_ptr<GameEngineSprite> Sprite;
 	SpriteData CurSprite;
-
+	SpriteRendererInfo SpriteRendererInfoValue;
 
 	std::shared_ptr<class GameEngineSampler> Sampler;
 

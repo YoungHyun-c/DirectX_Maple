@@ -328,11 +328,12 @@ void Player::ChangeAnimationState(const std::string& _StateName)
 {
 	switch (Dir)
 	{
+	// 이미지 뒤집을 생각
 	case PlayerDir::Left:
-		Transform.SetLocalScale({ 1.0f, 1.0f, 1.0f});
+		MainSpriteRenderer->RightFlip();
 		break;
 	case PlayerDir::Right:
-		Transform.SetLocalScale({ -1.0f, 1.0f, 1.0f });
+		MainSpriteRenderer->LeftFlip();
 		break;
 	default:
 		break;

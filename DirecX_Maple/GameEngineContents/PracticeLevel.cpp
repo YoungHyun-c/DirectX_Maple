@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include "Monster.h"
+#include "MainUIActor.h"
 
 PracticeLevel::PracticeLevel()
 {
@@ -95,7 +96,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
-	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 }
 
