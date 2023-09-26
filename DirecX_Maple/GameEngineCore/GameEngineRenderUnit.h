@@ -3,7 +3,7 @@
 // 설명 :
 // 렌더링의 최소단위
 // 이녀석을 돌리면 렌더링이 된다.
-class GameEngineRenderUnit
+class GameEngineRenderUnit : public GameEngineObject
 {
 public:
 	// constructer destructer

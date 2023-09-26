@@ -6,31 +6,24 @@
 // Update 이녀석이 업데이트될때
 // Release 이녀석이 지워질때
 
-// 설명 :
-class GameEngineObject : public std::enable_shared_from_this<GameEngineObject>
+class GameEngineObjectBase
 {
-	friend class GameEngineLevel;
-	friend class GameEngineCore;
-
-	;
 public:
-	GameEngineTransform Transform;
+	int GetOrder()
+	{
+		return Order;
+	}
 
-	// constructer destructer
-	GameEngineObject();
-	virtual ~GameEngineObject();
+	template<typename EnumType>
+	void SetOrder(EnumType _Order)
+	{
+		SetOrder(static_cast<int>(_Order));
+	}
 
-	// delete Function
-	GameEngineObject(const GameEngineObject& _Other) = delete;
-	GameEngineObject(GameEngineObject&& _Other) noexcept = delete;
-	GameEngineObject& operator = (const GameEngineObject& _Other) = delete;
-	GameEngineObject& operator = (GameEngineObject&& _Other) noexcept = delete;
-
-	virtual void Start() {}
-	virtual void Update(float _Delta) {}
-	virtual void Release() {}
-	virtual void LevelStart(class GameEngineLevel* _NextLevel) {}
-	virtual void LevelEnd(class GameEngineLevel* _NextLevel) {}
+	virtual void SetOrder(int _Order)
+	{
+		Order = _Order;
+	}
 
 	virtual void On()
 	{
@@ -49,29 +42,45 @@ public:
 
 	virtual bool IsUpdate()
 	{
-		return Parent == nullptr ? true == IsUpdateValue && false == IsDeathValue : Parent->IsUpdate() && true == IsUpdateValue && false == IsDeath();
+		return true == IsUpdateValue && false == IsDeathValue;
 	}
 
 	virtual bool IsDeath()
 	{
-		return Parent == nullptr ? IsDeathValue : Parent->IsDeath() || IsDeathValue;
+		return IsDeathValue;
 	}
 
-	int GetOrder()
-	{
-		return Order;
-	}
+protected:
+	int Order = 0;
+	bool IsUpdateValue = true; // 이걸 false로 만들면 된다.
+	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
+};
 
-	template<typename EnumType>
-	void SetOrder(EnumType _Order)
-	{
-		SetOrder(static_cast<int>(_Order));
-	}
+// 설명 :
+class GameEngineObject : public GameEngineObjectBase, public std::enable_shared_from_this<GameEngineObject>
+{
+	friend class GameEngineLevel;
+	friend class GameEngineCore;
 
-	virtual void SetOrder(int _Order)
-	{
-		Order = _Order;
-	}
+	
+public:
+	GameEngineTransform Transform;
+
+	// constructer destructer
+	GameEngineObject();
+	virtual ~GameEngineObject();
+
+	// delete Function
+	GameEngineObject(const GameEngineObject& _Other) = delete;
+	GameEngineObject(GameEngineObject&& _Other) noexcept = delete;
+	GameEngineObject& operator = (const GameEngineObject& _Other) = delete;
+	GameEngineObject& operator = (GameEngineObject&& _Other) noexcept = delete;
+
+	virtual void Start() {}
+	virtual void Update(float _Delta) {}
+	virtual void Release() {}
+	virtual void LevelStart(class GameEngineLevel* _NextLevel) {}
+	virtual void LevelEnd(class GameEngineLevel* _NextLevel) {}
 
 	float GetLiveTime()
 	{
@@ -195,7 +204,15 @@ public:
 		return Result;
 	}
 
+	virtual bool IsUpdate()
+	{
+		return Parent == nullptr ? true == IsUpdateValue && false == IsDeathValue : Parent->IsUpdate() && true == IsUpdateValue && false == IsDeath();
+	}
 
+	virtual bool IsDeath()
+	{
+		return Parent == nullptr ? IsDeathValue : Parent->IsDeath() || IsDeathValue;
+	}
 
 	//template<typename ObjectType>
 	//std::shared_ptr<ObjectType> CreateChild(int _Order = 0)
