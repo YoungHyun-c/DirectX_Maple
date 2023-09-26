@@ -247,9 +247,6 @@ private:
 
 	std::string Name;
 	float LiveTime = 0.0f;
-	int Order = 0;
-	bool IsUpdateValue = true; // 이걸 false로 만들면 된다.
-	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
 
 	void AddLiveTime(float _DeltaTime)
 	{
