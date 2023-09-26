@@ -2,7 +2,7 @@
 
 struct GameEngineVertex2D
 {
-    float4 POSITION : POSITIONT;
+    float4 POSITION : POSITION;
 };
 
 struct PixelOutPut
@@ -14,7 +14,7 @@ struct PixelOutPut
 PixelOutPut DebugColor_VS(GameEngineVertex2D _Input)
 {
     // 쉐이더 문법 모두 0인 자료형으로 초기화 하는 것
-    PixelOutPut Result = (PixelOutPut)0;
+    PixelOutPut Result = (PixelOutPut) 0;
     
     Result.POSITION = _Input.POSITION;
     

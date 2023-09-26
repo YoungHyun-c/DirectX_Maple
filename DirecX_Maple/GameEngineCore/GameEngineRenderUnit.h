@@ -5,18 +5,13 @@
 // 렌더링의 최소단위
 // 이녀석을 돌리면 렌더링이 된다.
 // final <- 더이상 상속 못 내린다.
-class GameEngineRenderUnit final : public GameEngineObject, std::enable_shared_from_this<GameEngineRenderUnit>
+class GameEngineRenderUnit final : public GameEngineObjectBase, std::enable_shared_from_this<GameEngineRenderUnit>
 {
 public:
 	// constructer destructer
 	GameEngineRenderUnit();
 	~GameEngineRenderUnit();
 
-	// delete Function
-	GameEngineRenderUnit(const GameEngineRenderUnit& _Other) = delete;
-	GameEngineRenderUnit(GameEngineRenderUnit&& _Other) noexcept = delete;
-	GameEngineRenderUnit& operator = (const GameEngineRenderUnit& _Other) = delete;
-	GameEngineRenderUnit& operator = (GameEngineRenderUnit&& _Other) noexcept = delete;
 
 	void SetMesh(std::string_view _Name);
 	void SetMaterial(std::string_view _Name);
