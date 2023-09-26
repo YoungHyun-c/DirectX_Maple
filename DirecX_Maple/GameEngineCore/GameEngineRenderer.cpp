@@ -80,191 +80,44 @@ int A = 0;
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	ResSetting();
-	Draw();
-}
-
-void GameEngineRenderer::ResSetting()
-{
+	for (size_t i = 0; i < Units.size(); i++)
 	{
-		Mesh->InputAssembler1();
-		Material->VertexShader();
-		LayOut->Setting();
-		Mesh->InputAssembler2();
-		Material->Rasterizer();
-		Material->PixelShader();
-		Material->Blend();
-
-		ShaderResHelper.AllShaderResourcesSetting();
-
-		// 얘는 솔직히 렌더타겟이 가져가야 한다.
-		D3D11_VIEWPORT ViewPort = {};
-		ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-		ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-		ViewPort.MinDepth = 0.0f;
-		ViewPort.MaxDepth = 1.0f;
-		ViewPort.TopLeftX = 0.0f;
-		ViewPort.TopLeftY = 0.0f;
-		GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
-
-		std::shared_ptr<class GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
-		if (nullptr != BackBufferRenderTarget)
-		{
-			BackBufferRenderTarget->Setting();
-		}
-	}
-	{
-		//float4x4 WorldViewProjection = Transform.GetWorldViewProjectionMatrix();
-
-		//// 인풋어셈블러1 버텍스 버퍼 세팅
-		//std::shared_ptr<GameEngineVertexBuffer> VertexBuffer = GameEngineVertexBuffer::Find("Rect");
-		//if (nullptr != VertexBuffer)
-		//{
-		//	VertexBuffer->Setting();
-		//}
-
-
-		//std::shared_ptr<GameEngineVertexShader> VertexShader = GameEngineVertexShader::Find("TextureShader_VS");
-		//if (nullptr != VertexShader && nullptr != VertexBuffer && nullptr == LayOut)
-		//{
-		//	LayOut = std::make_shared<GameEngineInputLayOut>();
-		//	LayOut->ResCreate(VertexBuffer, VertexShader);
-		//}
-
-
-		//if (nullptr != LayOut)
-		//{
-		//	LayOut->Setting();
-
-		//	// 레이아웃
-		//}
-
-		//// 버텍스 쉐이더 세팅
-		//if (nullptr != VertexShader)
-		//{
-		//	VertexShader->Setting();
-		//}
-
-		//std::shared_ptr<GameEngineIndexBuffer> IndexBuffer = GameEngineIndexBuffer::Find("Rect");
-		//if (nullptr != IndexBuffer)
-		//{
-		//	IndexBuffer->Setting();
-		//}
-
-		//// 인덱스버퍼를 어떻게 사용할 것이냐에 대한 옵션이다.
-		//// 삼각형의 배열로 보고 그려라
-		//// D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
-		//// 선의 배열로 보고 그려라.
-		//// D3D11_PRIMITIVE_TOPOLOGY_LINELIST
-		//GameEngineCore::GetContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-		//// 나중에 아웃풋머저 떄문에 그렇다.
-		//D3D11_VIEWPORT ViewPort = {};
-
-		//// 좀 더 식이 있어야 하는데 그건 다이렉트가 알아서 한다.
-		//// ViewPort 만들었던거 들어감
-		//ViewPort.Width = GameEngineCore::MainWindow.GetScale().X;
-		//ViewPort.Height = GameEngineCore::MainWindow.GetScale().Y;
-		//ViewPort.MinDepth = 0.0f;
-		//ViewPort.MaxDepth = 1.0f;
-		//ViewPort.TopLeftX = 0.0f;
-		//ViewPort.TopLeftY = 0.0f;
-
-		//GameEngineCore::GetContext()->RSSetViewports(1, &ViewPort);
-
-		//std::shared_ptr<GameEngineRasterizer> Rasterizer = GameEngineRasterizer::Find("EngineRasterizer");
-		//if (nullptr != Rasterizer)
-		//{
-		//	Rasterizer->Setting();
-		//}
-
-		//std::shared_ptr<GameEnginePixelShader> PixelShader = GameEnginePixelShader::Find("TextureShader_PS");
-		//if (nullptr != PixelShader)
-		//{
-		//	PixelShader->Setting();
-		//}
-
-		//std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Find("EngineBlend");
-		//if (nullptr != Blend)
-		//{
-		//	Blend->Setting();
-		//}
-
-		//std::shared_ptr<class GameEngineRenderTarget> BackBufferRenderTarget = GameEngineCore::GetBackBufferRenderTarget();
-		//if (nullptr != BackBufferRenderTarget)
-		//{
-		//	BackBufferRenderTarget->Setting();
-		//}
-
-		//// 다음 남은 것 (그린다)
-
-		//// 세팅된 버텍스 버퍼를 그려라.
-		//// 그린다 라는 버턴을 누르지는 않은 것.
-		//// 이게 찍는 버튼이다.
-		//// 그걸 다시 옵션을 줄 수 있는데.
-		//// 인덱스 버퍼를 사용하는 경우 호출하는 Draw함수이다.
-		////GameEngineCore::GetContext()->DrawIndexed(6, 0, 0);
-
+		Units[i]->ResSetting();
+		Units[i]->Draw();
 	}
 }
 
-void GameEngineRenderer::Draw()
+std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateAndFindRenderUnit(int _Index)
 {
-	Mesh->Draw();
+	Units.resize(_Index + 1);
+
+	// 있으면
+	if (nullptr != Units[_Index])
+	{
+		// 리턴
+		return Units[_Index];
+	}
+
+	// 없으면 만든다.
+	Units[_Index] = std::make_shared<GameEngineRenderUnit>();
+	Units[_Index]->SetParentRenderer(this);
+	return Units[_Index];
 }
 
-void GameEngineRenderer::SetMesh(std::string_view _Name)
+void GameEngineRenderer::SetMesh(std::string_view _Name, int _Index /*=0*/)
 {
-	Mesh = GameEngineMesh::Find(_Name);
-
-	if (nullptr == Mesh)
-	{
-		MsgBoxAssert("존재하지 않는 매쉬를 세팅하려고 했습니다.");
-	}
-
-	if (nullptr == LayOut && nullptr != Material)
-	{
-		LayOut = std::make_shared<GameEngineInputLayOut>();
-		LayOut->ResCreate(Mesh->GetVertexBuffer(), Material->GetVertexShader());
-	}
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit->SetMesh(_Name);
 }
 
-void GameEngineRenderer::SetMaterial(std::string_view _Name)
+void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*=0*/)
 {
-	Material = GameEngineMaterial::Find(_Name);
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit->SetMaterial(_Name);
+}
 
-	ShaderResHelper.ResClear();
-
-	if (nullptr == Material)
-	{
-		MsgBoxAssert("존재하지 않는 매쉬를 세팅하려고 했습니다.");
-	}
-
-	if (nullptr == LayOut && nullptr != Mesh)
-	{
-		LayOut = std::make_shared<GameEngineInputLayOut>();
-		LayOut->ResCreate(Mesh->GetVertexBuffer(), Material->GetVertexShader());
-	}
-
-	// 버텍스 쉐이더와 픽셀쉐이더가 다 들어있는 상태다.
-
-	// 렌더러의 쉐이더 리소스 헬퍼에
-	// 버텍스와 픽셀쉐이더의 리소스정보들을 복사 받습니다.
-	ShaderResHelper.ShaderResCopy(Material->GetVertexShader().get());
-	ShaderResHelper.ShaderResCopy(Material->GetPixelShader().get());
-
-	// 이걸 회사의 약속
-	if (ShaderResHelper.IsConstantBuffer("TransformData"))
-	{
-		const TransformData& Data = Transform.GetConstTransformDataRef();
-		ShaderResHelper.SetConstantBufferLink("TransformData", Data);
-	}
-
-	//	//std::shared_ptr<GameEngineConstantBuffer> Buffer = GameEngineConstantBuffer::CreateAndFind(sizeof(TransformData), "TransformData", _shader);
-//	//if (nullptr != Buffer)
-//	//{
-//	//	const TransformData& Data = DataTransform->GetConstTransformDataRef();
-//	//	Buffer->ChangeData(Data);
-//	//	Buffer->Setting(0);
-//	//}
+GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*=0*/)
+{
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	return Unit->ShaderResHelper;
 }
