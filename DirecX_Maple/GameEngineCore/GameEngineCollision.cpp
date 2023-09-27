@@ -95,3 +95,12 @@ void GameEngineCollision::Release()
 	//	Collision->Others.erase(this);
 	//}
 }
+
+void GameEngineCollision::Update(float _Delta)
+{
+	// 함수는 호출되는 것 만으로 이미 처리를 한것이다.
+	if (true == GameEngineLevel::IsDebug)
+	{
+		GameEngineDebug::DrawBox2D(Transform);
+	}
+}

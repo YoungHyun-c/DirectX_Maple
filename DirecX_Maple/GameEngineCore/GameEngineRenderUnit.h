@@ -32,7 +32,7 @@ public:
 	GameEngineShaderResHelper ShaderResHelper;
 
 private:
-	class GameEngineRenderer* ParentRenderer;
+	class GameEngineRenderer* ParentRenderer = nullptr;
 
 	// 최적화 대상이 될 수 있다.
 	// 이걸 어떻게든 관리할 방법을 찾는게 맞다. (하나만 만들어서 돌려쓰면 안될지?)

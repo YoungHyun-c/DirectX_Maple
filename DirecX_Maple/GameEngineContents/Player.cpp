@@ -74,7 +74,8 @@ void Player::Start()
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalScale({ 100.0f, 100.0f, 1.0f });
+		Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+		Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
 	}
 
 	ChangeState(PlayerState::Stand);
@@ -95,27 +96,27 @@ void Player::Update(float _Delta)
 		MainSpriteRenderer = nullptr;
 	}*/
 
-	GameEngineDebug::DrawBox2D(MainSpriteRenderer->Transform);
+	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 
-	EventParameter Event;
+	//EventParameter Event;
 
-	Event.Enter = [](GameEngineCollision* _this, GameEngineCollision* Col)
-		{
-			Col->GetActor()->Death();
-			int a = 0;
-		};
+	//Event.Enter = [](GameEngineCollision* _this, GameEngineCollision* Col)
+	//	{
+	//		Col->GetActor()->Death();
+	//		int a = 0;
+	//	};
 
-	Event.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
-		{
-			int a = 0;
-		};
+	//Event.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
+	//	{
+	//		int a = 0;
+	//	};
 
-	Event.Exit = [](GameEngineCollision* _this, GameEngineCollision* Col)
-		{
-			int a = 0;
-		};
+	//Event.Exit = [](GameEngineCollision* _this, GameEngineCollision* Col)
+	//	{
+	//		int a = 0;
+	//	};
 
-	Col->CollisionEvent(ContentsCollisionType::Monster, Event);
+	//Col->CollisionEvent(ContentsCollisionType::Monster, Event);
 
 	// 충돌했냐 안했냐만 보면 (만들어질 인터페이스 형식일뿐)
 	//std::list<std::shared_ptr<Monster>> MonsterList =

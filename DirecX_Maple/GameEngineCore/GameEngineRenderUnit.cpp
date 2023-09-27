@@ -89,7 +89,8 @@ void GameEngineRenderUnit::SetMaterial(std::string_view _Name)
 	ShaderResHelper.ShaderResCopy(Material->GetPixelShader().get());
 
 	// 이걸 회사의 약속
-	if (ShaderResHelper.IsConstantBuffer("TransformData"))
+	if (nullptr != ParentRenderer
+		&& ShaderResHelper.IsConstantBuffer("TransformData"))
 	{
 		const TransformData& Data = ParentRenderer->Transform.GetConstTransformDataRef();
 		ShaderResHelper.SetConstantBufferLink("TransformData", Data);
