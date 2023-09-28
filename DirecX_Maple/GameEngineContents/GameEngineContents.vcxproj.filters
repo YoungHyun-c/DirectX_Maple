@@ -45,6 +45,9 @@
     <ClCompile Include="MainUIActor.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="SkillManager.cpp">
+      <Filter>Object\Player\SKill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -91,6 +94,9 @@
     <ClInclude Include="MainUIActor.h">
       <Filter>Global</Filter>
     </ClInclude>
+    <ClInclude Include="SkillManager.h">
+      <Filter>Object\Player\SKill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -104,6 +110,9 @@
     </Filter>
     <Filter Include="Object\Player">
       <UniqueIdentifier>{d7d60562-48c1-4a10-8629-509501139502}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill">
+      <UniqueIdentifier>{0648dd44-240e-48d4-96b8-be7beafe35e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

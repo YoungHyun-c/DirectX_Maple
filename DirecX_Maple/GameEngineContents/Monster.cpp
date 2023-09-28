@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Monster.h"
+#include "Player.h"
 
 Monster::Monster()
 {
@@ -20,15 +21,31 @@ void Monster::Start()
 
 		NewRandom.SetSeed(reinterpret_cast<long long>(this));
 
-		//Renderer->SetSprite("JinHillaN001.png");
+		Renderer->SetSprite("JinHillaTest.png");
 		//Renderer->Transform.SetLocalPosition({ 1300.0f, -500.0f, 0 });
-		Renderer->SetImageScale({ 50.0f, 50.0f, 0.0f });
-		
-		Renderer->SetImageScale(NewRandom.RandomVectorBox2D(300, 500, 300, 500));
-		float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
-		std::shared_ptr<GameEngineCollision> Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+
+		//Renderer->Transform.SetLocalPosition({ Player::MainPlayer->Transform.GetWorldPosition() });
+
+		float4 Pos = float4::ZERO;
+		Pos = Transform.GetWorldPosition();
+		Renderer->Transform.SetLocalPosition(Pos);
+		Renderer->SetImageScale({ 500.0f, 500.0f, 0.0f });
+
+		//Renderer->SetImageScale(NewRandom.RandomVectorBox2D(300, 500, 300, 500));
+		//float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
+		//std::shared_ptr<GameEngineCollision> Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 		//Col->Transform.SetLocalScale({ 300.0f, 300.0f, 0.0f });
 		//Col->Transform.SetLocalScale(Scale);
 	}
 
+}
+
+void Monster::Update(float _Delta)
+{
+	//PlayerPos = Player::MainPlayer->GetPlayerTransform();
+}
+
+void Monster::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	//PlayerScale = Player::MainPlayer->GetPlayerScale();
 }

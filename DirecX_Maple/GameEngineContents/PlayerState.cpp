@@ -2,73 +2,81 @@
 #include "Player.h"
 #include "BackGroundMap.h"
 
-
+#define JumpDistance 200.0f
+#define JumpHeight 300.0f
 
 void Player::StandStart()
 {
-	ChangeAnimationState("Normal_stand");
+	ChangeAnimationState("Stand");
 }
 void Player::StandUpdate(float _Delta)
 {
 	if (true == GameEngineInput::IsDown(VK_LEFT)
 		|| true == GameEngineInput::IsDown(VK_RIGHT))
 	{
-		DirCheck();
 		ChangeState(PlayerState::Walk);
 		return;
 	}
+
+	if (GameEngineInput::IsDown('X') || GameEngineInput::IsPress('X'))
+	{
+		ChangeState(PlayerState::Jump);
+	}
+}
+
+void Player::StandEnd()
+{
+
 }
 
 void Player::WalkStart()
 {
-	ChangeAnimationState("Normal_Walk");
+	ChangeAnimationState("Walk");
 }
 void Player::WalkUpdate(float _Delta)
 {
-	DirCheck();
-
 	float4 MovePos = float4::ZERO;
+	float4 MoveDir = float4::ZERO;
 
-	if (GameEngineInput::IsPress(VK_LEFT) && Dir == PlayerDir::Left)
+	switch (Dir)
 	{
-		MovePos = { -WalkSpeed * _Delta, 0.0f };
-		//Transform.AddLocalPosition(float4::LEFT * _Delta * WalkSpeed);
-	}
-	if (GameEngineInput::IsPress(VK_RIGHT) && Dir == PlayerDir::Right)
-	{
-		//Transform.AddLocalPosition(float4::RIGHT * _Delta * WalkSpeed);
-		MovePos = { WalkSpeed * _Delta, 0.0f };
-	}
-	if (GameEngineInput::IsPress(VK_UP))
-	{
-		Transform.AddLocalPosition(float4::UP * _Delta * WalkSpeed);
-	}
-	if (GameEngineInput::IsPress(VK_DOWN))
-	{
-		Transform.AddLocalPosition(float4::DOWN * _Delta * WalkSpeed);
-	}
-	if (GameEngineInput::IsPress('Q'))
-	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, 360.0f * _Delta });
-	}
-	if (GameEngineInput::IsPress('E'))
-	{
-		Transform.AddLocalRotation({ 0.0f, 0.0f, -360.0f * _Delta });
+	case ActorDir::Right:
+		MoveDir = float4::RIGHT;
+		break;
+	case ActorDir::Left:
+		MoveDir = float4::LEFT;
+		break;
+	default:
+		break;
 	}
 
-	if (GameEngineInput::IsDown('X'))
+	if (GameEngineInput::IsPress(VK_LEFT))
+	{
+		MovePos += MoveDir * WalkSpeed * _Delta;
+	}
+	if (GameEngineInput::IsPress(VK_RIGHT) && Dir == ActorDir::Right)
+	{
+		MovePos += MoveDir * WalkSpeed * _Delta;
+	}
+
+	Transform.AddLocalPosition(MovePos);
+
+	if (GameEngineInput::IsDown('X') || GameEngineInput::IsPress('X'))
 	{
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (MovePos == float4::ZERO)
+	if (GameEngineInput::IsFree(VK_LEFT) && GameEngineInput::IsFree(VK_RIGHT))
 	{
-		DirCheck();
 		ChangeState(PlayerState::Stand);
 		return;
 	}
 
-	Transform.AddLocalPosition(MovePos);
+}
+
+void Player::WalkEnd()
+{
+
 }
 
 void Player::AlertStart()
@@ -105,28 +113,68 @@ void Player::ProneAttackUpdate(float _Delta)
 }
 void Player::JumpStart()
 {
-	Transform.AddLocalPosition(float4::UP * 400.0f);
-	MainSpriteRenderer->ChangeAnimation("Normal_Jump");
+	ChangeAnimationState("Jump");
+
+	if (true == IsGround)
+	{
+		if (GameEngineInput::IsPress(VK_LEFT))
+		{
+			AddMoveVectorForce(float4(-JumpDistance, JumpHeight));
+		}
+		else if (GameEngineInput::IsPress(VK_RIGHT))
+		{
+			AddMoveVectorForce(float4(JumpDistance, JumpHeight));
+		}
+		else
+		{
+			AddMoveVectorForce(float4(0, JumpHeight));
+		}
+		GroundJump = true;
+	}
 }
 void Player::JumpUpdate(float _Delta)
 {
-	DirCheck();
-
-	float4 MovePos = float4::ZERO;
-
-	//Transform.AddLocalPosition(float4::RIGHT * _Delta * WalkSpeed);
-	//MovePos = { float4::UP * 400.0f * _Delta};
-	
-	if (MovePos == float4::ZERO)
+	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
-		DirCheck();
-		ChangeState(PlayerState::Stand);
+		ChangeState(PlayerState::Walk);
 		return;
 	}
 
-	Transform.AddLocalPosition(MovePos);
+	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
+	{
+		float4 MoveDir = float4::ZERO;
 
+		switch (Dir)
+		{
+		case ActorDir::Right:
+			MoveDir = float4::RIGHT;
+			break;
+		case ActorDir::Left:
+			MoveDir = float4::LEFT;
+			break;
+		default:
+			break;
+		}
+		
+		switch (GroundJump)
+		{
+		case true:
+			Transform.AddLocalPosition(MoveDir * _Delta * JumpAirSpeed);
+			break;
+		case false:
+			Transform.AddLocalPosition(MoveDir * _Delta * AirSpeed);
+			break;
+		}
+	}
 }
+
+void Player::JumpEnd()
+{
+	GravityReset();
+	MoveVectorForceReset();
+	GroundJump = false;
+}
+
 void Player::DoubleJumpStart()
 {
 

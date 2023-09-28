@@ -9,8 +9,10 @@ enum class ContentsRenderType
 enum class ContentsObjectType
 {
 	BackGround,
-	Player,
 	Monster,
+	BackSkill,
+	Player,
+	FrontSkill,
 	JinHillaAnime,
 	UI,
 };
@@ -19,4 +21,11 @@ enum class ContentsCollisionType
 {
 	Player,
 	Monster,
+};
+
+enum class ActorDir
+{
+	Right,
+	Left,
+	Max,
 };

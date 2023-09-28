@@ -1,6 +1,6 @@
 #pragma once
 
-#define GroundColor GameEngineColor(255, 0, 0, 255)
+#define DefaultGroundColor GameEngineColor(255, 0, 0, 255)
 
 // Ό³Έν :
 class GlobalValue

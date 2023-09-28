@@ -18,7 +18,10 @@ public:
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer;
 protected:
 	void Start() override;
-
+	void Update(float _Delta) override;
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	float4 PlayerScale = float4::ZERO;
+	float4 PlayerPos = float4::ZERO;
 private:
 
 };

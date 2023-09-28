@@ -19,7 +19,7 @@ public:
 
 	void SetDebugMap(std::string_view _DebugMapName)
 	{
-		//DebugMap = GameEngineTexture::Find(_DebugMapName);
+		DebugMap = GameEngineTexture::Find(_DebugMapName);
 		DebugMapName = _DebugMapName;
 	}
 
@@ -28,17 +28,49 @@ public:
 		GravityForce = 0.0f;
 	}
 
+	inline void MoveVectorForceReset()
+	{
+		MoveVectorForce = float4::ZERO;
+	}
+
+	void AddMoveVectorForce(float4 _Force)
+	{
+		MoveVectorForce += _Force;
+	}
+
+	const float4 GetMoveVectorForce()
+	{
+		return MoveVectorForce;
+	}
+
+
+	void Gravity(float _Delta);
+	void BlockOut();
 	void CameraFocus(float _Delta);
 
+	GameEngineColor CheckGroundColor(float4 _CheckPos = float4::ZERO);
+	bool CheckGround(float4 _CheckPos = float4::ZERO);
+
 protected:
+	virtual void LevelStart() {}
+
 	void Start() override;
 	void Update(float _Delta) override;
 
+	bool IsGround = true;
 private:
-	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
+	bool IsGravity = true;
+	//float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
+	float GravityForce = 0.0f;
+	float GravityPower = 900.0f;
+	float MaxGravity = 1300.0f;
 	std::string DebugMapName;
+	std::shared_ptr<GameEngineTexture> DebugMap;
 
 	float CameraSpeed = 2.0f;
+	float4 MoveVectorForce = float4::ZERO;
 
+	float4 PlayerScale = float4::ZERO;
+	float4 CurMapScale = float4::ZERO;
 };
 

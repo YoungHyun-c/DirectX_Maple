@@ -22,19 +22,52 @@ void PlayerActor::Start()
 
 void PlayerActor::Update(float _Delta)
 {
-	GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
-	if (GameEngineColor::RED != Color)
+	Gravity(_Delta);
+	IsGround = CheckGround(float4{0.0f, -35.0f});
+	CameraFocus(_Delta);
+}
+
+void PlayerActor::Gravity(float _Delta)
+{
+	if (false == IsGravity)
 	{
-		GravityForce.Y -= _Delta * 900.0f;
-		Transform.AddLocalPosition(GravityForce * _Delta);
+		return;
+	}
+
+	if (true == IsGround && 0 >= MoveVectorForce.Y)
+	{
+		return;
+	}
+
+	GravityForce += GravityPower * _Delta;
+	if (MaxGravity <= GravityForce)
+	{
+		GravityForce = MaxGravity;
+	}
+
+	MoveVectorForce.Y -= GravityForce * _Delta;
+	if (0.0f > MoveVectorForce.Y)
+	{
+		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
+		GameEngineColor GroundColor = CheckGroundColor();
+		float Count = 0.0f;
+		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
+		{
+			if (DefaultGroundColor == GroundColor)
+			{
+				break;
+			}
+			 GroundColor = CheckGroundColor(float4{ 0.0f, 30.0f * Count });
+		}
+		if (0 != Count)
+		{
+			MoveVectorForceDelta.Y = -1.0f * Count;
+		}
+		Transform.AddLocalPosition(MoveVectorForceDelta);
 	}
 	else
 	{
-		//if (Color != GameEngineColor::White)
-		//{
-		//	Transform.AddLocalPosition(float4::UP);
-		//}
-		GravityReset();
+		Transform.AddLocalPosition(MoveVectorForce * _Delta);
 	}
 }
 
@@ -67,4 +100,26 @@ void PlayerActor::CameraFocus(float _Delta)
 	}
 	
 	GetLevel()->GetMainCamera()->Transform.SetLocalPosition(CameraPos);
+}
+
+GameEngineColor PlayerActor::CheckGroundColor(float4 _CheckPos)
+{
+	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + _CheckPos, DefaultGroundColor, DebugMapName);
+	return CheckColor;
+}
+
+bool PlayerActor::CheckGround(float4 _CheckPos)
+{
+	bool Result = false;
+	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + _CheckPos, DefaultGroundColor, DebugMapName);
+	if (DefaultGroundColor == CheckColor)
+	{
+		Result = true;
+	}
+	else
+	{
+		Result = false;
+	}
+
+	return Result;
 }

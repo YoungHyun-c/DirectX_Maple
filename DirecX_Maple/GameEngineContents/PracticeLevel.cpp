@@ -6,6 +6,7 @@
 #include "Monster.h"
 #include "MainUIActor.h"
 #include "TileMap.h"
+#include "SkillManager.h"
 
 PracticeLevel::PracticeLevel()
 {
@@ -34,6 +35,7 @@ void PracticeLevel::Start()
 		}
 		GameEngineSprite::CreateSingle("PracticeMap.png");
 		GameEngineSprite::CreateSingle("PracticeDebugMap.png");
+		GameEngineSprite::CreateSingle("JinHillaTest.png");
 	}
 
 	{
@@ -65,12 +67,26 @@ void PracticeLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("PracticeDebugMap.png");
+		NewPlayer->Transform.SetLocalPosition({ 500.0f, -500.0f });
 	}
 
 	{
 		std::shared_ptr<MainUIActor> UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
-		//UIObject->Transform.SetLocalPosition({600.0f, 75.0f});
 	}
+
+	{
+		std::shared_ptr<Monster> MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
+		//MonsterObject->Transform.SetLocalPosition({ 50.0f, 50.0f });
+	}
+
+	{
+		std::shared_ptr<SkillManager> Skill = CreateActor<SkillManager>(ContentsObjectType::BackSkill);
+
+	}
+
+	//{
+	//	CreateActor<SkillActor>();
+	//}
 
 	//{
 	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
@@ -113,6 +129,7 @@ void PracticeLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("BossEntranceLevel");
 	}
+
 }
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
