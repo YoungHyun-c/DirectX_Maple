@@ -25,9 +25,11 @@ enum class PlayerClothes
 
 
 #include "PlayerActor.h"
+#include "AdeleSkill.h"
 
 class Player : public PlayerActor
 {
+	friend class AdeleSkill;
 public:
 	static Player* MainPlayer;
 public:
@@ -118,6 +120,9 @@ protected:
 	void DeadUpdate(float _Delta);
 	//void DeadEnd();
 
+	// 스킬관련
+	//void BoltJump();
+
 	void ChangeState(PlayerState _State);
 	void ChangeAnimationState(const std::string& _StateName);
 
@@ -149,11 +154,13 @@ private:
 	float4 GroundCheck = { 0.0f, -10.0f };
 	float4 PlayerScale = float4::ZERO;
 
-	float WalkSpeed = 400.0f;
+	float WalkSpeed = 300.0f;
 	bool GroundJump = false;
+	bool DoubleJump = false;
 	float JumpAirSpeed = 30.0f;
 	float AirSpeed = 200.0f;
 
 	static Player* CurPlayer;
+
 };
 

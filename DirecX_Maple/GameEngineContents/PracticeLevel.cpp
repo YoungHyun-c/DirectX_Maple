@@ -6,7 +6,7 @@
 #include "Monster.h"
 #include "MainUIActor.h"
 #include "TileMap.h"
-#include "SkillManager.h"
+#include "AdeleSkill.h"
 
 PracticeLevel::PracticeLevel()
 {
@@ -80,7 +80,7 @@ void PracticeLevel::Start()
 	}
 
 	{
-		std::shared_ptr<SkillManager> Skill = CreateActor<SkillManager>(ContentsObjectType::BackSkill);
+		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>(ContentsObjectType::BackSkill);
 	}
 
 	//{

@@ -23,12 +23,12 @@ void Player::Start()
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
-		
+
 		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Walk", "Battle_Walk", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Alert", "Battle_Alert", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Prone", "Battle_Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Attack", "Battle_Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Battle_Attack", "Battle_Attack", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_ProneAttack", "Battle_ProneAttack", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Jump", "Battle_Jump", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Fly", "Battle_Fly", 0.1f, -1, -1, true);
@@ -39,9 +39,9 @@ void Player::Start()
 
 		MainSpriteRenderer->CreateAnimation("Normal_Stand", "Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Walk", "Walk", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Normal_Alert", "Alert", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Alert", "Alert", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Prone", "Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.2f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Jump", "Jump", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Fly", "Fly", 0.1f, -1, -1, true);
@@ -53,8 +53,17 @@ void Player::Start()
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Center);
-		Clothes = PlayerClothes::Normal;
+	}
 
+	Dir = ActorDir::Left;
+	Clothes = PlayerClothes::Normal;
+	ChangeState(PlayerState::Stand);
+
+	{
+		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
+		Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+		Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
+	}
 
 		//{
 		//	SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
@@ -64,7 +73,7 @@ void Player::Start()
 		//	SkillRenderer->Off();
 
 		//}
-		
+
 		//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
 		//MainSpriteRenderer->SetImageScale({ 91.0f, 80.0f });
 		//MainSpriteRenderer->SetImageScale({ 1000.0f,1000.0f });
@@ -84,31 +93,13 @@ void Player::Start()
 		//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
 		/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
-	}
-
-	//{
-	//	MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(30);
-	//	MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
-	//	MainSpriteRenderer->Transform.SetLocalPosition({ 0, 70, 1.0f });
-	//	MainSpriteRenderer->SetImageScale({ 100.0f, 20.0f });
-	//	MainSpriteRenderer->SetPivotType(PivotType::Left);
-	//}
+		
 
 	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
 	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
-
-	{
-		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-		Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
-	}
-
-	ChangeState(PlayerState::Stand);
-	Dir = ActorDir::Left;
-
 	float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
-	int a = 0;
+
 }
 
 void Player::TestEvent(GameEngineRenderer* _Renderer)
@@ -118,9 +109,10 @@ void Player::TestEvent(GameEngineRenderer* _Renderer)
 
 void Player::Update(float _Delta)
 {
+	PlayerActor::Update(_Delta);
+
 	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 
-	PlayerActor::Update(_Delta);
 	DirCheck();
 	StateUpdate(_Delta);
 
@@ -141,7 +133,7 @@ void Player::Update(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_SHIFT))
 	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Attack");
+		//MainSpriteRenderer->ChangeAnimation("Normal_Attack");
 	}
 
 	if (GameEngineInput::IsDown('1'))
@@ -192,22 +184,6 @@ void Player::Update(float _Delta)
 	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
 
 	//BackGroundMap::MainMap->GetLevel()->GetName();
-
-	//GameEngineColor Color = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition(), GameEngineColor::RED, DebugMapName);
-	//if (GameEngineColor::RED != Color)
-	//{
-	//	GravityForce.Y -= _Delta * 900.0f;
-	//	Transform.AddLocalPosition(GravityForce * _Delta);
-	//}
-	//else
-	//{
-	//	//if (Color != GameEngineColor::White)
-	//	//{
-	//	//	Transform.AddLocalPosition(float4::UP);
-	//	//}
-	//	GravityForce = 0.0f;
-	//}
-
 
 }
 

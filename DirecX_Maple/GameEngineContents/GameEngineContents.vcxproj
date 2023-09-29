@@ -19,6 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdeleSkill.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BasicFunction.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BossEntranceLevel.cpp">
       <SubType>
       </SubType>
@@ -78,10 +86,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SkillManager.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <SubType>
       </SubType>
@@ -92,6 +96,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AdeleSkill.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BasicFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="BossEntranceLevel.h">
       <SubType>
       </SubType>
@@ -146,10 +158,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PreCompile.h" />
-    <ClInclude Include="SkillManager.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="TileMap.h">
       <SubType>
       </SubType>
