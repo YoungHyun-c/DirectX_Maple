@@ -1,5 +1,6 @@
 #include"PreCompile.h"
 #include "BackGroundMap.h"
+#include "PotalManager.h"
 
 #pragma comment(lib, "msimg32.lib")
 
@@ -47,6 +48,11 @@ void BackGroundMap::Start()
 
 	Renderer->On();
 	DebugRenderer->Off();
+
+	//Potal= GetLevel()->CreateActor<PotalManager>();
+	//Potal->SetLinkedMap("BossEntranceLevel");
+	//Potal->Transform.SetWorldPosition({ 180.0f, -855.0f});
+
 }
 
 void BackGroundMap::Init(const std::string& _FileName, const std::string& _DebugFileName)
@@ -89,4 +95,25 @@ GameEngineColor BackGroundMap::GetColor(float4 _Pos, GameEngineColor _DefaultCol
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(_DebugMapName);
 
 	return Tex->GetColor(_Pos, _DefaultColor);
+}
+
+void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	if (FileName == "PracticeMap.png")
+	{
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("BossEntranceLevel");
+		Potal->Transform.SetWorldPosition({ 180.0f, -855.0f });
+	}
+
+	if (FileName == "EntranceMap.png")
+	{
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("PracticeLevel");
+		Potal->Transform.SetWorldPosition({ 110.0f, -750.0f });
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("BossLevel");
+		Potal->Transform.SetWorldPosition({ 785.0f, -750.0f });
+	}
 }

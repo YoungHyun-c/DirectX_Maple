@@ -29,5 +29,8 @@ private:
 	std::shared_ptr<class MainUIActor> UIObject;
 	std::shared_ptr<class SkillManager> Skill;
 	std::shared_ptr<class TileMap> TileMapObject;
+
+
+	std::shared_ptr<class PotalManager> Potal = nullptr;
 };
 

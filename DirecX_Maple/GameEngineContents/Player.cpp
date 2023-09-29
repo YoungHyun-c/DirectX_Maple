@@ -98,9 +98,9 @@ void Player::Start()
 	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 
 	{
-		//Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		//Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-		//Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
+		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
+		Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+		Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
 	}
 
 	ChangeState(PlayerState::Stand);
@@ -359,7 +359,7 @@ void Player::ChangeAnimationState(const std::string& _StateName)
 	MainSpriteRenderer->ChangeAnimation(AnimationName);
 }
 
-void Player::LevelStart()
+void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	MainPlayer = nullptr;
+	MainPlayer = this;
 }

@@ -3,6 +3,7 @@
 #include "BackGroundMap.h"
 
 #include "Player.h"
+#include "SkillManager.h"
 
 BossEntranceLevel::BossEntranceLevel()
 {
@@ -48,6 +49,11 @@ void BossEntranceLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("EntranceDebugMap.png");
+	}
+
+	{
+		std::shared_ptr<SkillManager> Skill = CreateActor<SkillManager>(ContentsObjectType::BackSkill);
+
 	}
 }
 

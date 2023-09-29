@@ -48,6 +48,9 @@
     <ClCompile Include="SkillManager.cpp">
       <Filter>Object\Player\SKill</Filter>
     </ClCompile>
+    <ClCompile Include="PotalManager.cpp">
+      <Filter>Object\Potal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -97,6 +100,9 @@
     <ClInclude Include="SkillManager.h">
       <Filter>Object\Player\SKill</Filter>
     </ClInclude>
+    <ClInclude Include="PotalManager.h">
+      <Filter>Object\Potal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -113,6 +119,9 @@
     </Filter>
     <Filter Include="Object\Player\SKill">
       <UniqueIdentifier>{0648dd44-240e-48d4-96b8-be7beafe35e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Potal">
+      <UniqueIdentifier>{a95353b8-cab2-4020-97c1-1f000e08fc1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

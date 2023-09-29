@@ -21,6 +21,7 @@ enum class ContentsCollisionType
 {
 	Player,
 	Monster,
+	Potal,
 };
 
 enum class ActorDir

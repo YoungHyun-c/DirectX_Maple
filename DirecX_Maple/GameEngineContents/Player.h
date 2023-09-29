@@ -130,7 +130,7 @@ protected:
 	void DirCheck();
 	
 private:
-	void LevelStart() override;
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 

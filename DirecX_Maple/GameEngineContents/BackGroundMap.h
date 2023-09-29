@@ -28,6 +28,8 @@ protected:
 	void Start() override;
 	void Update(float _DeltaTime) override;
 
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+
 private:
 	bool SwitchRenderValue = true;
 	std::string FileName;
@@ -36,5 +38,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> Renderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;
 
+
+	std::shared_ptr<class PotalManager> Potal = nullptr;
 };
 

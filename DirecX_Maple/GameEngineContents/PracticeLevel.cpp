@@ -81,12 +81,7 @@ void PracticeLevel::Start()
 
 	{
 		std::shared_ptr<SkillManager> Skill = CreateActor<SkillManager>(ContentsObjectType::BackSkill);
-
 	}
-
-	//{
-	//	CreateActor<SkillActor>();
-	//}
 
 	//{
 	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);

@@ -20,7 +20,9 @@ protected:
 	void Update(float _Delta) override;
 
 private:
-	std::shared_ptr<class GameEngineSpriteRenderer> SkillRenderer;
+	std::shared_ptr<class GameEngineSpriteRenderer> DoubleJumpRenderer;
+	std::shared_ptr<class GameEngineSpriteRenderer> UpJumpRenderer;
 
+	float4 PlayerPos = float4::ZERO;
 };
 
