@@ -22,7 +22,7 @@ void MainUIActor::Start()
 		AtereAnime->CreateAnimation("AtereAnime_Back", "AtereAnime", 0.3f, -1, -1, true);
 		AtereAnime->ChangeAnimation("AtereAnime_Back");
 		AtereAnime->AutoSpriteSizeOn();
-		AtereAnime->Transform.SetLocalPosition({ 600.0f, 145.0f });
+		AtereAnime->Transform.SetLocalPosition({ 602.0f, 141.0f });
 	}
 
 	{
@@ -32,6 +32,7 @@ void MainUIActor::Start()
 		AtereGage->Transform.SetLocalPosition({ 600.0f, 75.0f });
 		//AtereGage->SetAutoScaleRatio(1.0f);
 	}
+
 
 }
 

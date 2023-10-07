@@ -14,14 +14,19 @@ enum class ContentsObjectType
 	Player,
 	FrontSkill,
 	JinHillaAnime,
+	DamageRender,
 	UI,
+	Mouse,
 };
 
 enum class ContentsCollisionType
 {
 	Player,
 	Monster,
+	Skill,
 	Potal,
+	UI,
+	Mouse,
 };
 
 enum class ActorDir

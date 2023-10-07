@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BackGroundMap.h"
 #include "AdeleSkill.h"
+#include "Monster.h"
 
 #define JumpDistance 200.0f
 #define JumpHeight 300.0f
@@ -112,10 +113,39 @@ void Player::ProneUpdate(float _Delta)
 }
 void Player::AttackStart()
 {
+	if (IsAttack == true)
+	{
+		return;
+	}
+	IsAttack = true;
+
+	AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+	AttackCol->Transform.SetLocalPosition({ 150.0f, 0.0f });
+	AttackCol->Transform.SetLocalScale({ 200.0f, 200.0f });
+	AttackCol->On();
+	// Ãæµ¹
+	//std::vector<std::shared_ptr<GameEngineCollision>> HitMonsterVector;
+	//std::vector<std::shared_ptr<GameEngineCollision>> HitObjectVector;
+	//std::shared_ptr<GameEngineCollision> HitObject;
+	EventParameter HitEvent;
+
+	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* Cot)
+		{
+			Monster::Monsters->GetMonsterHp(-1);
+			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+			NewDR->PushDamage(480);
+		};
+	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Cot)
+		{
+			int a = 0;
+		};
+	AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
+	//RangeCheck->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
+
+
 	ChangeAnimationState("Attack");
 	GameEngineRandom NewRandom;
 	int AttackValue = NewRandom.RandomInt(1, 3);
-
 	std::shared_ptr<AdeleSkill> Divide = GetLevel()->CreateActor<AdeleSkill>();
 	switch(AttackValue)
 	{
@@ -191,7 +221,12 @@ void Player::AttackUpdate(float _Delta)
 		ChangeState(PlayerState::Walk);
 		return;
 	}
+}
 
+void Player::AttackEnd()
+{
+	IsAttack = false;
+	AttackCol->Off();
 }
 void Player::ProneAttackStart()
 {

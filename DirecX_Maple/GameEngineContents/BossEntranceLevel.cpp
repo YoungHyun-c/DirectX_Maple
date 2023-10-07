@@ -66,7 +66,7 @@ void BossEntranceLevel::Update(float _Delta)
 
 	if (GameEngineInput::IsDown('3'))
 	{
-		GameEngineCore::ChangeLevel("BossLevel");
+		//GameEngineCore::ChangeLevel("BossLevel");
 	}
 }
 

@@ -26,10 +26,12 @@ enum class PlayerClothes
 
 #include "PlayerActor.h"
 #include "AdeleSkill.h"
+#include "DamageRenderer.h"
 
 class Player : public PlayerActor
 {
 	friend class AdeleSkill;
+	friend class DamageRenderer;
 public:
 	static Player* MainPlayer;
 public:
@@ -98,7 +100,7 @@ protected:
 
 	void AttackStart();
 	void AttackUpdate(float _Delta);
-	//void AttackEnd();
+	void AttackEnd();
 
 	void ProneAttackStart();
 	void ProneAttackUpdate(float _Delta);
@@ -122,6 +124,10 @@ protected:
 
 	// 스킬관련
 	//void BoltJump();
+	bool IsAttack = false;
+	std::shared_ptr<class GameEngineCollision> RangeCheck = nullptr;
+	std::shared_ptr<GameEngineCollision> AttackCol;
+	int a = 0;
 
 	void ChangeState(PlayerState _State);
 	void ChangeAnimationState(const std::string& _StateName);

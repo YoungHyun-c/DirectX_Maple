@@ -37,7 +37,7 @@ private:
 
 	std::shared_ptr<class GameEngineSpriteRenderer> Renderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;
-
+	std::shared_ptr<class Mouse> MouseObject;
 
 	std::shared_ptr<class PotalManager> Potal = nullptr;
 };

@@ -26,9 +26,12 @@ private:
 	std::shared_ptr<class BackGroundMap> Map;
 	std::shared_ptr<class Player> PlayerObject;
 	std::shared_ptr<class Monster> MonsterObject;
-	std::shared_ptr<class MainUIActor> UIObject;
 	std::shared_ptr<class SkillManager> Skill;
 	std::shared_ptr<class TileMap> TileMapObject;
+
+	std::shared_ptr<class MainUIActor> UIObject;
+	std::shared_ptr<class SummonUi> SummonObject;
+	std::shared_ptr<class Mouse> MouseObject = nullptr;
 
 
 	std::shared_ptr<class PotalManager> Potal = nullptr;

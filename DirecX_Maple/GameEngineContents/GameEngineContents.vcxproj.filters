@@ -9,9 +9,6 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -54,6 +51,18 @@
     <ClCompile Include="BasicFunction.cpp">
       <Filter>Object\Player\Utill</Filter>
     </ClCompile>
+    <ClCompile Include="DamageRenderer.cpp">
+      <Filter>Object\Damage</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="SummonUi.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -66,9 +75,6 @@
     </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Object</Filter>
@@ -109,6 +115,18 @@
     <ClInclude Include="BasicFunction.h">
       <Filter>Object\Player\Utill</Filter>
     </ClInclude>
+    <ClInclude Include="DamageRenderer.h">
+      <Filter>Object\Damage</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="SummonUi.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Object\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -131,6 +149,15 @@
     </Filter>
     <Filter Include="Object\Player\Utill">
       <UniqueIdentifier>{934cc871-3a2b-4313-97eb-428fca2aaf09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Damage">
+      <UniqueIdentifier>{004c3407-9df7-4ff5-a59e-b1f82fcba03f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{baa31acc-2a5b-43e4-8953-28768935b13f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Monster">
+      <UniqueIdentifier>{540def0d-3a4f-4b19-81f7-8663c3253328}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

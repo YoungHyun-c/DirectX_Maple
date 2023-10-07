@@ -41,7 +41,7 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Normal_Walk", "Walk", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Alert", "Alert", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Prone", "Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.2f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Jump", "Jump", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Fly", "Fly", 0.1f, -1, -1, true);
@@ -55,14 +55,14 @@ void Player::Start()
 		MainSpriteRenderer->SetPivotType(PivotType::Center);
 	}
 
-	Dir = ActorDir::Left;
+	Dir = ActorDir::Right;
 	Clothes = PlayerClothes::Normal;
 	ChangeState(PlayerState::Stand);
 
 	{
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-		Col->Transform.SetLocalScale({ 50.0f, 50.0f, 1.0f });
+		Col->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
+		Col->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
 
 		//{
@@ -131,9 +131,41 @@ void Player::Update(float _Delta)
 		MainSpriteRenderer->AnimationPauseSwitch();
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT))
+	if (GameEngineInput::IsDown('Y'))
 	{
-		//MainSpriteRenderer->ChangeAnimation("Normal_Attack");
+		std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
+
+		Shard->SetSkillActor("Shard");
+	}
+
+	if (GameEngineInput::IsDown('R'))
+	{
+		std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
+
+		Maestro->SetSkillActor("Maestro");
+	}
+
+	//////////////////// 데미지 렌더 테스트중//////////////////////
+	if (GameEngineInput::IsDown('3'))
+	{
+		std::shared_ptr<AdeleSkill> Ruin = GetLevel()->CreateActor<AdeleSkill>();
+		Ruin->SetSkillActor("Ruin");
+		/*std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+		NewDR->PushDamage(480);*/
+	}
+
+	if (GameEngineInput::IsDown('Z'))
+	{
+		std::shared_ptr<AdeleSkill> Impale = GetLevel()->CreateActor<AdeleSkill>();
+
+		Impale->SetSkillActor("Impale");
+	}
+
+	if (GameEngineInput::IsDown('C'))
+	{
+		std::shared_ptr<AdeleSkill> Lesonens = GetLevel()->CreateActor<AdeleSkill>();
+
+		Lesonens->SetSkillActor("Lesonens");
 	}
 
 	if (GameEngineInput::IsDown('1'))
@@ -145,7 +177,7 @@ void Player::Update(float _Delta)
 	{
 		Clothes = PlayerClothes::Normal;
 	}
-	if (GameEngineInput::IsDown('3'))
+	if (GameEngineInput::IsDown('-'))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
 	}
@@ -180,9 +212,14 @@ void Player::Update(float _Delta)
 	}
 
 
-	float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
-	OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
-
+	// 출력
+	//float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
+	//OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
+	//float MonsterHp = Monster::Monsters->GetMonsterHp();
+	//std::string CurMonsterHp = "MonsterHp : ";
+	//CurMonsterHp += std::to_string(static_cast<int>(MonsterHp));
+	//CurMonsterHp += "\n";
+	//OutputDebugStringA(CurMonsterHp.c_str());
 	//BackGroundMap::MainMap->GetLevel()->GetName();
 
 }
@@ -201,6 +238,9 @@ void Player::ChangeState(PlayerState _State)
 			break;
 		case PlayerState::Jump:
 			JumpEnd();
+			break;
+		case PlayerState::Attack:
+			AttackEnd();
 			break;
 		default:
 			break;

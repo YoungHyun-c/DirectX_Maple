@@ -7,6 +7,10 @@
 #include "MainUIActor.h"
 #include "TileMap.h"
 #include "AdeleSkill.h"
+#include "DamageRenderer.h"
+
+#include "Mouse.h"
+#include "SummonUi.h"
 
 PracticeLevel::PracticeLevel()
 {
@@ -35,7 +39,6 @@ void PracticeLevel::Start()
 		}
 		GameEngineSprite::CreateSingle("PracticeMap.png");
 		GameEngineSprite::CreateSingle("PracticeDebugMap.png");
-		GameEngineSprite::CreateSingle("JinHillaTest.png");
 	}
 
 	{
@@ -50,7 +53,7 @@ void PracticeLevel::Start()
 			GameEngineDirectory& Dir = Directorys[i];
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
-
+		GameEngineSprite::CreateSingle("Mugong_stand.png");
 	}
 
 	//std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
@@ -75,13 +78,24 @@ void PracticeLevel::Start()
 	}
 
 	{
-		std::shared_ptr<Monster> MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
-		//MonsterObject->Transform.SetLocalPosition({ 50.0f, 50.0f });
+		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
+
+		MouseObject = CreateActor<Mouse>();
+		MouseObject->SetCurMouse(MouseObject);
 	}
 
 	{
-		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>(ContentsObjectType::BackSkill);
+		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
 	}
+
+	{
+		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>();
+	}
+
+	{
+		std::shared_ptr<DamageRenderer> DamageRender = CreateActor<DamageRenderer>();
+	}
+
 
 	//{
 	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
@@ -105,14 +119,10 @@ void PracticeLevel::Start()
 
 void PracticeLevel::Update(float _Delta)
 {
-	std::string FPS = "FPS : ";
-	FPS += std::to_string(static_cast<int>(1.0f / _Delta));
-	FPS += "\n";
-	OutputDebugStringA(FPS.c_str());
-
-	static size_t X = 0;
-
-	float Speed = 100.0f;
+	//std::string FPS = "FPS : ";
+	//FPS += std::to_string(static_cast<int>(1.0f / _Delta));
+	//FPS += "\n";
+	//OutputDebugStringA(FPS.c_str());
 
 
 	if (GameEngineInput::IsDown('B'))
@@ -123,6 +133,14 @@ void PracticeLevel::Update(float _Delta)
 	if (GameEngineInput::IsDown('2'))
 	{
 		GameEngineCore::ChangeLevel("BossEntranceLevel");
+	}
+
+
+	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	
+	if (false == Monster::Monsters->MonsterAppear)
+	{
+		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 	}
 
 }
