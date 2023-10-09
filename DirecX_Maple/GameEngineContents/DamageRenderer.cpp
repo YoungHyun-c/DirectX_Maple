@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "DamageRenderer.h"
 #include "Monster.h"
+#include "CravingMonster.h"
 
 DamageRenderer::DamageRenderer()
 {
@@ -51,7 +52,7 @@ void DamageRenderer::Update(float _Delta)
 
 	if (DamageRenderList.size() <= 0)
 	{
-		return;
+		Death();
 	}
 
 	std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*>::iterator Start = DamageRenderList.begin();
@@ -99,8 +100,18 @@ void DamageRenderer::PushDamage(int _SkillDamage)
 
 	Vect->reserve(Digit);
 
+	float LastNumYPos;
+	if (DamageRenderList.size() > 0)
+	{
+		LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
+	}
+	else
+	{
+		LastNumYPos = 0.0f;
+	}
 
-	for (int i = 0; i < 7; i++)
+
+	for (int j = 0; j < 7; j++)
 	{
 		for (int i = Digit; i > 0; i--)
 		{
@@ -108,8 +119,10 @@ void DamageRenderer::PushDamage(int _SkillDamage)
 
 			NewNumberRender = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);
 			NewNumberRender->SetSprite(TextureName);
-			//NewNumberRender->Transform.SetLocalPosition({ ((Digit / 2) - (i - 1)) * 32.0f + (16.0f * (Digit % 2)), LastNumYPos + 18.0f });
+			//NewNumberRender->Transform.SetLocalPosition({ ((Digit / 2) - (i - 1)) * 32.0f + (16.0f * (Digit % 2)), LastNumYPos + 50.0f });
+			//NewNumberRender->Transform.SetLocalPosition({ ( - (i - 1)) * 32.0f , LastNumYPos + 50.0f });
 			NewNumberRender->Transform.SetWorldPosition({ (Monster::Monsters->Transform.GetLocalPosition().X + 150.0f - (i - 1) * 32.0f), Monster::Monsters->Transform.GetLocalPosition().Y + LastNumYPos  + 50.0f });
+			//NewNumberRender->Transform.SetWorldPosition({ (CravingMonster::CravingMonsters->Transform.GetLocalPosition().X + 150.0f - (i - 1) * 32.0f), CravingMonster::CravingMonsters->Transform.GetLocalPosition().Y + LastNumYPos + 50.0f });
 			Vect->push_back(NewNumberRender);
 		}
 		LastNumYPos += 30.0f;
@@ -120,6 +133,7 @@ void DamageRenderer::PushDamage(int _SkillDamage)
 	//float Pos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
 	int a = 0;
 }
+
 
 void DamageRenderer::DeleteDamage()
 {

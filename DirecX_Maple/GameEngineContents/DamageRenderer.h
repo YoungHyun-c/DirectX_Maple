@@ -40,7 +40,7 @@ private:
 	float SkillFinalDamage = 2.2f;
 
 	int OneLineDamage;
-	float Disappear = 2.0f;
+	float Disappear = 1.5f;
 	float CurTime = 0.0f;
 	float LastNumYPos = 0.0f;
 	bool IsSet = false;

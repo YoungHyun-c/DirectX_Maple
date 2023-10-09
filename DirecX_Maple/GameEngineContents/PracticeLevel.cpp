@@ -70,7 +70,7 @@ void PracticeLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("PracticeDebugMap.png");
-		NewPlayer->Transform.SetLocalPosition({ 500.0f, -500.0f });
+		NewPlayer->Transform.SetWorldPosition({ 500.0f, -500.0f });
 	}
 
 	{
@@ -86,6 +86,12 @@ void PracticeLevel::Start()
 
 	{
 		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
+		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f });
+	}
+
+	{
+		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
+		MonsterObject->Transform.SetLocalPosition({ 600.0f, -700.0f });
 	}
 
 	{
@@ -136,11 +142,11 @@ void PracticeLevel::Update(float _Delta)
 	}
 
 
-	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	
 	if (false == Monster::Monsters->MonsterAppear)
 	{
-		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
+		//MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 	}
 
 }

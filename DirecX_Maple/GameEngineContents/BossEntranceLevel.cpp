@@ -49,6 +49,7 @@ void BossEntranceLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("EntranceDebugMap.png");
+		NewPlayer->Transform.SetWorldPosition({ 100.0f, -750.0f });
 	}
 
 	{

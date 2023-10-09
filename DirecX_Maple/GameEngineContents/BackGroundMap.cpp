@@ -4,11 +4,11 @@
 
 #pragma comment(lib, "msimg32.lib")
 
-BackGroundMap* BackGroundMap::MainMap;
+BackGroundMap* BackGroundMap::MainMap = nullptr;
 
 BackGroundMap::BackGroundMap()
 {
-	MainMap = this;
+	
 }
 
 BackGroundMap::~BackGroundMap()
@@ -61,7 +61,7 @@ void BackGroundMap::Init(const std::string& _FileName, const std::string& _Debug
 	DebugFileName = _DebugFileName;
 
 	GameEngineSprite::CreateSingle(FileName);
-	std::shared_ptr<GameEngineTexture> BackTexture = GameEngineTexture::Find(FileName);
+	BackTexture = GameEngineTexture::Find(FileName);
 	float4 RenderScale = BackTexture->GetScale().Half();
 	RenderScale.Y *= -1.0f;
 
@@ -99,6 +99,8 @@ GameEngineColor BackGroundMap::GetColor(float4 _Pos, GameEngineColor _DefaultCol
 
 void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	MainMap = this;
+
 	if (FileName == "PracticeMap.png")
 	{
 		Potal = GetLevel()->CreateActor<PotalManager>();
@@ -116,6 +118,5 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		Potal->SetLinkedMap("BossLevel");
 		Potal->Transform.SetWorldPosition({ 785.0f, -750.0f });
 	}
-
 
 }

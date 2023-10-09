@@ -20,6 +20,11 @@ public:
 
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = DefaultGroundColor, std::string_view _DebugMapName ="");
 
+	inline float4 GetMapScale()
+	{
+		return BackTexture->GetScale();
+	}
+
 	void Init(const std::string& _FileName, const std::string& _DebugFileName);
 
 	void SwitchRenderer();
@@ -37,6 +42,8 @@ private:
 
 	std::shared_ptr<class GameEngineSpriteRenderer> Renderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;
+	std::shared_ptr<GameEngineTexture> BackTexture = nullptr;
+
 	std::shared_ptr<class Mouse> MouseObject;
 
 	std::shared_ptr<class PotalManager> Potal = nullptr;

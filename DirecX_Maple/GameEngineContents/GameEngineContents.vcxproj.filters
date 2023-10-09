@@ -24,9 +24,6 @@
     <ClCompile Include="BackGroundMap.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="JinHillaAnime.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
@@ -63,6 +60,21 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="JinHillaAnime.cpp">
+      <Filter>Object\Boss\BossAnime</Filter>
+    </ClCompile>
+    <ClCompile Include="JinHillaEnterAnime.cpp">
+      <Filter>Object\Boss\BossAnime</Filter>
+    </ClCompile>
+    <ClCompile Include="JinHillaBoss.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CravingMonster.cpp">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFunction.cpp">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -90,9 +102,6 @@
     </ClInclude>
     <ClInclude Include="BackGroundMap.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="JinHillaAnime.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Object\Player</Filter>
@@ -127,6 +136,21 @@
     <ClInclude Include="Monster.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="JinHillaEnterAnime.h">
+      <Filter>Object\Boss\BossAnime</Filter>
+    </ClInclude>
+    <ClInclude Include="JinHillaAnime.h">
+      <Filter>Object\Boss\BossAnime</Filter>
+    </ClInclude>
+    <ClInclude Include="JinHillaBoss.h">
+      <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CravingMonster.h">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFunction.h">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -158,6 +182,15 @@
     </Filter>
     <Filter Include="Object\Monster">
       <UniqueIdentifier>{540def0d-3a4f-4b19-81f7-8663c3253328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss">
+      <UniqueIdentifier>{8749cffa-fad4-4545-bf16-49bf4768c897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\SummonMonster">
+      <UniqueIdentifier>{3760d047-b1ab-4368-b31a-4dd5bf733128}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\BossAnime">
+      <UniqueIdentifier>{b23dff28-ad41-4ad2-8743-8fa92e124c6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

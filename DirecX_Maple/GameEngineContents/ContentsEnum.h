@@ -35,3 +35,12 @@ enum class ActorDir
 	Left,
 	Max,
 };
+
+enum class MonstersName
+{
+	Mugong,
+	CarvingMonster,
+	GhostSuo,
+	GhostDemian,
+	Max,
+};

@@ -16,6 +16,20 @@ BossRewardLevel::~BossRewardLevel()
 
 void BossRewardLevel::Start()
 {
+	//{
+	//	GameEngineRandom NewRandom;
+	//	for (size_t i = 0; i < 10; i++)
+	//	{
+	//		std::shared_ptr<Monster> Object = CreateActor<Monster>(ContentsObjectType::Monster);
+	//		//Object->Transform.SetLocalPosition({ 0, 0 });
+	//		Object->Transform.SetLocalPosition(NewRandom.RandomVectorBox2D(0, 1280, 0, -720));
+	//	}
+
+	//	std::shared_ptr<PlayMap> Object0 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+	//	std::shared_ptr<PlayMap> Object1 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+	//	std::shared_ptr<PlayMap> Object2 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+	//	std::shared_ptr<PlayMap> Object3 = CreateActor<PlayMap>(ContentsObjectType::Monster);
+	//}
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
@@ -48,6 +62,7 @@ void BossRewardLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("RewardDebugMap.png");
+		NewPlayer->Transform.SetWorldPosition({ 250.0f, -600.0f });
 	}
 }
 

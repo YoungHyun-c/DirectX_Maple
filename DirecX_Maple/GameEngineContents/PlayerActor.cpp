@@ -4,6 +4,7 @@
 
 #include "GlobalValue.h"
 #include "ContentsCore.h"
+#include "Player.h"
 
 PlayerActor::PlayerActor()
 {

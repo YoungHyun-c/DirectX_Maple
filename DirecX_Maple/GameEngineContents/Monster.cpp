@@ -8,6 +8,7 @@ Monster* Monster::Monsters;
 Monster::Monster()
 {
 	Monsters = this;
+	MonsterName = static_cast<int>(MonstersName::Mugong);
 }
 
 Monster::~Monster()
@@ -37,7 +38,7 @@ void Monster::Start()
 		//float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
 		//Col->Transform.SetLocalScale(Scale);
 		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-		//Col->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+		//Col->Transform.SetLocalPosition({ 0.0f, 100.0f, 1.0f });
 		//Col->Transform.SetLocalPosition({ 0 , 100.0f });
 		Col->Transform.SetLocalScale({ 300.0f, 300.0f, 0.0f });
 		Col->Off();
@@ -54,8 +55,8 @@ void Monster::Update(float _Delta)
 	//Dir.Normalize();
 	//Renderer->Transform.AddLocalPosition(Dir * _Delta * 100.0f);
 
-	float4 PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
-	if (RenderOn == true && MonsterAppear == false)
+	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	//if (RenderOn == true && MonsterAppear == false)
 	{
 		//Renderer->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 		Renderer->On();
@@ -63,12 +64,15 @@ void Monster::Update(float _Delta)
 		Col->On();
 		MonsterAppear = true;
 	}
-	else if (RenderOn == false && MonsterAppear == true)
-	{
-		Renderer->Off();
-		Col->Off();
-		MonsterAppear = false;
-	}
+	//else if (RenderOn == false && MonsterAppear == true)
+	//{
+	//	Renderer->Off();
+	//	Col->Off();
+	//	MonsterAppear = false;
+	//}
+	
+	GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
+
 }
 
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)

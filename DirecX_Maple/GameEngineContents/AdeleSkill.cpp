@@ -186,7 +186,7 @@ void AdeleSkill::Update(float _Delta)
 {
 	//PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
 	
-	CurPlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	
 	if (UpdateFunc != nullptr)
 	{
@@ -309,7 +309,7 @@ void AdeleSkill::SetSkillActor(const std::string_view& _SkillName, bool _isRePla
 
 void AdeleSkill::SetSkillAnimation()
 {
-	PlayerPos = Player::MainPlayer->Transform.GetWorldPosition();
+	PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	if (SkillName == "BoltJump")
 	{
 		UpJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y - 50.0f });
@@ -317,7 +317,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "DoubleJump")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -336,7 +336,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "Divide1")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -361,7 +361,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "Divide2")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -386,7 +386,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "Divide3")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -446,7 +446,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "Impale")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -477,7 +477,7 @@ void AdeleSkill::SetSkillAnimation()
 	}
 	else if (SkillName == "Lesonens")
 	{
-		ActorDir Dir = Player::MainPlayer->GetDir();
+		ActorDir Dir = Player::GetMainPlayer()->GetDir();
 		switch (Dir)
 		{
 		case ActorDir::Left:
@@ -618,7 +618,7 @@ void AdeleSkill::ImpaleSkill()
 
 void AdeleSkill::LesonensSkill()
 {
-	ActorDir Dir = Player::MainPlayer->GetDir();
+	ActorDir Dir = Player::GetMainPlayer()->GetDir();
 	switch (Dir)
 	{
 	case ActorDir::Left:

@@ -24,5 +24,12 @@ protected:
 
 private:
 	std::shared_ptr<class BackGroundMap> Map;
+	std::shared_ptr<class JinHillaAnime> JinHillaAttackAni;
+	std::shared_ptr<class Player> NewPlayer;
+
+	std::shared_ptr<class CravingMonster> CravingMob;
+
+	float CurTime = 29.44f;
+	bool AniEnd = false;
 };
 

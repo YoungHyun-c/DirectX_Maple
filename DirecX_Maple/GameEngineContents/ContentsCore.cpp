@@ -31,8 +31,7 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
 
-	GameEngineCore::ChangeLevel("PracticeLevel");
-
+	GameEngineCore::ChangeLevel("BossLevel");
 }
 
 void ContentsCore::Update(float _Delta)

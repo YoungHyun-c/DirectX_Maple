@@ -49,8 +49,6 @@ public:
 	bool CheckGround(float4 _CheckPos = float4::ZERO);
 
 protected:
-	virtual void LevelStart() {}
-
 	void Start() override;
 	void Update(float _Delta) override;
 
@@ -66,8 +64,5 @@ private:
 
 	float CameraSpeed = 2.0f;
 	float4 MoveVectorForce = float4::ZERO;
-
-	float4 PlayerScale = float4::ZERO;
-	float4 CurMapScale = float4::ZERO;
 };
 

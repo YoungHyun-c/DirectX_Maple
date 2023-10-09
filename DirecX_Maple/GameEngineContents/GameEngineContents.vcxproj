@@ -43,6 +43,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="CravingMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="DamageRenderer.cpp">
       <SubType>
       </SubType>
@@ -55,11 +59,23 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="JinHillaBoss.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="JinHillaEnterAnime.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MainUIActor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MonsterFunction.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -133,6 +149,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="CravingMonster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="DamageRenderer.h">
       <SubType>
       </SubType>
@@ -145,11 +165,23 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="JinHillaBoss.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="JinHillaEnterAnime.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MainUIActor.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="Monster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MonsterFunction.h">
       <SubType>
       </SubType>
     </ClInclude>

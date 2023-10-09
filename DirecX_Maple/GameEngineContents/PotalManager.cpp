@@ -2,6 +2,7 @@
 #include "PotalManager.h"
 #include "Player.h"
 #include "BackGroundMap.h"
+#include "JinHillaEnterAnime.h"
 
 PotalManager::PotalManager()
 {
@@ -61,6 +62,5 @@ void PotalManager::Update(float _Detla)
 			};
 		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
 	}
-
 
 }

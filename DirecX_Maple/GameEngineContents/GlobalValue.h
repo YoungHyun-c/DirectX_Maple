@@ -20,6 +20,8 @@ public:
 
 	static float4 MapScale;
 
+	static float4 CurMonsterPos;
+
 protected:
 
 private:

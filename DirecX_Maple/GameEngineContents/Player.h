@@ -32,12 +32,22 @@ class Player : public PlayerActor
 {
 	friend class AdeleSkill;
 	friend class DamageRenderer;
-public:
+private:
 	static Player* MainPlayer;
 public:
+	static Player* GetMainPlayer()
+	{
+		return MainPlayer;
+	}
+
 	inline float4 GetPlayerScale() const
 	{
 		return PlayerScale;
+	}
+
+	inline float4 GetPlayerPos() const
+	{
+		return PlayerPos;
 	}
 
 	inline ActorDir GetDir()
@@ -77,6 +87,16 @@ public:
 	void AddPos(float4 _Pos)
 	{
 		Pos += _Pos;
+	}
+
+	void PlayerBind()
+	{
+		Bind = true;
+	}
+
+	void PlayerBindEnd()
+	{
+		Bind = false;
 	}
 
 protected:
@@ -154,11 +174,18 @@ private:
 	/*std::string DebugMapName;
 	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };*/
 
-	std::shared_ptr<GameEngineCollision> Col;
+	std::shared_ptr<GameEngineCollision> PlayerCol;
 
 	float4 Pos = float4::ZERO;
 	float4 GroundCheck = { 0.0f, -10.0f };
+	float4 UpCheck = { 0.0f, 50.0f };
 	float4 PlayerScale = float4::ZERO;
+	float4 PlayerPos = float4::ZERO;
+	float4 LeftCheck = { -15.0f, 0.0f };
+	float4 RightCheck = { 15.0f, 0.0f };
+	GameEngineColor CheckColor = DefaultGroundColor;
+	float4 CurMapScale = float4::ZERO;
+	void InsideLockMap();
 
 	float WalkSpeed = 300.0f;
 	bool GroundJump = false;
@@ -168,5 +195,7 @@ private:
 
 	static Player* CurPlayer;
 
+
+	bool Bind = false;
 };
 

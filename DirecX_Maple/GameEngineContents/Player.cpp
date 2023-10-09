@@ -51,8 +51,12 @@ void Player::Start()
 
 
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
-		MainSpriteRenderer->AutoSpriteSizeOn();
+		//MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Center);
+
+		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
+		PlayerScale = Sprite->GetSpriteData(0).GetScale();
+		Sprite = nullptr;
 	}
 
 	Dir = ActorDir::Right;
@@ -60,9 +64,9 @@ void Player::Start()
 	ChangeState(PlayerState::Stand);
 
 	{
-		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		Col->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
-		Col->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
+		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
+		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
+		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
 
 		//{
@@ -95,10 +99,9 @@ void Player::Start()
 		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
 		
 
-	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
-	Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
-	float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
-
+	//float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
+	//Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
+	//float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
 }
 
@@ -109,12 +112,18 @@ void Player::TestEvent(GameEngineRenderer* _Renderer)
 
 void Player::Update(float _Delta)
 {
+	if (Bind == true)
+	{
+		return;
+	}
+
 	PlayerActor::Update(_Delta);
 
 	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 
 	DirCheck();
 	StateUpdate(_Delta);
+	InsideLockMap();
 
 	// ÁÜÀÎ ÁÜ¾Æ¿ô
 	if (GameEngineInput::IsPress('I'))
@@ -205,11 +214,11 @@ void Player::Update(float _Delta)
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 	}
-	if (GameEngineInput::IsDown('0'))
-	{
-		SkillRenderer->On();
-		SkillRenderer->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
-	}
+	//if (GameEngineInput::IsDown('0'))
+	//{
+	//	SkillRenderer->On();
+	//	SkillRenderer->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
+	//}
 
 
 	// Ãâ·Â
@@ -375,7 +384,32 @@ void Player::ChangeAnimationState(const std::string& _StateName)
 	MainSpriteRenderer->ChangeAnimation(AnimationName);
 }
 
+void Player::InsideLockMap()
+{
+	float4 CurPos = Transform.GetWorldPosition();
+	if (0 >= CurPos.X + LeftCheck.X)
+	{
+		Transform.SetLocalPosition(float4{ - LeftCheck.X, CurPos.Y });
+	}
+	else if (CurMapScale.X <= CurPos.X + RightCheck.X)
+	{
+		Transform.SetLocalPosition(float4{ CurMapScale.X - RightCheck.X, CurPos.Y });
+	}
+
+	CurPos.Y *= -1.0f;
+	if (0 >= CurPos.Y - UpCheck.Y)
+	{
+		Transform.SetLocalPosition(float4{ CurPos.X, - UpCheck.Y });
+		MoveVectorForceReset();
+	}
+	else if (CurMapScale.Y <= CurPos.Y + GroundCheck.Y)
+	{
+		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y + GroundCheck.Y });
+	}
+}
+
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainPlayer = this;
+	CurMapScale = BackGroundMap::MainMap->GetMapScale();
 }

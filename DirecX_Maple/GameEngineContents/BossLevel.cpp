@@ -4,7 +4,10 @@
 
 #include "Player.h"
 #include "JinHillaAnime.h"
+#include "JinHillaEnterAnime.h"
 
+#include "CravingMonster.h"
+#include "MonsterFunction.h"
 
 BossLevel::BossLevel()
 {
@@ -18,20 +21,6 @@ BossLevel::~BossLevel()
 
 void BossLevel::Start()
 {
-	//{
-	//	GameEngineRandom NewRandom;
-	//	for (size_t i = 0; i < 10; i++)
-	//	{
-	//		std::shared_ptr<Monster> Object = CreateActor<Monster>(ContentsObjectType::Monster);
-	//		//Object->Transform.SetLocalPosition({ 0, 0 });
-	//		Object->Transform.SetLocalPosition(NewRandom.RandomVectorBox2D(0, 1280, 0, -720));
-	//	}
-
-	//	std::shared_ptr<PlayMap> Object0 = CreateActor<PlayMap>(ContentsObjectType::Monster);
-	//	std::shared_ptr<PlayMap> Object1 = CreateActor<PlayMap>(ContentsObjectType::Monster);
-	//	std::shared_ptr<PlayMap> Object2 = CreateActor<PlayMap>(ContentsObjectType::Monster);
-	//	std::shared_ptr<PlayMap> Object3 = CreateActor<PlayMap>(ContentsObjectType::Monster);
-	//}
 
 	{
 		GameEngineDirectory Dir;
@@ -63,14 +52,33 @@ void BossLevel::Start()
 	}
 
 	{
-		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("BossDebugMap.png");
+		//NewPlayer->PlayerBind();
+		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
 
 	// ÁøÈú¶ó ³´º£±â
 	//{
-	//	std::shared_ptr<JinHillaAnime> NewMonster = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
+	//	JinHillaAttackAni = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	//}
+
+
+	{
+		//std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
+	}
+
+
+	// ¿å¸ÁÀÇ Çå½Å Craving Monster
+	{
+		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+		CravingMob->Transform.SetWorldPosition({ 700.0f, -750.0f });
+		CravingMob->SetDebugMap("BossDebugMap.png");
+
+		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+		CravingMob->Transform.SetWorldPosition({ 1200.0f, -750.0f });
+		CravingMob->SetDebugMap("BossDebugMap.png");
+	}
 }
 
 void BossLevel::Update(float _Delta)
@@ -84,6 +92,18 @@ void BossLevel::Update(float _Delta)
 	{
 		GameEngineCore::ChangeLevel("BossRewardLevel");
 	}
+
+
+	int a = 0;
+
+	CurTime -= _Delta * 0.01;
+
+	//if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
+	//{
+	//	NewPlayer->PlayerBindEnd();
+	//	AniEnd = true;
+	//}
+
 }
 
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -94,6 +114,8 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	HScale.Y *= -1.0f;
 	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);;
+
+
 }
 
 void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)

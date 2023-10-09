@@ -1,8 +1,9 @@
 #pragma once
-#include <GameEngineCore/GameEngineActor.h>
+//#include <GameEngineCore/GameEngineActor.h>
+#include "MonsterFunction.h"
 
 // Ό³Έν :
-class Monster : public GameEngineActor
+class Monster : public MonsterFunction //GameEngineActor
 {
 public:
 	static Monster* Monsters;

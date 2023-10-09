@@ -9,7 +9,7 @@
 #define DoubleJumpDistance 450.0f
 #define NoKeyDistance 225.0f
 #define DoubleJumpHeight 100.0f
-#define DoubleJumpUP 350.0f
+#define DoubleJumpUP 500.0f
 
 
 void Player::StandStart()
@@ -33,6 +33,11 @@ void Player::StandUpdate(float _Delta)
 	if (GameEngineInput::IsDown(VK_SHIFT))
 	{
 		ChangeState(PlayerState::Attack);
+	}
+
+	if (GameEngineInput::IsPress(VK_DOWN))
+	{
+		ChangeState(PlayerState::Prone);
 	}
 }
 
@@ -71,6 +76,17 @@ void Player::WalkUpdate(float _Delta)
 		MovePos += MoveDir * WalkSpeed * _Delta;
 	}
 
+	if (GameEngineInput::IsPress(VK_DOWN))
+	{
+		ChangeState(PlayerState::Prone);
+	}
+
+	//CheckColor = CheckGroundColor(MovePos);
+	//if (DefaultGroundColor != CheckColor)
+	//{
+
+	//}
+
 	Transform.AddLocalPosition(MovePos);
 
 	if (GameEngineInput::IsDown('X') || GameEngineInput::IsPress('X'))
@@ -105,11 +121,16 @@ void Player::AlertUpdate(float _Delta)
 }
 void Player::ProneStart()
 {
-
+	ChangeAnimationState("Prone");
 }
 void Player::ProneUpdate(float _Delta)
 {
-
+	if (true == GameEngineInput::IsDown(VK_LEFT)
+		|| true == GameEngineInput::IsDown(VK_RIGHT))
+	{
+		ChangeState(PlayerState::Walk);
+		return;
+	}
 }
 void Player::AttackStart()
 {
@@ -120,8 +141,8 @@ void Player::AttackStart()
 	IsAttack = true;
 
 	AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-	AttackCol->Transform.SetLocalPosition({ 150.0f, 0.0f });
-	AttackCol->Transform.SetLocalScale({ 200.0f, 200.0f });
+	AttackCol->Transform.SetLocalPosition({ 207.5f, 0.0f });
+	AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
 	AttackCol->On();
 	// Ãæµ¹
 	//std::vector<std::shared_ptr<GameEngineCollision>> HitMonsterVector;
@@ -131,9 +152,11 @@ void Player::AttackStart()
 
 	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* Cot)
 		{
-			Monster::Monsters->GetMonsterHp(-1);
+			//Monster::Monsters->GetMonsterHp(-1);
 			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(480);
+			//NewDR->Transform.SetWorldPosition(Transform.GetWorldPosition() + float4{ 150.0f, 50.0f });
+			//NewDR->Transform.SetWorldPosition({ GlobalValue::CurMonsterPos.X + 150.0f, GlobalValue::CurMonsterPos.Y + 50.0f });
 		};
 	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Cot)
 		{
