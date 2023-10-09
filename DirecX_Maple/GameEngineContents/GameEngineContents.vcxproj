@@ -51,6 +51,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GhostDamien.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GhostSwoo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <SubType>
       </SubType>
@@ -154,6 +162,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="DamageRenderer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GhostDamien.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="GhostSwoo.h">
       <SubType>
       </SubType>
     </ClInclude>

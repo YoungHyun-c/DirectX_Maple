@@ -111,7 +111,7 @@ void DamageRenderer::PushDamage(int _SkillDamage)
 	}
 
 
-	for (int j = 0; j < 7; j++)
+	//for (int j = 0; j < 7; j++)
 	{
 		for (int i = Digit; i > 0; i--)
 		{

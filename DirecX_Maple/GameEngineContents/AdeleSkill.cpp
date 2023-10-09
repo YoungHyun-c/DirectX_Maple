@@ -216,8 +216,8 @@ void AdeleSkill::Update(float _Delta)
 				float4 Dir = MonsterDir - ShardDir;
 				Dir.Normalize();
 
-				(*ShardVec)[i]->Transform.AddLocalPosition(Dir * _Delta * 700.0f);
-				(*ShardC)[i]->Transform.AddLocalPosition(Dir * _Delta * 700.0f);
+				(*ShardVec)[i]->Transform.AddLocalPosition(Dir * _Delta * ShardSpeed);
+				(*ShardC)[i]->Transform.AddLocalPosition(Dir * _Delta * ShardSpeed);
 
 				float4 Angle = float4::Cross3D(MonsterDir, ShardDir);
 				float Dot = float4::DotProduct3D(MonsterDir, ShardDir);

@@ -55,8 +55,25 @@ void Monster::Update(float _Delta)
 	//Dir.Normalize();
 	//Renderer->Transform.AddLocalPosition(Dir * _Delta * 100.0f);
 
+	// 일단 띄워놓기 용 테스트에 용이
+	//float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	////if (RenderOn == true && MonsterAppear == false)
+	//{
+	//	//Renderer->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
+	//	Renderer->On();
+	//	//Col->Transform.SetLocalPosition({PlayerPos.X, PlayerPos.Y + 100.0f});
+	//	Col->On();
+	//	MonsterAppear = true;
+	//}
+	////else if (RenderOn == false && MonsterAppear == true)
+	////{
+	////	Renderer->Off();
+	////	Col->Off();
+	////	MonsterAppear = false;
+	////}
+
 	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
-	//if (RenderOn == true && MonsterAppear == false)
+	if (RenderOn == true && MonsterAppear == false)
 	{
 		//Renderer->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 		Renderer->On();
@@ -64,12 +81,12 @@ void Monster::Update(float _Delta)
 		Col->On();
 		MonsterAppear = true;
 	}
-	//else if (RenderOn == false && MonsterAppear == true)
-	//{
-	//	Renderer->Off();
-	//	Col->Off();
-	//	MonsterAppear = false;
-	//}
+	else if (RenderOn == false && MonsterAppear == true)
+	{
+		Renderer->Off();
+		Col->Off();
+		MonsterAppear = false;
+	}
 	
 	GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
 

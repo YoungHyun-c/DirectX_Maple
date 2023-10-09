@@ -44,7 +44,7 @@ void CravingMonster::Start()
 	MonsterRenderer->CreateAnimation("Awake", "Craving_Awake", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Death", "Craving_Death", 0.1f, -1, -1, false);
 
-	MonsterRenderer->ChangeAnimation("Regen");
+	MonsterRenderer->ChangeAnimation("Stand");
 	MonsterRenderer->AutoSpriteSizeOn();
 	MonsterRenderer->SetPivotType(PivotType::Bottom);
 	MonsterRenderer->Off();

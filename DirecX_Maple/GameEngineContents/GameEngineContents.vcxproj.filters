@@ -75,6 +75,12 @@
     <ClCompile Include="MonsterFunction.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
+    <ClCompile Include="GhostSwoo.cpp">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostDamien.cpp">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -149,6 +155,12 @@
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClInclude>
     <ClInclude Include="MonsterFunction.h">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostSwoo.h">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostDamien.h">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClInclude>
   </ItemGroup>

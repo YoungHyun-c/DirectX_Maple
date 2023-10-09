@@ -7,6 +7,8 @@ enum class MonsterState
 	Stand,
 	Move,
 	Attack,
+	Skill1,
+	Skill2,
 	Die,
 	Dieing,
 	Hit,
@@ -99,6 +101,12 @@ protected:
 
 	virtual void DeathStart();
 	virtual void DeathUpdate(float _Delta);
+
+	virtual void Skill_1Start();
+	virtual void Skill_1Update(float _Delta);
+
+	virtual void Skill_2Start();
+	virtual void Skill_2Update(float _Delta);
 
 	void StateCheck();
 	void ChangeState(MonsterState _State);

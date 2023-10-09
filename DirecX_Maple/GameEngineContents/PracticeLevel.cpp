@@ -89,10 +89,11 @@ void PracticeLevel::Start()
 		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f });
 	}
 
-	{
-		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
-		MonsterObject->Transform.SetLocalPosition({ 600.0f, -700.0f });
-	}
+	// 콜리전안에 몬스터 마릿수 확인 및 데미지 뜨도록 만들어야됨
+	//{
+	//	MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
+	//	MonsterObject->Transform.SetLocalPosition({ 600.0f, -700.0f });
+	//}
 
 	{
 		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>();
@@ -146,7 +147,7 @@ void PracticeLevel::Update(float _Delta)
 	
 	if (false == Monster::Monsters->MonsterAppear)
 	{
-		//MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
+		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 	}
 
 }

@@ -28,6 +28,9 @@ private:
 	std::shared_ptr<class Player> NewPlayer;
 
 	std::shared_ptr<class CravingMonster> CravingMob;
+	std::shared_ptr<class GhostSwoo> GhostSwooMob;
+	std::shared_ptr<class GhostDamien> GhostDamienMob;
+	std::shared_ptr<class GhostSwoo> SwooBall;
 
 	float CurTime = 29.44f;
 	bool AniEnd = false;

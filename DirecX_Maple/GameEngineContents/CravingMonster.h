@@ -88,8 +88,6 @@ private:
 	int Defense = 300;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;
-	float4 GroundCheck = { 0.0f, -10.0f };
-	float4 UpCheck = { 0.0f, 50.0f };
 	//std::shared_ptr<GameEngineSpriteRenderer> CravingMob;
 
 };

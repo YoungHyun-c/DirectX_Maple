@@ -10,6 +10,7 @@ enum class ContentsObjectType
 {
 	BackGround,
 	Monster,
+	MonsterSkill,
 	BackSkill,
 	Player,
 	FrontSkill,
@@ -40,7 +41,7 @@ enum class MonstersName
 {
 	Mugong,
 	CarvingMonster,
-	GhostSuo,
-	GhostDemian,
+	GhostSwoo,
+	GhostDamien,
 	Max,
 };

@@ -225,6 +225,26 @@ void MonsterFunction::DeathUpdate(float _Delta)
 
 }
 
+void MonsterFunction::Skill_1Start()
+{
+	ChangeAnimationState("Skill1");
+}
+
+void MonsterFunction::Skill_1Update(float _Delta)
+{
+
+}
+
+void MonsterFunction::Skill_2Start()
+{
+	ChangeAnimationState("Skill2");
+}
+
+void MonsterFunction::Skill_2Update(float _Delta)
+{
+
+}
+
 
 // 몬스터 상태관련
 void MonsterFunction::StateCheck()
@@ -295,6 +315,12 @@ void MonsterFunction::ChangeState(MonsterState _State)
 		case MonsterState::Attack:
 			AttackStart();
 			break;
+		case MonsterState::Skill1:
+			Skill_1Start();
+			break;
+		case MonsterState::Skill2:
+			Skill_2Start();
+			break;
 		case MonsterState::Die:
 			DieStart();
 			break;
@@ -327,6 +353,10 @@ void MonsterFunction::StateUpdate(float _Delta)
 		return MoveUpdate(_Delta);
 	case MonsterState::Attack:
 		return AttackUpdate(_Delta);
+	case MonsterState::Skill1:
+		return Skill_1Update(_Delta);
+	case MonsterState::Skill2:
+		return Skill_2Update(_Delta);
 	case MonsterState::Die:
 		return DieUpdate(_Delta);
 	case MonsterState::Dieing:

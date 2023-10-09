@@ -64,6 +64,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> ShardEffect;
 	void ShardSkill();
 	bool ShradAppear = false;
+	float ShardSpeed = 900.0f;
 
 	// ¿”∆‰¿œ
 	std::shared_ptr<class GameEngineSpriteRenderer> ImpaleA;
