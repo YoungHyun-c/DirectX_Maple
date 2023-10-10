@@ -319,7 +319,7 @@ void GameEngineSpriteRenderer::SetFrameEvent(std::string_view _AnimationName, in
 		MsgBoxAssert("존재하지 않는 애니메이션에 이벤트를 만들려고 했습니다.");
 	}
 
-	Animation->FrameEventFunction[_Frame] = _Function;
+	Animation->FrameEventFunction[Animation->Index[0]] = _Function;
 }
 
 void GameEngineSpriteRenderer::SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function)
@@ -378,8 +378,21 @@ void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
 		break;
 	case PivotType::Top:
 		Pivot = { 0.5f, 0.0f };
+		break;
+	case PivotType::RightUp:
+		Pivot = { 0.0f, 0.0f };
+		break;
+	case PivotType::Right:
+		Pivot = { 0.0f, 0.5f };
+		break;
+	case PivotType::RightBottom:
+		Pivot = { 0.0f, 1.0f };
+		break;
 	case PivotType::Bottom:
 		Pivot = { 0.5f, 1.0f };
+		break;
+	case PivotType::LeftBottom:
+		Pivot = { 1.0f, 1.0f };
 		break;
 	case PivotType::Left:
 		Pivot = { 1.0f, 0.5f };
@@ -387,9 +400,7 @@ void GameEngineSpriteRenderer::SetPivotType(PivotType _Type)
 	case PivotType::LeftTop:
 		Pivot = { 1.0f, 0.0f };
 		break;
-
 	default:
 		break;
 	}
-
 }
