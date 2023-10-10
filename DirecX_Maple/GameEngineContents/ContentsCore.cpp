@@ -51,7 +51,7 @@ void ContentsCore::UserRes()
 
 void ContentsCore::Start()
 {
-	UserRes();
+	//UserRes();
 
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
 	{

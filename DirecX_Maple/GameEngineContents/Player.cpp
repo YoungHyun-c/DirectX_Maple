@@ -22,7 +22,7 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
-		MainSpriteRenderer->SetMaterial("2DTextureOver");
+		//MainSpriteRenderer->SetMaterial("2DTextureOver"); //10/10
 		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 
 		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
@@ -66,7 +66,7 @@ void Player::Start()
 
 	{
 		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		PlayerCol->SetCollisionType(ColType::SPHERE2D);
+		//PlayerCol->SetCollisionType(ColType::SPHERE2D); //10/10
 		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
