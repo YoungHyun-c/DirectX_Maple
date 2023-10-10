@@ -65,6 +65,7 @@ void Player::Start()
 
 	{
 		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
+		PlayerCol->SetCollisionType(ColType::SPHERE2D);
 		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
