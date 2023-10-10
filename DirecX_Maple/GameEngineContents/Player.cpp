@@ -22,6 +22,7 @@ void Player::Start()
 {
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
+		MainSpriteRenderer->SetMaterial("2DTextureOver");
 		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 
 		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
