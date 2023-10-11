@@ -20,26 +20,26 @@
 
 GameEngineRenderer::GameEngineRenderer()
 {
-
 }
 
 GameEngineRenderer::~GameEngineRenderer()
 {
-
 }
 
 // 카메라 내부에서의 순서 변경
 void GameEngineRenderer::SetRenderOrder(int _Order)
 {
+
 	if (nullptr == Camera)
 	{
-		MsgBoxAssert("카메라가 존재하지 않는 렌더러 입니다. 카메라부터 지정해주세요");
+		MsgBoxAssert("카메라가 존재하지 않는 랜더러 입니다. 카메라부터 지정해주세요.");
 		return;
 	}
 
 	Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
 	GameEngineObject::SetOrder(_Order);
 	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
+
 }
 
 // 날 바라보는 카메라 변경
@@ -50,14 +50,7 @@ void GameEngineRenderer::SetCameraOrder(int _Order)
 
 void GameEngineRenderer::Start()
 {
-
-	// 메인카메라에 들어갔다.
 	SetCameraOrder(ECAMERAORDER::Main);
-
-	// 카메라를 찾아서 들어가야 한다.
-	// 카메라를 찾으려면 GameEngineLevel
-	// Level 부터 찾아야한다.
-	// Leel 누가 들고 있지? 나를 들고 있는 Actor가 들고 있다.
 }
 
 void GameEngineRenderer::SetViewCameraSelect(int _Order)
@@ -68,15 +61,19 @@ void GameEngineRenderer::SetViewCameraSelect(int _Order)
 
 	if (nullptr == FindCamera)
 	{
+		MsgBoxAssert("카메라가 존재하지 않는데 랜더러를 넣으려고 했습니다.");
+		return;
+	}
+
+	if (nullptr != Camera)
+	{
 		Camera->Renderers[GetOrder()].remove(GetDynamic_Cast_This<GameEngineRenderer>());
 	}
 
 	Camera = FindCamera.get();
 	Camera->Renderers[GetOrder()].push_back(GetDynamic_Cast_This<GameEngineRenderer>());
-	
+	// ViewInfo[Camera.get()] = _Order;
 }
-
-int A = 0;
 
 void GameEngineRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
@@ -94,7 +91,7 @@ std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateAndFindRenderUni
 	// 있으면
 	if (nullptr != Units[_Index])
 	{
-		// 리턴
+		//리턴
 		return Units[_Index];
 	}
 
@@ -104,13 +101,14 @@ std::shared_ptr<GameEngineRenderUnit> GameEngineRenderer::CreateAndFindRenderUni
 	return Units[_Index];
 }
 
-void GameEngineRenderer::SetMesh(std::string_view _Name, int _Index /*=0*/)
+
+void GameEngineRenderer::SetMesh(std::string_view _Name, int _Index /*= 0*/)
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	Unit->SetMesh(_Name);
 }
 
-void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*=0*/)
+void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*= 0*/)
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	Unit->SetMaterial(_Name);
@@ -118,7 +116,7 @@ void GameEngineRenderer::SetMaterial(std::string_view _Name, int _Index /*=0*/)
 	SetMaterialEvent(_Name, _Index);
 }
 
-GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*=0*/)
+GameEngineShaderResHelper& GameEngineRenderer::GetShaderResHelper(int _Index /*= 0*/)
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	return Unit->ShaderResHelper;

@@ -178,6 +178,9 @@
     <ClInclude Include="GameEngineUIRenderer.h">
       <Filter>Rendering\Contents</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineDepthStencil.h">
+      <Filter>Resources\RenderingSetting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -291,6 +294,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineUIRenderer.cpp">
       <Filter>Rendering\Contents</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineDepthStencil.cpp">
+      <Filter>Resources\RenderingSetting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

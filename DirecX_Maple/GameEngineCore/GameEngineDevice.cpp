@@ -292,6 +292,7 @@ void GameEngineDevice::CreateSwapChain()
 	// Api로 치면 Window에서 직접 얻어온 HDC 이다.
 	BackBufferRenderTarget = GameEngineRenderTarget::Create(BackBufferTexture);
 
+	BackBufferRenderTarget->CreateDepthTexture();
 	//BackBufferTexture->Release();
 
 	// 스왑체인이지 텍스처가 아니다.

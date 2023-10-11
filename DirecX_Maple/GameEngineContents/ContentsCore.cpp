@@ -53,6 +53,9 @@ void ContentsCore::Start()
 {
 	//UserRes();
 
+	// 깊이 버퍼 사용 안함
+	GameEngineRenderTarget::IsDepth = false;
+
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
 
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
