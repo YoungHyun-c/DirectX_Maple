@@ -23,6 +23,7 @@ protected:
 	
 	void DeathUpdate(float _Delta) override;
 
+
 private:
 	float MoveSpeed = 50.0f;
 	int Hp = 18688692000;

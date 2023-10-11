@@ -48,6 +48,8 @@ void GhostDamien::Start()
 	HitEffect->Off();
 
 	SetMoveSpeed(MoveSpeed);
+
+	SetColPos(-50.0f, 50.0f, 150.0f);
 }
 
 void GhostDamien::Update(float _Delta)
@@ -100,32 +102,8 @@ void GhostDamien::Update(float _Delta)
 		HitEffect->ChangeAnimation("Skill2Hit");
 	}
 
-
-	if (Dir == ActorDir::Left)
-	{
-		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X - 50.0f,
-			MonsterRenderer->Transform.GetLocalPosition().Y + 150.0f});
-	}
-	else if (Dir == ActorDir::Right)
-	{
-		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + 50.0f,
-	MonsterRenderer->Transform.GetLocalPosition().Y + 150.0f });
-	}
-
-	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
-
-	if (Transform.GetWorldPosition().X < LeftCheck)
-	{
-		GlobalValue::CurMonsterPos.X + 100.0f;
-		Dir = ActorDir::Right;
-		ChangeState(MonsterState::Move);
-	}
-	else if (Transform.GetWorldPosition().X > RightCheck)
-	{
-		GlobalValue::CurMonsterPos.X - 200.0f;
-		Dir = ActorDir::Left;
-		ChangeState(MonsterState::Move);
-	}
+	DirCheck();
+	InsideLockMap();
 }
 
 void GhostDamien::StandUpdate(float _Delta)
@@ -140,3 +118,18 @@ void GhostDamien::DeathUpdate(float _Delat)
 {
 
 }
+
+//void GhostDamien::InsideLockMap()
+//{
+//	if (Dir == ActorDir::Left)
+//	{
+//		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X - 50.0f,
+//			MonsterRenderer->Transform.GetLocalPosition().Y + 150.0f });
+//	}
+//	else if (Dir == ActorDir::Right)
+//	{
+//		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + 50.0f,
+//	MonsterRenderer->Transform.GetLocalPosition().Y + 150.0f });
+//	}
+//
+//}

@@ -398,3 +398,35 @@ GameEngineColor MonsterFunction::CheckSideColor(float4 CheckPos)
 	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + CheckPos, GameEngineColor::White, DebugMapName);
 	return CheckColor;
 }
+
+void MonsterFunction::DirCheck()
+{
+	if (Dir == ActorDir::Left)
+	{
+		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
+			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+	}
+	else if (Dir == ActorDir::Right)
+	{
+		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
+			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+	}
+}
+
+void MonsterFunction::InsideLockMap()
+{
+	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
+
+	if (Transform.GetWorldPosition().X < LeftCheck)
+	{
+		GlobalValue::CurMonsterPos.X + 100.0f;
+		Dir = ActorDir::Right;
+		ChangeState(MonsterState::Move);
+	}
+	else if (Transform.GetWorldPosition().X > RightCheck)
+	{
+		GlobalValue::CurMonsterPos.X - 200.0f;
+		Dir = ActorDir::Left;
+		ChangeState(MonsterState::Move);
+	}
+}

@@ -44,6 +44,13 @@ public:
 		MoveSpeed = _MoveSpeed;
 	}
 
+	void SetColPos(float _LeftColPos = 0, float _RightColPos = 0, float _YColPos = 0)
+	{
+		LeftColPos = _LeftColPos;
+		RightColPos = _RightColPos;
+		YColPos = _YColPos;
+	}
+
 	bool GetGround()
 	{
 		return IsGround;
@@ -53,13 +60,18 @@ public:
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
-	float4 LeftCheck = { -100.0f, 0.0f };
-	float4 RightCheck = { 100.0f, 0.0f };
+	float LeftCheck = 100.0f;
+	float RightCheck = 1750.0f;
+	float LeftColPos = 0.0f;
+	float RightColPos = 0.0f;
+	float YColPos = 0.0f;
 	GameEngineColor CheckColor;
 	float4 MonsterMovePos = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
 	float4 NextPos = float4::ZERO;
 	GameEngineColor CheckSideColor(float4 CheckPos = float4::ZERO);
+	void InsideLockMap();
+	void DirCheck();
 
 	std::shared_ptr<class GameEngineSpriteRenderer> MonsterRenderer;
 	std::shared_ptr<class GameEngineCollision> MonsterCollision;

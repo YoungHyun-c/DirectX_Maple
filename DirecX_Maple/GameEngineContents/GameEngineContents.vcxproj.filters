@@ -81,6 +81,9 @@
     <ClCompile Include="GhostDamien.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
+    <ClCompile Include="ReverseActor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="GhostDamien.h">
       <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="ReverseActor.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -54,12 +54,6 @@ void ContentsCore::Start()
 	//UserRes();
 
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
-	{
-		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTextureOver");
-		Mat->SetVertexShader("TextureShader_VS");
-		Mat->SetPixelShader("TextureShader_PS");
-		Mat->SetBlendState("OverRay");
-	}
 
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PracticeLevel>("PracticeLevel");
@@ -67,7 +61,7 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
 
-	GameEngineCore::ChangeLevel("PracticeLevel");
+	GameEngineCore::ChangeLevel("BossLevel");
 }
 
 void ContentsCore::Update(float _Delta)

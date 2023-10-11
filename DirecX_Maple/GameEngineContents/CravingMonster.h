@@ -37,6 +37,7 @@ protected:
 	void Update(float _Delta) override;
 
 	void DeathUpdate(float _Delta) override;
+
 	/*void StateUpdate(float _Delta);
 
 	void RegenStart();

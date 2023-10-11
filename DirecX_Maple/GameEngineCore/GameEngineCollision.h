@@ -90,7 +90,7 @@ protected:
 
 private:
 	ColType CollisionType = ColType::SPHERE2D;
+	//ColType CollisionType = ColType::AABBBOX2D;
 	std::set<std::shared_ptr<GameEngineCollision>> Others;
 
 };
-

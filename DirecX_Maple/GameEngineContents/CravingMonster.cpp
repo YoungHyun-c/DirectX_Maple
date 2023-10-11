@@ -56,6 +56,7 @@ void CravingMonster::Start()
 	MonsterCollision->Off();
 
 	SetMoveSpeed(MoveSpeed);
+	SetColPos(-10.0f, 40.0f, 120.0f);
 
 	ActorDir::Left;
 }
@@ -97,35 +98,9 @@ void CravingMonster::Update(float _Delta)
 
 	TimeCounting();
 	StateUpdate(_Delta);
-
-	//MonsterRenderer->Transform.SetLocalPosition(MonsterRenderer->Transform.GetLocalPosition());
-	if (Dir == ActorDir::Left)
-	{
-		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X - 10.0f,
-			MonsterRenderer->Transform.GetLocalPosition().Y + 120.0f});
-	}
-	else if (Dir == ActorDir::Right)
-	{
-		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + 40.0f,
-	MonsterRenderer->Transform.GetLocalPosition().Y + 120.0f });
-	}
-
-	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
-
-	if (Transform.GetWorldPosition().X < LeftCheck)
-	{
-		GlobalValue::CurMonsterPos.X + 100.0f;
-		Dir = ActorDir::Right;
-		ChangeState(MonsterState::Move);
-	}
-	else if (Transform.GetWorldPosition().X > RightCheck)
-	{
-		GlobalValue::CurMonsterPos.X - 200.0f;
-		Dir = ActorDir::Left;
-		ChangeState(MonsterState::Move);
-	}
-
-	int a = 0;
+	
+	DirCheck();
+	InsideLockMap();
 }
 //
 //void CravingMonster::ChangeState(CravingState _State)
@@ -286,10 +261,32 @@ void CravingMonster::DeathUpdate(float _Delta)
 {
 
 }
-//
-//void CravingMonster::ChangeAnimationState(const std::string& _StateName)
+
+//void CravingMonster::InsideLockMap()
 //{
-//	AnimationName = _StateName;
+//	if (Dir == ActorDir::Left)
+//	{
+//		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X - 10.0f,
+//			MonsterRenderer->Transform.GetLocalPosition().Y + 120.0f });
+//	}
+//	else if (Dir == ActorDir::Right)
+//	{
+//		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + 40.0f,
+//	MonsterRenderer->Transform.GetLocalPosition().Y + 120.0f });
+//	}
 //
-//	CravingMob->ChangeAnimation(AnimationName);
+//	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
+//
+//	if (Transform.GetWorldPosition().X < LeftCheck)
+//	{
+//		GlobalValue::CurMonsterPos.X + 100.0f;
+//		Dir = ActorDir::Right;
+//		ChangeState(MonsterState::Move);
+//	}
+//	else if (Transform.GetWorldPosition().X > RightCheck)
+//	{
+//		GlobalValue::CurMonsterPos.X - 200.0f;
+//		Dir = ActorDir::Left;
+//		ChangeState(MonsterState::Move);
+//	}
 //}
