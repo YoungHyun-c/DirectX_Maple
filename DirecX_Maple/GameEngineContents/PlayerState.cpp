@@ -139,10 +139,19 @@ void Player::AttackStart()
 		return;
 	}
 	IsAttack = true;
-
+	
 	AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-	AttackCol->Transform.SetLocalPosition({ 207.5f, 0.0f });
-	AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
+	AttackCol->SetCollisionType(ColType::AABBBOX2D);
+	if (Dir == ActorDir::Right)
+	{
+		AttackCol->Transform.SetLocalPosition({ 207.5f, 0.0f });
+		AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
+	}
+	else if (Dir == ActorDir::Left)
+	{
+		AttackCol->Transform.SetLocalPosition({ -207.5f, 0.0f });
+		AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
+	}
 	AttackCol->On();
 	// Ãæµ¹
 	//std::vector<std::shared_ptr<GameEngineCollision>> HitMonsterVector;
@@ -238,7 +247,6 @@ void Player::AttackUpdate(float _Delta)
 	//	}
 	//}
 
-
 	if (MainSpriteRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(PlayerState::Walk);
@@ -251,6 +259,7 @@ void Player::AttackEnd()
 	IsAttack = false;
 	AttackCol->Off();
 }
+
 void Player::ProneAttackStart()
 {
 

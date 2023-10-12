@@ -36,7 +36,15 @@ protected:
 	void Start();
 	void Update(float _Delta) override;
 
+	void StandStart() override;
+	void AttackUpdate(float _Delta) override;
+	
+	void DieStart() override;
+	void DieingStart() override;
+	void DieingEnd() override;
 	void DeathUpdate(float _Delta) override;
+
+	void AttackEvent(float _Delta);
 
 	/*void StateUpdate(float _Delta);
 
@@ -67,28 +75,24 @@ protected:
 	void ChangeState(CravingState _State);
 	void ChangeAnimationState(const std::string& _StateName);*/
 
-	//void DirCheck();
-
 private:
-	//void Start() override;
-	//void Update(float _Delta) override;
-
-	//ActorDir Dir = ActorDir::Max;
-	//CravingState State = CravingState::Max;
-	//std::string CurState = "";
-	//std::string AnimationName = "";
-
-	//float M_FMoveTime = 0.0f;
-	//float M_FMoveLinitTime = 6.0f;
-	//float M_FStopTime = 0.0f;
-	//float M_FStopLimiTime = 2.0f;
-	//int idx = rand() % 2;
-
 	float MoveSpeed = 70.0f;
 	int Hp = 10000000;
 	int Defense = 300;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;
+
+	float DeathTime = 0.0f;
+	float RegenCool = 10.0f;
+	float AttackCool = 6.0f;
+	float Attacking = 1.0f;
+	float AttackStart = 0.0f;
+	float AttackEnd = 1.3f;
+	bool IsAttack = false;
+
+	std::shared_ptr<GameEngineCollision> CravingSkillCol;
+	std::shared_ptr<GameEngineCollision> CravingDieCol;
+	std::shared_ptr<GameEngineCollision> CravingAttackRangeCol;
 	//std::shared_ptr<GameEngineSpriteRenderer> CravingMob;
 
 };

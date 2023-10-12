@@ -65,6 +65,8 @@ protected:
 	float LeftColPos = 0.0f;
 	float RightColPos = 0.0f;
 	float YColPos = 0.0f;
+	float MonsterDirX;
+	float PlayerDirX;
 	GameEngineColor CheckColor;
 	float4 MonsterMovePos = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
@@ -78,8 +80,8 @@ protected:
 
 	int MonsterName = 0;
 	ActorDir Dir = ActorDir::Left;
-	MonsterState State = MonsterState::Stand;
-	std::string CurState = "Stand";
+	MonsterState State = MonsterState::Max;
+	std::string CurState = "Max";
 	std::string AnimationName = "";
 
 	bool IsGround = false;
@@ -95,6 +97,7 @@ protected:
 
 	virtual void StandStart();
 	virtual void StandUpdate(float _Delta);
+	virtual void StandEnd();
 	
 	virtual void MoveStart();
 	virtual void MoveUpdate(float _Delta);
@@ -107,6 +110,7 @@ protected:
 
 	virtual void DieingStart();
 	virtual void DieingUpdate(float _Delta);
+	virtual void DieingEnd();
 
 	virtual void AwakeStart();
 	virtual void AwakeUpdate(float _Delta);
@@ -133,7 +137,9 @@ protected:
 	float MoveDistance = 0.0f;
 	float MoveLimitDistance = 700.0f;
 	float M_FStopTime = 0.0f;
-	float M_FStopLimiTime = 2.0f;
+	float M_FStopLimitTime = 1.5f;
+	float M_DieingTime = 0.0f;
+	float M_DieingLimitTime = 5.0f;
 
 	int CurStateNumber = rand() % 2;
 

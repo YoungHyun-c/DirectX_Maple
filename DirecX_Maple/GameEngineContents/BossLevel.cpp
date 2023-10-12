@@ -74,30 +74,30 @@ void BossLevel::Start()
 	// 욕망의 헌신 Craving Monster
 	{
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 700.0f, -750.0f });
+		CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f });
 		CravingMob->SetDebugMap("BossDebugMap.Png");
 
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 1200.0f, -750.0f });
+		CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f });
 		CravingMob->SetDebugMap("BossDebugMap.Png");
 	}
 
 	// 사령 스우, 스우 구체
-	{
-		GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
-		GhostSwooMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
-		GhostSwooMob->SetDebugMap("BossDebugMap.Png");
+	//{
+	//	GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
+	//	GhostSwooMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
+	//	GhostSwooMob->SetDebugMap("BossDebugMap.Png");
 
 
-	}
+	//}
 
-	// 사령 데미안, 이펙트
-	{
-		GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
-		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -800.0f });
-		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
+	//// 사령 데미안, 이펙트
+	//{
+	//	GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
+	//	GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -800.0f });
+	//	GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 
-	}
+	//}
 }
 
 void BossLevel::Update(float _Delta)

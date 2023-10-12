@@ -108,6 +108,7 @@ void AdeleSkill::Start()
 			ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 			ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
 			ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
+			ShardCol->SetCollisionType(ColType::AABBBOX2D);
 			ShardCol->Off();
 			ShardC->push_back(ShardCol);
 		}
@@ -168,13 +169,13 @@ void AdeleSkill::Start()
 	}
 
 	// 6차 마에스트로
-	{
-		Maestro = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Maestro->AutoSpriteSizeOn();
-		Maestro->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, false);
-		Maestro->ChangeAnimation("Maestro");
-		Maestro->Off();
-	}
+	//{
+	//	Maestro = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+	//	Maestro->AutoSpriteSizeOn();
+	//	Maestro->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, false);
+	//	Maestro->ChangeAnimation("Maestro");
+	//	Maestro->Off();
+	//}
 }
 
 void AdeleSkill::LevelStart(GameEngineLevel* _PreveLevel)

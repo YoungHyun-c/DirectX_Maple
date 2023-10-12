@@ -24,6 +24,9 @@ enum class ContentsCollisionType
 {
 	Player,
 	Monster,
+	MonsterSkill,
+	MonsterAttackRange,
+	Craving,
 	Skill,
 	Potal,
 	UI,

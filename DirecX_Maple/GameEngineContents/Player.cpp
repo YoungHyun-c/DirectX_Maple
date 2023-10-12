@@ -66,7 +66,7 @@ void Player::Start()
 
 	{
 		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
-		//PlayerCol->SetCollisionType(ColType::SPHERE2D); //10/10
+		PlayerCol->SetCollisionType(ColType::AABBBOX2D); //10/10
 		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
@@ -118,6 +118,8 @@ void Player::Update(float _Delta)
 	{
 		return;
 	}
+	
+	PlayerPos = Transform.GetWorldPosition();
 
 	PlayerActor::Update(_Delta);
 
@@ -342,6 +344,11 @@ void Player::StateUpdate(float _Delta)
 void Player::DirCheck()
 {
 	ActorDir CheckDir = ActorDir::Max;
+
+	if (IsAttack == true)
+	{
+		return;
+	}
 
 	if (true == GameEngineInput::IsPress(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
 	{

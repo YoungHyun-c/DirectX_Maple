@@ -2,6 +2,7 @@
 #include "MonsterFunction.h"
 #include <GameEngineBase/GameEngineRandom.h>
 #include "BackGroundMap.h"
+#include "Player.h"
 
 MonsterFunction* MonsterFunction::MonsterFunc;
 
@@ -20,6 +21,7 @@ MonsterFunction::~MonsterFunction()
 void MonsterFunction::RegenStart()
 {
 	ChangeAnimationState("Regen");
+	MonsterRenderer->On();
 }
 void MonsterFunction::RegenUpdate(float _Delta)
 {
@@ -36,11 +38,14 @@ void MonsterFunction::StandStart()
 void MonsterFunction::StandUpdate(float _Delta)
 {
 	M_FStopTime += _Delta;
-	if (M_FStopTime >= M_FStopLimiTime)
+	if (M_FStopTime >= M_FStopLimitTime)
 	{
 		ChangeState(MonsterState::Move);
-		M_FStopTime = 0.0f;
 	}
+}
+void MonsterFunction::StandEnd()
+{
+	M_FStopTime = 0.0f;
 }
 
 void MonsterFunction::MoveStart()
@@ -60,6 +65,11 @@ void MonsterFunction::MoveUpdate(float _Delta)
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 
+	MonsterDirX = Transform.GetWorldPosition().X;
+	PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
+	float4 CompareDir = PlayerDirX - MonsterDirX + 10.0f;
+	CompareDir.Normalize();
+
 	switch (Dir)
 	{
 	case ActorDir::Right:
@@ -72,114 +82,21 @@ void MonsterFunction::MoveUpdate(float _Delta)
 		break;
 	}
 
-
 	if (Dir == ActorDir::Left)
 	{
-		//MonsterRenderer->Transform.AddLocalPosition({ -MoveSpeed * _Delta, });
 		MoveDistance += MoveSpeed * _Delta;
 		MonsterRenderer->RightFlip();
-		MovePos += MoveDir * MoveSpeed * _Delta;
+		MovePos += MoveDir * -CompareDir * MoveSpeed * _Delta;
 	}
 	if (Dir == ActorDir::Right)
 	{
-		//MonsterRenderer->Transform.AddLocalPosition({ MoveSpeed * _Delta, });
 		MoveDistance += MoveSpeed * _Delta;
 		MonsterRenderer->LeftFlip();
-		MovePos += MoveDir * MoveSpeed * _Delta;
+		MovePos += MoveDir * CompareDir * MoveSpeed * _Delta;
 	}
 
 	Transform.AddLocalPosition(MovePos);
 
-
-
-	//float4 CurPos = Transform.GetLocalPosition();
-	//float4 CurColorPos = (float4{ CurPos.X, CurPos.Y });
-	//GameEngineColor CurColor = DebugMap->GetColor( static_cast<int>(CurColorPos.X), static_cast<int>(CurColorPos.Y) , DefaultGroundColor);
-	//if (Dir == ActorDir::Left)
-	//{
-	//	//MonsterRenderer->Transform.AddLocalPosition({ -MoveSpeed * _Delta, });
-	//	NextPos = Transform.GetLocalPosition() + (-MoveSpeed * _Delta, 0);
-	//	//NextPos = (LeftCheck -MoveSpeed * _Delta, 0);
-	//}
-	//if (Dir == ActorDir::Right)
-	//{
-	//	NextPos = Transform.GetLocalPosition() + (MoveSpeed * _Delta, 0);
-	//	//NextPos = (RightCheck + MoveSpeed * _Delta, 0);
-	//}
-	////float4 NextPos = Transform.GetLocalPosition() + ( * MoveSpeed * _Delta , 0 );
-	//float4 NextColorPos = CurColorPos + ( NextPos.X, NextPos.Y );
-	//GameEngineColor NextColor = DebugMap->GetColor( NextColorPos.X,NextColorPos.Y , DefaultGroundColor);
-
-
-	//if (CurColor == GameEngineColor::RED)
-	//{
-	//	float4 CopyNextColorPos = NextColorPos;
-	//	GameEngineColor CopyNextColor = NextColor;
-
-	//	int DownCount = 0;
-
-	//	while (CopyNextColor == GameEngineColor::RED)
-	//	{
-	//		MoveDistance += MoveSpeed * _Delta;
-	//		//CopyNextColorPos.X++;
-	//		Transform.SetLocalPosition(NextPos);
-	//		CopyNextColor = DebugMap->GetColor(static_cast<int>(CopyNextColorPos.X), static_cast<int>(CopyNextColorPos.Y), DefaultGroundColor);
-	//		DownCount++;
-
-	//		if (DownCount >= 10)
-	//		{
-	//			return;
-	//		}
-	//	}
-
-	//	if (DownCount < 10)
-	//	{
-	//		return;
-	//	}
-	//}
-
-	//float4 MovePos = float4::ZERO;
-	//float4 MoveDir = float4::ZERO;
-
-	//switch (Dir)
-	//{
-	//case ActorDir::Right:
-	//	MoveDir = float4::RIGHT;
-	//	break;
-	//case ActorDir::Left:
-	//	MoveDir = float4::LEFT;
-	//	break;
-	//default:
-	//	break;
-	//}
-
-	//if (Dir == ActorDir::Left)
-	//{
-	//	MoveDistance += MoveSpeed * _Delta;
-	//	MovePos += MoveDir * MoveSpeed * _Delta;
-	//	NextPos = Transform.GetLocalPosition() + LeftCheck;
-	//}
-	//if (Dir == ActorDir::Right)
-	//{
-	//	MoveDistance += MoveSpeed * _Delta;
-	//	MovePos += MoveDir * MoveSpeed * _Delta;
-	//	NextPos = Transform.GetLocalPosition()+ RightCheck;
-	//}
-
-	//CheckColor = CheckSideColor(NextPos);
-	//
-	//if (DefaultGroundColor == CheckColor)
-	//{
-	//	if (Dir == ActorDir::Left)
-	//	{
-	//		Dir = ActorDir::Right;
-	//	}
-	//	else if (Dir == ActorDir::Right)
-	//	{
-	//		Dir = ActorDir::Left;
-	//	}
-	//}
-	//Transform.AddLocalPosition(MovePos);
 }
 
 
@@ -197,7 +114,10 @@ void MonsterFunction::DieStart()
 }
 void MonsterFunction::DieUpdate(float _Delta)
 {
-
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(MonsterState::Dieing);
+	}
 }
 void MonsterFunction::DieingStart()
 {
@@ -205,15 +125,28 @@ void MonsterFunction::DieingStart()
 }
 void MonsterFunction::DieingUpdate(float _Delta)
 {
+	M_DieingTime += _Delta;
+	if (M_DieingTime >= M_DieingLimitTime)
+	{
+		ChangeState(MonsterState::Awake);
+		M_DieingTime = 0.0f;
+	}
+}
+void MonsterFunction::DieingEnd()
+{
 
 }
+
 void MonsterFunction::AwakeStart()
 {
 	ChangeAnimationState("Awake");
 }
 void MonsterFunction::AwakeUpdate(float _Delta)
 {
-
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(MonsterState::Stand);
+	}
 }
 void MonsterFunction::DeathStart()
 {
@@ -301,6 +234,18 @@ void MonsterFunction::ChangeState(MonsterState _State)
 {
 	if (_State != State)
 	{
+		switch (State)
+		{
+		case MonsterState::Stand:
+			StandEnd();
+			break;
+		case MonsterState::Dieing:
+			DieingEnd();
+			break;
+		default:
+			break;
+		}
+
 		switch (_State)
 		{
 		case MonsterState::Regen:
@@ -332,6 +277,8 @@ void MonsterFunction::ChangeState(MonsterState _State)
 			break;
 		case MonsterState::Death:
 			DeathStart();
+			break;
+		case MonsterState::Max:
 			break;
 		default:
 			break;
@@ -401,6 +348,15 @@ GameEngineColor MonsterFunction::CheckSideColor(float4 CheckPos)
 
 void MonsterFunction::DirCheck()
 {
+	if (PlayerDirX > MonsterDirX)
+	{
+		Dir = ActorDir::Right;
+	}
+	else if (PlayerDirX < MonsterDirX)
+	{
+		Dir = ActorDir::Left;
+	}
+
 	if (Dir == ActorDir::Left)
 	{
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
