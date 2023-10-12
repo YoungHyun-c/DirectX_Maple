@@ -77,11 +77,14 @@ void BossRewardLevel::Update(float _Delta)
 void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("RewardMap.png");
-	float4 HScale = Tex->GetScale().Half();
 	GlobalValue::MapScale = Tex->GetScale();
+	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
-	GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	GetMainCamera()->Transform.SetLocalPosition(HScale);
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+
+	HScale.Z = 500.0f;
+	Map->Transform.SetLocalPosition(HScale);
 }
 
 void BossRewardLevel::LevelEnd(GameEngineLevel* _NextLevel)

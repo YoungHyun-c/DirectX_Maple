@@ -70,7 +70,7 @@ void PracticeLevel::Start()
 	{
 		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("PracticeDebugMap.png");
-		NewPlayer->Transform.SetWorldPosition({ 500.0f, -500.0f });
+		NewPlayer->Transform.SetWorldPosition({ 500.0f, -500.0f, 1.0f });
 	}
 
 	{
@@ -147,7 +147,7 @@ void PracticeLevel::Update(float _Delta)
 	
 	if (false == Monster::Monsters->MonsterAppear)
 	{
-		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
+		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f, 100.0f });
 	}
 
 }
@@ -158,8 +158,11 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
-	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
+	GetMainCamera()->Transform.SetLocalPosition(HScale);
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+	
+	HScale.Z = 500.0f;
+	Map->Transform.SetLocalPosition(HScale);
 }
 
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)

@@ -105,6 +105,8 @@ void Player::Start()
 	//Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 	//float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
+	Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
+
 }
 
 void Player::TestEvent(GameEngineRenderer* _Renderer)

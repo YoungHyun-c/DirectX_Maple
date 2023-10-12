@@ -20,6 +20,7 @@ void PotalManager::Start()
 {
 	PotalCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Potal);
 	PotalCol->Transform.SetLocalScale({ 80.0f, 100.0f });
+	PotalCol->SetCollisionType(ColType::AABBBOX2D);
 }
 
 void PotalManager::Update(float _Detla)

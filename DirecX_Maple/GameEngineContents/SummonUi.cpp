@@ -34,6 +34,7 @@ void SummonUi::Start()
 
 	{
 		SummonCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::UI);
+		SummonCol->SetCollisionType(ColType::AABBBOX2D);
 		SummonCol->Transform.SetLocalScale({ 100.0f, 30.0f });
 	}
 
@@ -45,6 +46,7 @@ void SummonUi::Start()
 
 	{
 		ClearCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::UI);
+		ClearCol->SetCollisionType(ColType::AABBBOX2D);
 		ClearCol->Transform.SetLocalScale({ 100.0f, 30.0f, 1.0f });
 	}
 

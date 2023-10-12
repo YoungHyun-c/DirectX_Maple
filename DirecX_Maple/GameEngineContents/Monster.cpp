@@ -41,6 +41,7 @@ void Monster::Start()
 		//Col->Transform.SetLocalPosition({ 0.0f, 100.0f, 1.0f });
 		//Col->Transform.SetLocalPosition({ 0 , 100.0f });
 		Col->Transform.SetLocalScale({ 300.0f, 300.0f, 0.0f });
+		Col->SetCollisionType(ColType::AABBBOX2D);
 		Col->Off();
 
 	}
