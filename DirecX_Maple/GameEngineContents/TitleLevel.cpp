@@ -81,7 +81,7 @@ void TitleLevel::Start()
 
 void TitleLevel::Update(float _Delta)
 {
-	if (GameEngineInput::IsPress('1'))
+	if (GameEngineInput::IsPress('1', this))
 	{
 		GameEngineCore::ChangeLevel("PracticeLevel");
 	}

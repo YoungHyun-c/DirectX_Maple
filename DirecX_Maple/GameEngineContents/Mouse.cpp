@@ -4,7 +4,7 @@
 
 #include <GameEngineCore/GameEngineCore.h>
 
-std::shared_ptr<Mouse> Mouse::CurMouse = nullptr;
+Mouse* Mouse::MainMouse;
 
 Mouse::Mouse()
 {
@@ -30,6 +30,7 @@ void Mouse::Start()
 
 	TransformData Data = CursorCollision->Transform.GetConstTransformDataRef();
 	ShowCursor(false);
+	GameEngineInput::AddInputObject(this);
 }
 
 void Mouse::Update(float _Delta)
@@ -57,7 +58,7 @@ void Mouse::ClickUpdate()
 		IsDoubleClick == false;
 	}
 
-	if (GameEngineInput::IsDown(VK_LBUTTON) == true)
+	if (GameEngineInput::IsDown(VK_LBUTTON, this) == true)
 	{
 		if (IsClick == true)
 		{
@@ -85,4 +86,9 @@ void Mouse::ClickUpdate()
 	{
 		int a = 0;
 	}
+}
+
+void Mouse::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	MainMouse = this;
 }

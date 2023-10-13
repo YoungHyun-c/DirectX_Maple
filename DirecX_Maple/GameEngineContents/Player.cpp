@@ -106,7 +106,7 @@ void Player::Start()
 	//float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
 	Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
-
+	GameEngineInput::AddInputObject(this);
 }
 
 void Player::TestEvent(GameEngineRenderer* _Renderer)
@@ -132,41 +132,41 @@ void Player::Update(float _Delta)
 	InsideLockMap();
 
 	float Speed = 100.0f;
-	if (GameEngineInput::IsPress('A'))
+	if (GameEngineInput::IsPress('A', this))
 	{
 		MainSpriteRenderer->LeftFlip();
 		Transform.AddLocalPosition(float4::FORWARD * _Delta * Speed);
 	}
 
-	if (GameEngineInput::IsPress('D'))
+	if (GameEngineInput::IsPress('D', this))
 	{
 		MainSpriteRenderer->RightFlip();
 		Transform.AddLocalPosition(float4::BACKWARD * _Delta * Speed);
 	}
 
 	// ÁÜÀÎ ÁÜ¾Æ¿ô
-	if (GameEngineInput::IsPress('I'))
+	if (GameEngineInput::IsPress('I', this))
 	{
 		GetLevel()->GetMainCamera()->AddZoomValue(-_Delta);
 	}
-	if (GameEngineInput::IsPress('O'))
+	if (GameEngineInput::IsPress('O', this))
 	{
 		GetLevel()->GetMainCamera()->AddZoomValue(_Delta);
 	}
 
-	if (GameEngineInput::IsDown('P'))
+	if (GameEngineInput::IsDown('P', this))
 	{
 		MainSpriteRenderer->AnimationPauseSwitch();
 	}
 
-	if (GameEngineInput::IsDown('Y'))
+	if (GameEngineInput::IsDown('Y', this))
 	{
 		std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
 
 		Shard->SetSkillActor("Shard");
 	}
 
-	if (GameEngineInput::IsDown('R'))
+	if (GameEngineInput::IsDown('R', this))
 	{
 		std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
 
@@ -174,7 +174,7 @@ void Player::Update(float _Delta)
 	}
 
 	//////////////////// µ¥¹ÌÁö ·»´õ Å×½ºÆ®Áß//////////////////////
-	if (GameEngineInput::IsDown('3'))
+	if (GameEngineInput::IsDown('3', this))
 	{
 		std::shared_ptr<AdeleSkill> Ruin = GetLevel()->CreateActor<AdeleSkill>();
 		Ruin->SetSkillActor("Ruin");
@@ -182,54 +182,54 @@ void Player::Update(float _Delta)
 		NewDR->PushDamage(480);*/
 	}
 
-	if (GameEngineInput::IsDown('Z'))
+	if (GameEngineInput::IsDown('Z', this))
 	{
 		std::shared_ptr<AdeleSkill> Impale = GetLevel()->CreateActor<AdeleSkill>();
 
-		Impale->SetSkillActor("Impale");
+		Impale->SetSkillActor("Impale", this);
 	}
 
-	if (GameEngineInput::IsDown('C'))
+	if (GameEngineInput::IsDown('C', this))
 	{
 		std::shared_ptr<AdeleSkill> Lesonens = GetLevel()->CreateActor<AdeleSkill>();
 
 		Lesonens->SetSkillActor("Lesonens");
 	}
 
-	if (GameEngineInput::IsDown('1'))
+	if (GameEngineInput::IsDown('1', this))
 	{
 		Clothes = PlayerClothes::Battle;
 	}
 
-	if (GameEngineInput::IsDown('2'))
+	if (GameEngineInput::IsDown('2', this))
 	{
 		Clothes = PlayerClothes::Normal;
 	}
-	if (GameEngineInput::IsDown('-'))
+	if (GameEngineInput::IsDown('-', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
 	}
-	if (GameEngineInput::IsDown('4'))
+	if (GameEngineInput::IsDown('4', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Impale");
 	}
-	if (GameEngineInput::IsDown('5'))
+	if (GameEngineInput::IsDown('5', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Jump");
 	}
-	if (GameEngineInput::IsDown('6'))
+	if (GameEngineInput::IsDown('6', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Prone");
 	}
-	if (GameEngineInput::IsDown('7'))
+	if (GameEngineInput::IsDown('7', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_ProneAttack");
 	}
-	if (GameEngineInput::IsDown('8'))
+	if (GameEngineInput::IsDown('8', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Rope");
 	}
-	if (GameEngineInput::IsDown('9'))
+	if (GameEngineInput::IsDown('9', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 	}
@@ -352,7 +352,7 @@ void Player::DirCheck()
 		return;
 	}
 
-	if (true == GameEngineInput::IsPress(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
+	if (true == GameEngineInput::IsPress(VK_LEFT, this) && true == GameEngineInput::IsFree(VK_RIGHT, this))
 	{
 		CheckDir = ActorDir::Left;
 		MainSpriteRenderer->LeftFlip();
@@ -361,7 +361,7 @@ void Player::DirCheck()
 		//	ChangeAnimationState("Walk");
 		//}
 	}
-	else if (true == GameEngineInput::IsPress(VK_RIGHT) && true == GameEngineInput::IsFree(VK_LEFT))
+	else if (true == GameEngineInput::IsPress(VK_RIGHT, this) && true == GameEngineInput::IsFree(VK_LEFT, this))
 	{
 		CheckDir = ActorDir::Right;
 		MainSpriteRenderer->RightFlip();
@@ -370,8 +370,8 @@ void Player::DirCheck()
 		//	ChangeAnimationState("Walk");
 		//}
 	}
-	else if(true == GameEngineInput::IsPress(VK_RIGHT) && true == GameEngineInput::IsDown(VK_LEFT)
-		|| true == GameEngineInput::IsDown(VK_RIGHT) && true == GameEngineInput::IsPress(VK_LEFT))
+	else if(true == GameEngineInput::IsPress(VK_RIGHT, this) && true == GameEngineInput::IsDown(VK_LEFT, this)
+		|| true == GameEngineInput::IsDown(VK_RIGHT, this) && true == GameEngineInput::IsPress(VK_LEFT, this))
 	{
 		Dir = CheckDir;
 		if (IsGround == true)

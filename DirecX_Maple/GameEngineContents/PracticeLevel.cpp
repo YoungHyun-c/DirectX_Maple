@@ -68,9 +68,9 @@ void PracticeLevel::Start()
 	}
 
 	{
-		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
-		NewPlayer->SetDebugMap("PracticeDebugMap.png");
-		NewPlayer->Transform.SetWorldPosition({ 500.0f, -500.0f, 1.0f });
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
+		PlayerObject->SetDebugMap("PracticeDebugMap.png");
+		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, 1.0f });
 	}
 
 	{
@@ -80,8 +80,7 @@ void PracticeLevel::Start()
 	{
 		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
 
-		MouseObject = CreateActor<Mouse>();
-		MouseObject->SetCurMouse(MouseObject);
+		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
 	{
@@ -132,12 +131,12 @@ void PracticeLevel::Update(float _Delta)
 	//OutputDebugStringA(FPS.c_str());
 
 
-	if (GameEngineInput::IsDown('B'))
+	if (GameEngineInput::IsDown('B', this))
 	{
 		Map->SwitchRenderer();
 	}
 
-	if (GameEngineInput::IsDown('2'))
+	if (GameEngineInput::IsDown('2', this))
 	{
 		GameEngineCore::ChangeLevel("BossEntranceLevel");
 	}
@@ -149,7 +148,6 @@ void PracticeLevel::Update(float _Delta)
 	{
 		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f, 100.0f });
 	}
-
 }
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)

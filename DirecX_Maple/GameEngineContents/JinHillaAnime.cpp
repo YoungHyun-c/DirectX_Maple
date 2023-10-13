@@ -34,7 +34,7 @@ void JinHillaAnime::Update(float _Delta)
 		}
 	}
 
-	if (GameEngineInput::IsDown(VK_RETURN))
+	if (GameEngineInput::IsDown(VK_RETURN, this))
 	{
 		JinHillaAnimeRenderer->ChangeAnimation("JinHillaAnime");
 		JinAnimeEnd = true;

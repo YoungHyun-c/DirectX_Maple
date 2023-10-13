@@ -30,7 +30,7 @@ void PotalManager::Update(float _Detla)
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
 			{
-				if (GameEngineInput::IsDown(VK_UP))
+				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
 					GameEngineCore::ChangeLevel("PracticeLevel");
 				}
@@ -43,7 +43,7 @@ void PotalManager::Update(float _Detla)
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
 			{
-				if (GameEngineInput::IsDown(VK_UP))
+				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
 					GameEngineCore::ChangeLevel("BossEntranceLevel");
 				}
@@ -56,7 +56,7 @@ void PotalManager::Update(float _Detla)
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
 			{
-				if (GameEngineInput::IsDown(VK_UP))
+				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
 					GameEngineCore::ChangeLevel("BossLevel");
 				}

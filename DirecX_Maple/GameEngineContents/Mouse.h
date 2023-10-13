@@ -5,6 +5,8 @@
 class GameEngineSpriteRenderer;
 class Mouse : public BasicFunction
 {
+private:
+	static Mouse* MainMouse;
 public:
 	// constructer destructer
 	Mouse();
@@ -16,9 +18,9 @@ public:
 	Mouse& operator = (const Mouse& _Other) = delete;
 	Mouse& operator = (Mouse&& _Other) noexcept = delete;
 
-	static std::shared_ptr<Mouse> GetMouse()
+	static Mouse* GetMouse()
 	{
-		return CurMouse;
+		return MainMouse;
 	}
 
 	std::shared_ptr<class GameEngineCollision> GetMouseCollision()
@@ -26,9 +28,9 @@ public:
 		return CursorCollision;
 	}
 
-	void SetCurMouse(std::shared_ptr<Mouse> _Mouse)
+	void SetCurMouse(Mouse* _Mouse)
 	{
-		CurMouse = _Mouse;
+		MainMouse = _Mouse;
 	}
 
 	bool Click()
@@ -46,9 +48,10 @@ public:
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
 
 private:
-	static std::shared_ptr<Mouse> CurMouse;
+	//static std::shared_ptr<Mouse> CurMouse;
 
 	void PosUpdate();
 
@@ -62,4 +65,3 @@ private:
 	float DoubleClickCount = 0.0f;
 
 };
-

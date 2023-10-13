@@ -18,24 +18,24 @@ void Player::StandStart()
 }
 void Player::StandUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsDown(VK_LEFT)
-		|| true == GameEngineInput::IsDown(VK_RIGHT))
+	if (true == GameEngineInput::IsDown(VK_LEFT, this)
+		|| true == GameEngineInput::IsDown(VK_RIGHT, this))
 	{
 		ChangeState(PlayerState::Walk);
 		return;
 	}
 
-	if (GameEngineInput::IsDown('X') || GameEngineInput::IsPress('X'))
+	if (GameEngineInput::IsDown('X', this) || GameEngineInput::IsPress('X', this))
 	{
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack);
 	}
 
-	if (GameEngineInput::IsPress(VK_DOWN))
+	if (GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		ChangeState(PlayerState::Prone);
 	}
@@ -67,16 +67,16 @@ void Player::WalkUpdate(float _Delta)
 		break;
 	}
 
-	if (GameEngineInput::IsPress(VK_LEFT))
+	if (GameEngineInput::IsPress(VK_LEFT, this))
 	{
 		MovePos += MoveDir * WalkSpeed * _Delta;
 	}
-	if (GameEngineInput::IsPress(VK_RIGHT) && Dir == ActorDir::Right)
+	if (GameEngineInput::IsPress(VK_RIGHT, this) && Dir == ActorDir::Right)
 	{
 		MovePos += MoveDir * WalkSpeed * _Delta;
 	}
 
-	if (GameEngineInput::IsPress(VK_DOWN))
+	if (GameEngineInput::IsPress(VK_DOWN, this))
 	{
 		ChangeState(PlayerState::Prone);
 	}
@@ -89,18 +89,18 @@ void Player::WalkUpdate(float _Delta)
 
 	Transform.AddLocalPosition(MovePos);
 
-	if (GameEngineInput::IsDown('X') || GameEngineInput::IsPress('X'))
+	if (GameEngineInput::IsDown('X', this) || GameEngineInput::IsPress('X', this))
 	{
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (GameEngineInput::IsFree(VK_LEFT) && GameEngineInput::IsFree(VK_RIGHT))
+	if (GameEngineInput::IsFree(VK_LEFT, this) && GameEngineInput::IsFree(VK_RIGHT, this))
 	{
 		ChangeState(PlayerState::Stand);
 		return;
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack);
 	}
@@ -125,8 +125,8 @@ void Player::ProneStart()
 }
 void Player::ProneUpdate(float _Delta)
 {
-	if (true == GameEngineInput::IsDown(VK_LEFT)
-		|| true == GameEngineInput::IsDown(VK_RIGHT))
+	if (true == GameEngineInput::IsDown(VK_LEFT, this)
+		|| true == GameEngineInput::IsDown(VK_RIGHT, this))
 	{
 		ChangeState(PlayerState::Walk);
 		return;
@@ -274,11 +274,11 @@ void Player::JumpStart()
 
 	if (true == IsGround)
 	{
-		if (GameEngineInput::IsPress(VK_LEFT))
+		if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
 			AddMoveVectorForce(float4(-JumpDistance, JumpHeight));
 		}
-		else if (GameEngineInput::IsPress(VK_RIGHT))
+		else if (GameEngineInput::IsPress(VK_RIGHT, this))
 		{
 			AddMoveVectorForce(float4(JumpDistance, JumpHeight));
 		}
@@ -297,7 +297,7 @@ void Player::JumpUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsPress(VK_LEFT) || GameEngineInput::IsPress(VK_RIGHT))
+	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
 	{
 		float4 MoveDir = float4::ZERO;
 
@@ -324,7 +324,7 @@ void Player::JumpUpdate(float _Delta)
 		}
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT))
+	if (GameEngineInput::IsDown(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack);
 	}
@@ -334,22 +334,22 @@ void Player::JumpUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('X'))
+	if (GameEngineInput::IsDown('X', this))
 	{
 		std::shared_ptr<AdeleSkill> BoltJumpActor = GetLevel()->CreateActor<AdeleSkill>();
 		std::shared_ptr<AdeleSkill> DoubleJumpActor = GetLevel()->CreateActor<AdeleSkill>();
 		DoubleJump = true;
-		if (GameEngineInput::IsPress(VK_UP))
+		if (GameEngineInput::IsPress(VK_UP, this))
 		{
 			BoltJumpActor->SetSkillActor("BoltJump");
 			AddMoveVectorForce(float4(0, DoubleJumpUP));
 		}
-		else if (true == GameEngineInput::IsPress(VK_LEFT) && true == GameEngineInput::IsFree(VK_RIGHT))
+		else if (true == GameEngineInput::IsPress(VK_LEFT, this) && true == GameEngineInput::IsFree(VK_RIGHT, this))
 		{
 			DoubleJumpActor->SetSkillActor("DoubleJump");
 			AddMoveVectorForce(float4(-DoubleJumpDistance * 0.5, DoubleJumpHeight));
 		}
-		else if (true == GameEngineInput::IsPress(VK_RIGHT) && true == GameEngineInput::IsFree(VK_LEFT))
+		else if (true == GameEngineInput::IsPress(VK_RIGHT, this) && true == GameEngineInput::IsFree(VK_LEFT, this))
 		{
 			DoubleJumpActor->SetSkillActor("DoubleJump");
 			AddMoveVectorForce(float4(DoubleJumpDistance * 0.5, DoubleJumpHeight));
@@ -359,7 +359,7 @@ void Player::JumpUpdate(float _Delta)
 			switch (Dir)
 			{
 			case ActorDir::Right:
-				if (true == GameEngineInput::IsFree(VK_RIGHT) && true == GameEngineInput::IsFree(VK_LEFT))
+				if (true == GameEngineInput::IsFree(VK_RIGHT, this) && true == GameEngineInput::IsFree(VK_LEFT, this))
 				{
 					DoubleJumpActor->SetSkillActor("DoubleJump");
 					AddMoveVectorForce(float4(NoKeyDistance, DoubleJumpHeight));
@@ -372,7 +372,7 @@ void Player::JumpUpdate(float _Delta)
 					break;
 				}
 			case ActorDir::Left:
-				if (true == GameEngineInput::IsFree(VK_RIGHT) && true == GameEngineInput::IsFree(VK_LEFT))
+				if (true == GameEngineInput::IsFree(VK_RIGHT, this) && true == GameEngineInput::IsFree(VK_LEFT, this))
 				{
 					DoubleJumpActor->SetSkillActor("DoubleJump");
 					AddMoveVectorForce(float4(-NoKeyDistance, DoubleJumpHeight));
@@ -386,7 +386,7 @@ void Player::JumpUpdate(float _Delta)
 			}
 		}
 
-		if (GameEngineInput::IsDown(VK_SHIFT))
+		if (GameEngineInput::IsDown(VK_SHIFT, this))
 		{
 			ChangeState(PlayerState::Attack);
 		}

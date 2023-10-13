@@ -2,6 +2,7 @@
 #include "SummonUi.h"
 #include "Monster.h"
 #include "Player.h"
+#include "Mouse.h"
 
 SummonUi::SummonUi()
 {
@@ -80,7 +81,7 @@ void SummonUi::Update(float _Delta)
 			};
 		SummonEvent.Stay = [&](GameEngineCollision* _Mouse, GameEngineCollision* _This)
 			{
-				if (GameEngineInput::IsPress(VK_LBUTTON))
+				if (GameEngineInput::IsPress(VK_LBUTTON, Mouse::GetMouse()))
 				{
 					SummonButton->SetSprite("SummonButton3.Png");
 					ClearButton->SetSprite("ClearButton1.png");
@@ -107,7 +108,7 @@ void SummonUi::Update(float _Delta)
 			};
 		ClearEvent.Stay = [&](GameEngineCollision* _Mouse, GameEngineCollision* _This)
 			{
-				if (GameEngineInput::IsPress(VK_LBUTTON))
+				if (GameEngineInput::IsPress(VK_LBUTTON, Mouse::GetMouse()))
 				{
 					ClearButton->SetSprite("ClearButton3.png");
 					SummonButton->SetSprite("SummonButton1.Png");

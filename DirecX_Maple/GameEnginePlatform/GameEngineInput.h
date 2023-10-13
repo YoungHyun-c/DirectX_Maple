@@ -79,14 +79,20 @@ public:
 	static void Update(float _DeltaTime);
 	static void Reset();
 
-	static bool IsDown(int _Key);
-	static bool IsUp(int _Key);
-	static bool IsPress(int _Key);
-	static bool IsFree(int _Key);
+	static bool IsDown(int _Key, void* _Ptr);
+	static bool IsUp(int _Key, void* _Ptr);
+	static bool IsPress(int _Key, void* _Ptr);
+	static bool IsFree(int _Key, void* _Ptr);
+
+	static void AddInputObject(void* _Ptr);
+	static void IsOnlyInputObject(void* _Ptr);
 
 protected:
 
 private:
 	static std::map<int, GameEngineKey> AllKeys;
+
+	// 이 주소값이 입력을 받을거다.
+	static std::map<void*, bool> InputObject;
 };
 

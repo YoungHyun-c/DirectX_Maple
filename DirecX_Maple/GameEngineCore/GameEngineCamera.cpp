@@ -7,12 +7,10 @@
 
 GameEngineCamera::GameEngineCamera()
 {
-
 }
 
 GameEngineCamera::~GameEngineCamera()
 {
-
 }
 
 void GameEngineCamera::Start()
@@ -25,15 +23,21 @@ void GameEngineCamera::Start()
 
 	if (nullptr == Level)
 	{
-		MsgBoxAssert("Level이 nullptr입니다.");
+		MsgBoxAssert("Level이 nullptr입니다");
 		return;
 	}
 
-	// Level->Cameras[CameraOrder] = GetDynamic_Cast_This<GameEngineCamera>();
+	IsFreeCamera = false;
+	if (Level->GetMainCamera().get() == this)
+	{
+		GameEngineInput::AddInputObject(this);
+	}
 }
 
 void GameEngineCamera::Update(float _Delta)
 {
+
+
 	GameEngineActor::Update(_Delta);
 
 	float4 Position = Transform.GetWorldPosition();
@@ -54,7 +58,20 @@ void GameEngineCamera::Update(float _Delta)
 	case EPROJECTIONTYPE::Orthographic:
 		Transform.OrthographicLH(WindowScale.X, WindowScale.Y, Near, Far);
 		break;
+	default:
+		break;
 	}
+
+	//if (GameEngineInput::IsDown(VK_F9, this))
+	//{
+	//	IsFreeCamera = true;
+	//	GameEngineInput::IsOnlyInputObject(this);
+	//}
+
+	//if (false == IsFreeCamera)
+	//{
+	//	return;
+	//}
 }
 
 void GameEngineCamera::SetCameraOrder(int _Order)
@@ -63,7 +80,7 @@ void GameEngineCamera::SetCameraOrder(int _Order)
 
 	if (nullptr == Level)
 	{
-		MsgBoxAssert("Level이 nullptr 입니다.");
+		MsgBoxAssert("Level이 nullptr입니다");
 		return;
 	}
 
@@ -77,7 +94,7 @@ void GameEngineCamera::SetCameraOrder(int _Order)
 
 void GameEngineCamera::Render(float _DeltaTime)
 {
-	// 렌더러가 없으면 continue;
+	//  랜더러가 없으면 continue;
 	if (true == Renderers.empty())
 	{
 		return;
@@ -85,32 +102,30 @@ void GameEngineCamera::Render(float _DeltaTime)
 
 	GameEngineCore::GetBackBufferRenderTarget()->Setting();
 
-	// x + 1;
-	// y + 1;
-	// Z + 1;
+	//x + 1;
+	//y + 1;
+	//z + 1;
 
-	/*for (size_t i = 0; i < 1280 * 720; i++)
-	{
-		GameEngineCore::MainWindow.GetBackBuffer()->GetColor(0, { 0,0 });
-	}*/
+	//for (size_t i = 0; i < 1280 * 720; i++)
+	//{
+	//	GameEngineCore::MainWindow.GetBackBuffer()->GetColor(0, {0, 0});
+	//}
 
 	for (std::pair<const int, std::list<std::shared_ptr<class GameEngineRenderer>>>& RendererPair : Renderers)
 	{
 		std::list<std::shared_ptr<class GameEngineRenderer>>& RendererList = RendererPair.second;
-		
+
 		for (std::shared_ptr<class GameEngineRenderer>& Renderer : RendererList)
 		{
 			if (false == Renderer->IsUpdate())
 			{
 				continue;
 			}
-			// Transform
 
 			Renderer->Transform.CalculationViewAndProjection(Transform.GetConstTransformDataRef());
 			Renderer->Render(this, _DeltaTime);
 		}
 	}
-
 }
 
 void GameEngineCamera::AllReleaseCheck()
@@ -120,6 +135,7 @@ void GameEngineCamera::AllReleaseCheck()
 		return;
 	}
 
+	// 들고있는 녀석들은 전부다 액터겠지만
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineRenderer>>>& _Pair : Renderers)
 	{
 		std::list<std::shared_ptr<GameEngineRenderer>>& Group = _Pair.second;
@@ -127,7 +143,7 @@ void GameEngineCamera::AllReleaseCheck()
 		std::list<std::shared_ptr<GameEngineRenderer>>::iterator Start = Group.begin();
 		std::list<std::shared_ptr<GameEngineRenderer>>::iterator End = Group.end();
 
-		for (; Start != End; )
+		for (; Start != End;)
 		{
 			if (false == (*Start)->IsDeath())
 			{
@@ -144,7 +160,7 @@ void GameEngineCamera::AllReleaseCheck()
 float4 GameEngineCamera::GetWorldMousePos2D()
 {
 	// 월드라고 하는 세상은 화면과 관련이 없었다.
-	// 그런데 화면에 나타나게 되면서 관련있게 됐다.
+	// 그런데 관련있게 됐다.
 
 	// 나누기
 	// 로컬 => 월드(크자이공부) => 뷰 => 프로젝션 => 뷰포트(스크린좌표)
@@ -155,8 +171,7 @@ float4 GameEngineCamera::GetWorldMousePos2D()
 
 	float4 Scale = GameEngineCore::MainWindow.GetScale();
 	ViewPort.ViewPort(Scale.X, Scale.Y, 0, 0);
-
-	// 스크린 => 프로젝션으로 이동.
+	// 스크린 => 프로젝션으로 이동
 	MousePos *= ViewPort.InverseReturn();
 
 	// 프로젝션 => 뷰로 이동
