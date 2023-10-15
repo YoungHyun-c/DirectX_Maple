@@ -25,6 +25,15 @@ void PlayerActor::Update(float _Delta)
 {
 	Gravity(_Delta);
 	IsGround = CheckGround(float4{0.0f, -35.0f});
+	
+	// 프리카메라 사용 설정
+	IsCameraFocus = GetLevel()->GetMainCamera();
+	CameraFocusValue = IsCameraFocus->IsFreeCamera();
+	if (CameraFocusValue == true)
+	{
+		return;
+	}
+	// 카메라 중심맞추기
 	CameraFocus(_Delta);
 }
 

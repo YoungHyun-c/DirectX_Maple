@@ -67,7 +67,7 @@ void Player::Start()
 	{
 		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
 		PlayerCol->SetCollisionType(ColType::AABBBOX2D); //10/10
-		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f, 1.0f });
+		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f});
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
 
@@ -107,6 +107,8 @@ void Player::Start()
 
 	Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
 	GameEngineInput::AddInputObject(this);
+
+	//GetLevel()->GetMainCamera()->CameraTargetSetting(Transform, float4::BACKWARD * 500.0f);
 }
 
 void Player::TestEvent(GameEngineRenderer* _Renderer)
@@ -131,7 +133,7 @@ void Player::Update(float _Delta)
 	StateUpdate(_Delta);
 	InsideLockMap();
 
-	float Speed = 100.0f;
+	float Speed = 500.0f;
 	if (GameEngineInput::IsPress('A', this))
 	{
 		MainSpriteRenderer->LeftFlip();

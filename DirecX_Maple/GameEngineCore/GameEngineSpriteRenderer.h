@@ -6,15 +6,16 @@ class GameEngineFrameAnimation
 {
 	friend class GameEngineSpriteRenderer;
 
+public:
 	GameEngineSpriteRenderer* Parent = nullptr;
-	
+
 	std::string AnimationName;
 	std::string SpriteName;
 
 	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
 
-	//float Inter;
-	float Loop;
+	// float Inter;
+	bool Loop;
 	bool IsEnd;
 
 	bool EventCheck = false;
@@ -23,6 +24,7 @@ class GameEngineFrameAnimation
 	unsigned int End;
 	unsigned int CurIndex;
 	float CurTime = 0.0f;
+
 	std::vector<int> Index;
 
 	void Reset();
@@ -66,17 +68,17 @@ class GameEngineSpriteRenderer : public GameEngineRenderer
 	friend GameEngineFrameAnimation;
 
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineSpriteRenderer();
 	~GameEngineSpriteRenderer();
 
 	// delete Function
 	GameEngineSpriteRenderer(const GameEngineSpriteRenderer& _Other) = delete;
 	GameEngineSpriteRenderer(GameEngineSpriteRenderer&& _Other) noexcept = delete;
-	GameEngineSpriteRenderer& operator = (const GameEngineSpriteRenderer& _Other) = delete;
-	GameEngineSpriteRenderer& operator = (GameEngineSpriteRenderer&& _Other) noexcept = delete;
-	
-	// 스프라이트는 기본적으로
+	GameEngineSpriteRenderer& operator=(const GameEngineSpriteRenderer& _Other) = delete;
+	GameEngineSpriteRenderer& operator=(GameEngineSpriteRenderer&& _Other) noexcept = delete;
+
+	// 스프라이트는 기본적으로 
 	// 강제로 애니메이션을 정지한다는 뜻으로 받아들이겠다.
 	void SetSprite(std::string_view _Name, unsigned int index = 0);
 
@@ -164,13 +166,9 @@ public:
 	{
 		Pivot = _Value;
 	}
-
 	void SetPivotType(PivotType _Type);
-
 	void SetImageScale(const float4& _Scale);
 	void AddImageScale(const float4& _Scale);
-
-
 
 	std::shared_ptr<GameEngineSprite> GetSprite()
 	{
@@ -206,6 +204,8 @@ protected:
 	int Index = 0;
 
 private:
+	// 부모인 actor를 기준으로한
+
 	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>> FrameAnimations;
 
 	std::shared_ptr<GameEngineFrameAnimation> CurFrameAnimations;
@@ -224,4 +224,3 @@ private:
 
 	GameEngineTransform ImageTransform;
 };
-

@@ -76,7 +76,7 @@ void CravingMonster::Start()
 
 	SetMoveSpeed(MoveSpeed);
 	SetColPos(-10.0f, 40.0f, 120.0f);
-
+	GameEngineInput::AddInputObject(this);
 	ActorDir::Left;
 }
 

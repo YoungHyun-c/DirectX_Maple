@@ -10,24 +10,23 @@ enum class ColType
 {
 	// 캡슐
 	// 2D에서의 충돌은 모두가 한축이 같아야 한다.
-	// 우리는 충돌이 2D가 더 느리다.
-	SPHERE2D, // z를 0으로 만들고 충돌 (연산량으로)구 50 60개를 돌릴수가 있다.
+	// 우리는 충돌이 2D가 더 느려요.
+	SPHERE2D, // z를 0으로 만들고 충돌 구 50 60개를 돌릴수가 있다.
 	AABBBOX2D, // z를 0으로 만들고 충돌 Axis-Aligned Bounding 회전하지 않은 박스
-	OBBBOX2D, // z를 0으로 만들고 충돌 Oriented Bounding Box 회전한 박스 <= 을 1번할 연산량으로(구 50 60)
+	OBBBOX2D, // z를 0으로 만들고 충돌 Oriented Bounding Box 회전한 박스 <= 을 1번할 연산량으로
 	SPHERE3D,
 	AABBBOX3D,
 	OBBBOX3D,
 	MAX,
 };
 
+
 class CollisionData
 {
 public:
 	union
 	{
-		// 공용체, 클래스 바이트패딩, 클래스나 구조체에 바이트패딩을 추가하여 CPU접근을 더 용이하게 해주는 것.
-		// 젤 큰 바이트 크기로 나머지 순서대로 있는 바이트 크기들의 크기도 조정 후 구조체의 크기 결정.
-		// 다이렉트 X에서 지원해주는 충돌용 도형
+		// 다이렉트 x에서 지원해주는 충돌용 도형
 		DirectX::BoundingSphere SPHERE;
 		DirectX::BoundingBox AABB;
 		DirectX::BoundingOrientedBox OBB;
@@ -39,7 +38,6 @@ public:
 
 	}
 };
-
 
 class GameEngineTransform;
 class CollisionParameter
@@ -74,17 +72,13 @@ public:
 	{
 
 	}
-
 };
 
- 
-// 왜
+// 왜 굳이. 
 class TransformData
 {
 public:
-	// w가 0일떄와 1일때의 차이를 잘 기억해야된다.
-	// W가 있고 없고의 차이는 이동의 차이이다.
-
+	// w가 0일때와 1일때의 차이를 잘 기억해놓자.
 
 	float4 Scale = float4::ONENULL;
 	float4 Rotation = float4::ZERONULL;
@@ -102,22 +96,22 @@ public:
 	float4 WorldQuaternion;
 	float4 WorldPosition;
 
-	float4x4 ScaleMatrix;	// 크
-	float4x4 RotationMatrix;// 자
-	float4x4 PositionMatrix;// 이
+	float4x4 ScaleMatrix; // 크
+	float4x4 RotationMatrix; // 자
+	float4x4 PositionMatrix; // 이
 	float4x4 RevolutionMatrix; // 공
-	float4x4 ParentMatrix;	// 공
-
+	float4x4 ParentMatrix; // 공
 
 	float4x4 LocalWorldMatrix;
 	// 월드 공간
 	float4x4 WorldMatrix;
 
+
 	float4x4 ViewMatrix;
 	float4x4 ProjectionMatrix;
 	float4x4 ViewPort;
 
-	// 로컬 => 월드 => 뷰 => 프로젝션
+	// 로컬 => 월드 => 뷰 => 프로젝션 
 	float4x4 WorldViewProjectionMatrix;
 
 	void LocalCalculation()
@@ -155,15 +149,15 @@ public:
 class GameEngineTransform
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineTransform();
 	~GameEngineTransform();
 
 	// delete Function
 	GameEngineTransform(const GameEngineTransform& _Other) = delete;
 	GameEngineTransform(GameEngineTransform&& _Other) noexcept = delete;
-	GameEngineTransform& operator = (const GameEngineTransform& _Other) = delete;
-	GameEngineTransform& operator = (GameEngineTransform&& _Other) noexcept = delete;
+	GameEngineTransform& operator=(const GameEngineTransform& _Other) = delete;
+	GameEngineTransform& operator=(GameEngineTransform&& _Other) noexcept = delete;
 
 	void OrthographicLH(float _Width, float _Height, float _Near, float _Far)
 	{
@@ -209,7 +203,6 @@ public:
 		TransformUpdate();
 	}
 
-	// set
 	void SetLocalPosition(const float4& _Value)
 	{
 		TransData.Position = _Value;
@@ -247,6 +240,7 @@ public:
 		TransformUpdate();
 	}
 
+
 	void AddWorldScale(const float4& _Value)
 	{
 		SetWorldScale(GetWorldScale() + _Value);
@@ -272,10 +266,14 @@ public:
 		return TransData.WorldRotation;
 	}
 
-	// Get
 	float4 GetWorldPosition() const
 	{
 		return TransData.WorldPosition;
+	}
+
+	float4 GetLocalScale() const
+	{
+		return TransData.LocalScale;
 	}
 
 	float4 GetLocalRotationEuler() const
@@ -288,26 +286,23 @@ public:
 		return TransData.LocalPosition;
 	}
 
+
 	// 회전 그 자체로 한 오브젝트의 앞 위 오른쪽
-	//	[1][0][0][0] 오른쪽
-	//	[0][1][0][0] 위
-	//	[0][0][1][0] 앞
-	//	[0][0][0][1]
+	// [1][0][0][0] 오른쪽
+	// [0][1][0][0] 위
+	// [0][0][1][0] 앞
+	// [0][0][0][1]
 
 	float4 GetWorldForwardVector() const
 	{
 		return TransData.WorldMatrix.ArrVector[2].NormalizeReturn();
 	}
 
-	float4 GetLocalScale() const
-	{
-		return TransData.LocalScale;
-	}
-
 	float4 GetWorldBackVector() const
 	{
 		return -(TransData.WorldMatrix.ArrVector[2].NormalizeReturn());
 	}
+
 
 	float4 GetWorldRightVector() const
 	{
@@ -342,6 +337,11 @@ public:
 		TransformUpdate();
 	}
 
+	void SetTransformData(const TransformData& Data)
+	{
+		TransData = Data;
+	}
+
 	void CalChilds();
 
 	float4x4 GetWorldViewProjectionMatrix()
@@ -350,20 +350,18 @@ public:
 	}
 
 	// 트랜스폼은 충돌 타입이 정해져 있지 않는다.
-	//					 내 타입,  나랑,  상대타입,  상대
+	//                    내가 사각형이고            날                           상대는 구               상대
 	static bool Collision(const CollisionParameter& _Data);
 
 	CollisionData ColData;
-	//ColType _ThisTpye, GameEngineTransform& _LeftTrans, ColType _OtherType, GameEngineTransform& _RightTrans
-
-
 protected:
 
 private:
 
-
 	GameEngineTransform* Parent = nullptr;
 	std::list<GameEngineTransform*> Childs;
 	TransformData TransData;
+
 };
+
 

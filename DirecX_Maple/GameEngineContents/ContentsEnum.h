@@ -4,6 +4,7 @@ enum class ContentsRenderType
 {
 	BackGround,
 	Play,
+	Max,
 };
 
 enum class ContentsObjectType
@@ -18,6 +19,22 @@ enum class ContentsObjectType
 	DamageRender,
 	UI,
 	Mouse,
+	Max,
+};
+
+enum class DeepBufferType
+{
+	Mouse,
+	UI,
+	DamageRender,
+	JinHillaAnime,
+	FrontSkill,
+	Player,
+	BackSkill,
+	Monster,
+	MonsterSkill,
+	BackGround,
+	Max,
 };
 
 enum class ContentsCollisionType
@@ -31,6 +48,7 @@ enum class ContentsCollisionType
 	Potal,
 	UI,
 	Mouse,
+	Max,
 };
 
 enum class ActorDir

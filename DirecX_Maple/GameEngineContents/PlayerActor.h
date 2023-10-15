@@ -53,6 +53,8 @@ protected:
 	void Update(float _Delta) override;
 
 	bool IsGround = true;
+	bool CameraFocusValue = false;
+	std::shared_ptr<class GameEngineCamera> IsCameraFocus = nullptr;
 private:
 	bool IsGravity = true;
 	//float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };

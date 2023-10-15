@@ -74,11 +74,11 @@ void BossLevel::Start()
 	// ¿å¸ÁÀÇ Çå½Å Craving Monster
 	{
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f });
+		CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob->SetDebugMap("BossDebugMap.Png");
 
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f });
+		CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob->SetDebugMap("BossDebugMap.Png");
 	}
 
@@ -98,6 +98,8 @@ void BossLevel::Start()
 	//	GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 
 	//}
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void BossLevel::Update(float _Delta)

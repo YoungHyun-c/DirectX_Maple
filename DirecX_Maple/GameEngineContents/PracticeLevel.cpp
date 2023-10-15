@@ -70,7 +70,7 @@ void PracticeLevel::Start()
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
 		PlayerObject->SetDebugMap("PracticeDebugMap.png");
-		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, 1.0f });
+		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, static_cast<float>(DeepBufferType::Player) });
 	}
 
 	{
@@ -85,7 +85,7 @@ void PracticeLevel::Start()
 
 	{
 		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
-		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f });
+		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 	}
 
 	// 콜리전안에 몬스터 마릿수 확인 및 데미지 뜨도록 만들어야됨
@@ -102,7 +102,7 @@ void PracticeLevel::Start()
 		std::shared_ptr<DamageRenderer> DamageRender = CreateActor<DamageRenderer>();
 	}
 
-
+	GameEngineInput::AddInputObject(this);
 	//{
 	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
 
@@ -156,7 +156,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
-	GetMainCamera()->Transform.SetLocalPosition(HScale);
+	//GetMainCamera()->Transform.SetLocalPosition(HScale);
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 	
 	HScale.Z = 500.0f;

@@ -56,6 +56,8 @@ void BossEntranceLevel::Start()
 		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>(ContentsObjectType::BackSkill);
 
 	}
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void BossEntranceLevel::Update(float _Delta)

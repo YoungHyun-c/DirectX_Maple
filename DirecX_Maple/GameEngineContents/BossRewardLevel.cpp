@@ -64,6 +64,8 @@ void BossRewardLevel::Start()
 		NewPlayer->SetDebugMap("RewardDebugMap.png");
 		NewPlayer->Transform.SetWorldPosition({ 250.0f, -600.0f });
 	}
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void BossRewardLevel::Update(float _Delta)

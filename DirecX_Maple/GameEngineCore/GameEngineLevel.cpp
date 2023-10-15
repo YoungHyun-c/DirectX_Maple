@@ -12,11 +12,13 @@ GameEngineLevel::GameEngineLevel()
 {
 	// Main
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::Main);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(INT_MIN, ECAMERAORDER::Main);
+		GameEngineInput::AddInputObject(NewCamera.get());
+
 	}
 
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(0, ECAMERAORDER::UI);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(INT_MIN, ECAMERAORDER::UI);
 	}
 
 	// UI카메라
@@ -74,6 +76,7 @@ void GameEngineLevel::Render(float _Delta)
 	if (true == IsDebug)
 	{
 		GameEngineDebug::GameEngineDebugCore::DebugRender();
+		// 몬가를 한다.
 	}
 }
 
@@ -82,7 +85,6 @@ void GameEngineLevel::Release()
 	// MsgBoxAssert("치명적인 버그를 발견하셨군요 팀장님한테 연락하세요. 사수 거칠필요 없습니다. 연락 xxx 번호");
 	MsgBoxAssert("레벨은 엔진 규칙상 삭제할수 없습니다.");
 }
-
 
 void GameEngineLevel::AllReleaseCheck()
 {
@@ -107,6 +109,8 @@ void GameEngineLevel::AllReleaseCheck()
 		Pair.second->AllReleaseCheck();
 	}
 
+
+	// 들고있는 녀석들은 전부다 액터겠지만
 	for (std::pair<const int, std::list<std::shared_ptr<GameEngineObject>>>& _Pair : Childs)
 	{
 		std::list<std::shared_ptr<GameEngineObject>>& Group = _Pair.second;
@@ -114,9 +118,10 @@ void GameEngineLevel::AllReleaseCheck()
 		std::list<std::shared_ptr<GameEngineObject>>::iterator Start = Group.begin();
 		std::list<std::shared_ptr<GameEngineObject>>::iterator End = Group.end();
 
-		for (; Start != End; )
+		for (; Start != End;)
 		{
 			(*Start)->AllReleaseCheck();
+
 			if (false == (*Start)->IsDeath())
 			{
 				++Start;
@@ -125,10 +130,10 @@ void GameEngineLevel::AllReleaseCheck()
 
 			Start = Group.erase(Start);
 		}
-
 	}
-}
 
+
+}
 
 void GameEngineLevel::ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order)
 {

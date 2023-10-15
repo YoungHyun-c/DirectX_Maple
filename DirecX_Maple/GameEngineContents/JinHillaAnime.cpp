@@ -22,6 +22,7 @@ void JinHillaAnime::Start()
 		JinHillaAnimeRenderer->SetImageScale({ 1366, 768 });
 		//JinHillaAnimeSpriteRenderer->SetPivotType(PivotType::Center);
 	}
+	GameEngineInput::AddInputObject(this);
 }
 
 void JinHillaAnime::Update(float _Delta)

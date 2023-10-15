@@ -77,6 +77,8 @@ void TitleLevel::Start()
 	{
 		std::shared_ptr<JinHillaAnime> NewMonster = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	}
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void TitleLevel::Update(float _Delta)

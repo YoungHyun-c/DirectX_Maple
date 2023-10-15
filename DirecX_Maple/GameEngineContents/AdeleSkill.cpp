@@ -313,7 +313,7 @@ void AdeleSkill::SetSkillAnimation()
 	PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	if (SkillName == "BoltJump")
 	{
-		UpJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y - 50.0f });
+		UpJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y - 50.0f, BackSkillPosZ });
 		UpJumpRenderer->On();
 	}
 	else if (SkillName == "DoubleJump")
@@ -322,12 +322,12 @@ void AdeleSkill::SetSkillAnimation()
 		switch (Dir)
 		{
 		case ActorDir::Left:
-			DoubleJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X + 100.0f, PlayerPos.Y });
+			DoubleJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X + 100.0f, PlayerPos.Y, BackSkillPosZ });
 			DoubleJumpRenderer->RightFlip();
 			DoubleJumpRenderer->On();
 			break;
 		case ActorDir::Right:
-			DoubleJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X - 100.0f, PlayerPos.Y });
+			DoubleJumpRenderer->Transform.SetWorldPosition({ PlayerPos.X - 100.0f, PlayerPos.Y, BackSkillPosZ });
 			DoubleJumpRenderer->LeftFlip();
 			DoubleJumpRenderer->On();
 			break;
@@ -341,18 +341,18 @@ void AdeleSkill::SetSkillAnimation()
 		switch (Dir)
 		{
 		case ActorDir::Left:
-			Divide1->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y - 25.0f });
+			Divide1->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y - 25.0f, FrontSkillPosZ });
 			Divide1->RightFlip();
 			Divide1->On();
-			Creation1->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y - 25.0f });
+			Creation1->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y - 25.0f, FrontSkillPosZ });
 			Creation1->RightFlip();
 			Creation1->On();
 			break;
 		case ActorDir::Right:
-			Divide1->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y});
+			Divide1->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Divide1->LeftFlip();
 			Divide1->On();
-			Creation1->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y});
+			Creation1->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Creation1->LeftFlip();
 			Creation1->On();
 			break;
@@ -366,18 +366,18 @@ void AdeleSkill::SetSkillAnimation()
 		switch (Dir)
 		{
 		case ActorDir::Left:
-			Divide2->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y});
+			Divide2->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y, FrontSkillPosZ });
 			Divide2->RightFlip();
 			Divide2->On();
-			Creation2->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y });
+			Creation2->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y, FrontSkillPosZ });
 			Creation2->RightFlip();
 			Creation2->On();
 			break;
 		case ActorDir::Right:
-			Divide2->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y});
+			Divide2->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Divide2->LeftFlip();
 			Divide2->On();
-			Creation2->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y });
+			Creation2->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Creation2->LeftFlip();
 			Creation2->On();
 			break;
@@ -391,18 +391,18 @@ void AdeleSkill::SetSkillAnimation()
 		switch (Dir)
 		{
 		case ActorDir::Left:
-			Divide3->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y});
+			Divide3->Transform.SetWorldPosition({ PlayerPos.X - 200.0f, PlayerPos.Y, FrontSkillPosZ });
 			Divide3->RightFlip();
 			Divide3->On();
-			Creation3->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y });
+			Creation3->Transform.SetWorldPosition({ PlayerPos.X - 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Creation3->RightFlip();
 			Creation3->On();
 			break;
 		case ActorDir::Right:
-			Divide3->Transform.SetWorldPosition({ PlayerPos.X + 200.0f, PlayerPos.Y});
+			Divide3->Transform.SetWorldPosition({ PlayerPos.X + 200.0f, PlayerPos.Y, FrontSkillPosZ });
 			Divide3->LeftFlip();
 			Divide3->On();
-			Creation3->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y });
+			Creation3->Transform.SetWorldPosition({ PlayerPos.X + 300.0f, PlayerPos.Y, FrontSkillPosZ });
 			Creation3->LeftFlip();
 			Creation3->On();
 			break;

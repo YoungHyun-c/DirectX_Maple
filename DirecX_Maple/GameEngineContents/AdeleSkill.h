@@ -37,6 +37,8 @@ private:
 	std::string SkillName;
 	bool isRePlay = false;
 
+	float BackSkillPosZ = static_cast<float>(DeepBufferType::BackSkill);
+	float FrontSkillPosZ = static_cast<float>(DeepBufferType::FrontSkill);
 
 	float4 Dir = float4::ZERO;
 	// 스킬이름, 스킬
