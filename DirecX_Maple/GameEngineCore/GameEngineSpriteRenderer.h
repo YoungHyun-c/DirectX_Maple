@@ -8,37 +8,29 @@ class GameEngineFrameAnimation
 
 public:
 	GameEngineSpriteRenderer* Parent = nullptr;
-
+	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
 	std::string AnimationName;
 	std::string SpriteName;
 
-	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
-
-	// float Inter;
 	bool Loop;
 	bool IsEnd;
-
-	bool EventCheck = false;
 
 	unsigned int Start;
 	unsigned int End;
 	unsigned int CurIndex;
-	float CurTime = 0.0f;
-
+	float CurTime = 0.0f; // CurAnimationTime;
 	std::vector<int> Index;
 
 	void Reset();
-
-	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
-
-	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
-
 	SpriteData Update(float _DeltaTime);
 
+	// FrameEvent
+	bool EventCheck = false;
+	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
+	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
 	void EventCall(int _Frame);
-
 public:
-	std::vector<float> Inter;
+	std::vector<float> Inter; // AnimationSpeed;
 };
 
 enum class PivotType

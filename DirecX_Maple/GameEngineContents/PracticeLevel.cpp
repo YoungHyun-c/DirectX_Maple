@@ -144,7 +144,7 @@ void PracticeLevel::Update(float _Delta)
 
 	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	
-	if (false == Monster::Monsters->MonsterAppear)
+	if (false == Monster::Monsters->MonsterAppearValue())
 	{
 		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f, 100.0f });
 	}

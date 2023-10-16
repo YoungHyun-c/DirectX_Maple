@@ -71,6 +71,8 @@ void Player::Start()
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
 
+	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Normal_Stand");
+	_Animation->Inter[0];
 		//{
 		//	SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
 		//	SkillRenderer->AutoSpriteSizeOn();

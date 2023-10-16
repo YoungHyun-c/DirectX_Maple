@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BackGroundMap.h"
 #include "AdeleSkill.h"
+#include "SkillManager.h"
 #include "Monster.h"
 
 #define JumpDistance 200.0f
@@ -159,19 +160,21 @@ void Player::AttackStart()
 	//std::shared_ptr<GameEngineCollision> HitObject;
 	EventParameter HitEvent;
 
-	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* Cot)
+	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			//Monster::Monsters->GetMonsterHp(-1);
 			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(480);
+			//SkillManager::PlayerSkillManager->HitPrint("Normal_Impale", 1, _Other->GetParentObject(), false);
 			//NewDR->Transform.SetWorldPosition(Transform.GetWorldPosition() + float4{ 150.0f, 50.0f });
 			//NewDR->Transform.SetWorldPosition({ GlobalValue::CurMonsterPos.X + 150.0f, GlobalValue::CurMonsterPos.Y + 50.0f });
 		};
-	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Cot)
+	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			int a = 0;
 		};
 	AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
+
 	//RangeCheck->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 
 

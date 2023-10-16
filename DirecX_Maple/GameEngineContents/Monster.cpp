@@ -20,29 +20,23 @@ void Monster::Start()
 {
 	{
 		Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
-
-		GameEngineRandom NewRandom;
-
-		NewRandom.SetSeed(reinterpret_cast<long long>(this));
 		Renderer->SetSprite("Mugong_stand.png");
-
-		//Renderer->Transform.SetLocalPosition({ Player::MainPlayer->Transform.GetWorldPosition() });
 		Renderer->AutoSpriteSizeOn();
-
-		//float4 Pos = float4::ZERO;
-		//Pos = Transform.GetWorldPosition();
-		//Renderer->Transform.SetLocalPosition(Pos);
 		Renderer->Off();
 
-		//Renderer->SetImageScale(NewRandom.RandomVectorBox2D(300, 500, 300, 500));
-		//float4 Scale = NewRandom.RandomVectorBox2D(100, 100, 100, 100);
-		//Col->Transform.SetLocalScale(Scale);
-		Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-		//Col->Transform.SetLocalPosition({ 0.0f, 100.0f, 1.0f });
-		//Col->Transform.SetLocalPosition({ 0 , 100.0f });
-		Col->Transform.SetLocalScale({ 300.0f, 300.0f, 1.0f });
-		Col->SetCollisionType(ColType::AABBBOX2D);
-		Col->Off();
+		{	
+			std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Mugong_stand.Png");
+			MonsterScale = Sprite->GetSpriteData(0).GetScale();
+			Sprite = nullptr;
+		}
+
+		{
+			Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+			//Col->Transform.SetLocalScale({ 300.0f, 300.0f, 1.0f });
+			Col->Transform.SetLocalScale(MonsterScale);
+			Col->SetCollisionType(ColType::AABBBOX2D);
+			Col->Off();
+		}
 
 	}
 
@@ -90,10 +84,15 @@ void Monster::Update(float _Delta)
 	}
 	
 	GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
-
+	Col->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
 }
 
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	//Monsters = this;
+}
+
+void Monster::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	//Death();
 }

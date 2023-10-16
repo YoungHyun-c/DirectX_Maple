@@ -37,20 +37,28 @@ public:
 		RenderOn = false;
 	}
 
-	bool MonsterAppear = false;
+	bool MonsterAppearValue()
+	{
+		return MonsterAppear;
+	}
 
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
-	void LevelStart(GameEngineLevel* _PrevLevel) override;
-	float4 PlayerScale = float4::ZERO;
-	float4 PlayerPos = float4::ZERO;
 
-	int MonsterHp = 10;
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
+
+	//void CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other);
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> Renderer;
-	std::shared_ptr<GameEngineCollision> Col;
+	EventParameter MonsterEvent;
+	int MonsterHp = INT_MAX;
+	bool MonsterAppear = false;
+	float4 MonsterScale = float4::ZERO;
+	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
+	std::shared_ptr<GameEngineCollision> Col = nullptr;
+	
 
 	bool RenderOn = false;
 };
