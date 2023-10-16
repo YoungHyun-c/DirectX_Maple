@@ -24,6 +24,7 @@ PracticeLevel::~PracticeLevel()
 
 void PracticeLevel::Start()
 {
+	GameEngineGUI::CreateGUIWindow<TestGUIWindow>("Test");
 	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
 
 	{

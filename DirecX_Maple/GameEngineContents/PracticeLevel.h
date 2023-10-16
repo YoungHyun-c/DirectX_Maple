@@ -1,5 +1,20 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
+#include <GameEngineCore/GameEngineGUI.h>
+
+// Gui 테스트
+class TestGUIWindow : public GameEngineGUIWindow
+{
+public:
+	virtual void Start()
+	{
+
+	}
+	virtual void OnGUI(float _DeltaTme)
+	{
+
+	}
+};
 
 // 설명 :
 class PracticeLevel : public GameEngineLevel

@@ -16,6 +16,7 @@ void GameEngineGUIWindow::End()
 	ImGui::End();
 }
 
+std::map<std::string, std::shared_ptr<GameEngineGUIWindow>> GameEngineGUI::GUIWindows;
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 GameEngineGUI::GameEngineGUI()
@@ -73,27 +74,31 @@ void GameEngineGUI::Release()
     ImGui::DestroyContext();
 }
 
-void GameEngineGUI::GUIRenderStart()
+void GameEngineGUI::GUIRender(float _DeltaTime)
 {
     // Start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 
-    static bool show_another_window = true;
+    //static bool show_another_window = true;
 
-    if (true == show_another_window)
+    //if (true == show_another_window)
+    //{
+    //    ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+    //    ImGui::Text("Hello from another window!");
+    //    if (ImGui::Button("Close Me"))
+    //        show_another_window = false;
+    //    ImGui::End();
+    //}
+
+    for (std::pair<const std::string, std::shared_ptr<GameEngineGUIWindow>> Pair : GUIWindows)
     {
-        ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-        ImGui::Text("Hello from another window!");
-        if (ImGui::Button("Close Me"))
-            show_another_window = false;
-        ImGui::End();
+        Pair.second->Begin();
+        Pair.second->OnGUI(_DeltaTime);
+        Pair.second->End();
     }
-}
 
-void GameEngineGUI::GUiRenderEnd()
-{
     ImGui::Render();
 
     ImGuiIO& io = ImGui::GetIO();

@@ -92,9 +92,7 @@ void GameEngineCore::Update()
 
 	CurLevel->Render(DeltaTime);
 
-	GameEngineGUI::GUIRenderStart();
-
-	GameEngineGUI::GUiRenderEnd();
+	GameEngineGUI::GUIRender(DeltaTime);
 
 	MainDevice.RenderEnd();
 
