@@ -11,6 +11,8 @@
 #include "GhostDamien.h"
 #include "MonsterFunction.h"
 
+#include "SkillManager.h"
+
 BossLevel::BossLevel()
 {
 
@@ -80,6 +82,10 @@ void BossLevel::Start()
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
 		CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob->SetDebugMap("BossDebugMap.Png");
+	}
+
+	{
+		CreateActor<SkillManager>();
 	}
 
 	// 사령 스우, 스우 구체

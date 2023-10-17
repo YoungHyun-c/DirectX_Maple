@@ -64,7 +64,7 @@ void DamageRenderer::Update(float _Delta)
 
 		for (int i = 0; i < (*Start)->size(); i++)
 		{
-			(*Vec)[i]->Transform.AddLocalPosition({ 0, 20.0f * _Delta});
+			(*Vec)[i]->Transform.AddLocalPosition({ 0, 50.0f * _Delta});
 		}
 	}
 
@@ -77,61 +77,67 @@ void DamageRenderer::Update(float _Delta)
 
 }
 
-void DamageRenderer::PushDamage(int _SkillDamage)
+//void DamageRenderer::PushDamage(size_t _SkillPercentDam)
+void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage)
 {
-	std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
-	SkillPercentDam = (_SkillDamage / 100.0f );
-	OneLineDamage = ((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * CriticalConstant * OffensePower * DamagePower *
-		DefenseCorrection * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage;
-	
-	std::string CurDamage = "OneLineDamage : ";
-	CurDamage += std::to_string(static_cast<int>(OneLineDamage));
-	CurDamage += "\n";
-	OutputDebugStringA(CurDamage.c_str());
-
-	int NumArr[14] = { 0, };
-	int Digit;
-
-	for (Digit = 0; OneLineDamage > 0; Digit++)
+	for (int j = 0; j < _HitCount; j++)
 	{
-		NumArr[Digit] = OneLineDamage % 10;
-		OneLineDamage /= 10;
-	}
+		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
+		SkillPercentDam = (_SkillPercentDam / 100.0f);
+		SkillFinalDamage = (_SkillFinalDamage / 100.0f);
+		GameEngineRandom CriticalRan;
+		CriticalRan.SetSeed(time(nullptr)+j);
+		CriticalRandomDam = CriticalRan.RandomFloat(120, 150);
+		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
+		OneLineDamage = ((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
+			DefenseCorrection * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage;
+		SumDamage += OneLineDamage;
+		std::string CurDamage = "OneLineDamage : ";
+		CurDamage += std::to_string(static_cast<long long>(OneLineDamage));
+		CurDamage += "\n";
+		OutputDebugStringA(CurDamage.c_str());
 
-	Vect->reserve(Digit);
 
-	float LastNumYPos;
-	if (DamageRenderList.size() > 0)
-	{
-		LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
-	}
-	else
-	{
-		LastNumYPos = 0.0f;
-	}
+		int NumArr[15] = { 0, };
+		int Digit;
 
-
-	//for (int j = 0; j < 7; j++)
-	{
-		for (int i = Digit; i > 0; i--)
+		for (Digit = 0; OneLineDamage > 0; Digit++)
 		{
-			std::string TextureName = "CriticalNum_" + std::to_string(NumArr[i - 1]) + ".png";
-
-			NewNumberRender = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);
-			NewNumberRender->SetSprite(TextureName);
-			//NewNumberRender->Transform.SetLocalPosition({ ((Digit / 2) - (i - 1)) * 32.0f + (16.0f * (Digit % 2)), LastNumYPos + 50.0f });
-			//NewNumberRender->Transform.SetLocalPosition({ ( - (i - 1)) * 32.0f , LastNumYPos + 50.0f });
-			NewNumberRender->Transform.SetWorldPosition({ (Monster::Monsters->Transform.GetLocalPosition().X + 150.0f - (i - 1) * 32.0f), Monster::Monsters->Transform.GetLocalPosition().Y + LastNumYPos  + 50.0f });
-			//NewNumberRender->Transform.SetWorldPosition({ (CravingMonster::CravingMonsters->Transform.GetLocalPosition().X + 150.0f - (i - 1) * 32.0f), CravingMonster::CravingMonsters->Transform.GetLocalPosition().Y + LastNumYPos + 50.0f });
-			Vect->push_back(NewNumberRender);
+			NumArr[Digit] = OneLineDamage % 10;
+			OneLineDamage /= 10;
 		}
-		LastNumYPos += 30.0f;
+
+		Vect->reserve(Digit);
+
+		float LastNumYPos;
+		if (DamageRenderList.size() > 0)
+		{
+			//LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
+		}
+		else
+		{
+			LastNumYPos = 0.0f;
+		}
+
+
+		//for (int k = 0; k < _HitCount; j++)
+		{
+			for (int i = Digit; i > 0; i--)
+			{
+				std::string TextureName = "CriticalNum_" + std::to_string(NumArr[i - 1]) + ".png";
+
+				NewNumberRender = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);
+				NewNumberRender->SetSprite(TextureName);
+				NewNumberRender->Transform.SetWorldPosition({ (_Object->Transform.GetWorldPosition().X + 150.0f - (i - 1) * 32.0f), _Object->Transform.GetWorldPosition().Y + LastNumYPos + 150.0f });
+				Vect->push_back(NewNumberRender);
+			}
+			LastNumYPos += 30.0f;
+		}
+		DamageRenderList.push_back(Vect);
 	}
-
-	DamageRenderList.push_back(Vect);
-
 	//float Pos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
 	int a = 0;
+
 }
 
 

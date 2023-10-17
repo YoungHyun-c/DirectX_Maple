@@ -87,6 +87,12 @@
     <ClCompile Include="SkillManager.cpp">
       <Filter>Object\Player\SKill</Filter>
     </ClCompile>
+    <ClCompile Include="SkillDivide.cpp">
+      <Filter>Object\Player\SKill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillFunction.cpp">
+      <Filter>Object\Player\SKill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -173,6 +179,12 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
+      <Filter>Object\Player\SKill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillDivide.h">
+      <Filter>Object\Player\SKill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillFunction.h">
       <Filter>Object\Player\SKill</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 
 #include "BackGroundMap.h"
 #include "Monster.h"
+#include "SkillManager.h"
 
 Player* Player::MainPlayer = nullptr;
 
@@ -50,6 +51,10 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Normal_Dead", "Dead", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Rope", "Rope", 0.1f, -1, -1, true);
 
+		/*SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+		SkillRenderer->CreateAnimation("Divide1Hit_", "Divide1_Hit", 0.05f);
+		SkillRenderer->ChangeAnimation("Divide1Hit_");
+		SkillRenderer->Off();*/
 
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 		//MainSpriteRenderer->AutoSpriteSizeOn();
@@ -174,7 +179,7 @@ void Player::Update(float _Delta)
 	{
 		std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
 
-		Maestro->SetSkillActor("Maestro");
+		//Maestro->SetSkillActor("Maestro");
 	}
 
 	//////////////////// 데미지 렌더 테스트중//////////////////////

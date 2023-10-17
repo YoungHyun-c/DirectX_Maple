@@ -1,9 +1,12 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include "BackGroundMap.h"
-#include "AdeleSkill.h"
-#include "SkillManager.h"
 #include "Monster.h"
+
+//#include "AdeleSkill.h"
+#include "SkillManager.h"
+#include "SkillDivide.h"
+
 
 #define JumpDistance 200.0f
 #define JumpHeight 300.0f
@@ -141,61 +144,68 @@ void Player::AttackStart()
 	}
 	IsAttack = true;
 	
-	AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-	AttackCol->SetCollisionType(ColType::AABBBOX2D);
-	if (Dir == ActorDir::Right)
-	{
-		AttackCol->Transform.SetLocalPosition({ 207.5f, 0.0f });
-		AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
-	}
-	else if (Dir == ActorDir::Left)
-	{
-		AttackCol->Transform.SetLocalPosition({ -207.5f, 0.0f });
-		AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
-	}
-	AttackCol->On();
-	// 충돌
-	//std::vector<std::shared_ptr<GameEngineCollision>> HitMonsterVector;
-	//std::vector<std::shared_ptr<GameEngineCollision>> HitObjectVector;
-	//std::shared_ptr<GameEngineCollision> HitObject;
-	EventParameter HitEvent;
+	ChangeAnimationState("Attack");
+	SkillManager::PlayerSkillManager->UseSkill("Divide1");
 
-	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
-		{
-			//Monster::Monsters->GetMonsterHp(-1);
-			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
-			NewDR->PushDamage(480);
-			//SkillManager::PlayerSkillManager->HitPrint("Normal_Impale", 1, _Other->GetParentObject(), false);
-			//NewDR->Transform.SetWorldPosition(Transform.GetWorldPosition() + float4{ 150.0f, 50.0f });
-			//NewDR->Transform.SetWorldPosition({ GlobalValue::CurMonsterPos.X + 150.0f, GlobalValue::CurMonsterPos.Y + 50.0f });
-		};
-	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Other)
-		{
-			int a = 0;
-		};
-	AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
+	//AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+	//AttackCol->SetCollisionType(ColType::AABBBOX2D);
+	//if (Dir == ActorDir::Right)
+	//{
+	//	AttackCol->Transform.SetLocalPosition({ 207.5f, 0.0f });
+	//	AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
+	//}
+	//else if (Dir == ActorDir::Left)
+	//{
+	//	AttackCol->Transform.SetLocalPosition({ -207.5f, 0.0f });
+	//	AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
+	//}
+	////AttackCol->On();
+	//// 충돌
+	////std::vector<std::shared_ptr<GameEngineCollision>> HitMonsterVector;
+	////std::vector<std::shared_ptr<GameEngineCollision>> HitObjectVector;
+	////std::shared_ptr<GameEngineCollision> HitObject;
+	//EventParameter HitEvent;
+
+	//HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+	//		//Monster::Monsters->GetMonsterHp(-1);
+	//		std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+	//		NewDR->PushDamage(_Other, 6, 480, 220);
+	//		//SkillManager::PlayerSkillManager->HitPrint(_Other->GetParentObject(), "Divide1_Hit", 6, 500, 220);
+	//		//SkillManager::PlayerSkillManager->HitPrint("Normal_Impale", 1, _Other->GetParentObject(), false);
+	//		//NewDR->Transform.SetWorldPosition(Transform.GetWorldPosition() + float4{ 150.0f, 50.0f });
+	//		//NewDR->Transform.SetWorldPosition({ GlobalValue::CurMonsterPos.X + 150.0f, GlobalValue::CurMonsterPos.Y + 50.0f });
+	//	};
+	//HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Other)
+	//	{
+	//		int a = 0;
+	//	};
+	//AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
+	//AttackCol->Collision(ContentsCollisionType::Monster, std::bind(&Player::CollisionEvent2, this, std::placeholders::_1));
+
 
 	//RangeCheck->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 
 
-	ChangeAnimationState("Attack");
-	GameEngineRandom NewRandom;
-	int AttackValue = NewRandom.RandomInt(1, 3);
-	std::shared_ptr<AdeleSkill> Divide = GetLevel()->CreateActor<AdeleSkill>();
-	switch(AttackValue)
-	{
-	case(1):
-		Divide->SetSkillActor("Divide1");
-		break;
-	case(2):
-		Divide->SetSkillActor("Divide2");
-		break;
-	case(3):
-		Divide->SetSkillActor("Divide3");
-		break;
-	default:
-		break;
-	}
+	/*ChangeAnimationState("Attack");
+	SkillManager::PlayerSkillManager->UseSkill("Divide1");*/
+	//GameEngineRandom NewRandom;
+	//int AttackValue = NewRandom.RandomInt(1, 3);
+	//std::shared_ptr<AdeleSkill> Divide = GetLevel()->CreateActor<AdeleSkill>();
+	//switch(AttackValue)
+	//{
+	//case(1):
+	//	Divide->SetSkillActor("Divide1");
+	//	break;
+	//case(2):
+	//	Divide->SetSkillActor("Divide2");
+	//	break;
+	//case(3):
+	//	Divide->SetSkillActor("Divide3");
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 void Player::AttackUpdate(float _Delta)
 {
@@ -250,6 +260,7 @@ void Player::AttackUpdate(float _Delta)
 	//	}
 	//}
 
+
 	if (MainSpriteRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(PlayerState::Walk);
@@ -260,7 +271,7 @@ void Player::AttackUpdate(float _Delta)
 void Player::AttackEnd()
 {
 	IsAttack = false;
-	AttackCol->Off();
+	//AttackCol->Off();
 }
 
 void Player::ProneAttackStart()

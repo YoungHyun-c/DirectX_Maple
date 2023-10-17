@@ -39,7 +39,6 @@ void Monster::Start()
 		}
 
 	}
-
 }
 
 void Monster::Update(float _Delta)
@@ -83,7 +82,7 @@ void Monster::Update(float _Delta)
 		MonsterAppear = false;
 	}
 	
-	GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
+	//GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
 	Col->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
 }
 

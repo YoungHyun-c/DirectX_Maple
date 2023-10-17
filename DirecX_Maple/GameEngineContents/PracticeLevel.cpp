@@ -8,6 +8,7 @@
 #include "TileMap.h"
 #include "AdeleSkill.h"
 #include "DamageRenderer.h"
+#include "SkillManager.h"
 
 #include "Mouse.h"
 #include "SummonUi.h"
@@ -96,7 +97,11 @@ void PracticeLevel::Start()
 	//}
 
 	{
-		std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>();
+		//std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>();
+	}
+
+	{
+		CreateActor<SkillManager>();
 	}
 
 	{
