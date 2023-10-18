@@ -32,6 +32,9 @@ private:
 	std::shared_ptr<class GhostDamien> GhostDamienMob;
 	std::shared_ptr<class GhostSwoo> SwooBall;
 
+
+	std::shared_ptr<class Mouse> MouseObject = nullptr;
+
 	float CurTime = 29.44f;
 	bool AniEnd = false;
 };

@@ -81,7 +81,6 @@ void PracticeLevel::Start()
 
 	{
 		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
-
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
@@ -89,12 +88,6 @@ void PracticeLevel::Start()
 		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
 		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 	}
-
-	// 콜리전안에 몬스터 마릿수 확인 및 데미지 뜨도록 만들어야됨
-	//{
-	//	MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
-	//	MonsterObject->Transform.SetLocalPosition({ 600.0f, -700.0f });
-	//}
 
 	{
 		//std::shared_ptr<AdeleSkill> Skill = CreateActor<AdeleSkill>();
@@ -111,22 +104,6 @@ void PracticeLevel::Start()
 	GameEngineInput::AddInputObject(this);
 	//{
 	//	std::shared_ptr<TileMap> Object = CreateActor<TileMap>(ContentsObjectType::BackGround);
-
-	//	size_t TileX = 300;
-	//	size_t TileY = 300;
-
-	//	Object->TileRenderer->CreateTileMap({ TileX, TileY, {32, 32}, "HoHoYee_AttackABC" });
-
-	//	for (size_t y = 0; y < TileY; y++)
-	//	{
-	//		for (size_t x = 0; x < TileX; x++)
-	//		{
-	//			Object->TileRenderer->SetTileIndex({ y, x });
-	//		}
-	//	}
-
-	//	TileMapObject = Object;
-	//}
 }
 
 void PracticeLevel::Update(float _Delta)

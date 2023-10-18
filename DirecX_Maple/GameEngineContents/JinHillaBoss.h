@@ -1,7 +1,8 @@
 #pragma once
+#include "MonsterFunction.h"
 
 // Ό³Έν :
-class JinHillaBoss
+class JinHillaBoss : public MonsterFunction
 {
 public:
 	// constructer destructer

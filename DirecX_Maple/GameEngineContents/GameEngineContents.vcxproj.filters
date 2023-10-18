@@ -228,5 +228,8 @@
     <Filter Include="Object\Boss\BossAnime">
       <UniqueIdentifier>{b23dff28-ad41-4ad2-8743-8fa92e124c6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Boss\UI">
+      <UniqueIdentifier>{5ad2f0e8-5d0d-4f76-adb8-29ac6e453154}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -46,7 +46,7 @@ private:
 
 	std::shared_ptr<class MainUIActor> UIObject;
 	std::shared_ptr<class SummonUi> SummonObject;
-	std::shared_ptr<class Mouse> MouseObject;
+	std::shared_ptr<class Mouse> MouseObject = nullptr;
 
 
 	std::shared_ptr<class PotalManager> Potal = nullptr;

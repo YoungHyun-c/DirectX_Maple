@@ -15,6 +15,7 @@ void MainUIActor::Start()
 {
 	{
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
 	}
 
 	{
@@ -26,11 +27,18 @@ void MainUIActor::Start()
 	}
 
 	{
-		AtereGage = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		AtereGage->SetSprite("LWGaugeUI_background.png");
-		AtereGage->AutoSpriteSizeOn();
-		AtereGage->Transform.SetLocalPosition({ 600.0f, 75.0f });
+		AtereGaugeBack = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		AtereGaugeBack->SetSprite("LWGaugeUI_background.png");
+		AtereGaugeBack->AutoSpriteSizeOn();
+		AtereGaugeBack->Transform.SetLocalPosition({ 600.0f, 75.0f });
 		//AtereGage->SetAutoScaleRatio(1.0f);
+	}
+
+	{
+		AtereGauge = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		AtereGauge->SetSprite("LWGaugeUI.gauge.png");
+		AtereGauge->AutoSpriteSizeOn();
+		AtereGauge->Transform.SetLocalPosition({ 600.0f, 90.0f });
 	}
 
 

@@ -134,6 +134,7 @@ void CravingMonster::Update(float _Delta)
 
 void CravingMonster::StandStart()
 {
+	Hp = 10000000;
 	ChangeAnimationState("Stand");
 	CravingAttackRangeCol->On();
 	MonsterCollision->On();
@@ -149,6 +150,7 @@ void CravingMonster::DieStart()
 void CravingMonster::DieingStart()
 {
 	CravingDieCol->On();
+	CravingSkillCol->Off();
 }
 
 void CravingMonster::DieingEnd()
@@ -174,6 +176,12 @@ void CravingMonster::DeathUpdate(float _Delta)
 
 void CravingMonster::AttackUpdate(float _Delta)
 {
+	if (Hp <= 0)
+	{
+		CravingSkillCol->Off();
+		ChangeState(MonsterState::Die);
+	}
+
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Move);
@@ -231,6 +239,7 @@ void CravingMonster::Hit(long long _Damage, bool _Attack)
 		ChangeState(MonsterState::Die);
 		if (DeathCount <= 0)
 		{
+			CravingSkillCol->Off();
 			ChangeState(MonsterState::Death);
 			DeathCount = 3;
 		}

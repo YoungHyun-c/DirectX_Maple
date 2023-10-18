@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "JinHillaAnime.h"
 #include "JinHillaEnterAnime.h"
+#include "Mouse.h"
 
 #include "CravingMonster.h"
 #include "GhostSwoo.h"
@@ -12,7 +13,7 @@
 #include "MonsterFunction.h"
 
 #include "SkillManager.h"
-#include "Monster.h"
+
 
 BossLevel::BossLevel()
 {
@@ -69,9 +70,10 @@ void BossLevel::Start()
 	//}
 
 
-	//{
-	//	std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
-	//}
+	// ¿‘¿Â ƒ∆Ω≈
+	{
+		//std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
+	}
 
 
 	// øÂ∏¡¿« «ÂΩ≈ Craving Monster
@@ -106,6 +108,10 @@ void BossLevel::Start()
 
 	//}
 
+	{
+		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+	}
+
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -129,14 +135,15 @@ void BossLevel::Update(float _Delta)
 
 	// ¿‘¿Â ƒ∆Ω≈
 	//if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
-	{
+	//{
 		NewPlayer->PlayerBindEnd();
-		//AniEnd = true;
-	}
+	//	AniEnd = true;
+	//}
 
 	std::string BossTimer = "Ω√∞£ ≈∏¿Ã∏” : ";
 	BossTimer += std::to_string(CurTime);
 	BossTimer += "\n";
+
 	//OutputDebugStringA(BossTimer.c_str());
 	/*long long MonsterHp = Monster::Monsters->GetMonsterHp();
 	std::string CurMonsterHp = "MonsterHp : ";
