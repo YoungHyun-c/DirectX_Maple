@@ -56,13 +56,23 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 void ContentsControlWindow::Start()
 {
+	Tabs.push_back(std::make_shared<LevelChangeTab>("LevelChangeTab"));
+	CurTab = Tabs[0];
 	Tabs.push_back(std::make_shared<TestTab>("Test"));
 	Tabs.push_back(std::make_shared<MapEditorTab>("MapEditor"));
 }
 
-void ContentsControlWindow::LevelChangeScreen(GameEngineLevel* _Level)
+void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	std::map<std::string, std::shared_ptr<GameEngineLevel>>& AllLevels = GameEngineCore::GetAllLevel();
 
+	for (std::pair<const std::string, std::shared_ptr<GameEngineLevel>> Pair : AllLevels)
+	{
+		if (ImGui::Button(Pair.first.c_str()))
+		{
+			GameEngineCore::ChangeLevel(Pair.first);
+		}
+	}
 }
 
 void ContentsControlWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)

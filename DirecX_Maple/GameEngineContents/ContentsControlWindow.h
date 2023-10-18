@@ -7,6 +7,7 @@ public:
 	std::string Name;
 	int Index;
 
+	virtual void Start() {}
 	virtual void OnGUI(GameEngineLevel* _Level, float _DeltaTime) = 0;
 
 	Tab(std::string_view _Name)
@@ -44,6 +45,16 @@ public:
 	}
 };
 
+class LevelChangeTab : public Tab
+{
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
+public:
+	LevelChangeTab(std::string_view _Name)
+		:Tab(_Name)
+	{
+	}
+};
+
 
 // Ό³Έν :
 class ContentsControlWindow : public GameEngineGUIWindow
@@ -52,7 +63,6 @@ public:
 	void Start() override;
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
-	void LevelChangeScreen(GameEngineLevel* _Level);
 	
 	std::shared_ptr<Tab> CurTab = nullptr;
 	std::vector<std::shared_ptr<Tab>> Tabs;
