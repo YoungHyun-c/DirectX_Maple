@@ -7,6 +7,7 @@
 #include "JinHillaEnterAnime.h"
 #include "Mouse.h"
 
+#include "JinHillaBoss.h"
 #include "CravingMonster.h"
 #include "GhostSwoo.h"
 #include "GhostDamien.h"
@@ -75,7 +76,6 @@ void BossLevel::Start()
 		//std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
 	}
 
-
 	// ¿å¸ÁÀÇ Çå½Å Craving Monster
 	{
 		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
@@ -107,6 +107,13 @@ void BossLevel::Start()
 	//	GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 
 	//}
+
+	// º¸½º
+	{
+		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+		BossJin->Transform.SetWorldPosition({ 950.0f, -800.0f, static_cast<float>(DeepBufferType::Monster) });
+		BossJin->SetDebugMap("BossDebugMap.Png");
+	}
 
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);

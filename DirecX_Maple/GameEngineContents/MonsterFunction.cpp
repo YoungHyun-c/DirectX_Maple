@@ -207,28 +207,6 @@ void MonsterFunction::StateCheck()
 			break;
 		}
 	}
-	//else if (State == MonsterState::Stand || State == MonsterState::Hit)
-	//{
-	//	GameEngineRandom StateRandom;
-	//	CurStateNumber = StateRandom.RandomInt(0, 2);
-
-	//	switch (CurStateNumber)
-	//	{
-	//	case 0:
-	//		Dir = ActorDir::Left;
-	//		ChangeAnimationState("Move");
-	//		break;
-	//	case 1:
-	//		Dir = ActorDir::Right;
-	//		ChangeAnimationState("Move");
-	//		break;
-	//	case 2:
-	//		State = MonsterState::Stand;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
 }
 
 void MonsterFunction::ChangeState(MonsterState _State)

@@ -51,35 +51,6 @@ protected:
 
 	void AttackEvent(float _Delta);
 
-	/*void StateUpdate(float _Delta);
-
-	void RegenStart();
-	void RegenUpdate(float _Delta);
-
-	void StandStart();
-	void StandUpdate(float _Delta);
-
-	void MoveStart();
-	void MoveUpdate(float _Delta);
-
-	void AttackStart();
-	void AttackUpdate(float _Delta);
-
-	void DieStart();
-	void DieUpdate(float _Delta);
-
-	void DieingStart();
-	void DieingUpdate(float _Delta);
-
-	void AwakeStart();
-	void AwakeUpdate(float _Delta);
-
-	void DeathStart();
-	void DeathUpdate(float _Delta);
-
-	void ChangeState(CravingState _State);
-	void ChangeAnimationState(const std::string& _StateName);*/
-
 private:
 	float MoveSpeed = 70.0f;
 	long long Hp = 10000000;
@@ -90,9 +61,9 @@ private:
 	float DeathTime = 0.0f;
 	float RegenCool = 10.0f;
 	float AttackCool = 6.0f;
-	float Attacking = 1.0f;
+
 	float AttackStart = 0.0f;
-	float AttackEnd = 1.3f;
+
 	bool IsAttack = false;
 
 	int DeathCount = 3;

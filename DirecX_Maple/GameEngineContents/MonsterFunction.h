@@ -7,8 +7,16 @@ enum class MonsterState
 	Stand,
 	Move,
 	Attack,
+	Attack2,
+	Attack3,
+	Attack4,
+	Attack5,
+	Attack6,
+	Attack7,
 	Skill1,
 	Skill2,
+	Skill3,
+	Skill4, // Summon
 	Die,
 	Dieing,
 	Hit,
@@ -90,7 +98,6 @@ protected:
 	bool IsFight = false;
 	bool IsDeath = false;
 	bool IsAnimationEnd = false;
-
 
 	void StateUpdate(float _Delta);
 

@@ -31,6 +31,7 @@ private:
 	std::shared_ptr<class GhostSwoo> GhostSwooMob;
 	std::shared_ptr<class GhostDamien> GhostDamienMob;
 	std::shared_ptr<class GhostSwoo> SwooBall;
+	std::shared_ptr<class JinHillaBoss> BossJin;
 
 
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
