@@ -31,27 +31,13 @@ void BackGroundMap::Update(float _DeltaTime)
 
 void BackGroundMap::Start()
 {
-	//{
-	//	Renderer = CreateComponent<GameEngineSpriteRenderer>(-30);
-	//	Renderer->SetSprite("BossMap.png");
-
-	//	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
-
-	//	float4 HScale = Tex->GetScale().Half();
-	//	HScale.Y *= -1.0f;
-	//	Renderer->Transform.SetLocalPosition(HScale);
-	//}
-	//Transform.AddLocalPosition({ 683, 384 });
 
 	Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
 	DebugRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
-
+	// 마스크기능
+	//Renderer->SetMaskTexture("Mask.png");
 	Renderer->On();
 	DebugRenderer->Off();
-
-	//Potal= GetLevel()->CreateActor<PotalManager>();
-	//Potal->SetLinkedMap("BossEntranceLevel");
-	//Potal->Transform.SetWorldPosition({ 180.0f, -855.0f});
 
 }
 
