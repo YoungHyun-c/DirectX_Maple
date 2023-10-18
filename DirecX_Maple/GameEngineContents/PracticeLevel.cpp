@@ -34,7 +34,6 @@ void TestGUIWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		Objects.push_back(Ptr);
 	}
 
-
 	if (Objects.size())
 	{
 		std::vector<std::string> Names;
@@ -43,9 +42,6 @@ void TestGUIWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		{
 			Names.push_back(Ptr->GetName());
 		}
-
-		//Names.push_back("aaaa");
-		//Names.push_back("bbbb");
 
 		std::vector<const char*> CNames;
 
@@ -64,6 +60,11 @@ void TestGUIWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			if (ImGui::Button("Select Object Off"))
 			{
 				SelectObject->Off();
+			}
+
+			if (ImGui::Button("Select Object On"))
+			{
+				SelectObject->On();
 			}
 
 		}
@@ -116,27 +117,27 @@ void PracticeLevel::Start()
 	}
 
 	{
-		Map = CreateActor<BackGroundMap>(static_cast<int>(ContentsObjectType::BackGround) , "Map");
+		Map = CreateActor<BackGroundMap>(static_cast<int>(ContentsObjectType::BackGround), "Map");
 		Map->Init("PracticeMap.png", "PracticeDebugMap.png");
 	}
 
 	{
-		PlayerObject = CreateActor<Player>(0, "Player");
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
 		PlayerObject->SetDebugMap("PracticeDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, static_cast<float>(DeepBufferType::Player) });
 	}
 
 	{
-		std::shared_ptr<MainUIActor> UIObject = CreateActor<MainUIActor>(0, "UIObject");
+		std::shared_ptr<MainUIActor> UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
 	}
 
 	{
-		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(0, "SummonButton");
+		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
 	{
-		MonsterObject = CreateActor<Monster>(0, "MugongMob");
+		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
 		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 	}
 
