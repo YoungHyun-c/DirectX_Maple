@@ -151,9 +151,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 			LastNumYPos += 30.0f;
 		}
 		DamageRenderList.push_back(Vect);
-		//Monster::Monsters->GetMonsterHp(-1);
 	}
-	//float Pos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
 	int a = 0;
 }
 

@@ -93,6 +93,9 @@
     <ClCompile Include="SkillFunction.cpp">
       <Filter>Object\Player\SKill</Filter>
     </ClCompile>
+    <ClCompile Include="ContentsControlWindow.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -187,6 +190,9 @@
     <ClInclude Include="SkillFunction.h">
       <Filter>Object\Player\SKill</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsControlWindow.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -230,6 +236,9 @@
     </Filter>
     <Filter Include="Object\Boss\UI">
       <UniqueIdentifier>{5ad2f0e8-5d0d-4f76-adb8-29ac6e453154}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{1b6893ad-abb6-45a2-9489-fee40258797f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

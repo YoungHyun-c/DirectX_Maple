@@ -343,7 +343,7 @@ void MonsterFunction::LevelStart(GameEngineLevel* _PrevLevel)
 
 GameEngineColor MonsterFunction::CheckSideColor(float4 CheckPos)
 {
-	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + CheckPos, GameEngineColor::White, DebugMapName);
+	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + CheckPos, GameEngineColor::WHITE, DebugMapName);
 	return CheckColor;
 }
 

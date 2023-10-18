@@ -2,16 +2,6 @@
 #include <GameEngineCore/GameEngineLevel.h>
 #include <GameEngineCore/GameEngineGUI.h>
 
-// Gui 테스트
-class TestGUIWindow : public GameEngineGUIWindow
-{
-public:
-	int Select = 0;
-	std::shared_ptr<GameEngineObject> SelectObject = nullptr;
-
-	void Start() override;
-	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
-};
 
 // 설명 :
 class PracticeLevel : public GameEngineLevel

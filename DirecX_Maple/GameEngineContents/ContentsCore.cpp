@@ -10,6 +10,7 @@
 #include "BossEntranceLevel.h"
 #include "BossLevel.h"
 #include "BossRewardLevel.h"
+#include "ContentsControlWindow.h"
 
 ContentsCore::ContentsCore()
 {
@@ -51,8 +52,10 @@ void ContentsCore::UserRes()
 
 void ContentsCore::Start()
 {
+	// 만드는쉐이더
 	//UserRes();
 
+	GameEngineGUI::CreateGUIWindow<ContentsControlWindow>("ContentsControlWindow");
 	// 깊이 버퍼 사용 안함
 	GameEngineRenderTarget::IsDepth = false;
 
