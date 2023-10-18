@@ -18,11 +18,11 @@ public:
 	Monster& operator = (const Monster& _Other) = delete;
 	Monster& operator = (Monster&& _Other) noexcept = delete;
 
-	int GetMonsterHp(int _Value)
+	long long GetMonsterHp(long long _Value)
 	{
 		return MonsterHp += _Value;
 	}
-	int GetMonsterHp()
+	long long GetMonsterHp()
 	{
 		return MonsterHp;
 	}
@@ -42,6 +42,8 @@ public:
 		return MonsterAppear;
 	}
 
+	void Hit(long long _Damage, bool _Attack) override;
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -53,7 +55,7 @@ protected:
 
 private:
 	EventParameter MonsterEvent;
-	int MonsterHp = INT_MAX;
+	long long MonsterHp;
 	bool MonsterAppear = false;
 	float4 MonsterScale = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;

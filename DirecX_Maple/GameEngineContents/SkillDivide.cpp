@@ -2,6 +2,7 @@
 #include "SkillDivide.h"
 #include "Player.h"
 #include "SkillManager.h"
+#include "MonsterFunction.h"
 
 SkillDivide::SkillDivide()
 {
@@ -237,6 +238,15 @@ void SkillDivide::Update(float _Delta)
 		Divide1->Off();
 		AttackCol->Off();
 	}*/
+	
+	// 시간에 따라 데미지
+	//CurTime += _Delta;
+	//if (CurTime >= LimitTime)
+	//{
+	//	AttackEvent();
+	//	CurTime = 0.0f;
+	//}
+
 	AttackEvent();
 }
 
@@ -264,7 +274,7 @@ void SkillDivide::AttackEvent()
 			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(_Other, DivideHitCount, 1000, 220);
 		};
-	HitEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Other)
+	HitEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			int a = 0;
 		};

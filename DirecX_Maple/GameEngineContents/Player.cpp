@@ -76,36 +76,37 @@ void Player::Start()
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
 	}
 
-	std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Normal_Stand");
-	_Animation->Inter[0];
-		//{
-		//	SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		//	SkillRenderer->AutoSpriteSizeOn();
-		//	SkillRenderer->CreateAnimation("DobleJump", "JumpNormal", 0.1f, -1, -1, true);
-		//	SkillRenderer->ChangeAnimation("DobleJump");
-		//	SkillRenderer->Off();
+	//std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Normal_Stand");
+	//_Animation->Inter[0];
 
-		//}
+	//{
+	//	SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	SkillRenderer->AutoSpriteSizeOn();
+	//	SkillRenderer->CreateAnimation("DobleJump", "JumpNormal", 0.1f, -1, -1, true);
+	//	SkillRenderer->ChangeAnimation("DobleJump");
+	//	SkillRenderer->Off();
 
-		//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
-		//MainSpriteRenderer->SetImageScale({ 91.0f, 80.0f });
-		//MainSpriteRenderer->SetImageScale({ 1000.0f,1000.0f });
-		//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
-		//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
+	//}
 
-		//MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
+	//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
+	//MainSpriteRenderer->SetImageScale({ 91.0f, 80.0f });
+	//MainSpriteRenderer->SetImageScale({ 1000.0f,1000.0f });
+	//MainSpriteRenderer->SetSamplerState(SamplerOption::LINEAR);
+	//MainSpriteRenderer->SetSamplerState(SamplerOption::POINT);
 
-		//MainSpriteRenderer->AutoSpriteSizeOn();
-		//MainSpriteRenderer->SetAutoScaleRatio(0.8f);
-		//MainSpriteRenderer->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
+	//MainSpriteRenderer->SetEndEvent("Attack", std::bind(&Player::TestEvent, this, std::placeholders::_1));
+
+	//MainSpriteRenderer->AutoSpriteSizeOn();
+	//MainSpriteRenderer->SetAutoScaleRatio(0.8f);
+	//MainSpriteRenderer->Transform.SetLocalScale({ -200.0f, 200.0f, 1.0f });
 
 
-		// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
-		//MainSpriteRenderer->SetSprite("TestPlayer.png", 5);
+	// 자동으로 내부에서 트랜스폼을 이미지 크기로 변경까지 할것이다.
+	//MainSpriteRenderer->SetSprite("TestPlayer.png", 5);
 
-		//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
-		/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
-		Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
+	//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
+	/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
+	Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
 		
 
 	//float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();

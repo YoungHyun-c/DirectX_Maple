@@ -2,6 +2,7 @@
 #include "DamageRenderer.h"
 #include "Monster.h"
 #include "CravingMonster.h"
+#include "MonsterFunction.h"
 
 DamageRenderer::DamageRenderer()
 {
@@ -77,9 +78,9 @@ void DamageRenderer::Update(float _Delta)
 
 }
 
-//void DamageRenderer::PushDamage(size_t _SkillPercentDam)
 void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage)
 {
+	float LastNumYPos = 0.0f;
 	for (int j = 0; j < _HitCount; j++)
 	{
 		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
@@ -97,6 +98,22 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		CurDamage += "\n";
 		OutputDebugStringA(CurDamage.c_str());
 
+		// 몬스터에게 데미지
+
+		if (_Object->GetName() == "CravingDiebody")
+		{
+			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, false);
+		}
+		else
+		{
+			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
+		}
+
+		// 무공일떄 데미지 해봄
+		if (_Object->GetName() == "Mugong")
+		{
+			Monster::Monsters->GetMonsterHp(-OneLineDamage);
+		}
 
 		int NumArr[15] = { 0, };
 		int Digit;
@@ -109,15 +126,15 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 
 		Vect->reserve(Digit);
 
-		float LastNumYPos;
-		if (DamageRenderList.size() > 0)
+		//float LastNumYPos;
+		/*if (DamageRenderList.size() > 0)
 		{
-			//LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
+			LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
 		}
 		else
 		{
 			LastNumYPos = 0.0f;
-		}
+		}*/
 
 
 		//for (int k = 0; k < _HitCount; j++)
@@ -134,10 +151,10 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 			LastNumYPos += 30.0f;
 		}
 		DamageRenderList.push_back(Vect);
+		//Monster::Monsters->GetMonsterHp(-1);
 	}
 	//float Pos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
 	int a = 0;
-
 }
 
 

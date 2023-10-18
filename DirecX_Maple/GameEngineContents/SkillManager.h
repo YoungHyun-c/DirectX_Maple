@@ -63,34 +63,8 @@ private:
 	std::map<std::string, std::shared_ptr<class SkillFunction>> AllSkills;
 	std::list<std::shared_ptr<HitRenderData>> AllHitRenders;
 
+	//GameEngineObject* HitObjectData = nullptr;
 
-
-	// µ¥¹ÌÁö ·»´õ
-	int Str = 40182;
-	int Dex = 4354;
-	int AllAttack = 4772;
-	float WeaponConstant = 1.34;
-	float AdeleCorrection = 0.01;
-	//float SkillPercentDam = 4.8f;
-	GameEngineObject* HitObjectData;
-	size_t HitCount;
-	size_t SkillPercentDam;
-	size_t SkillFinalDamage;
-	//float CriticalConstant = 2.05f;
-	float Critical;
-	float CriticalRandomDam;
-	float CriticalDam = 70;
-	float OffensePower = 2.12f;
-	float DamagePower = 1.74f;
-	float DefenseCorrection = 0.98f;
-	float LevelCorrection = 1.5f;
-	float ArcaneCorrection = 1.5f;
-	float Proficiency = 0.95f;
-
-	int OneLineDamage;
-	float Disappear = 1.5f;
-	float CurTime = 0.0f;
-	float LastNumYPos = 0.0f;
 	bool IsSet = false;
 
 	bool IsAttack = false;

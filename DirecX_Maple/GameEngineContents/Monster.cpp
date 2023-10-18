@@ -36,6 +36,7 @@ void Monster::Start()
 			Col->Transform.SetLocalScale(MonsterScale);
 			Col->SetCollisionType(ColType::AABBBOX2D);
 			Col->Off();
+			Col->SetName("Mugong");
 		}
 
 	}
@@ -89,9 +90,15 @@ void Monster::Update(float _Delta)
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	//Monsters = this;
+	MonsterHp = 100000000000;
 }
 
 void Monster::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	//Death();
+}
+
+void Monster::Hit(long long _Damage, bool _Attack)
+{
+
 }

@@ -12,6 +12,7 @@
 #include "MonsterFunction.h"
 
 #include "SkillManager.h"
+#include "Monster.h"
 
 BossLevel::BossLevel()
 {
@@ -123,7 +124,7 @@ void BossLevel::Update(float _Delta)
 	// 보스 타이머 만들어야됨 분, 초에 맞추도록
 	//if (AniEnd == true)
 	{
-		CurTime -= _Delta * 0.01;
+		CurTime -= _Delta * 0.01f;
 	}
 
 	// 입장 컷신
@@ -136,8 +137,12 @@ void BossLevel::Update(float _Delta)
 	std::string BossTimer = "시간 타이머 : ";
 	BossTimer += std::to_string(CurTime);
 	BossTimer += "\n";
-	OutputDebugStringA(BossTimer.c_str());
-
+	//OutputDebugStringA(BossTimer.c_str());
+	/*long long MonsterHp = Monster::Monsters->GetMonsterHp();
+	std::string CurMonsterHp = "MonsterHp : ";
+	CurMonsterHp += std::to_string(MonsterHp);
+	CurMonsterHp += "\n";
+	OutputDebugStringA(CurMonsterHp.c_str());*/
 }
 
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)

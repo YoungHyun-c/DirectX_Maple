@@ -55,7 +55,7 @@ void Mouse::ClickUpdate()
 
 	if (IsDoubleClick == true)
 	{
-		IsDoubleClick == false;
+		IsDoubleClick = false;
 	}
 
 	if (GameEngineInput::IsDown(VK_LBUTTON, this) == true)

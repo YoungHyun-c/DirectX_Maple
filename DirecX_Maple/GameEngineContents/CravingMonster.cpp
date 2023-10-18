@@ -44,6 +44,18 @@ void CravingMonster::Start()
 	MonsterRenderer->CreateAnimation("Awake", "Craving_Awake", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Death", "Craving_Death", 0.1f, -1, -1, false);
 
+	// 공격프레임
+	MonsterRenderer->SetFrameEvent("Attack", 11, [&](GameEngineSpriteRenderer*)
+		{
+			CravingSkillCol->On();
+		}
+	);
+	MonsterRenderer->SetFrameEvent("Attack", 18, [&](GameEngineSpriteRenderer*)
+		{
+			CravingSkillCol->Off();
+		}
+	);
+
 	MonsterRenderer->ChangeAnimation("Stand");
 	MonsterRenderer->AutoSpriteSizeOn();
 	MonsterRenderer->SetPivotType(PivotType::Bottom);
@@ -65,6 +77,7 @@ void CravingMonster::Start()
 		CravingDieCol->Transform.SetLocalScale({ 110.0f, 70.0f });
 		CravingDieCol->Transform.SetLocalPosition({ 0.0f, 50.0f });
 		CravingDieCol->SetCollisionType(ColType::AABBBOX2D);
+		CravingDieCol->SetName("CravingDiebody");
 		CravingDieCol->Off();
 
 		CravingAttackRangeCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
@@ -130,6 +143,7 @@ void CravingMonster::DieStart()
 {
 	ChangeAnimationState("DIe");
 	CravingAttackRangeCol->Off();
+	MonsterCollision->Off();
 }
 
 void CravingMonster::DieingStart()
@@ -191,18 +205,34 @@ void CravingMonster::AttackEvent(float _Delta)
 		{
 			ChangeState(MonsterState::Attack);
 		}
-		if (AttackStart >= Attacking)
-		{
-			CravingSkillCol->On();
-		}
-		if (AttackStart >= AttackEnd)
-		{
-			CravingSkillCol->Off();
-		}
 		if (AttackStart > AttackCool)
 		{
 			AttackStart = 0.0f;
 			IsAttack = false;
+		}
+	}
+}
+
+void CravingMonster::Hit(long long _Damage, bool _Attack)
+{
+	if (_Attack == false)
+	{
+		return;
+	}
+
+	if (_Attack == true)
+	{
+		Hp -= _Damage;
+	}
+
+	if (Hp <= 0)
+	{
+		DeathCount -= 1;
+		ChangeState(MonsterState::Die);
+		if (DeathCount <= 0)
+		{
+			ChangeState(MonsterState::Death);
+			DeathCount = 3;
 		}
 	}
 }

@@ -39,5 +39,8 @@ private:
 	//std::shared_ptr<class GameEngineSpriteRenderer> Divide3;
 	std::shared_ptr<GameEngineCollision> AttackCol = nullptr;
 	void AttackEvent();
+
+	float CurTime = 0.0f;
+	float LimitTime = 0.12f;
 };
 

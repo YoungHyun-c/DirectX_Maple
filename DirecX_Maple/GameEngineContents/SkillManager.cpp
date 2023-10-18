@@ -112,18 +112,6 @@ void SkillManager::HitPrint(GameEngineObject* _Object, std::string_view _HitSpri
 	HitData->HitAnimations.resize(_HitCount);
 	HitData->RandomPos.resize(_HitCount);
 
-	//HitObjectData = _Object;
-	//HitCount = _HitCount;
-	//SkillPercentDam = _SkillPercentDam;
-	//SkillFinalDamage = _SkillFinalDamage;
-
-	//if (IsAttack == false)
-	//{
-	//	std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
-	//	NewDR->PushDamage(_Object, _HitCount, _SkillPercentDam, _SkillFinalDamage);
-	//	IsAttack = true;
-	//}
-
 	for (size_t i = 0; i < _HitCount; i++)
 	{
 		std::shared_ptr<GameEngineSpriteRenderer> HitAnimation = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);

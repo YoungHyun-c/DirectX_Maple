@@ -56,7 +56,7 @@ public:
 		return IsGround;
 	}
 
-	//virtual void Hit(int _Damge, bool _RealAttack) = 0;
+	virtual void Hit(long long _Damge, bool _Attack) = 0;
 
 protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
@@ -65,12 +65,14 @@ protected:
 	float LeftColPos = 0.0f;
 	float RightColPos = 0.0f;
 	float YColPos = 0.0f;
-	float MonsterDirX;
-	float PlayerDirX;
+	float MonsterDirX = 0.0f;
+	float PlayerDirX = 0.0f;
+
 	GameEngineColor CheckColor;
 	float4 MonsterMovePos = float4::ZERO;
 	float4 CurMapScale = float4::ZERO;
 	float4 NextPos = float4::ZERO;
+	float4 MonsterPos = float4::ZERO;
 	GameEngineColor CheckSideColor(float4 CheckPos = float4::ZERO);
 	void InsideLockMap();
 	void DirCheck();

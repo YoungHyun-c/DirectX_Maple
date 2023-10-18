@@ -136,6 +136,12 @@ void PracticeLevel::Update(float _Delta)
 	//FPS += "\n";
 	//OutputDebugStringA(FPS.c_str());
 
+	long long MonsterHp = Monster::Monsters->GetMonsterHp();
+	std::string CurMonsterHp = "MonsterHp : ";
+	CurMonsterHp += std::to_string(MonsterHp);
+	CurMonsterHp += "\n";
+	OutputDebugStringA(CurMonsterHp.c_str());
+
 
 	if (GameEngineInput::IsDown('B', this))
 	{

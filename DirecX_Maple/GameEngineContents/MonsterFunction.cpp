@@ -4,7 +4,7 @@
 #include "BackGroundMap.h"
 #include "Player.h"
 
-MonsterFunction* MonsterFunction::MonsterFunc;
+MonsterFunction* MonsterFunction::MonsterFunc = nullptr;
 
 MonsterFunction::MonsterFunction()
 {
@@ -67,6 +67,7 @@ void MonsterFunction::MoveUpdate(float _Delta)
 
 	MonsterDirX = Transform.GetWorldPosition().X;
 	PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
+
 	float4 CompareDir = PlayerDirX - MonsterDirX + 10.0f;
 	CompareDir.Normalize();
 
@@ -372,16 +373,16 @@ void MonsterFunction::DirCheck()
 void MonsterFunction::InsideLockMap()
 {
 	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
-
+	MonsterPos = MonsterRenderer->Transform.GetWorldPosition();
 	if (Transform.GetWorldPosition().X < LeftCheck)
 	{
-		GlobalValue::CurMonsterPos.X + 100.0f;
+		MonsterRenderer->Transform.SetLocalPosition(MonsterPos.X + 100.0f);
 		Dir = ActorDir::Right;
 		ChangeState(MonsterState::Move);
 	}
 	else if (Transform.GetWorldPosition().X > RightCheck)
 	{
-		GlobalValue::CurMonsterPos.X - 200.0f;
+		MonsterRenderer->Transform.SetLocalPosition(MonsterPos.X - 200.0f);
 		Dir = ActorDir::Left;
 		ChangeState(MonsterState::Move);
 	}

@@ -30,7 +30,12 @@ public:
 	CravingMonster& operator = (const CravingMonster& _Other) = delete;
 	CravingMonster& operator = (CravingMonster&& _Other) noexcept = delete;
 	
-	//void Hit(int _Damage, bool _IsRealAttack) override;
+	void Hit(long long _Damage, bool _Attack) override;
+
+	long long &GetMonsterHp()
+	{
+		return Hp;
+	}
 
 protected:
 	void Start();
@@ -77,7 +82,7 @@ protected:
 
 private:
 	float MoveSpeed = 70.0f;
-	int Hp = 10000000;
+	long long Hp = 10000000;
 	int Defense = 300;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;
@@ -90,9 +95,13 @@ private:
 	float AttackEnd = 1.3f;
 	bool IsAttack = false;
 
+	int DeathCount = 3;
+
 	std::shared_ptr<GameEngineCollision> CravingSkillCol;
 	std::shared_ptr<GameEngineCollision> CravingDieCol;
 	std::shared_ptr<GameEngineCollision> CravingAttackRangeCol;
+
+
 	//std::shared_ptr<GameEngineSpriteRenderer> CravingMob;
 
 };
