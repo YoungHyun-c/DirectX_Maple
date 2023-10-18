@@ -9,15 +9,16 @@ class GameEngineCollisionGroup : public GameEngineObject
 	friend class GameEngineLevel;
 
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineCollisionGroup();
 	~GameEngineCollisionGroup();
 
 	// delete Function
 	GameEngineCollisionGroup(const GameEngineCollisionGroup& _Other) = delete;
 	GameEngineCollisionGroup(GameEngineCollisionGroup&& _Other) noexcept = delete;
-	GameEngineCollisionGroup& operator = (const GameEngineCollisionGroup& _Other) = delete;
-	GameEngineCollisionGroup& operator = (GameEngineCollisionGroup&& _Other) noexcept = delete;
+	GameEngineCollisionGroup& operator=(const GameEngineCollisionGroup& _Other) = delete;
+	GameEngineCollisionGroup& operator=(GameEngineCollisionGroup&& _Other) noexcept = delete;
+
 
 	bool Collision(std::shared_ptr<GameEngineCollision> _Collision);
 

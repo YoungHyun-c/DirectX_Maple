@@ -1,8 +1,8 @@
 #pragma once
 #include "GameEngineTransform.h"
 
-// 우리 엔진의 가장 기본적인
-// Start 이녀석이 시작 될때
+// 우리엔진의 가장 기본적인
+// Start 이녀석이 시작될때
 // Update 이녀석이 업데이트될때
 // Release 이녀석이 지워질때
 
@@ -25,6 +25,7 @@ public:
 		Order = _Order;
 	}
 
+
 	virtual void On()
 	{
 		IsUpdateValue = true;
@@ -40,16 +41,6 @@ public:
 		this->IsDeathValue = true;
 	}
 
-	void SetName(const std::string& _Name)
-	{
-		Name = _Name;
-	}
-
-	std::string GetName()
-	{
-		return Name;
-	}
-
 	virtual bool IsUpdate()
 	{
 		return true == IsUpdateValue && false == IsDeathValue;
@@ -60,11 +51,27 @@ public:
 		return IsDeathValue;
 	}
 
+	void SetName(std::string_view _Name)
+	{
+		Name = _Name.data();
+	}
+
+	void SetName(const std::string& _Name)
+	{
+		Name = _Name;
+	}
+
+	std::string GetName()
+	{
+		return Name;
+	}
+
+
 protected:
 	std::string Name;
 
 	int Order = 0;
-	bool IsUpdateValue = true; // 이걸 false로 만들면 된다.
+	bool IsUpdateValue = true; // 이걸 false로 만들면 됩니다.
 	bool IsDeathValue = false; // 아예 메모리에서 날려버리고 싶어.
 };
 
@@ -74,25 +81,25 @@ class GameEngineObject : public GameEngineObjectBase, public std::enable_shared_
 	friend class GameEngineLevel;
 	friend class GameEngineCore;
 
-	
 public:
 	GameEngineTransform Transform;
 
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineObject();
 	virtual ~GameEngineObject();
 
 	// delete Function
 	GameEngineObject(const GameEngineObject& _Other) = delete;
 	GameEngineObject(GameEngineObject&& _Other) noexcept = delete;
-	GameEngineObject& operator = (const GameEngineObject& _Other) = delete;
-	GameEngineObject& operator = (GameEngineObject&& _Other) noexcept = delete;
+	GameEngineObject& operator=(const GameEngineObject& _Other) = delete;
+	GameEngineObject& operator=(GameEngineObject&& _Other) noexcept = delete;
 
 	virtual void Start() {}
 	virtual void Update(float _Delta) {}
 	virtual void Release() {}
 	virtual void LevelStart(class GameEngineLevel* _NextLevel) {}
 	virtual void LevelEnd(class GameEngineLevel* _NextLevel) {}
+
 
 	float GetLiveTime()
 	{
@@ -104,13 +111,12 @@ public:
 		LiveTime = 0.0f;
 	}
 
-
 	void AllLevelStart(class GameEngineLevel* _PrevLevel);
 	void AllLevelEnd(class GameEngineLevel* _NextLevel);
 	virtual void AllReleaseCheck();
 	virtual void AllUpdate(float _Delta);
 
-	// 지금 당장은 그냥 처음 만들어질때만
+	// 지금 당장은 그냥 처음 만들어질때만.
 	template<typename ChildType>
 	std::shared_ptr<GameEngineObject> CreateChild(int _Order)
 	{
@@ -121,14 +127,12 @@ public:
 		return NewChild;
 	}
 
+
 	void SetParent(GameEngineObject* _Parent, int _Order)
 	{
 		Parent = _Parent;
 		Parent->Childs[_Order].push_back(shared_from_this());
-		// 부모가 있는지 확인하고 있으면 부모를 지정,
-		// 엑터를 움직여도 렌더러가 안움직일 것인데, 어떤 Transform이 움직일 때 자식인 렌더러를 트랜스폼 해주어야 한다.
 		Transform.SetParent(_Parent->Transform);
-		// Parent->Transform.SetParent(_Parent->Transform);
 	}
 
 	template<typename ParentType>
@@ -136,13 +140,13 @@ public:
 	{
 		Parent = _Parent.get();
 		Transform.SetParent(_Parent->Transform);
-		// Parent->Transform.SetParent(_Parent->Transform);
 	}
 
 	GameEngineObject* GetParentObject()
 	{
 		return Parent;
 	}
+
 
 	template<typename ParentType>
 	ParentType* GetParent()
@@ -158,25 +162,25 @@ public:
 
 		if (nullptr == CameraPtr)
 		{
-			//MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
+			// MsgBoxAssert("다이나믹 캐스트에 실패했습니다. 가상함수 테이블 부모가 누구인지 확인해보세요. 혹은 부모 생성자에서는 사용이 불가능한 함수입니다.");
 			return nullptr;
 		}
-		
+
 		return CameraPtr;
 	}
 
 	template<typename EnumType>
 	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(EnumType _GroupIndex)
 	{
-		return GetObjectGroup(static_cast<int>(_GroupIndex));
+		return GetObjectGroupInt(static_cast<int>(_GroupIndex));
 	}
 
-	template<typename ObjectType>
-	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroup(int _GroupIndex)
+	std::list<std::shared_ptr<GameEngineObject>> GetObjectGroupInt(int _GroupIndex)
 	{
 		std::list<std::shared_ptr<class GameEngineObject>>& Group = Childs[_GroupIndex];
 		return Group;
 	}
+
 
 	template<typename ObjectType, typename EnumType>
 	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(EnumType _GroupIndex)
@@ -184,17 +188,18 @@ public:
 		return GetObjectGroupConvert<ObjectType>(static_cast<int>(_GroupIndex));
 	}
 
+
 	template<typename ObjectType>
 	std::list<std::shared_ptr<ObjectType>> GetObjectGroupConvert(int _GroupIndex)
 	{
 		std::list<std::shared_ptr<ObjectType>> Result;
 		std::list<std::shared_ptr<class GameEngineObject>>& Group = Childs[_GroupIndex];
 
-		for (std::shared_ptr<class GameEngineObject> Object : Group)
+		for (std::shared_ptr<class GameEngineObject> Obejct : Group)
 		{
-			// 컴파일타임어써션을 통해서 애초에 이게 가능한 일인지 알 수 있는데
-			// 일단은 만드는게 우선이니
-			std::shared_ptr<ObjectType> Ptr = Object->GetDynamic_Cast_This<ObjectType>();
+			// 컴파일타임어써션을 통해서 애초에 이게 가능한 일인지 알수 있는데
+			// 빠르게 만들어야 하니까.
+			std::shared_ptr<ObjectType> Ptr = Obejct->GetDynamic_Cast_This<ObjectType>();
 
 			if (nullptr == Ptr)
 			{
@@ -207,37 +212,16 @@ public:
 		return Result;
 	}
 
-	virtual bool IsUpdate()
+	bool IsUpdate() override
 	{
 		return Parent == nullptr ? true == IsUpdateValue && false == IsDeathValue : Parent->IsUpdate() && true == IsUpdateValue && false == IsDeath();
 	}
 
-	virtual bool IsDeath()
+	bool IsDeath() override
 	{
 		return Parent == nullptr ? IsDeathValue : Parent->IsDeath() || IsDeathValue;
 	}
 
-	//template<typename ObjectType>
-	//std::shared_ptr<ObjectType> CreateChild(int _Order = 0)
-	//{
-	//	std::shared_ptr<class GameEngineObject> NewChild = std::make_shared<ObjectType>();
-
-
-	//	NewChild->Start();
-	//	NewChild->Parent = this;
-	//	Childs[_Order].push_back(NewChild);
-
-	//	// GameEngineObject형으로 사용하고 있따면
-	//	// 내가 잘못형변환하면 Monster였는데? Player <= 미친듯한 메모리 크러시를 일으킨다.
-	//	// 이녀석은 문제가 이유를 알 수 없게 터진다.
-	//	// 이 포인터가 상속관계 있고 가상함수 테이블을 가지고 있다면
-	//	// dynamic_cast를 통해서 안전하게 형변환이 가능하다.
-	//	// std::shared_ptr 진짜 포인터는 아니기 때문에 dynamic_cast 해야할 상황에서
-	//	// 아래와 같은 함수를 사용하면 된다.
-	//	return std::dynamic_pointer_cast<ObjectType>(NewChild);
-	//}
-	//
-	//virtual void AllUpdate(float _Delta);
 
 protected:
 	GameEngineObject* Parent = nullptr;

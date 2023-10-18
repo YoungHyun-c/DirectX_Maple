@@ -77,7 +77,7 @@ void CravingMonster::Start()
 		CravingDieCol->Transform.SetLocalScale({ 110.0f, 70.0f });
 		CravingDieCol->Transform.SetLocalPosition({ 0.0f, 50.0f });
 		CravingDieCol->SetCollisionType(ColType::AABBBOX2D);
-		CravingDieCol->SetName("CravingDiebody");
+		CravingDieCol->SetName(std::string("CravingDiebody"));
 		CravingDieCol->Off();
 
 		CravingAttackRangeCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);

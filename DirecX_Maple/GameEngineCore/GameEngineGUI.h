@@ -9,7 +9,7 @@ public:
 	// ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
 
 	virtual void Start() = 0;
-	virtual void OnGUI(float _DeltaTime) = 0;
+	virtual void OnGUI(GameEngineLevel* _Level, float _DeltaTime) = 0;
 };
 
 // Ό³Έν :
@@ -19,7 +19,7 @@ public:
 	static void Start();
 	static void Release();
 
-	static void GUIRender(float _DeltaTime);
+	static void GUIRender(GameEngineLevel* _Level, float _DeltaTime);
 
 	// constrcuter destructer
 	GameEngineGUI();

@@ -74,7 +74,7 @@ void GameEngineGUI::Release()
     ImGui::DestroyContext();
 }
 
-void GameEngineGUI::GUIRender(float _DeltaTime)
+void GameEngineGUI::GUIRender(GameEngineLevel* _Level, float _DeltaTime)
 {
     // Start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
@@ -95,7 +95,7 @@ void GameEngineGUI::GUIRender(float _DeltaTime)
     for (std::pair<const std::string, std::shared_ptr<GameEngineGUIWindow>> Pair : GUIWindows)
     {
         Pair.second->Begin();
-        Pair.second->OnGUI(_DeltaTime);
+        Pair.second->OnGUI(_Level, _DeltaTime);
         Pair.second->End();
     }
 

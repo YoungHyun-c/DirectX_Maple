@@ -36,7 +36,7 @@ void Monster::Start()
 			Col->Transform.SetLocalScale(MonsterScale);
 			Col->SetCollisionType(ColType::AABBBOX2D);
 			Col->Off();
-			Col->SetName("Mugong");
+			Col->SetName(std::string("Mugong"));
 		}
 
 	}

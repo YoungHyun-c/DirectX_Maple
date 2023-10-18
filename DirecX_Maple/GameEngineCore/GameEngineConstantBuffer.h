@@ -1,21 +1,21 @@
 #pragma once
 #include "GameEngineDirectBuffer.h"
-//#include "GameEngineShader.h"
+// #include "GameEngineShader.h"
 
 // 설명 :
 class GameEngineConstantBuffer :
 	public GameEngineResources<GameEngineConstantBuffer>, public GameEngineDirectBuffer
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineConstantBuffer();
 	~GameEngineConstantBuffer();
 
 	// delete Function
 	GameEngineConstantBuffer(const GameEngineConstantBuffer& _Other) = delete;
 	GameEngineConstantBuffer(GameEngineConstantBuffer&& _Other) noexcept = delete;
-	GameEngineConstantBuffer& operator = (const GameEngineConstantBuffer& _Other) = delete;
-	GameEngineConstantBuffer& operator = (GameEngineConstantBuffer&& _Other) noexcept = delete;
+	GameEngineConstantBuffer& operator=(const GameEngineConstantBuffer& _Other) = delete;
+	GameEngineConstantBuffer& operator=(GameEngineConstantBuffer&& _Other) noexcept = delete;
 
 	static std::shared_ptr<GameEngineConstantBuffer> CreateAndFind(int _Byte, std::string_view _Name, D3D11_SHADER_BUFFER_DESC _BufferDesc)
 	{
@@ -36,7 +36,7 @@ public:
 
 		std::shared_ptr<GameEngineConstantBuffer> Res = GameEngineResources::CreateRes();
 		Res->SetName(UpperName);
-
+		Res->BufferDesc = _BufferDesc;
 		ConstantBuffers[_Byte][UpperName] = Res;
 		Res->ResCreate(_Byte);
 		return Res;
@@ -57,14 +57,15 @@ public:
 protected:
 
 private:
-	//ShaderType Type = ShaderType::None;
-	//int Slot = 0;
+	D3D11_SHADER_BUFFER_DESC BufferDesc;
 
-	// 자료구조를 Resource랑 다르게 따로따로 가지고 있어야 한다.
-	//				500byte			transformdata
+	// ShaderType Type = ShaderType::None;
+	// int Slot = 0;
+
+	// 자료구조를 Resources랑 다르게 다르게 가지고 있어야 한다.
+	//            500byte         transformdata
 	static std::map<int, std::map<std::string, std::shared_ptr<GameEngineConstantBuffer>>> ConstantBuffers;
 
-	void ResCreate(int _Bytesize);
-
+	void ResCreate(int _ByteSize);
 };
 

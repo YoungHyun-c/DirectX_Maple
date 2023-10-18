@@ -99,6 +99,7 @@ void GameEngineSpriteRenderer::Start()
 
 }
 
+// Update Order에 영향을 받는다.
 void GameEngineSpriteRenderer::Update(float _Delta)
 {
 	if (nullptr != CurFrameAnimations)

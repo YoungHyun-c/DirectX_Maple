@@ -13,6 +13,63 @@
 #include "Mouse.h"
 #include "SummonUi.h"
 
+void TestGUIWindow::Start()
+{
+
+}
+
+void TestGUIWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
+{
+	if (ImGui::Button("Collision OnOff"))
+	{
+		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
+	}
+
+	std::list<std::shared_ptr<GameEngineObject>> ObjectLists = _Level->GetObjectGroupInt(0);
+
+	std::vector<std::shared_ptr<GameEngineObject>> Objects;
+
+	for (std::shared_ptr<GameEngineObject> Ptr : ObjectLists)
+	{
+		Objects.push_back(Ptr);
+	}
+
+
+	if (Objects.size())
+	{
+		std::vector<std::string> Names;
+
+		for (std::shared_ptr<GameEngineObject> Ptr : Objects)
+		{
+			Names.push_back(Ptr->GetName());
+		}
+
+		//Names.push_back("aaaa");
+		//Names.push_back("bbbb");
+
+		std::vector<const char*> CNames;
+
+		for (size_t i = 0; i < Names.size(); i++)
+		{
+			CNames.push_back(Names[i].c_str());
+		}
+
+		if (ImGui::ListBox("ObjectList", &Select, &CNames[0], Names.size()))
+		{
+			SelectObject = Objects[Select];
+		}
+
+		if (nullptr != SelectObject)
+		{
+			if (ImGui::Button("Select Object Off"))
+			{
+				SelectObject->Off();
+			}
+
+		}
+	}
+}
+
 PracticeLevel::PracticeLevel()
 {
 
@@ -58,34 +115,28 @@ void PracticeLevel::Start()
 		GameEngineSprite::CreateSingle("Mugong_stand.png");
 	}
 
-	//std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
-	//GlobalValue::MapScale = Tex->GetScale();
-	//float4 HScale = Tex->GetScale().Half();
-	//HScale.Y *= -1.0f;
-	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
-	//GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 	{
-		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
+		Map = CreateActor<BackGroundMap>(static_cast<int>(ContentsObjectType::BackGround) , "Map");
 		Map->Init("PracticeMap.png", "PracticeDebugMap.png");
 	}
 
 	{
-		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
+		PlayerObject = CreateActor<Player>(0, "Player");
 		PlayerObject->SetDebugMap("PracticeDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, static_cast<float>(DeepBufferType::Player) });
 	}
 
 	{
-		std::shared_ptr<MainUIActor> UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+		std::shared_ptr<MainUIActor> UIObject = CreateActor<MainUIActor>(0, "UIObject");
 	}
 
 	{
-		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
+		std::shared_ptr<SummonUi> SummonObject = CreateActor<SummonUi>(0, "SummonButton");
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
 	{
-		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
+		MonsterObject = CreateActor<Monster>(0, "MugongMob");
 		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 	}
 
