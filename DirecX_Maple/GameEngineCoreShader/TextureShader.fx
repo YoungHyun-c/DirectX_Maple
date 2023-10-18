@@ -86,6 +86,12 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
 
 // 우리 규칙
 
+cbuffer ColorData : register(b1)
+{
+    float4 PlusColor; // 최종색상에 더한다.
+    float4 MulColor; // 최종색상에 곱한다.
+}
+
 Texture2D DiffuseTex : register(t0);
 SamplerState DiffuseTexSampler : register(s0);
 
@@ -102,6 +108,14 @@ float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
     if (0.0f >= Color.a)
     {
         clip(-1);
+    }
+    
+    Color += PlusColor;
+    Color *= MulColor;
+    
+    if (0 >= Color.a)
+    {
+        Color.a = 0.0f;
     }
     
     // 안에서 사용하지 않으면 아예 존재하지 않는다.

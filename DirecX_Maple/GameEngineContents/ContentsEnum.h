@@ -2,6 +2,7 @@
 
 enum class ContentsRenderType
 {
+	Fade,
 	BackGround,
 	Play,
 	Max,

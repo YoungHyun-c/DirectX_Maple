@@ -27,11 +27,15 @@ void BackGroundMap::Update(float _DeltaTime)
 	//	Renderer->Death();
 	//	Renderer = nullptr;
 	//}
+
+	// Fade in Fade Out 테스트
+	{
+		DarkRenderer->GetColorData().MulColor.A -= _DeltaTime * 0.5f;
+	}
 }
 
 void BackGroundMap::Start()
 {
-
 	Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
 	DebugRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
 	// 마스크기능
@@ -39,6 +43,8 @@ void BackGroundMap::Start()
 	Renderer->On();
 	DebugRenderer->Off();
 
+	DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsRenderType::Fade);
+	DarkRenderer->SetSprite("Dark.Png");
 }
 
 void BackGroundMap::Init(const std::string& _FileName, const std::string& _DebugFileName)
@@ -86,6 +92,13 @@ GameEngineColor BackGroundMap::GetColor(float4 _Pos, GameEngineColor _DefaultCol
 void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainMap = this;
+	
+	//Fade in Fade Out 테스트
+	{
+		DarkRenderer->GetColorData().MulColor.A = 1;
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->On();
+	}
 
 	if (FileName == "PracticeMap.png")
 	{
