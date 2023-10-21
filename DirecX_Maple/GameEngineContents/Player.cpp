@@ -223,10 +223,6 @@ void Player::Update(float _Delta)
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Impale");
 	}
-	if (GameEngineInput::IsDown('5', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Jump");
-	}
 	if (GameEngineInput::IsDown('6', this))
 	{
 		MainSpriteRenderer->ChangeAnimation("Normal_Prone");

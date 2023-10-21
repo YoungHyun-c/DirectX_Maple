@@ -31,7 +31,7 @@ void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
-	Death();
+	//Death();
 }
 
 void SkillManager::Start()

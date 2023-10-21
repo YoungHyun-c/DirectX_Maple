@@ -14,7 +14,9 @@ enum class MonsterState
 	Attack6,
 	Attack7,
 	Skill1,
+	Skill1After,
 	Skill2,
+	Skill2After,
 	Skill3,
 	Skill4, // Summon
 	Die,
@@ -57,6 +59,11 @@ public:
 		LeftColPos = _LeftColPos;
 		RightColPos = _RightColPos;
 		YColPos = _YColPos;
+	}
+
+	virtual void CallRegen()
+	{
+		ChangeState(MonsterState::Regen);
 	}
 
 	bool GetGround()
@@ -129,6 +136,9 @@ protected:
 
 	virtual void Skill_1Start();
 	virtual void Skill_1Update(float _Delta);
+	//virtual void Skill_1End();
+	virtual void Skill_1After();
+	
 
 	virtual void Skill_2Start();
 	virtual void Skill_2Update(float _Delta);
@@ -144,11 +154,13 @@ protected:
 
 	float MoveSpeed = 0.0f;
 	float MoveDistance = 0.0f;
-	float MoveLimitDistance = 700.0f;
+	float MoveLimitDistance = 600.0f;
 	float M_FStopTime = 0.0f;
 	float M_FStopLimitTime = 1.5f;
 	float M_DieingTime = 0.0f;
 	float M_DieingLimitTime = 5.0f;
+	float M_DisappearTime = 0.0f;
+	float M_AppearTime = 1.0f;
 
 	int CurStateNumber = rand() % 2;
 

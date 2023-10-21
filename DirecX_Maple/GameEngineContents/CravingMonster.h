@@ -37,6 +37,8 @@ public:
 		return Hp;
 	}
 
+	void CallRegen() override;
+
 protected:
 	void Start();
 	void Update(float _Delta) override;

@@ -245,3 +245,8 @@ void CravingMonster::Hit(long long _Damage, bool _Attack)
 		}
 	}
 }
+
+void CravingMonster::CallRegen()
+{
+	ChangeState(MonsterState::Regen);
+}

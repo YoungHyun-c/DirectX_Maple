@@ -75,6 +75,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="JinHillaBossState.cpp" />
     <ClCompile Include="JinHillaEnterAnime.cpp">
       <SubType>
       </SubType>

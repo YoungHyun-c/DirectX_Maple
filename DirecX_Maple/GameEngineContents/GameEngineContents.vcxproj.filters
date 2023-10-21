@@ -96,6 +96,9 @@
     <ClCompile Include="ContentsControlWindow.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="JinHillaBossState.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />

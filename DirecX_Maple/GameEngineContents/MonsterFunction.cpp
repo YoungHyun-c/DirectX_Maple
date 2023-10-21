@@ -62,6 +62,7 @@ void MonsterFunction::MoveUpdate(float _Delta)
 		return;
 	}
 
+	DirCheck();
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 
@@ -166,7 +167,19 @@ void MonsterFunction::Skill_1Start()
 
 void MonsterFunction::Skill_1Update(float _Delta)
 {
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		M_DisappearTime += _Delta;
+	}
+	if (M_DisappearTime >= M_AppearTime)
+	{
+		ChangeState(MonsterState::Skill1After);
+	}
+}
 
+void MonsterFunction::Skill_1After()
+{
+	ChangeAnimationState("Skill1After");
 }
 
 void MonsterFunction::Skill_2Start()
@@ -221,6 +234,9 @@ void MonsterFunction::ChangeState(MonsterState _State)
 		case MonsterState::Dieing:
 			DieingEnd();
 			break;
+		//case MonsterState::Skill1:
+		//	Skill_1End();
+			break;
 		default:
 			break;
 		}
@@ -241,6 +257,9 @@ void MonsterFunction::ChangeState(MonsterState _State)
 			break;
 		case MonsterState::Skill1:
 			Skill_1Start();
+			break;
+		case MonsterState::Skill1After:
+			Skill_1After();
 			break;
 		case MonsterState::Skill2:
 			Skill_2Start();
@@ -327,11 +346,14 @@ GameEngineColor MonsterFunction::CheckSideColor(float4 CheckPos)
 
 void MonsterFunction::DirCheck()
 {
+	PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
+	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
+	
 	if (PlayerDirX > MonsterDirX)
 	{
 		Dir = ActorDir::Right;
 	}
-	else if (PlayerDirX < MonsterDirX)
+	if (PlayerDirX < MonsterDirX)
 	{
 		Dir = ActorDir::Left;
 	}

@@ -78,13 +78,13 @@ void BossLevel::Start()
 
 	// øÂ∏¡¿« «ÂΩ≈ Craving Monster
 	{
-		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-		CravingMob->SetDebugMap("BossDebugMap.Png");
+		//CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+		//CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+		//CravingMob->SetDebugMap("BossDebugMap.Png");
 
-		CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-		CravingMob->SetDebugMap("BossDebugMap.Png");
+		//CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+		//CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+		//CravingMob->SetDebugMap("BossDebugMap.Png");
 	}
 
 	{
@@ -111,7 +111,7 @@ void BossLevel::Start()
 	// ∫∏Ω∫
 	{
 		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-		BossJin->Transform.SetWorldPosition({ 950.0f, -800.0f, static_cast<float>(DeepBufferType::Monster) });
+		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 		BossJin->SetDebugMap("BossDebugMap.Png");
 	}
 
@@ -142,10 +142,11 @@ void BossLevel::Update(float _Delta)
 
 	// ¿‘¿Â ƒ∆Ω≈
 	//if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
-	//{
+	{
 		NewPlayer->PlayerBindEnd();
-	//	AniEnd = true;
-	//}
+		//AniEnd = true;
+		//BossJin->CallRegen();
+	}
 
 	std::string BossTimer = "Ω√∞£ ≈∏¿Ã∏” : ";
 	BossTimer += std::to_string(CurTime);
