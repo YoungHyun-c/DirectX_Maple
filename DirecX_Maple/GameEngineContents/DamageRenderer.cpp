@@ -90,8 +90,8 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		CriticalRan.SetSeed(time(nullptr)+j);
 		CriticalRandomDam = CriticalRan.RandomFloat(120, 150);
 		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
-		OneLineDamage = ((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
-			DefenseCorrection * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage;
+		OneLineDamage = static_cast<long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
+			DefenseCorrection * LevelCorrection * ArcaneCorrection *Proficiency * SkillFinalDamage);
 		SumDamage += OneLineDamage;
 		std::string CurDamage = "OneLineDamage : ";
 		CurDamage += std::to_string(static_cast<long long>(OneLineDamage));

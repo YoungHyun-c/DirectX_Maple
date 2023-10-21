@@ -34,7 +34,9 @@ private:
 	std::shared_ptr<class JinHillaBoss> BossJin;
 
 
+	// Ui
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
+	std::shared_ptr<class BossLevelUi> BossUi = nullptr;
 
 	float CurTime = 29.44f;
 	bool AniEnd = false;

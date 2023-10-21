@@ -3,10 +3,11 @@
 #include "CravingMonster.h"
 #include "Player.h"
 
+JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
 JinHillaBoss::JinHillaBoss()
 {
-
+	
 }
 
 JinHillaBoss::~JinHillaBoss()
@@ -134,4 +135,11 @@ void JinHillaBoss::Update(float _Delta)
 
 	InsideLockMap();
 	AttackEvent(_Delta);
+}
+
+
+void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	MainBoss = this;
+	JinHillaCurHp = 1760000000000;
 }

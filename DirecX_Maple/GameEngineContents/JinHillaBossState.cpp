@@ -205,7 +205,7 @@ void JinHillaBoss::AttackStart()
 
 void JinHillaBoss::AttackUpdate(float _Delta)
 {
-	if (JinHillaHp <= 0)
+	if (JinHillaCurHp <= 0)
 	{
 		ChangeState(MonsterState::Death);
 	}
@@ -257,10 +257,10 @@ void JinHillaBoss::Hit(long long _Damage, bool _Attack)
 
 	if (_Attack == true)
 	{
-		JinHillaHp -= _Damage;
+		JinHillaCurHp -= _Damage;
 	}
 
-	if (JinHillaHp <= 0)
+	if (JinHillaCurHp <= 0)
 	{
 		ChangeState(MonsterState::Death);
 	}

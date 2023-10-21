@@ -4,7 +4,13 @@
 // 설명 :
 class JinHillaBoss : public MonsterFunction
 {
+private:
+	static JinHillaBoss* MainBoss;
 public:
+	static JinHillaBoss* GetMainBoss()
+	{
+		return MainBoss;
+	}
 	// constructer destructer
 	JinHillaBoss();
 	~JinHillaBoss();
@@ -19,7 +25,18 @@ public:
 
 	void CallRegen() override;
 
+	long long GetCurBossHp()
+	{
+		return JinHillaCurHp;
+	}
+
+	long long GetMainBossHp()
+	{
+		return JinHillaHp;
+	}
+
 protected:
+	void LevelStart(GameEngineLevel* _PreveLevel) override;
 	void Start();
 	void Update(float _Delta) override;
 
@@ -49,8 +66,9 @@ private:
 	float4 JinBossScale = float4::ZERO;
 
 	float MoveSpeed = 50.0f;
-	//long long JinHillaHp = 176000000000000; // 하드 176조
-	long long JinHillaHp = 1000000000; // 하드 176조
+	long long JinHillaHp = 176000000000000; // 하드 176조
+	long long JinHillaCurHp = 0; // 하드 176조
+	//long long JinHillaHp = 1000000000; // 하드 176조
 	int Defense = 300;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;

@@ -12,6 +12,7 @@
 #include "GhostSwoo.h"
 #include "GhostDamien.h"
 #include "MonsterFunction.h"
+#include "BossLevelUi.h"
 
 #include "SkillManager.h"
 
@@ -119,6 +120,11 @@ void BossLevel::Start()
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
+	// 보스레벨 Ui
+	{
+		BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	}
+
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -158,6 +164,12 @@ void BossLevel::Update(float _Delta)
 	CurMonsterHp += std::to_string(MonsterHp);
 	CurMonsterHp += "\n";
 	OutputDebugStringA(CurMonsterHp.c_str());*/
+
+	/*long long MainBossHp = JinHillaBoss::GetMainBoss()->GetCurBossHp();
+	std::string CurMainBossHp = "MainBossHp : ";
+	CurMainBossHp += std::to_string(MainBossHp);
+	CurMainBossHp += "\n";
+	OutputDebugStringA(CurMainBossHp.c_str());*/
 }
 
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
