@@ -133,8 +133,9 @@ void GameEngineLevel::AllReleaseCheck()
 	}
 }
 
-void GameEngineLevel::ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order)
+void GameEngineLevel::ActorInit(std::shared_ptr<class GameEngineActor> _Actor, int _Order, std::string_view _Name/* = ""*/)
 {
+	_Actor->SetName(_Name);
 	_Actor->SetParent(this, _Order);
 	_Actor->Start();
 }
