@@ -3,12 +3,10 @@
 
 GameEngineSerializer::GameEngineSerializer()
 {
-
 }
 
 GameEngineSerializer::~GameEngineSerializer()
 {
-
 }
 
 void GameEngineSerializer::Write(const void* _Data, unsigned int _Size)
@@ -40,7 +38,7 @@ void GameEngineSerializer::operator<<(const std::string& _Value)
 	// [a][a][a][b][b][b]
 
 	operator<<(static_cast<unsigned int>(_Value.size()));
-	Write(&_Value[0], _Value.size());
+	Write(&_Value[0], static_cast<unsigned int>(_Value.size()));
 }
 void GameEngineSerializer::operator<<(const int& _Value)
 {

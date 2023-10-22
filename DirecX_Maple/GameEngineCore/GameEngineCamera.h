@@ -70,7 +70,7 @@ public:
 	float4 GetScreenMouseDir() { return ScreenMouseDir; }
 	float4 GetScreenMouseDirNormal() { return ScreenMouseDirNormal; }
 
-	int SetZSort(int _SortOrder)
+	void SetZSort(int _SortOrder)
 	{
 		ZSortMap.insert(_SortOrder);
 	}

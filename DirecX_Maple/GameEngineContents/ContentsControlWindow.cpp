@@ -12,8 +12,7 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContensResources");
-		Dir.MoveChild("Data");
+		Dir.MoveChild("ContentsResources");
 
 		OPENFILENAMEA OFN;
 		char filePathName[100] = "";
