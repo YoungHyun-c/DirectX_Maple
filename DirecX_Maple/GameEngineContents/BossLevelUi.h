@@ -42,5 +42,14 @@ private:
 	float4 HpBarPos = {0.0f, 370.0f};
 	float4 CurHpPos = { -375.0f, 370.0f };
 
+
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender1;
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender2;
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender3;
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender4;
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender5;
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRenderDot;
+
+	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberBack;
 };
 

@@ -53,18 +53,6 @@ private:
 	float LastNumYPos = 0.0f;
 	bool IsSet = false;
 
-
-	std::shared_ptr<GameEngineSpriteRenderer> Render0;
-	std::shared_ptr<GameEngineSpriteRenderer> Render1;
-	std::shared_ptr<GameEngineSpriteRenderer> Render2;
-	std::shared_ptr<GameEngineSpriteRenderer> Render3;
-	std::shared_ptr<GameEngineSpriteRenderer> Render4;
-	std::shared_ptr<GameEngineSpriteRenderer> Render5;
-	std::shared_ptr<GameEngineSpriteRenderer> Render6;
-	std::shared_ptr<GameEngineSpriteRenderer> Render7;
-	std::shared_ptr<GameEngineSpriteRenderer> Render8;
-	std::shared_ptr<GameEngineSpriteRenderer> Render9;
-
 	std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*> DamageRenderList;
 	std::shared_ptr<GameEngineSpriteRenderer> NewNumberRender;
 };

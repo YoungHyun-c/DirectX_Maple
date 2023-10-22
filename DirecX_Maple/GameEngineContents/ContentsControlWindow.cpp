@@ -4,6 +4,12 @@
 
 void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	std::string MousePos = GameEngineCore::MainWindow.GetMousePos().ToString();
+
+	if (ImGui::Button(MousePos.c_str()))
+	{
+
+	}
 	if (ImGui::Button("Collision OnOff"))
 	{
 		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
