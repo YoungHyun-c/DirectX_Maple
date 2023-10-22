@@ -23,6 +23,11 @@ public:
 		return FloatDelta * GlobalTimeScale;
 	}
 
+	float GetUnScaleDeltaTime()
+	{
+		return FloatDelta;
+	}
+
 	void Reset();
 
 	void Update();
