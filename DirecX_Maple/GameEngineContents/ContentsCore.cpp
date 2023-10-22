@@ -10,6 +10,7 @@
 #include "BossEntranceLevel.h"
 #include "BossLevel.h"
 #include "BossRewardLevel.h"
+#include "MapEditorLevel.h"
 #include "ContentsControlWindow.h"
 
 ContentsCore::ContentsCore()
@@ -66,6 +67,8 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossEntranceLevel>("BossEntranceLevel");
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
+	// 맵 에디터 테스트
+	GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 
 	GameEngineCore::ChangeLevel("BossLevel");
 }

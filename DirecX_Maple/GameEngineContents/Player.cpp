@@ -63,6 +63,9 @@ void Player::Start()
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 		Sprite = nullptr;
+
+		// 색 검은색으로 만들기.
+		//MainSpriteRenderer->RenderBaseInfoValue.BaseColorOnly = 1;
 	}
 
 	Dir = ActorDir::Right;

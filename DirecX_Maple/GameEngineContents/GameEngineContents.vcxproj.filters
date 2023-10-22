@@ -102,6 +102,9 @@
     <ClCompile Include="BossLevelUi.cpp">
       <Filter>Object\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="MapEditorLevel.cpp">
+      <Filter>Level\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -202,6 +205,9 @@
     <ClInclude Include="BossLevelUi.h">
       <Filter>Object\Boss\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MapEditorLevel.h">
+      <Filter>Level\Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -248,6 +254,9 @@
     </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{1b6893ad-abb6-45a2-9489-fee40258797f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\Editor">
+      <UniqueIdentifier>{82ebd5e1-4441-45f3-a96a-b4484a23fb03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
