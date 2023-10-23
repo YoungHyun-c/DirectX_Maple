@@ -23,6 +23,17 @@ void JinHillaBoss::StandStart()
 	MonsterRenderer->SetPivotType(PivotType::Center);
 }
 
+void JinHillaBoss::StandUpdate(float _Delta)
+{
+	JinDirCheck();
+	M_FStopTime += _Delta;
+	if (M_FStopTime >= M_FStopLimitTime)
+	{
+		ChangeState(MonsterState::Move);
+		return;
+	}
+}
+
 void JinHillaBoss::BossStateCheck()
 {
 	if (State == MonsterState::Move)
@@ -61,14 +72,15 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 		return;
 	}
 
-	DirCheck();
+	//DirCheck();
+	AttackEvent(_Delta);
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 
 	MonsterDirX = Transform.GetWorldPosition().X;
 	PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
 
-	float4 CompareDir = PlayerDirX - MonsterDirX + 10.0f;
+	float4 CompareDir = PlayerDirX - MonsterDirX - 1.0f;
 	CompareDir.Normalize();
 
 	switch (Dir)
@@ -101,10 +113,8 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 
 void JinHillaBoss::AttackStart()
 {
-	
 	std::string AnimationName = "Attack";
 
-	TestPattern += 1;
 	switch (TestPattern)
 	{
 	case 1:
@@ -119,32 +129,45 @@ void JinHillaBoss::AttackStart()
 			MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
 		}
+		TestPattern += 1;
 		break;
 	case 2:
 		ChangeAnimationState("Attack2");
 		if (Dir == ActorDir::Left)
 		{
+			Dir = ActorDir::Left;
 			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
 			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
 		}
 		if (Dir == ActorDir::Right)
 		{
+			Dir = ActorDir::Right;
 			MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
 		}
+		TestPattern += 1;
 		break;
 	case 3:
 		ChangeAnimationState("Attack3");
 		if (Dir == ActorDir::Left)
 		{
+			Dir = ActorDir::Left;
 			MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+
+			JinHillBindSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
+			JinHillKnockSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
 		}
 		if (Dir == ActorDir::Right)
 		{
+			Dir = ActorDir::Right;
 			MonsterRenderer->Transform.SetLocalPosition({ 330.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+
+			JinHillBindSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
+			JinHillKnockSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
 		}
+		TestPattern += 1;
 		break;
 	case 4:
 		ChangeAnimationState("Attack4");
@@ -152,12 +175,17 @@ void JinHillaBoss::AttackStart()
 		{
 			MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
 			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
+
+			JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ -250.0f, 50.0f });
 		}
 		if (Dir == ActorDir::Right)
 		{
 			MonsterRenderer->Transform.SetLocalPosition({ 260.0f, 100.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 100.0f });
+
+			JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ 250.0f, 50.0f });
 		}
+		TestPattern += 1;
 		break;
 	case 5:
 		ChangeAnimationState("Attack5");
@@ -171,6 +199,8 @@ void JinHillaBoss::AttackStart()
 			MonsterRenderer->Transform.SetLocalPosition({ 50.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
 		}
+		TestPattern += 1;
+		break;
 	case 6:
 		ChangeAnimationState("Attack7");
 		if (Dir == ActorDir::Left)
@@ -183,7 +213,7 @@ void JinHillaBoss::AttackStart()
 			MonsterRenderer->Transform.SetLocalPosition({ 200.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 50.0f, 120.0f });
 		}
-		TestPattern = 0;
+		TestPattern = 1;
 		break;
 	default:
 		break;
@@ -205,11 +235,6 @@ void JinHillaBoss::AttackStart()
 
 void JinHillaBoss::AttackUpdate(float _Delta)
 {
-	if (JinHillaCurHp <= 0)
-	{
-		ChangeState(MonsterState::Death);
-	}
-
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Move);
@@ -263,6 +288,7 @@ void JinHillaBoss::Hit(long long _Damage, bool _Attack)
 	if (JinHillaCurHp <= 0)
 	{
 		ChangeState(MonsterState::Death);
+		return;
 	}
 }
 

@@ -206,7 +206,7 @@
       <Filter>Level\Editor</Filter>
     </ClInclude>
     <ClInclude Include="BossLevelUi.h">
-      <Filter>Object\Boss\UI</Filter>
+      <Filter>Object\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

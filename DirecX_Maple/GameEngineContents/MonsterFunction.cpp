@@ -357,16 +357,17 @@ void MonsterFunction::DirCheck()
 	{
 		Dir = ActorDir::Left;
 	}
-
 	if (Dir == ActorDir::Left)
 	{
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+		return;
 	}
 	else if (Dir == ActorDir::Right)
 	{
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+		return;
 	}
 }
 

@@ -80,7 +80,7 @@ void BossLevelUi::Start()
 
 	BossHpUiBar = new std::vector<std::shared_ptr<GameEngineUIRenderer>>();
 	BossHpUiBar->reserve(4);
-	for (int i = BossHpUiBar->capacity(); i > 0; i--)
+	for (size_t i = BossHpUiBar->capacity(); i > 0; i--)
 	{
 		BossHpBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		std::string HpBarName = "Boss" + std::to_string(i) + "Hp.Png";
@@ -192,6 +192,14 @@ void BossLevelUi::BossHpBarUiRenderer()
 	// 임의로 체력을 낮췄을때 다른 줄의 체력도 끄기 위해 체력의 0, 1, 2 째줄도 끈다.
 	for (int i = 0; i <= PercentFrontHp / 25; i++)
 	{
+		if (CurHpCal <= 0)
+		{
+			(*BossHpUiBar)[3]->Off();
+			(*BossHpUiBar)[2]->Off();
+			(*BossHpUiBar)[1]->Off();
+			(*BossHpUiBar)[0]->Off();
+			return;
+		}
 		if (PercentFrontHp / 25 == 3)
 		{
 			(*BossHpUiBar)[0]->Transform.SetLocalScale({ static_cast<float>((PercentFrontHp % (25 * 3)) + PercentBackHp * 0.01f) * 30, 1.0f });

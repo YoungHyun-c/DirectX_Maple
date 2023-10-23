@@ -41,6 +41,7 @@ protected:
 	void Update(float _Delta) override;
 
 	void StandStart();
+	void StandUpdate(float _Delta);
 
 	void MoveStart();
 	void MoveUpdate(float _Delta);
@@ -63,6 +64,7 @@ protected:
 
 private:
 	ActorDir Dir = ActorDir::Max;
+	void JinDirCheck();
 	float4 JinBossScale = float4::ZERO;
 
 	float MoveSpeed = 50.0f;
@@ -81,9 +83,15 @@ private:
 	std::shared_ptr<GameEngineCollision> JinHillaAttackRangeCol;
 	std::shared_ptr<GameEngineCollision> JinHillBodyCol;
 
+	std::shared_ptr<GameEngineCollision> JinHillBindSkillCol;
+	std::shared_ptr<GameEngineCollision> JinHillKnockSkillCol;
+	std::shared_ptr<GameEngineCollision> JinHillFrontSlapSkillCol;
+	std::shared_ptr<GameEngineCollision> JinHillSideSlapSkillCol;
+	std::shared_ptr<GameEngineCollision> JinHillChoppingSkillCol;
+
 
 	bool IsAttack = false;
-	int TestPattern = 0;
+	int TestPattern = 1;
 
 	std::shared_ptr<class CravingMonster> CravingMob;
 

@@ -35,13 +35,110 @@ void JinHillaBoss::Start()
 	MonsterRenderer->CreateAnimation("Skill2", "JinHilla_Skill2_Animation", 0.1f, -1, -1, false); // 낫베기 패턴때
 	MonsterRenderer->CreateAnimation("Skill3", "JinHilla_Skill3_Craving", 0.1f, -1, -1, false); // Craving 소환
 	MonsterRenderer->CreateAnimation("Skill4", "JinHilla_Skill4_Summon", 0.1f, -1, -1, false); // 스우 데미안 소환
-	
+
 	MonsterRenderer->ChangeAnimation("Stand");
 	MonsterRenderer->AutoSpriteSizeOn();
 	//MonsterRenderer->SetPivotType(PivotType::Center);
 	MonsterRenderer->Off();
-	
+
 	TimeCounting();
+
+	// 공격스킬 충돌 콜리전
+	{
+		JinHillBindSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
+		JinHillBindSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		JinHillBindSkillCol->Transform.SetLocalScale({ 600.0f, 400.0f });
+		JinHillBindSkillCol->SetCollisionType(ColType::AABBBOX2D);
+		JinHillBindSkillCol->Off();
+
+		JinHillKnockSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
+		JinHillKnockSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		JinHillKnockSkillCol->Transform.SetLocalScale({ 600.0f, 400.0f });
+		JinHillKnockSkillCol->SetCollisionType(ColType::AABBBOX2D);
+		JinHillKnockSkillCol->Off();
+
+		JinHillFrontSlapSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
+		JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		JinHillFrontSlapSkillCol->Transform.SetLocalScale({ 400.0f, 200.0f });
+		JinHillFrontSlapSkillCol->SetCollisionType(ColType::AABBBOX2D);
+		JinHillFrontSlapSkillCol->Off();
+
+		JinHillSideSlapSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
+		JinHillSideSlapSkillCol->Transform.SetLocalPosition({ 0.0f, 0.0f });
+		JinHillSideSlapSkillCol->Transform.SetLocalScale({ 750.0f, 300.0f });
+		JinHillSideSlapSkillCol->SetCollisionType(ColType::AABBBOX2D);
+		JinHillSideSlapSkillCol->Off();
+
+		JinHillChoppingSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
+		JinHillChoppingSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		JinHillChoppingSkillCol->Transform.SetLocalScale({ 600.0f, 350.0f });
+		JinHillChoppingSkillCol->SetCollisionType(ColType::AABBBOX2D);
+		JinHillChoppingSkillCol->Off();
+	}
+
+	// 공격스킬 애니메이션
+	{
+		// Attack3
+		MonsterRenderer->SetFrameEvent("Attack3", 14, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillBindSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 20, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillBindSkillCol->Off();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 37, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillKnockSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 41, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillKnockSkillCol->Off();
+			}
+		);
+
+		// Attack4
+		MonsterRenderer->SetFrameEvent("Attack4", 18, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillFrontSlapSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack4", 23, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillFrontSlapSkillCol->Off();
+			}
+		);
+
+		// Attack5
+		MonsterRenderer->SetFrameEvent("Attack5", 19, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillSideSlapSkillCol->On();
+			}
+		);
+
+		MonsterRenderer->SetFrameEvent("Attack5", 24, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillSideSlapSkillCol->Off();
+			}
+		);
+
+		// Attack7
+		MonsterRenderer->SetFrameEvent("Attack7", 14, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillChoppingSkillCol->On();
+			}
+		);
+
+		MonsterRenderer->SetFrameEvent("Attack7", 17, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillChoppingSkillCol->Off();
+			}
+		);
+	}
+
 	// 볼
 	//MonsterRenderer->CreateAnimation("Attack6", "JinHilla_Attack6_Ball", 0.1f, -1, -1, false);
 
@@ -58,8 +155,8 @@ void JinHillaBoss::Start()
 	// 공격범위
 	{
 		JinHillaAttackRangeCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
-		JinHillaAttackRangeCol->Transform.SetLocalScale({ 600.0f, 400.0f });
 		JinHillaAttackRangeCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		JinHillaAttackRangeCol->Transform.SetLocalScale({ 600.0f, 400.0f });
 		JinHillaAttackRangeCol->SetCollisionType(ColType::AABBBOX2D);
 		JinHillaAttackRangeCol->Off();
 	}
@@ -80,6 +177,15 @@ void JinHillaBoss::Update(float _Delta)
 	GameEngineDebug::DrawBox2D(MonsterRenderer->GetImageTransform(), float4::GREEN);
 	MonsterFunction::Update(_Delta);
 
+	JinDirCheck();
+	StateUpdate(_Delta);
+
+	if (JinHillaCurHp <= 0)
+	{
+		ChangeState(MonsterState::Death);
+		return;
+	}
+
 	if (GameEngineInput::IsDown('5', this))
 	{
 		ChangeState(MonsterState::Stand);
@@ -88,43 +194,83 @@ void JinHillaBoss::Update(float _Delta)
 		MonsterRenderer->On();
 		MonsterCollision->On();*/
 	}
-	if (GameEngineInput::IsDown('6', this))
+	//if (GameEngineInput::IsDown('6', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('7', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack2");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('8', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack3");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('9', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack4");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
+	//}
+	//if (GameEngineInput::IsDown('0', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack5");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+
+	if (GameEngineInput::IsDown('-', this))
 	{
-		MonsterRenderer->ChangeAnimation("Attack");
-		MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-		MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	}
-	if (GameEngineInput::IsDown('7', this))
-	{
-		MonsterRenderer->ChangeAnimation("Attack2");
-		MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-		MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	}
-	if (GameEngineInput::IsDown('8', this))
-	{
-		MonsterRenderer->ChangeAnimation("Attack3");
-		MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
-		MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	}
-	if (GameEngineInput::IsDown('9', this))
-	{
-		MonsterRenderer->ChangeAnimation("Attack4");
-		MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
-		MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
-	}
-	if (GameEngineInput::IsDown('0', this))
-	{
-		MonsterRenderer->ChangeAnimation("Attack5");
-		MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
-		MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+		JinHillaCurHp -= 10000000000000;
 	}
 
 
-	StateUpdate(_Delta);
+	//PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
+	//MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
+	//if (PlayerDirX > MonsterDirX)
+	//{
+	//	Dir = ActorDir::Right;
+	//}
+	//if (PlayerDirX < MonsterDirX)
+	//{
+	//	Dir = ActorDir::Left;
+	//}
 
+	InsideLockMap();
+	//AttackEvent(_Delta);
+
+	// 넉백 만들어보려했는데 이대로 만드는게 아니라 플레이어에 넉백함수를 만들어서 플레이어가 직접 넉백당하게만들어야 될꺼같음.
+	// 방향, 거리, 시간영향, 힘? 필요할듯
+	//EventParameter KnockAttack;
+	//{
+	//	KnockAttack.Enter = [](GameEngineCollision* _this, GameEngineCollision* _Player)
+	//		{
+	//			_Player->GetParentObject()->Transform.AddLocalPosition({300.0f});
+	//		};
+	//	JinHillKnockSkillCol->CollisionEvent(ContentsCollisionType::Player, KnockAttack);
+	//}
+	
+	//EventParameter BindAttack;
+	//{
+	//	BindAttack.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Player)
+	//		{
+	//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
+	//		};
+	//	JinHillBindSkillCol->CollisionEvent(ContentsCollisionType::Player, BindAttack);
+	//}
+}
+
+void JinHillaBoss::JinDirCheck()
+{
 	PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
 	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
-	if (PlayerDirX > MonsterDirX)
+	if (PlayerDirX >= MonsterDirX)
 	{
 		Dir = ActorDir::Right;
 	}
@@ -132,9 +278,6 @@ void JinHillaBoss::Update(float _Delta)
 	{
 		Dir = ActorDir::Left;
 	}
-
-	InsideLockMap();
-	AttackEvent(_Delta);
 }
 
 
