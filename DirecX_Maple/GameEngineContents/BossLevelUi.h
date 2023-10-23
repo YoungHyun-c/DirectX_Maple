@@ -27,29 +27,35 @@ private:
 
 	std::shared_ptr<class GameEngineSpriteRenderer> BossIcon;
 	std::shared_ptr<class GameEngineSpriteRenderer> BossHpBarRender;
-	std::shared_ptr<class GameEngineSpriteRenderer> Boss1HpBar;
-	std::shared_ptr<class GameEngineSpriteRenderer> Boss2HpBar;
-	std::shared_ptr<class GameEngineSpriteRenderer> Boss3HpBar;
-	std::shared_ptr<class GameEngineSpriteRenderer> Boss4HpBar;
+
+	std::vector<std::shared_ptr<GameEngineUIRenderer>>* BossHpUiBar = nullptr;
+	std::shared_ptr<class GameEngineUIRenderer> BossHpBar;
 
 	double MainHpCal = 0;
 	double CurHpCal = 0;
-	int PercentFrontHp = 0;
+	int PercentFrontHp = 0; // float과 double은 % 연산이 안됨
 	int PercentBackHp = 0;
 	double percentBackHpCal = 0.0f;
+	int CurPerHp = 0;
 
 	float4 IconPos = { -398.0f, 365.0f };
 	float4 HpBarPos = {0.0f, 370.0f};
 	float4 CurHpPos = { -375.0f, 370.0f };
 
 
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender1;
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender2;
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender3;
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender4;
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRender5;
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberRenderDot;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRender1;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRender2;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRender3;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRender4;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRender5;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberRenderDot;
 
-	std::shared_ptr<GameEngineSpriteRenderer> BossHpNumberBack;
+	std::shared_ptr<GameEngineUIRenderer> BossHpNumberBack;
+
+	void BossHpPerUiRenderer();
+	void BossHpBarUiRenderer();
+
+
+
 };
 

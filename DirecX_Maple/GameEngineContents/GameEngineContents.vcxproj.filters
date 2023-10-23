@@ -99,11 +99,11 @@
     <ClCompile Include="JinHillaBossState.cpp">
       <Filter>Object\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="BossLevelUi.cpp">
-      <Filter>Object\Boss\UI</Filter>
-    </ClCompile>
     <ClCompile Include="MapEditorLevel.cpp">
       <Filter>Level\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevelUi.cpp">
+      <Filter>Object\Boss\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,11 +202,11 @@
     <ClInclude Include="ContentsControlWindow.h">
       <Filter>GUI</Filter>
     </ClInclude>
-    <ClInclude Include="BossLevelUi.h">
-      <Filter>Object\Boss\UI</Filter>
-    </ClInclude>
     <ClInclude Include="MapEditorLevel.h">
       <Filter>Level\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevelUi.h">
+      <Filter>Object\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

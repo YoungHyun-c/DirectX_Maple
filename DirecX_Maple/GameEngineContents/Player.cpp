@@ -158,19 +158,19 @@ void Player::Update(float _Delta)
 	}
 
 	// ÁÜÀÎ ÁÜ¾Æ¿ô
-	if (GameEngineInput::IsPress('I', this))
-	{
-		GetLevel()->GetMainCamera()->AddZoomValue(-_Delta);
-	}
-	if (GameEngineInput::IsPress('O', this))
-	{
-		GetLevel()->GetMainCamera()->AddZoomValue(_Delta);
-	}
+	//if (GameEngineInput::IsPress('I', this))
+	//{
+	//	GetLevel()->GetMainCamera()->AddZoomValue(-_Delta);
+	//}
+	//if (GameEngineInput::IsPress('O', this))
+	//{
+	//	GetLevel()->GetMainCamera()->AddZoomValue(_Delta);
+	//}
 
-	if (GameEngineInput::IsDown('P', this))
-	{
-		MainSpriteRenderer->AnimationPauseSwitch();
-	}
+	//if (GameEngineInput::IsDown('P', this))
+	//{
+	//	MainSpriteRenderer->AnimationPauseSwitch();
+	//}
 
 	if (GameEngineInput::IsDown('Y', this))
 	{
@@ -214,34 +214,34 @@ void Player::Update(float _Delta)
 		Clothes = PlayerClothes::Battle;
 	}
 
-	if (GameEngineInput::IsDown('2', this))
-	{
-		Clothes = PlayerClothes::Normal;
-	}
-	if (GameEngineInput::IsDown('-', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
-	}
-	if (GameEngineInput::IsDown('4', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Impale");
-	}
-	if (GameEngineInput::IsDown('6', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Prone");
-	}
-	if (GameEngineInput::IsDown('7', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_ProneAttack");
-	}
-	if (GameEngineInput::IsDown('8', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Rope");
-	}
-	if (GameEngineInput::IsDown('9', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
-	}
+	//if (GameEngineInput::IsDown('2', this))
+	//{
+	//	Clothes = PlayerClothes::Normal;
+	//}
+	//if (GameEngineInput::IsDown('-', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_Fly");
+	//}
+	//if (GameEngineInput::IsDown('4', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_Impale");
+	//}
+	//if (GameEngineInput::IsDown('6', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_Prone");
+	//}
+	//if (GameEngineInput::IsDown('7', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_ProneAttack");
+	//}
+	//if (GameEngineInput::IsDown('8', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_Rope");
+	//}
+	//if (GameEngineInput::IsDown('9', this))
+	//{
+	//	MainSpriteRenderer->ChangeAnimation("Normal_Stand");
+	//}
 	//if (GameEngineInput::IsDown('0'))
 	//{
 	//	SkillRenderer->On();

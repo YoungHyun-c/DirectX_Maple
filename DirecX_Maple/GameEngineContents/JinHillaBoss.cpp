@@ -141,5 +141,8 @@ void JinHillaBoss::Update(float _Delta)
 void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainBoss = this;
-	JinHillaCurHp = 1760000000000;
+	//JinHillaCurHp = 176000000000000; // 1其
+	//JinHillaCurHp = 133000000000000; // 2其
+	//JinHillaCurHp = 89000000000000;  // 3其	
+	JinHillaCurHp = 45000000000000;  // 4其
 }
