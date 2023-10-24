@@ -129,14 +129,15 @@ void Player::TestEvent(GameEngineRenderer* _Renderer)
 
 void Player::Update(float _Delta)
 {
-	if (Bind == true)
-	{
-		return;
-	}
 	
 	PlayerPos = Transform.GetWorldPosition();
 
 	PlayerActor::Update(_Delta);
+
+	if (Bind == true)
+	{
+		return;
+	}
 
 	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 

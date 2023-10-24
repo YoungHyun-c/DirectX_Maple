@@ -105,6 +105,9 @@
     <ClCompile Include="BossLevelUi.cpp">
       <Filter>Object\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="BossSkillEffect.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -206,6 +209,9 @@
       <Filter>Level\Editor</Filter>
     </ClInclude>
     <ClInclude Include="BossLevelUi.h">
+      <Filter>Object\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSkillEffect.h">
       <Filter>Object\Boss</Filter>
     </ClInclude>
   </ItemGroup>

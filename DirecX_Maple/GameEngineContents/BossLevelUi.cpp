@@ -11,7 +11,15 @@ BossLevelUi::BossLevelUi()
 
 BossLevelUi::~BossLevelUi()
 {
-
+	if (nullptr != BossHpUiBar)
+	{
+		for (int i = 0; i < BossHpUiBar->size(); i++)
+		{
+			(*BossHpUiBar)[i]->Death();
+			(*BossHpUiBar)[i] = nullptr;
+		}
+		delete (BossHpUiBar);
+	}
 }
 
 void BossLevelUi::Start()

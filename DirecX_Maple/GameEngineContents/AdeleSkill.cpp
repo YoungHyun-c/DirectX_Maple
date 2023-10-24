@@ -99,29 +99,30 @@ void AdeleSkill::Start()
 		ShardEffect->ChangeAnimation("ShardEffect");
 		ShardEffect->Off();
 
-		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* ShardVect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
-		ShardVect->reserve(5);
-		std::vector<std::shared_ptr<GameEngineCollision>>* ShardC = new std::vector<std::shared_ptr<GameEngineCollision>>();
-		ShardC->reserve(5);
-		for (int i = 0; i <5; i++)
-		{
-			ShardImage = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-			ShardImage->Transform.SetLocalRotation({ 0, 0, -90.0f });
-			ShardImage->AutoSpriteSizeOn();
-			ShardImage->CreateAnimation("Shard", "Shard_Start", 0.05f, -1, -1, false);
-			ShardImage->ChangeAnimation("Shard");
-			ShardImage->Off();
-			ShardVect->push_back(ShardImage);
-			
-			ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-			ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-			ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
-			ShardCol->SetCollisionType(ColType::AABBBOX2D);
-			ShardCol->Off();
-			ShardC->push_back(ShardCol);
-		}
-		Shard.push_back(ShardVect);
-		ShardCollist.push_back(ShardC);
+		// new 라서 릭 남음 없애야됨
+		//std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* ShardVect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
+		//ShardVect->reserve(5);
+		//std::vector<std::shared_ptr<GameEngineCollision>>* ShardC = new std::vector<std::shared_ptr<GameEngineCollision>>();
+		//ShardC->reserve(5);
+		//for (int i = 0; i <5; i++)
+		//{
+		//	ShardImage = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+		//	ShardImage->Transform.SetLocalRotation({ 0, 0, -90.0f });
+		//	ShardImage->AutoSpriteSizeOn();
+		//	ShardImage->CreateAnimation("Shard", "Shard_Start", 0.05f, -1, -1, false);
+		//	ShardImage->ChangeAnimation("Shard");
+		//	ShardImage->Off();
+		//	ShardVect->push_back(ShardImage);
+		//	
+		//	ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+		//	ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+		//	ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
+		//	ShardCol->SetCollisionType(ColType::AABBBOX2D);
+		//	ShardCol->Off();
+		//	ShardC->push_back(ShardCol);
+		//}
+		//Shard.push_back(ShardVect);
+		//ShardCollist.push_back(ShardC);
 
 		//ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 		//ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });

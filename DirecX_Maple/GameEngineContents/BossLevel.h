@@ -33,7 +33,7 @@ private:
 	std::shared_ptr<class GhostSwoo> SwooBall;
 	std::shared_ptr<class JinHillaBoss> BossJin;
 
-
+	//std::shared_ptr<class BossSkillEffect> BossEffect;
 	// Ui
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
 	std::shared_ptr<class BossLevelUi> BossUi = nullptr;

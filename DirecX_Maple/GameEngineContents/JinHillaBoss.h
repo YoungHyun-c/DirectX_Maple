@@ -89,11 +89,17 @@ private:
 	std::shared_ptr<GameEngineCollision> JinHillSideSlapSkillCol;
 	std::shared_ptr<GameEngineCollision> JinHillChoppingSkillCol;
 
+	std::shared_ptr<class BossSkillEffect> BossEffect;
 
 	bool IsAttack = false;
+	bool PlayerBind = false;
 	int TestPattern = 1;
 
 	std::shared_ptr<class CravingMonster> CravingMob;
 
+	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
+	void SkillAnimation();
+
+	int Test = 0;
 };
 

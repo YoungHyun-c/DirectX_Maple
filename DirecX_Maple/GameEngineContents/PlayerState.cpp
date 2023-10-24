@@ -80,11 +80,6 @@ void Player::WalkUpdate(float _Delta)
 		MovePos += MoveDir * WalkSpeed * _Delta;
 	}
 
-	if (GameEngineInput::IsPress(VK_DOWN, this))
-	{
-		ChangeState(PlayerState::Prone);
-	}
-
 	//CheckColor = CheckGroundColor(MovePos);
 	//if (DefaultGroundColor != CheckColor)
 	//{

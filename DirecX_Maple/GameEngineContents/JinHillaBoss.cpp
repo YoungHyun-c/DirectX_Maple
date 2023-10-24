@@ -3,6 +3,8 @@
 #include "CravingMonster.h"
 #include "Player.h"
 
+#include "BossSkillEffect.h"
+
 JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
 JinHillaBoss::JinHillaBoss()
@@ -71,73 +73,13 @@ void JinHillaBoss::Start()
 
 		JinHillChoppingSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
 		JinHillChoppingSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
-		JinHillChoppingSkillCol->Transform.SetLocalScale({ 600.0f, 350.0f });
+		JinHillChoppingSkillCol->Transform.SetLocalScale({ 550.0f, 350.0f });
 		JinHillChoppingSkillCol->SetCollisionType(ColType::AABBBOX2D);
 		JinHillChoppingSkillCol->Off();
 	}
 
-	// 공격스킬 애니메이션
-	{
-		// Attack3
-		MonsterRenderer->SetFrameEvent("Attack3", 14, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillBindSkillCol->On();
-			}
-		);
-		MonsterRenderer->SetFrameEvent("Attack3", 20, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillBindSkillCol->Off();
-			}
-		);
-		MonsterRenderer->SetFrameEvent("Attack3", 37, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillKnockSkillCol->On();
-			}
-		);
-		MonsterRenderer->SetFrameEvent("Attack3", 41, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillKnockSkillCol->Off();
-			}
-		);
-
-		// Attack4
-		MonsterRenderer->SetFrameEvent("Attack4", 18, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillFrontSlapSkillCol->On();
-			}
-		);
-		MonsterRenderer->SetFrameEvent("Attack4", 23, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillFrontSlapSkillCol->Off();
-			}
-		);
-
-		// Attack5
-		MonsterRenderer->SetFrameEvent("Attack5", 19, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillSideSlapSkillCol->On();
-			}
-		);
-
-		MonsterRenderer->SetFrameEvent("Attack5", 24, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillSideSlapSkillCol->Off();
-			}
-		);
-
-		// Attack7
-		MonsterRenderer->SetFrameEvent("Attack7", 14, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillChoppingSkillCol->On();
-			}
-		);
-
-		MonsterRenderer->SetFrameEvent("Attack7", 17, [&](GameEngineSpriteRenderer*)
-			{
-				JinHillChoppingSkillCol->Off();
-			}
-		);
-	}
+	// 스킬 애니메이션
+	SkillAnimation();
 
 	// 볼
 	//MonsterRenderer->CreateAnimation("Attack6", "JinHilla_Attack6_Ball", 0.1f, -1, -1, false);
@@ -170,6 +112,10 @@ void JinHillaBoss::Start()
 	SetColPos(-20.0f, 20.0f, 0.0f);
 	GameEngineInput::AddInputObject(this);
 	Dir = ActorDir::Right;
+
+
+	BossEffect = GetLevel()->CreateActor<BossSkillEffect>();
+	BossEffect->Transform.SetLocalPosition({ 900.0f, -700.0f });
 }
 
 void JinHillaBoss::Update(float _Delta)
@@ -255,16 +201,38 @@ void JinHillaBoss::Update(float _Delta)
 	//		};
 	//	JinHillKnockSkillCol->CollisionEvent(ContentsCollisionType::Player, KnockAttack);
 	//}
-	
+
+	//if (PlayerBind == true)
+	//{
+	//	Player::GetMainPlayer()->PlayerBind();
+	//}
+	//
 	//EventParameter BindAttack;
 	//{
-	//	BindAttack.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Player)
+	//	BindAttack.Enter = [](GameEngineCollision* _this, GameEngineCollision* _Player)
 	//		{
+	//			//Player::GetMainPlayer()->PlayerBind();
+	//			//PlayerBind = true;
+	//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
+	//		};
+	//	BindAttack.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Player)
+	//		{
+	//			//Player::GetMainPlayer()->PlayerBind();
+	//			//PlayerBind = true;
 	//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
 	//		};
 	//	JinHillBindSkillCol->CollisionEvent(ContentsCollisionType::Player, BindAttack);
 	//}
+
+	//JinHillBindSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
 }
+
+void JinHillaBoss::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+{
+	//Player::GetMainPlayer()->PlayerBind();
+	//PlayerBind = true;
+}
+
 
 void JinHillaBoss::JinDirCheck()
 {
@@ -288,4 +256,70 @@ void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 	//JinHillaCurHp = 133000000000000; // 2페
 	//JinHillaCurHp = 89000000000000;  // 3페	
 	JinHillaCurHp = 45000000000000;  // 4페
+}
+
+void JinHillaBoss::SkillAnimation()
+{
+	// 공격스킬 애니메이션
+	{
+		// Attack3
+		MonsterRenderer->SetFrameEvent("Attack3", 14, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillBindSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 20, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillBindSkillCol->Off();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 37, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillKnockSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack3", 41, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillKnockSkillCol->Off();
+			}
+		);
+
+		// Attack4
+		MonsterRenderer->SetFrameEvent("Attack4", 18, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillFrontSlapSkillCol->On();
+			}
+		);
+		MonsterRenderer->SetFrameEvent("Attack4", 23, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillFrontSlapSkillCol->Off();
+			}
+		);
+
+		// Attack5
+		MonsterRenderer->SetFrameEvent("Attack5", 19, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillSideSlapSkillCol->On();
+			}
+		);
+
+		MonsterRenderer->SetFrameEvent("Attack5", 24, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillSideSlapSkillCol->Off();
+			}
+		);
+
+		// Attack7
+		MonsterRenderer->SetFrameEvent("Attack7", 14, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillChoppingSkillCol->On();
+			}
+		);
+
+		MonsterRenderer->SetFrameEvent("Attack7", 17, [&](GameEngineSpriteRenderer*)
+			{
+				JinHillChoppingSkillCol->Off();
+			}
+		);
+	}
 }
