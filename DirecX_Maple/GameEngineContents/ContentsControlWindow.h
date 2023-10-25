@@ -39,6 +39,8 @@ public:
 	std::string LoadPath;
 	std::string InputPath;
 
+	int HpInput = 0;
+
 	char BackGroundName[256] = { 0, };
 
 	void Start();
