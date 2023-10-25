@@ -16,6 +16,9 @@ public:
 	MapEditorLevel& operator = (const MapEditorLevel& _Other) = delete;
 	MapEditorLevel& operator = (MapEditorLevel&& _Other) noexcept = delete;
 
+	std::shared_ptr<GameEngineActor> BackGroundActor;
+	std::shared_ptr<GameEngineSpriteRenderer> BackGroundRenderer;
+
 protected:
 	void Start() override;
 	

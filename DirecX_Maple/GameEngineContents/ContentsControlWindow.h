@@ -18,11 +18,11 @@ public:
 
 class TestTab : public Tab
 {
-	// TestLevelMember
+	// TestLevelMemeber
 	int Select = 0;
 	std::shared_ptr<GameEngineObject> SelectObject = nullptr;
 
-	void OnGUI(GameEngineLevel* _Level, float _DeltaTiame);
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
 
 public:
 	TestTab(std::string_view _Name)
@@ -33,11 +33,14 @@ public:
 
 class MapEditorTab : public Tab
 {
+public:
 	std::string SavePath;
 	std::string InputPath;
 
+	char BackGroundName[256] = { 0, };
+
 	void Start();
-	void OnGUI(GameEngineLevel* _Level, float _DeltaTima);
+	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
 
 public:
 	MapEditorTab(std::string_view _Name)
@@ -46,12 +49,14 @@ public:
 	}
 };
 
+
 class LevelChangeTab : public Tab
 {
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
+
 public:
 	LevelChangeTab(std::string_view _Name)
-		:Tab(_Name)
+		: Tab(_Name)
 	{
 	}
 };
@@ -64,7 +69,6 @@ public:
 	void Start() override;
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime) override;
 
-	
 	std::shared_ptr<Tab> CurTab = nullptr;
 	std::vector<std::shared_ptr<Tab>> Tabs;
 };

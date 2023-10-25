@@ -17,6 +17,11 @@ void MapEditorLevel::Start()
 	GetMainCamera()->Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, 0.0f });
 	GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
 
+	{
+		BackGroundActor = CreateActor<GameEngineActor>();
+		BackGroundRenderer = BackGroundActor->CreateComponent<GameEngineSpriteRenderer>();
+	}
+
 	GameEngineInput::AddInputObject(this);
 }
 

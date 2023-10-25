@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "ContentsControlWindow.h"
+#include "MapEditorLevel.h"
 
 void MapEditorTab::Start()
 {
@@ -66,8 +67,31 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		SavePath = "";
 	}
 
-	// 일반적으로 그냥 클래스를 저장할수는 없다.
-	// 포인터는 저장의 의미가 없다.
+	MapEditorLevel* MapLevel = dynamic_cast<MapEditorLevel*>(_Level);
+
+	if (nullptr == MapLevel)
+	{
+		return;
+	}
+
+	// MapLevel->BackGroundRenderer->SetSprite
+
+	Labal = "BackName";
+	Labal = GameEngineString::AnsiToUTF8(Labal);
+	ImGui::InputText(Labal.c_str(), BackGroundName, 256);
+
+	if (ImGui::Button("Setting"))
+	{
+
+		std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(BackGroundName);
+
+		float4 HScale = Tex->GetScale().Half();
+		HScale.Y *= -1.0f;
+
+		MapLevel->BackGroundRenderer->SetSprite(BackGroundName);
+		MapLevel->BackGroundRenderer->Transform.SetLocalPosition(HScale);
+	}
+
 
 }
 
