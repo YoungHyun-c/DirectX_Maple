@@ -6,8 +6,6 @@
 namespace GameEngineDebug
 {
 	void LeakCheck();
-
-
 };
 
 #define MsgBoxAssert(Text) \

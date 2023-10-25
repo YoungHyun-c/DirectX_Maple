@@ -27,7 +27,7 @@
 class GameEngineRandom
 {
 public:
-	// static 남발하게 되면 절대로 안지워지고 프로그램과 함꼐하는 메모리가 되어버린다.
+	// static 남발하게 되면 절대로 안지워지고 프로그램과 함께하는 메모리가 되어버립니다.
 
 	// constrcuter destructer
 	GameEngineRandom();
@@ -46,7 +46,7 @@ public:
 
 	float4 RandomVectorBox2D(float _MinX, float _MaxX, float _MinY, float _MaxY);
 
-	void SetSeed(__int64 _Seed) 
+	void SetSeed(__int64 _Seed)
 	{
 		MtGen = std::mt19937_64(_Seed);
 	}

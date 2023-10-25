@@ -6,8 +6,6 @@
 class GameEngineTime
 {
 public:
-
-
 	// constrcuter destructer
 	GameEngineTime();
 	~GameEngineTime();
@@ -18,7 +16,7 @@ public:
 	GameEngineTime& operator=(const GameEngineTime& _Other) = delete;
 	GameEngineTime& operator=(GameEngineTime&& _Other) noexcept = delete;
 
-	float GetDeltaTime() 
+	float GetDeltaTime()
 	{
 		return FloatDelta * GlobalTimeScale;
 	}
@@ -54,7 +52,7 @@ public:
 		SetTimeScale(static_cast<int>(_Order), _TimeScale);
 	}
 
-	void SetTimeScale(int _Order, float _TimeScale) 
+	void SetTimeScale(int _Order, float _TimeScale)
 	{
 		TimeScale[_Order] = _TimeScale;
 	}
