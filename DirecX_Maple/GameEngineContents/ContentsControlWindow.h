@@ -34,7 +34,9 @@ public:
 class MapEditorTab : public Tab
 {
 public:
+	std::string DefSavePath;
 	std::string SavePath;
+	std::string LoadPath;
 	std::string InputPath;
 
 	char BackGroundName[256] = { 0, };

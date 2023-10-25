@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "ContentsControlWindow.h"
 #include "MapEditorLevel.h"
+#include "Monster.h"
+
 
 void MapEditorTab::Start()
 {
@@ -19,6 +21,8 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
 		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("Data");
+
 
 		OPENFILENAMEA OFN;
 		char filePathName[100] = "";
@@ -37,35 +41,25 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		OFN.lpstrInitialDir = Path.c_str();
 
 		if (GetSaveFileNameA(&OFN) != 0) {
-			// sprintf_s(filePathName, "%s 파일을 열겠습니까?", OFN.lpstrFile);
-
 			SavePath = OFN.lpstrFile;
 		}
 	}
 
-	InputPath.resize(256);
+	//InputPath.resize(256);
 
-	std::string Labal = "저장경로";
-	Labal = GameEngineString::AnsiToUTF8(Labal);
-	ImGui::InputText(Labal.c_str(), &InputPath[0], InputPath.size());
+	//std::string Labal = "저장경로";
+	//Labal = GameEngineString::AnsiToUTF8(Labal);
+	//ImGui::InputText(Labal.c_str(), &InputPath[0], InputPath.size());
 
-	if (ImGui::Button("Def Save"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("Data");
+	//GameEngineDirectory Dir;
+	//Dir.MoveParentToExistsChild("ContentsResources");
+	//Dir.MoveChild("ContentsResources");
+	//Dir.MoveChild("Data");
 
-		std::string PathName = Dir.GetFileName();
+	//std::string PathName = Dir.GetFileName();
 
-		SavePath = PathName + InputPath + ".GameData";
-	}
+	//DefSavePath = PathName + InputPath + ".GameData";
 
-	if ("" != SavePath)
-	{
-		// File을 가지고 저장
-		SavePath = "";
-	}
 
 	MapEditorLevel* MapLevel = dynamic_cast<MapEditorLevel*>(_Level);
 
@@ -76,7 +70,8 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 	// MapLevel->BackGroundRenderer->SetSprite
 
-	Labal = "BackName";
+	std::string Labal = "저장경로";
+	Labal = "BackImageName";
 	Labal = GameEngineString::AnsiToUTF8(Labal);
 	ImGui::InputText(Labal.c_str(), BackGroundName, 256);
 
@@ -92,6 +87,98 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		MapLevel->BackGroundRenderer->Transform.SetLocalPosition(HScale);
 	}
 
+	if ("" != SavePath)
+	{
+		ImGui::Text(SavePath.c_str());
+
+		if (ImGui::Button("MapDataSave"))
+		{
+			GameEngineSerializer BinSer;
+			BinSer << MapLevel->BackGroundRenderer->GetSprite()->GetName();
+			//std::vector<std::shared_ptr<Monster>> ObjectType = _Level->GetObjectGroupConvert<Monster>(ContentsObjectType::Monster);
+			//BinSer << static_cast<unsigned int>(ObjectType.size());
+			//for (size_t i = 0; i < ObjectType.size(); i++)
+			//{
+			//	ObjectType[i]->Serializer(BinSer);
+			//}
+
+
+			GameEngineFile File = SavePath;
+			File.Open(FileOpenType::Write, FileDataType::Binary);
+			File.Write(BinSer);
+
+		}
+	}
+
+	if (ImGui::Button("Load"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("Data");
+
+
+		OPENFILENAMEA OFN;
+		char filePathName[100] = "";
+		char lpstrFile[100] = "";
+		static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
+
+		std::string Path = Dir.GetStringPath();
+
+		memset(&OFN, 0, sizeof(OPENFILENAME));
+		OFN.lStructSize = sizeof(OPENFILENAME);
+		OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
+		OFN.lpstrFilter = filter;
+		OFN.lpstrFile = lpstrFile;
+		OFN.nMaxFile = 100;
+		OFN.lpstrDefExt = "GameData";
+		OFN.lpstrInitialDir = Path.c_str();
+
+		if (GetOpenFileNameA(&OFN) != 0) {
+			LoadPath = OFN.lpstrFile;
+		}
+	}
+
+	if (LoadPath != "")
+	{
+		ImGui::Text(LoadPath.c_str());
+
+		if (ImGui::Button("MapDataLoad"))
+		{
+			GameEngineSerializer BinSer;
+
+			GameEngineFile File = LoadPath;
+			File.Open(FileOpenType::Read, FileDataType::Binary);
+			File.DataAllRead(BinSer);
+
+			std::vector<std::shared_ptr<Monster>> ObjectType = _Level->GetObjectGroupConvert<Monster>(ContentsObjectType::Monster);
+			for (size_t i = 0; i < ObjectType.size(); i++)
+			{
+				// 다 죽인다.
+				ObjectType[i]->Death();
+			}
+
+
+			std::string BackFileName;
+			BinSer >> BackFileName;
+			unsigned int MonsterCount = 0;
+			BinSer >> MonsterCount;
+
+			//for (size_t i = 0; i < MonsterCount; i++)
+			//{
+			//	std::shared_ptr<Monster> Object = _Level->CreateActor<Monster>(ContentsObjectType::Monster);
+			//	Object->DeSerializer(BinSer);
+			//}
+
+
+
+			// GameEngineSerializer BinSer;
+			// SaveBin << MapLevel->BackGroundRenderer->GetSprite()->GetName();
+		}
+	}
+
+	// 일반적으로 그냥 클래스를 저장할수는 없다.
+	// 포인터는 저장의 의미가 없다.
 
 }
 
@@ -103,6 +190,7 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	{
 
 	}
+
 	if (ImGui::Button("Collision OnOff"))
 	{
 		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
@@ -117,14 +205,18 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		Objects.push_back(Ptr);
 	}
 
+
 	if (Objects.size())
 	{
 		std::vector<std::string> Names;
-		
+
 		for (std::shared_ptr<GameEngineObject> Ptr : Objects)
 		{
 			Names.push_back(Ptr->GetName());
 		}
+
+		//Names.push_back("aaaa");
+		//Names.push_back("bbbb");
 
 		std::vector<const char*> CNames;
 
@@ -144,14 +236,11 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			{
 				SelectObject->Off();
 			}
-			if (ImGui::Button("Select Object On"))
-			{
-				SelectObject->On();
-			}
-		}
 
+		}
 	}
 }
+
 
 void ContentsControlWindow::Start()
 {
@@ -159,6 +248,7 @@ void ContentsControlWindow::Start()
 	CurTab = Tabs[0];
 	Tabs.push_back(std::make_shared<TestTab>("Test"));
 	Tabs.push_back(std::make_shared<MapEditorTab>("MapEditor"));
+
 }
 
 void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
@@ -174,14 +264,16 @@ void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	}
 }
 
+
 void ContentsControlWindow::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
 	for (size_t i = 0; i < Tabs.size(); i++)
 	{
 		ImGui::SameLine();
-		if(ImGui::Button(Tabs[i]->Name.c_str()))
+		if (ImGui::Button(Tabs[i]->Name.c_str()))
 		{
 			CurTab = Tabs[i];
+			CurTab->Start();
 		}
 	}
 

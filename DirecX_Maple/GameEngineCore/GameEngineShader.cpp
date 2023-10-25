@@ -23,6 +23,9 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 	case ShaderType::Vertex:
 		Version = "vs";
 		break;
+	case ShaderType::Geometry:
+		Version = "gs";
+		break;
 	case ShaderType::Pixel:
 		Version = "ps";
 		break;
@@ -42,6 +45,7 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 
 	// "vs_5_0"
 }
+
 
 void GameEngineShader::ShaderResCheck()
 {
@@ -65,7 +69,10 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 	// 이 파일의 경로로 
 	_File.Open(FileOpenType::Read, FileDataType::Text);
 
-	std::string_view ShaderCode = _File.GetStringView();
+	GameEngineSerializer Ser;
+	_File.DataAllRead(Ser);
+
+	std::string_view ShaderCode = Ser.GetStringView();
 
 	// 파일을 다 읽어왔고
 	// 내부에 어떤 쉐이더가 있는지 분석하기 시작할 것이다.
@@ -88,6 +95,21 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 
 	{
 		// find 앞에서 부터 뒤져서 바이트 위치를 알려줍니다.
+		size_t EntryIndex = ShaderCode.find("_GS(");
+		// 못찾았을때 나옵니다.
+		if (EntryIndex != std::string::npos)
+		{
+			// 내가 지정한 위치에서부터 앞으로 찾기 아서 
+			size_t FirstIndex = ShaderCode.find_last_of(" ", EntryIndex);
+			std::string_view EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex + 2);
+
+			// GameEngineVertexShader::Load(_File.GetStringPath(), EntryName);
+
+		}
+	}
+
+	{
+		// find 앞에서 부터 뒤져서 바이트 위치를 알려줍니다.
 		size_t EntryIndex = ShaderCode.find("_PS(");
 		// 못찾았을때 나옵니다.
 		if (EntryIndex != std::string::npos)
@@ -103,3 +125,4 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 
 	return true;
 }
+

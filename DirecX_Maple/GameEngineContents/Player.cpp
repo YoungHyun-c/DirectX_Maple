@@ -148,18 +148,18 @@ void Player::Update(float _Delta)
 	StateUpdate(_Delta);
 	InsideLockMap();
 
-	float Speed = 500.0f;
-	if (GameEngineInput::IsPress('A', this))
-	{
-		MainSpriteRenderer->LeftFlip();
-		Transform.AddLocalPosition(float4::FORWARD * _Delta * Speed);
-	}
+	//float Speed = 500.0f;
+	//if (GameEngineInput::IsPress('A', this))
+	//{
+	//	MainSpriteRenderer->LeftFlip();
+	//	Transform.AddLocalPosition(float4::FORWARD * _Delta * Speed);
+	//}
 
-	if (GameEngineInput::IsPress('D', this))
-	{
-		MainSpriteRenderer->RightFlip();
-		Transform.AddLocalPosition(float4::BACKWARD * _Delta * Speed);
-	}
+	//if (GameEngineInput::IsPress('D', this))
+	//{
+	//	MainSpriteRenderer->RightFlip();
+	//	Transform.AddLocalPosition(float4::BACKWARD * _Delta * Speed);
+	//}
 
 	// ¡‹¿Œ ¡‹æ∆øÙ
 	//if (GameEngineInput::IsPress('I', this))

@@ -3,17 +3,20 @@
 #include "GameEngineDebug.h"
 #include "GameEngineMath.h"
 
-// 실제적으로 컴퓨터의 모든 데이터는 바이트 덩어리라고 할 수 있다.
-// 그 바이트 덩어리를 내가 원하는 만큼 내가 원하는 양으로
-// 읽어들이거나 컨트롤 할 수 있게 만들어주는 클래스 이다.
+// 실제적으로 컴퓨터의 모든 데이터는 바이트 덩어리라고 할수 있다.
+// 그 바이트 덩어리를 내가 원하는 만큼 내가 원하는 양으로 
+// 읽어들이거나 컨트롤할수 있게 만들어주는 클래스 이다.
+
+// 설명 :
 class GameEngineSerializer
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineSerializer();
 	~GameEngineSerializer();
 
 	void Write(const void* Data, unsigned int _Size);
+	void operator<<(std::string_view _Value);
 	void operator<<(const std::string& _Value);
 	void operator<<(const int& _Value);
 	void operator<<(const unsigned int& _Value);
@@ -33,11 +36,13 @@ public:
 	void operator>>(float4& _Value);
 	void operator>>(float4x4& _Value);
 
-	// delete Function
+	std::string_view GetStringView();
+
+	//// delete Function
 	//GameEngineSerializer(const GameEngineSerializer& _Other) = delete;
 	//GameEngineSerializer(GameEngineSerializer&& _Other) noexcept = delete;
-	//GameEngineSerializer& operator = (const GameEngineSerializer& _Other) = delete;
-	//GameEngineSerializer& operator = (GameEngineSerializer&& _Other) noexcept = delete;
+	//GameEngineSerializer& operator=(const GameEngineSerializer& _Other) = delete;
+	//GameEngineSerializer& operator=(GameEngineSerializer&& _Other) noexcept = delete;
 
 	void BufferResize(size_t _BufferSize)
 	{
@@ -48,6 +53,12 @@ public:
 	{
 		return Data.size();
 	}
+
+	size_t GetWriteOffset()
+	{
+		return WriteOffset;
+	}
+
 
 	template<typename PtrType>
 	PtrType* GetDataPtr()
@@ -63,7 +74,7 @@ private:
 	unsigned int ReadOffset = 0;
 
 	// 이런 클래스가 있다면
-	// 모든걸 쓰거나 읽을 수 있다.
+	// 모든걸 쓰거나 읽일수가 있다.
 	std::vector<char> Data;
 };
 
