@@ -3,6 +3,11 @@
 #include "Monster.h"
 #include "CravingMonster.h"
 #include "MonsterFunction.h"
+#include "Player.h"
+#include "PlayerValue.h"
+#include "GlobalValue.h"
+
+#define MaxDamage 700000000000
 
 DamageRenderer::DamageRenderer()
 {
@@ -75,6 +80,24 @@ void DamageRenderer::Update(float _Delta)
 		DeleteDamage();
 		CurTime = 0.0f;
 	}
+}
+
+void DamageRenderer::PlayerDamageCal()
+{
+	Str = (PlayerValue::GetValue()->GetPlayerStr());
+	Dex = PlayerValue::GetValue()->GetPlayerDex();
+	DamagePer = PlayerValue::GetValue()->GetPlayerDamPer();
+	BossDamagerPer = PlayerValue::GetValue()->GetPlayerBossDamPer();
+	DefenseIgnore = PlayerValue::GetValue()->GetPlayerDefenseIgnore();
+	CriticalDam = PlayerValue::GetValue()->GetPlayerCriticalDam();
+	AllAttack = PlayerValue::GetValue()->GetPlayerAllAttack();
+	AttackPer = PlayerValue::GetValue()->GetPlayerAttackPer();
+	ProPertyIgnorePer = PlayerValue::GetValue()->GetPlayerProPertyIgnore();
+
+	OffensePower = ((100 + AttackPer) / 100.0f);
+	AllDamagePer = ((100 + DamagePer + BossDamagerPer) / 100.0f);
+	DefenseCal = ((100 - (MonsterDefense - MonsterDefense * (DefenseIgnore/100.0f)) * (100 - SkillOption)) / 100.0f);
+	MonsterProperty = ((50 + (ProPertyIgnorePer)/2.0f) / 100.0f);
 
 }
 
@@ -86,20 +109,44 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
 		SkillPercentDam = (_SkillPercentDam / 100.0f);
 		SkillFinalDamage = (_SkillFinalDamage / 100.0f);
+
+		PlayerDamageCal();
+		
 		GameEngineRandom CriticalRan;
 		CriticalRan.SetSeed(time(nullptr)+j);
 		CriticalRandomDam = CriticalRan.RandomFloat(120, 150);
 		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
-		OneLineDamage = static_cast<long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
-			DefenseCorrection * LevelCorrection * ArcaneCorrection *Proficiency * SkillFinalDamage);
+		
+		
+		OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
+			DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);
+
+		if (_Object->GetName() == "Boss")
+		{
+			DefenseCal = ((100 - (BossDefense - BossDefense * (DefenseIgnore / 100.0f)) * (100 - SkillOption)) / 100.0f);
+			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * AllDamagePer *
+				DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage);
+		}
+		if (_Object->GetName() == "Mugong")
+		{
+			MugongDefense = GlobalValue::GetMonsterValue()->GetMugongDefenseValue();
+			DefenseCal = ((100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f)) * (100 - SkillOption)) / 100.0f);
+			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
+				DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);
+		}
+
+		if (OneLineDamage >= MaxDamage)
+		{
+			OneLineDamage = MaxDamage;
+		}
+
 		SumDamage += OneLineDamage;
 		std::string CurDamage = "OneLineDamage : ";
-		CurDamage += std::to_string(static_cast<long long>(OneLineDamage));
+		CurDamage += std::to_string(static_cast<unsigned long long>(OneLineDamage));
 		CurDamage += "\n";
 		OutputDebugStringA(CurDamage.c_str());
 
 		// 몬스터에게 데미지
-
 		if (_Object->GetName() == "CravingDiebody")
 		{
 			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, false);
@@ -109,11 +156,6 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
 		}
 
-		// 무공일떄 데미지 해봄
-		if (_Object->GetName() == "Mugong")
-		{
-			Monster::Monsters->GetMonsterHp(-OneLineDamage);
-		}
 
 		int NumArr[15] = { 0, };
 		int Digit;
@@ -148,7 +190,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 				NewNumberRender->Transform.SetWorldPosition({ (_Object->Transform.GetWorldPosition().X + 150.0f - (i - 1) * 32.0f), _Object->Transform.GetWorldPosition().Y + LastNumYPos + 150.0f });
 				Vect->push_back(NewNumberRender);
 			}
-			LastNumYPos += 30.0f;
+			LastNumYPos += 32.0f;
 		}
 		DamageRenderList.push_back(Vect);
 	}

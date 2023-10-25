@@ -114,6 +114,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="PlayerValue.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="PotalManager.cpp">
       <SubType>
       </SubType>
@@ -253,6 +257,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayerActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerValue.h">
       <SubType>
       </SubType>
     </ClInclude>

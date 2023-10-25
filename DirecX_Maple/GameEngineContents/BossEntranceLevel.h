@@ -25,5 +25,7 @@ protected:
 private:
 	std::shared_ptr<class BackGroundMap> Map;
 
+	std::shared_ptr<class Player> NewPlayer = nullptr;
+
 };
 

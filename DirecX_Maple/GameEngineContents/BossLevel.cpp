@@ -71,15 +71,15 @@ void BossLevel::Start()
 	}
 
 	// ¿å¸ÁÀÇ Çå½Å Craving Monster
-	{
-		//CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		//CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-		//CravingMob->SetDebugMap("BossDebugMap.Png");
+	//{
+	//	CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+	//	CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+	//	CravingMob->SetDebugMap("BossDebugMap.Png");
 
-		//CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-		//CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-		//CravingMob->SetDebugMap("BossDebugMap.Png");
-	}
+	//	CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
+	//	CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+	//	CravingMob->SetDebugMap("BossDebugMap.Png");
+	//}
 
 	{
 		CreateActor<SkillManager>();

@@ -272,7 +272,7 @@ void SkillDivide::AttackEvent()
 	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
-			NewDR->PushDamage(_Other, DivideHitCount, 1000, 220);
+			NewDR->PushDamage(_Other, DivideHitCount, 480, 220);
 		};
 	HitEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{

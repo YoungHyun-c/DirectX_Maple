@@ -67,12 +67,9 @@ void Monster::Update(float _Delta)
 	////	MonsterAppear = false;
 	////}
 
-	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	if (RenderOn == true && MonsterAppear == false)
 	{
-		//Renderer->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
 		Renderer->On();
-		//Col->Transform.SetLocalPosition({PlayerPos.X, PlayerPos.Y + 100.0f});
 		Col->On();
 		MonsterAppear = true;
 	}
@@ -83,7 +80,6 @@ void Monster::Update(float _Delta)
 		MonsterAppear = false;
 	}
 	
-	//GlobalValue::CurMonsterPos = Renderer->Transform.GetWorldPosition();
 	Col->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
 }
 

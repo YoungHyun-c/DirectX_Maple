@@ -5,6 +5,13 @@
 // Ό³Έν :
 class GlobalValue
 {
+private:
+	static GlobalValue MonsterValue;
+public:
+	static GlobalValue* GetMonsterValue()
+	{
+		return &MonsterValue;
+	}
 public:
 	// constructer destructer
 	GlobalValue();
@@ -22,9 +29,20 @@ public:
 
 	static float4 CurMonsterPos;
 
+	int GetMugongDefenseValue()
+	{
+		return MugongDefense;
+	}
+
+	void SetMugongDefenseValue(int _Value)
+	{
+		MugongDefense = _Value;
+	}
+
 protected:
 
 private:
-
+	int MonsterDefense = 10;
+	int MugongDefense = 10;
 };
 

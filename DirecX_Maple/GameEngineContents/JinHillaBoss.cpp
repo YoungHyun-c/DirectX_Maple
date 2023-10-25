@@ -4,6 +4,7 @@
 #include "Player.h"
 
 #include "BossSkillEffect.h"
+#include "GlobalValue.h"
 
 JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
@@ -92,6 +93,7 @@ void JinHillaBoss::Start()
 		MonsterCollision->Transform.SetLocalScale({ 100.0f, 200.0f });
 		MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
 		MonsterCollision->Off();
+		MonsterCollision->SetName(std::string("Boss"));
 	}
 
 	// 공격범위
@@ -112,10 +114,6 @@ void JinHillaBoss::Start()
 	SetColPos(-20.0f, 20.0f, 0.0f);
 	GameEngineInput::AddInputObject(this);
 	Dir = ActorDir::Right;
-
-
-	//BossEffect = GetLevel()->CreateActor<BossSkillEffect>();
-	//BossEffect->Transform.SetLocalPosition({ 900.0f, -700.0f });
 }
 
 void JinHillaBoss::Update(float _Delta)

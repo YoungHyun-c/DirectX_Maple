@@ -29,7 +29,7 @@ void Mouse::Start()
 	CursorCollision->SetCollisionType(ColType::AABBBOX2D);
 
 	TransformData Data = CursorCollision->Transform.GetConstTransformDataRef();
-	ShowCursor(false);
+	//ShowCursor(false);
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -47,6 +47,11 @@ void Mouse::PosUpdate()
 	MousePos = { MousePos.X - WindowScale.hX() , -MousePos.Y + WindowScale.hY(), -500.0f};
 	Cursor->Transform.SetLocalPosition(MousePos);
 	CursorCollision->Transform.SetLocalPosition(GetLevel()->GetMainCamera()->Transform.GetWorldPosition() + MousePos +float4{ -8, 10 });
+
+	if (MousePos.X >= WindowScale.X && MousePos.Y >= WindowScale.Y)
+	{
+		ShowCursor(true);
+	}
 }
 
 void Mouse::ClickUpdate()

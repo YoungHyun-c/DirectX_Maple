@@ -67,10 +67,10 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossEntranceLevel>("BossEntranceLevel");
 	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
 	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
-	// 맵 에디터 테스트
-	GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 
-	GameEngineCore::ChangeLevel("BossLevel");
+	GameEngineCore::ChangeLevel("PracticeLevel");
+	// 맵 에디터 테스트
+	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 }
 
 void ContentsCore::Update(float _Delta)

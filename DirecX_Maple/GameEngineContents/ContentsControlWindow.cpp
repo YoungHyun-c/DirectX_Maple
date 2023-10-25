@@ -2,26 +2,150 @@
 #include "ContentsControlWindow.h"
 #include "MapEditorLevel.h"
 #include "Monster.h"
-#include "Player.h"
+#include "PlayerValue.h"
 
-
-void MapEditorTab::Start()
+#include "DamageRenderer.h"
+void CharEditorTab::Start()
 {
 }
 
-void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
+void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-	Player::GetMainPlayer();
+	Str = PlayerStat->GetValue()->GetPlayerStr();
+	Dex = PlayerStat->GetValue()->GetPlayerDex();
+	DamagePer = PlayerStat->GetValue()->GetPlayerDamPer();
+	BossDamagePer = PlayerStat->GetValue()->GetPlayerBossDamPer();
+	DefenseIgnore = PlayerStat->GetValue()->GetPlayerDefenseIgnore();
+	CritialDam = PlayerStat->GetValue()->GetPlayerCriticalDam();
+	AllAttack = PlayerStat->GetValue()->GetPlayerAllAttack();
+	AttackPer = PlayerStat->GetValue()->GetPlayerAttackPer();
 
-	if (ImGui::InputInt("Hp", &HpInput))
+	MugongDefense = MugongStat->GetMonsterValue()->GetMugongDefenseValue();
+
+	if (ImGui::InputInt("Str", &Str))
 	{
-		if (0 >= HpInput)
+		if (0 >= Str)
 		{
-			HpInput = 1;
+			Str = 1;
 		}
+		PlayerStat->GetValue()->SetPlayerStr(Str);
+	}
+	if (ImGui::InputInt("Dex", &Dex))
+	{
+		if (0 >= Dex)
+		{
+			Dex = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerDex(Dex);
+	}
+	if (ImGui::InputInt("DamagePer", &DamagePer))
+	{
+		if (0 >= DamagePer)
+		{
+			DamagePer = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerDamPer(DamagePer);
+	}
+	if (ImGui::InputInt("BossDamagePer", &BossDamagePer))
+	{
+		if (0 >= BossDamagePer)
+		{
+			BossDamagePer = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerBossDamPer(BossDamagePer);
+	}
+	if (ImGui::InputFloat("DefenseIgnore", &DefenseIgnore))
+	{
+		if (0 >= DefenseIgnore)
+		{
+			DefenseIgnore = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerDefenseIgnore(DefenseIgnore);
+	}
+	if (ImGui::InputFloat("CritialDam", &CritialDam))
+	{
+		if (0 >= CritialDam)
+		{
+			CritialDam = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerCriticalDam(CritialDam);
+	}
+	if (ImGui::InputInt("AllAttackPower", &AllAttack))
+	{
+		if (0 >= AllAttack)
+		{
+			AllAttack = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerAllAttack(AllAttack);
+	}
+	if (ImGui::InputInt("AllAttackPercent %", &AttackPer))
+	{
+		if (0 >= AttackPer)
+		{
+			AttackPer = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerAttackPer(AttackPer);
+	}
+
+	if (ImGui::InputInt("MugongDefense", &MugongDefense))
+	{
+		if (0 >= MugongDefense)
+		{
+			MugongDefense = 10;
+		}
+		MugongStat->GetMonsterValue()->SetMugongDefenseValue(MugongDefense);
 	}
 
 
+	if (ImGui::Button("Save"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("PlayerData");
+
+		OPENFILENAMEA OFN;
+		char filePathName[100] = "";
+		char lpstrFile[100] = "";
+		static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
+
+		std::string Path = Dir.GetStringPath();
+
+		memset(&OFN, 0, sizeof(OPENFILENAME));
+		OFN.lStructSize = sizeof(OPENFILENAME);
+		OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
+		OFN.lpstrFilter = filter;
+		OFN.lpstrFile = lpstrFile;
+		OFN.nMaxFile = 100;
+		OFN.lpstrDefExt = "GameData";
+		OFN.lpstrInitialDir = Path.c_str();
+
+		if (GetSaveFileNameA(&OFN) != 0) {
+			SavePath = OFN.lpstrFile;
+		}
+	}
+
+	//if ("" != SavePath)
+	//{
+	//	ImGui::Text(SavePath.c_str());
+
+	//	if (ImGui::Button("MapDataSave"))
+	//	{
+	//		GameEngineSerializer BinSer;
+
+	//		std::vector<std::shared_ptr<Monster>> ObjectType = _Level->GetObjectGroupConvert<Monster>(ContentsObjectType::Monster);
+	//		BinSer << static_cast<unsigned int>(ObjectType.size());
+	//		for (size_t i = 0; i < ObjectType.size(); i++)
+	//		{
+	//			ObjectType[i]->Serializer(BinSer);
+	//		}
+
+	//		GameEngineFile File = SavePath;
+	//		File.Open(FileOpenType::Write, FileDataType::Binary);
+	//		File.Write(BinSer);
+
+	//	}
+	//}
 }
 
 void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
@@ -57,9 +181,6 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			Names.push_back(Ptr->GetName());
 		}
 
-		//Names.push_back("aaaa");
-		//Names.push_back("bbbb");
-
 		std::vector<const char*> CNames;
 
 		for (size_t i = 0; i < Names.size(); i++)
@@ -88,9 +209,8 @@ void ContentsControlWindow::Start()
 {
 	Tabs.push_back(std::make_shared<LevelChangeTab>("LevelChangeTab"));
 	CurTab = Tabs[0];
-	Tabs.push_back(std::make_shared<TestTab>("Test"));
-	Tabs.push_back(std::make_shared<MapEditorTab>("MapEditor"));
-
+	Tabs.push_back(std::make_shared<CharEditorTab>("CharEditor"));
+	//Tabs.push_back(std::make_shared<TestTab>("Test"));
 }
 
 void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)

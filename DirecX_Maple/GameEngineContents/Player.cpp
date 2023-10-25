@@ -171,7 +171,6 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	
 	PlayerPos = Transform.GetWorldPosition();
 
 	PlayerActor::Update(_Delta);

@@ -108,6 +108,9 @@
     <ClCompile Include="BossSkillEffect.cpp">
       <Filter>Object\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerValue.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="BossSkillEffect.h">
       <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerValue.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

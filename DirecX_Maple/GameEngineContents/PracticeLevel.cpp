@@ -127,7 +127,7 @@ void PracticeLevel::Update(float _Delta)
 	
 	if (false == Monster::Monsters->MonsterAppearValue())
 	{
-		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f, 100.0f });
+		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, -750.0f, 100.0f });
 	}
 }
 

@@ -47,6 +47,7 @@ class Player : public PlayerActor
 {
 	friend class AdeleSkill;
 	friend class DamageRenderer;
+	friend class PlayerValue;
 private:
 	static Player* MainPlayer;
 public:
@@ -84,11 +85,6 @@ public:
 	Player(Player&& _Other) noexcept = delete;
 	Player& operator = (const Player& _Other) = delete;
 	Player& operator = (Player&& _Other) noexcept = delete;
-
-	void AddPos(float4 _Pos)
-	{
-		Pos += _Pos;
-	}
 
 	void PlayerEnterBind()
 	{
@@ -240,5 +236,4 @@ private:
 	bool SkillUseCheck();
 	Skill* CurSkill = nullptr;
 	std::map<char, Skill > SkillState;
-
 };

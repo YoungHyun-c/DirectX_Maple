@@ -400,7 +400,7 @@ void MonsterFunction::DirCheck()
 
 void MonsterFunction::InsideLockMap()
 {
-	GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
+	//GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
 	MonsterPos = MonsterRenderer->Transform.GetWorldPosition();
 	if (Transform.GetWorldPosition().X < LeftCheck)
 	{
