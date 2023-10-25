@@ -70,6 +70,12 @@ public:
 	float4 GetScreenMouseDir() { return ScreenMouseDir; }
 	float4 GetScreenMouseDirNormal() { return ScreenMouseDirNormal; }
 
+	template<typename EnumType>
+	void SetZSort(EnumType _SortOrder)
+	{
+		ZSortMap.insert(static_cast<int>(_SortOrder));
+	}
+
 	void SetZSort(int _SortOrder)
 	{
 		ZSortMap.insert(_SortOrder);
