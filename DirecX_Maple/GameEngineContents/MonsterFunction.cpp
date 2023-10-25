@@ -173,13 +173,38 @@ void MonsterFunction::Skill_1Update(float _Delta)
 	}
 	if (M_DisappearTime >= M_AppearTime)
 	{
+		M_DisappearTime = 0.0f;
 		ChangeState(MonsterState::Skill1After);
+		return;
 	}
 }
 
 void MonsterFunction::Skill_1After()
 {
 	ChangeAnimationState("Skill1After");
+	float4 TestPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	if (TestPos.X <= LeftCheck)
+	{
+		Transform.SetWorldPosition({ TestPos.X + LeftCheck, -700.0f });
+		return;
+	}
+	else if (TestPos.X >= RightCheck)
+	{
+		Transform.SetWorldPosition({ RightCheck - 20.0f, -700.0f });
+		return;
+	}
+	else
+	{
+		Transform.SetWorldPosition({ TestPos.X, -700.0f });
+	}
+}
+
+void MonsterFunction::Skill_1AfterUpdate(float _Delta)
+{
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(MonsterState::Stand);
+	}
 }
 
 void MonsterFunction::Skill_2Start()
@@ -300,6 +325,8 @@ void MonsterFunction::StateUpdate(float _Delta)
 		return AttackUpdate(_Delta);
 	case MonsterState::Skill1:
 		return Skill_1Update(_Delta);
+	case MonsterState::Skill1After:
+		return Skill_1AfterUpdate(_Delta);
 	case MonsterState::Skill2:
 		return Skill_2Update(_Delta);
 	case MonsterState::Die:

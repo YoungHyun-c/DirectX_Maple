@@ -55,7 +55,7 @@ void BossLevel::Start()
 	{
 		NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
 		NewPlayer->SetDebugMap("BossDebugMap.png");
-		NewPlayer->PlayerBind();
+		NewPlayer->PlayerEnterBind();
 		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
 
@@ -143,7 +143,7 @@ void BossLevel::Update(float _Delta)
 	// ÀÔÀå ÄÆ½Å
 	//if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
 	{
-		NewPlayer->PlayerBindEnd();
+		NewPlayer->PlayerEnterBindEnd();
 		//AniEnd = true;
 		//BossJin->CallRegen();
 	}

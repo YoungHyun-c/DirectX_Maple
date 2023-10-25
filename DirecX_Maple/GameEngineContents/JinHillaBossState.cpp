@@ -115,7 +115,8 @@ void JinHillaBoss::AttackStart()
 {
 	std::string AnimationName = "Attack";
 
-	switch (TestPattern)
+	// TestPattern
+	switch (3)
 	{
 	case 1:
 		ChangeAnimationState("Attack");

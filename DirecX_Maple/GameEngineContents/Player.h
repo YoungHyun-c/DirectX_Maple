@@ -23,6 +23,14 @@ enum class PlayerClothes
 	Max,
 };
 
+struct KnockBackInfo
+{
+	float4 Dir;
+	float Distance;
+	float Speed;
+	float MinTime;
+	float Time = 0.0f;
+};
 
 #include "PlayerActor.h"
 #include "AdeleSkill.h"
@@ -70,34 +78,24 @@ public:
 	Player& operator = (const Player& _Other) = delete;
 	Player& operator = (Player&& _Other) noexcept = delete;
 
-	void TestEvent(GameEngineRenderer* _Renderer);
-
-	// 엑터로 이동
-	//void SetDebugMap(std::string_view _DebugMapName)
-	//{
-	//	//DebugMap = GameEngineTexture::Find(_DebugMapName);
-	//	DebugMapName = _DebugMapName;
-	//}
-
-	//void GravityReset()
-	//{
-	//	GravityForce = 0.0f;
-	//}
-
 	void AddPos(float4 _Pos)
 	{
 		Pos += _Pos;
 	}
 
-	void PlayerBind()
+	void PlayerEnterBind()
 	{
 		Bind = true;
 	}
 
-	void PlayerBindEnd()
+	void PlayerEnterBindEnd()
 	{
 		Bind = false;
 	}
+
+	// 스킬을 맞았을때의 기능
+	void PlayerBind(float _Time = 1.0f);
+	void KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime);
 
 protected:
 	void StateUpdate(float _Delta);
@@ -181,8 +179,8 @@ private:
 	float4 UpCheck = { 0.0f, 50.0f };
 	float4 PlayerScale = float4::ZERO;
 	float4 PlayerPos = float4::ZERO;
-	float4 LeftCheck = { -15.0f, 0.0f };
-	float4 RightCheck = { 15.0f, 0.0f };
+	float4 LeftCheck = { -20.0f, 0.0f };
+	float4 RightCheck = { 20.0f, 0.0f };
 	GameEngineColor CheckColor = DefaultGroundColor;
 	float4 CurMapScale = float4::ZERO;
 	void InsideLockMap();
@@ -197,6 +195,14 @@ private:
 
 
 	bool Bind = false;
+	float BindTime = 0.0f;
+	float BindLimitTime = 1.5f;
+	float CurTime = 0.0f;
 
+	std::shared_ptr<KnockBackInfo> MyKnockBackInfo = nullptr;
+	void KnockBackUpdate(float _Delta);
+	bool isKnockBack = false;
+
+	float PrevTime = 0.0f;
+	float TimeCount = 0.0f;
 };
-

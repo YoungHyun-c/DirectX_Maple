@@ -24,7 +24,7 @@ void Player::Start()
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		//MainSpriteRenderer->SetMaterial("2DTextureOver"); //10/10
-		MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
+		//MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 
 		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Walk", "Battle_Walk", 0.3f, -1, -1, true);
@@ -57,7 +57,7 @@ void Player::Start()
 		SkillRenderer->Off();*/
 
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
-		//MainSpriteRenderer->AutoSpriteSizeOn();
+		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Center);
 
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
@@ -122,11 +122,6 @@ void Player::Start()
 	//GetLevel()->GetMainCamera()->CameraTargetSetting(Transform, float4::BACKWARD * 500.0f);
 }
 
-void Player::TestEvent(GameEngineRenderer* _Renderer)
-{
-	int a = 0;
-}
-
 void Player::Update(float _Delta)
 {
 	
@@ -136,6 +131,14 @@ void Player::Update(float _Delta)
 
 	if (Bind == true)
 	{
+		CurTime += _Delta;
+		//PlayerBind();
+		return;
+	}
+
+	if (isKnockBack == true)
+	{
+		KnockBackUpdate(_Delta);
 		return;
 	}
 
@@ -423,7 +426,7 @@ void Player::InsideLockMap()
 	float4 CurPos = Transform.GetWorldPosition();
 	if (0 >= CurPos.X + LeftCheck.X)
 	{
-		Transform.SetLocalPosition(float4{ - LeftCheck.X, CurPos.Y });
+		Transform.SetLocalPosition(float4{ -LeftCheck.X, CurPos.Y });
 	}
 	else if (CurMapScale.X <= CurPos.X + RightCheck.X)
 	{
@@ -433,7 +436,7 @@ void Player::InsideLockMap()
 	CurPos.Y *= -1.0f;
 	if (0 >= CurPos.Y - UpCheck.Y)
 	{
-		Transform.SetLocalPosition(float4{ CurPos.X, - UpCheck.Y });
+		Transform.SetLocalPosition(float4{ CurPos.X, -UpCheck.Y });
 		MoveVectorForceReset();
 	}
 	else if (CurMapScale.Y <= CurPos.Y + GroundCheck.Y)
@@ -441,6 +444,61 @@ void Player::InsideLockMap()
 		Transform.SetLocalPosition(float4{ CurPos.X, CurMapScale.Y + GroundCheck.Y });
 	}
 }
+
+void Player::PlayerBind(float _Time)
+{
+	Bind = true;
+	/*if (_Time >= CurTime)
+	{
+		Bind = false;
+		CurTime = 0.0f;
+		return;
+	}*/
+}
+
+void Player::KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime)
+{
+	if (isKnockBack == false)
+	{
+		isKnockBack = true;
+		if (MyKnockBackInfo == nullptr)
+		{
+			MyKnockBackInfo = std::make_shared<KnockBackInfo>();
+			MyKnockBackInfo->Dir = _Dir;
+			MyKnockBackInfo->Distance = _Distance;
+			MyKnockBackInfo->Speed = _Speed;
+			MyKnockBackInfo->MinTime = _MinTime;
+		}
+		else
+		{
+			MsgBoxAssert("KncokBackInfo?");
+			return;
+		}
+	}
+}
+
+void Player::KnockBackUpdate(float _Delta)
+{
+	if (MyKnockBackInfo == nullptr)
+	{
+		MsgBoxAssert("넉백인포가 Nullptr인데 넉백되었습니다.");
+	}
+
+	CurTime = static_cast<float>(clock());
+	TimeCount = (CurTime - PrevTime) / 1000.0f;
+	PrevTime = CurTime;
+
+	float4 CurPos = Transform.GetLocalPosition();
+	Transform.SetLocalPosition(CurPos + MyKnockBackInfo->Dir * MyKnockBackInfo->Speed * _Delta);
+	MyKnockBackInfo->Time += TimeCount;
+	InsideLockMap();
+	if (MyKnockBackInfo->Time >= MyKnockBackInfo->MinTime)
+	{
+		isKnockBack = false;
+		MyKnockBackInfo = nullptr;
+	}
+}
+
 
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
