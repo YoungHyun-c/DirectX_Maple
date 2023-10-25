@@ -8,6 +8,11 @@ void MapEditorTab::Start()
 
 void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	if (_Level->GetName() != "MapEditor")
+	{
+		return;
+	}
+
 	if (ImGui::Button("Save"))
 	{
 		GameEngineDirectory Dir;
