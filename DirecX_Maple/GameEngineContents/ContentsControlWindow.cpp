@@ -11,8 +11,6 @@ void MapEditorTab::Start()
 
 void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-
-
 	Player::GetMainPlayer();
 
 	if (ImGui::InputInt("Hp", &HpInput))
@@ -21,11 +19,7 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		{
 			HpInput = 1;
 		}
-
-		// Player::GetMainPlayer()->SetHp(HpInput);
 	}
-
-
 
 
 }

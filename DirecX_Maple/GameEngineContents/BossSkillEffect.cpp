@@ -28,5 +28,8 @@ void BossSkillEffect::Start()
 
 void BossSkillEffect::Update(float _Delta)
 {
-
+	if (true == SkillEffect->IsCurAnimationEnd())
+	{
+		Death();
+	}
 }
