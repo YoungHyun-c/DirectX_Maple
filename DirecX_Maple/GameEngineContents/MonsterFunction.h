@@ -157,7 +157,7 @@ protected:
 	float MoveDistance = 0.0f;
 	float MoveLimitDistance = 600.0f;
 	float M_FStopTime = 0.0f;
-	float M_FStopLimitTime = 1.5f;
+	float M_FStopLimitTime = 2.0f;
 	float M_DieingTime = 0.0f;
 	float M_DieingLimitTime = 5.0f;
 	float M_DisappearTime = 0.0f;

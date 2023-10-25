@@ -22,7 +22,7 @@ void Player::StandStart()
 }
 void Player::StandUpdate(float _Delta)
 {
-	SkillUseCheck();
+	//SkillUseCheck();
 
 
 	if (true == GameEngineInput::IsDown(VK_LEFT, this)

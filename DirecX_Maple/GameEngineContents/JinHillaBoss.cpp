@@ -27,7 +27,7 @@ void JinHillaBoss::Start()
 	MonsterRenderer->CreateAnimation("Death", "JinHilla_Death", 0.1f, -1, -1, false);
 
 	MonsterRenderer->CreateAnimation("Attack", "BossGreenAttack", 0.1f, -1, -1, false); // 초앞
-	MonsterRenderer->CreateAnimation("Attack2", "BossPurpleAttack", 0.1f, -1, -1, true); // 보뒤
+	MonsterRenderer->CreateAnimation("Attack2", "BossPurpleAttack", 0.1f, -1, -1, false); // 보뒤
 	MonsterRenderer->CreateAnimation("Attack3", "BossAttack3_Knock", 0.1f, -1, -1, false); // 파바 넉백
 	MonsterRenderer->CreateAnimation("Attack4", "BossAttack4_Front", 0.1f, -1, -1, false); // 앞휘두르기
 	MonsterRenderer->CreateAnimation("Attack5", "Attack5_Side", 0.1f, -1, -1, false);	   // 양옆사이드 볼
@@ -121,8 +121,28 @@ void JinHillaBoss::Update(float _Delta)
 	GameEngineDebug::DrawBox2D(MonsterRenderer->GetImageTransform(), float4::GREEN);
 	MonsterFunction::Update(_Delta);
 
-	JinDirCheck();
+	//JinDirCheck();
+	//StateUpdate(_Delta);
+
+	//JinDirCheck();
 	StateUpdate(_Delta);
+	if (nullptr == CurSkill)
+	{
+		/*JinDirCheck();
+		StateUpdate(_Delta);
+		InsideLockMap();*/
+	}
+	else 
+	{
+		//if (true == CurSkill->IsControll)
+		//{
+		//	JinDirCheck();
+		//	StateUpdate(_Delta);
+		//	InsideLockMap();
+		//}
+
+		CurSkill->Update(_Delta);
+	}
 
 	if (JinHillaCurHp <= 0)
 	{
@@ -152,9 +172,8 @@ void JinHillaBoss::Update(float _Delta)
 		JinHillaCurHp -= 10000000000000;
 	}
 
-
 	InsideLockMap();
-	//AttackEvent(_Delta);
+	AttackEvent(_Delta);
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
 }
 
@@ -174,10 +193,12 @@ void JinHillaBoss::JinDirCheck()
 	if (PlayerDirX >= MonsterDirX)
 	{
 		Dir = ActorDir::Right;
+		MonsterRenderer->LeftFlip();
 	}
 	if (PlayerDirX < MonsterDirX)
 	{
 		Dir = ActorDir::Left;
+		MonsterRenderer->RightFlip();
 	}
 }
 
@@ -194,6 +215,24 @@ void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 ///////////////////// 공격스킬 애니메이션 관련////////////////////
 void JinHillaBoss::SkillAnimation()
 {
+	{
+		MonsterRenderer->SetFrameEvent("Attack", 14, [&](GameEngineSpriteRenderer*)
+			{
+				SkillState[1];
+				SkillUseCheck();
+			}
+		);
+	}
+
+	{
+		MonsterRenderer->SetFrameEvent("Attack2", 14, [&](GameEngineSpriteRenderer*)
+			{
+				SkillState[2];
+				SkillUseCheck();
+			}
+		);
+	}
+
 	{
 		// Attack3
 		MonsterRenderer->SetFrameEvent("Attack3", 14, [&](GameEngineSpriteRenderer*)
@@ -255,6 +294,308 @@ void JinHillaBoss::SkillAnimation()
 			}
 		);
 	}
+
+
+	{
+		Skill Skill;
+		Skill.IsControll = false;
+		
+		for (int i = 0; i < 6; i++)
+		{
+			Skill.StateTest.CreateState(i, {
+				.Start =
+				[=](class GameEngineState* _Parent)
+				{
+					if (CurSkill->SkillUseDir == ActorDir::Right)
+					{
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{350.0f + 150 * i, -100.0f, 0.0f});
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							if (i >= 1)
+							{
+								Green = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 3)
+							{
+								Green = 2;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Green });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+
+							std::string AniName = "GreenTile";
+							AniName += std::to_string(Green);
+							Effect->ChangeAnimationState(AniName);
+						}
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-200.0f - 150*i, -100.0f, 0.0f});
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							if (i >= 1)
+							{
+								Green = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 3)
+							{
+								Green = 2;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Green });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+							std::string AniName = "GreenTile";
+							AniName += std::to_string(Green);
+							Effect->ChangeAnimationState(AniName);
+						}
+					}
+
+
+					if (CurSkill->SkillUseDir == ActorDir::Left)
+					{
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -350.0f - 150 * i, -100.0f, 0.0f });
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							if (i >= 1)
+							{
+								Green = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 3)
+							{
+								Green = 2;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ Effect->Transform.GetWorldPosition().X, Effect->Transform.GetWorldPosition().Y + 100.0f + 120.0f * Green });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+
+							std::string AniName = "GreenTile";
+							AniName += std::to_string(Green);
+							Effect->ChangeAnimationState(AniName);
+						}
+
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f + 150 * i, -100.0f, 0.0f });
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							if (i >= 1)
+							{
+								Green = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 3)
+							{
+								Green = 2;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Purple });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+							std::string AniName = "GreenTile";
+							AniName += std::to_string(Green);
+							Effect->ChangeAnimationState(AniName);
+						}
+					}
+
+				},
+				.Stay =
+				[=](float DeltaTime, class GameEngineState* _Parent)
+				{
+					if (0.15f <= _Parent->GetStateTime())
+					{
+						_Parent->ChangeState(i + 1);
+					}
+				}
+				});
+		}
+
+		// 20에서 사용 가능
+		Skill.StateTest.CreateState(6, {
+			.Start =
+			[=](class GameEngineState* _Parent)
+			{
+					CurSkill = nullptr;
+					Green = 0;
+			} });
+
+		SkillState[1] = Skill;
+	}
+
+	{
+		Skill Skill2;
+		Skill2.IsControll = false;
+
+		for (int i = 0; i < 6; i++)
+		{
+			Skill2.StateTest2.CreateState(i, {
+				.Start =
+				[=](class GameEngineState* _Parent)
+				{
+					if (CurSkill->SkillUseDir == ActorDir::Right)
+					{
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{350.0f + 150 * i, -100.0f, 0.0f});
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							if (i >= 2 && i < 4)
+							{
+								Purple = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 4)
+							{
+								Purple = 0;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Purple });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+
+							std::string AniName = "PurpleTile";
+							AniName += std::to_string(Purple);
+							Effect->ChangeAnimationState(AniName);
+						}
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-200.0f - 150 * i, -100.0f, 0.0f});
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							if (i >= 2)
+							{
+								Purple = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 4)
+							{
+								Purple = 0;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Purple });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+							std::string AniName = "PurpleTile";
+							AniName += std::to_string(Purple);
+							Effect->ChangeAnimationState(AniName);
+						}
+					}
+
+
+					if (CurSkill->SkillUseDir == ActorDir::Left)
+					{
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -350.0f - 150 * i, -100.0f, 0.0f });
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							if (i >= 2)
+							{
+								Purple = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 4)
+							{
+								Purple = 0;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ Effect->Transform.GetWorldPosition().X, Effect->Transform.GetWorldPosition().Y + 100.0f + 120.0f * Purple });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+
+							std::string AniName = "PurpleTile";
+							AniName += std::to_string(Purple);
+							Effect->ChangeAnimationState(AniName);
+						}
+
+						{
+							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f + 150 * i, -100.0f, 0.0f });
+							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+							JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 600.0f });
+							if (i >= 2)
+							{
+								Purple = 1;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 300.0f });
+							}
+							if (i >= 4)
+							{
+								Purple = 0;
+								JinHillGreenSkillCol->Transform.SetLocalScale({ 100.0f, 100.0f });
+							}
+							JinHillGreenSkillCol->Transform.SetWorldPosition({ EFfectPos.X, EFfectPos.Y + 100.0f + 120.0f * Purple });
+							JinHillGreenSkillCol->SetCollisionType(ColType::AABBBOX2D);
+							JinHillGreenSkillCol->On();
+							std::string AniName = "PurpleTile";
+							AniName += std::to_string(Purple);
+							Effect->ChangeAnimationState(AniName);
+						}
+					}
+
+				},
+				.Stay =
+				[=](float DeltaTime, class GameEngineState* _Parent)
+				{
+					if (0.15f <= _Parent->GetStateTime())
+					{
+						_Parent->ChangeState(i + 1);
+					}
+				}
+				});
+		}
+
+		// 20에서 사용 가능
+		Skill2.StateTest2.CreateState(6, {
+			.Start =
+			[=](class GameEngineState* _Parent)
+			{
+					CurSkill = nullptr;
+					Purple = 2;
+			} });
+
+		SkillState[2] = Skill2;
+	}
+}
+
+bool JinHillaBoss::SkillUseCheck()
+{
+	if (nullptr != CurSkill)
+	{
+		return false;
+	}
+
+	for (std::pair<const int, Skill>& pair : SkillState)
+	{
+		//if (AnimationName == "Attack")
+		if (pair.first == 1)
+		{
+			Skill& UseSkill = pair.second;
+
+			CurSkill = &UseSkill;
+			CurSkill->SkillUsePos = Transform.GetWorldPosition();
+			CurSkill->SkillUseDir = Dir;
+			UseSkill.StateTest.ChangeState(0);
+			return true;
+		}
+	}
+
+	return false;
 }
 
 

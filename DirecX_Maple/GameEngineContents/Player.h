@@ -215,25 +215,25 @@ private:
 	// 스킬중 그 어떤거라도 사용하면 무조건 스킬로 상태가 체인지 되면 된다.
 	// 누르는 키
 
-	class Skill 
-	{
-	public:
-		bool IsControll;
-	    float MaxCoolTime;
-	    float CurCoolTime;
-		float4 SkillUsePos;
-		int TargetCollisionOrder;
-		GameEngineState State;
+	//class Skill 
+	//{
+	//public:
+	//	bool IsControll;
+	//    float MaxCoolTime;
+	//    float CurCoolTime;
+	//	float4 SkillUsePos;
+	//	int TargetCollisionOrder;
+	//	GameEngineState State;
 
-		// void CoolUpdate();
+	//	// void CoolUpdate();
 
-		void Update(float _Delta) 
-		{
-			State.Update(_Delta);
-		}
-	};
+	//	void Update(float _Delta) 
+	//	{
+	//		State.Update(_Delta);
+	//	}
+	//};
 
-	bool SkillUseCheck();
-	Skill* CurSkill = nullptr;
-	std::map<char, Skill > SkillState;
+	//bool SkillUseCheck();
+	//Skill* CurSkill = nullptr;
+	//std::map<int, Skill > SkillState;
 };

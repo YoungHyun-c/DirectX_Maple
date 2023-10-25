@@ -20,6 +20,10 @@ void BossSkillEffect::Start()
 	SkillEffect->CreateAnimation("GreenTile1", "GreenFloorTile1", 0.1f);
 	SkillEffect->CreateAnimation("GreenTile2", "GreenFloorTile2", 0.1f);
 
+	SkillEffect->CreateAnimation("PurpleTile0", "PurpleFloorTile0", 0.1f);
+	SkillEffect->CreateAnimation("PurpleTile1", "PurpleFloorTile1", 0.1f);
+	SkillEffect->CreateAnimation("PurpleTile2", "PurpleFloorTile2", 0.1f);
+
 	SkillEffect->ChangeAnimation("GreenTile2");
 	SkillEffect->AutoSpriteSizeOn();
 	SkillEffect->SetPivotType(PivotType::Bottom);

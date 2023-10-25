@@ -1,5 +1,6 @@
 #pragma once
 #include "MonsterFunction.h"
+#include <GameEngineCore/GameEngineState.h>
 
 // Ό³Έν :
 class JinHillaBoss : public MonsterFunction
@@ -54,6 +55,7 @@ protected:
 	void AttackEvent(float _Delta);
 
 	void Skill_1Start();
+	void Skill_1AfterUpdate(float _Delta);
 	//void Skill_1End();
 	//void Skill_1After();
 
@@ -74,11 +76,11 @@ private:
 	int Defense = 300;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;
-	float MoveLimit = 150.0f;
+	float MoveLimit = 50.0f;
 
 	float AppearCool = 1.5f;
 	float StartAttack = 0.0f;
-	float AttackCool = 6.0f;
+	float AttackCool = 8.0f;
 
 	std::shared_ptr<GameEngineCollision> JinHillaAttackRangeCol;
 	std::shared_ptr<GameEngineCollision> JinHillBodyCol;
@@ -88,6 +90,8 @@ private:
 	std::shared_ptr<GameEngineCollision> JinHillFrontSlapSkillCol;
 	std::shared_ptr<GameEngineCollision> JinHillSideSlapSkillCol;
 	std::shared_ptr<GameEngineCollision> JinHillChoppingSkillCol;
+
+	//std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol;
 
 	std::shared_ptr<class BossSkillEffect> BossEffect;
 
@@ -101,5 +105,32 @@ private:
 	void SkillAnimation();
 
 	int Test = 0;
+
+
+	class Skill
+	{
+	public:
+		bool IsControll;
+		float MaxCoolTime;
+		float CurCoolTime;
+		float4 SkillUsePos;
+		ActorDir SkillUseDir = ActorDir::Max;
+		int TargetCollisionOrder;
+		GameEngineState StateTest;
+		GameEngineState StateTest2;
+
+		// void CoolUpdate();
+
+		void Update(float _Delta)
+		{
+			StateTest.Update(_Delta);
+		}
+	};
+
+	bool SkillUseCheck();
+	Skill* CurSkill = nullptr;
+	std::map<int, Skill > SkillState;
+	int Green = 0;
+	int Purple = 2;
 };
 

@@ -9,6 +9,7 @@ void JinHillaBoss::RegenUpdate(float _Delta)
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Stand);
+		return;
 	}
 }
 
@@ -44,10 +45,10 @@ void JinHillaBoss::BossStateCheck()
 		switch (CurStateNumber)
 		{
 		case 0:
-			ChangeState(MonsterState::Skill1);
+			return ChangeState(MonsterState::Skill1);
 			break;
 		case 1:
-			ChangeState(MonsterState::Move);
+			return ChangeState(MonsterState::Move);
 			break;
 		default:
 			break;
@@ -66,13 +67,13 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 	if (MoveDistance >= MoveLimit)
 	{
 		// 상태 함수 테스트 (순간이동?)
-		//BossStateCheck();
-		ChangeState(MonsterState::Stand);
+		BossStateCheck();
+		//ChangeState(MonsterState::Stand);
 		MoveDistance = 0.0f;
 		return;
 	}
 
-	//DirCheck();
+	DirCheck();
 	AttackEvent(_Delta);
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
@@ -98,13 +99,13 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 	if (Dir == ActorDir::Left)
 	{
 		MoveDistance += MoveSpeed * _Delta;
-		MonsterRenderer->RightFlip();
+		//MonsterRenderer->RightFlip();
 		MovePos += MoveDir * -CompareDir * MoveSpeed * _Delta;
 	}
 	if (Dir == ActorDir::Right)
 	{
 		MoveDistance += MoveSpeed * _Delta;
-		MonsterRenderer->LeftFlip();
+		//MonsterRenderer->LeftFlip();
 		MovePos += MoveDir * CompareDir * MoveSpeed * _Delta;
 	}
 
@@ -114,12 +115,15 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 void JinHillaBoss::AttackStart()
 {
 	std::string AnimationName = "Attack";
+	MonsterRenderer->SetPivotType(PivotType::Center);
 
+	//DirCheck();
 	// TestPattern
-	switch (3)
+	switch (TestPattern)
 	{
 	case 1:
 		ChangeAnimationState("Attack");
+		AnimationName = "Attack";
 		if (Dir == ActorDir::Left)
 		{
 			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
@@ -134,6 +138,7 @@ void JinHillaBoss::AttackStart()
 		break;
 	case 2:
 		ChangeAnimationState("Attack2");
+		AnimationName = "Attack2";
 		if (Dir == ActorDir::Left)
 		{
 			Dir = ActorDir::Left;
@@ -265,6 +270,7 @@ void JinHillaBoss::AttackEvent(float _Delta)
 		if (0.5f > StartAttack)
 		{
 			ChangeState(MonsterState::Attack);
+			return;
 		}
 		if (StartAttack > AttackCool)
 		{
@@ -303,8 +309,18 @@ void JinHillaBoss::CallRegen()
 void JinHillaBoss::Skill_1Start()
 {
 	ChangeAnimationState("Skill1");
+	MonsterCollision->Off();
+	JinHillaAttackRangeCol->Off();
 }
 
+void JinHillaBoss::Skill_1AfterUpdate(float _Delta)
+{
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(MonsterState::Stand);
+		return;
+	}
+}
 
 void JinHillaBoss::DeathStart()
 {

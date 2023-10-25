@@ -16,7 +16,6 @@
 
 #include "SkillManager.h"
 
-
 BossLevel::BossLevel()
 {
 
@@ -119,7 +118,6 @@ void BossLevel::Start()
 	}
 
 	GameEngineInput::AddInputObject(this);
-
 }
 
 void BossLevel::Update(float _Delta)
