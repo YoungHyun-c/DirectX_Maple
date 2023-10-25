@@ -8,7 +8,6 @@
 //		std::map<std::string, GameEngineState> GameAllSkillMap;
 // }
 
-
 enum class PlayerState
 {
 	Stand,
@@ -226,6 +225,8 @@ private:
 		bool IsControll;
 	    float MaxCoolTime;
 	    float CurCoolTime;
+		float4 SkillUsePos;
+		int TargetCollisionOrder;
 		GameEngineState State;
 
 		// void CoolUpdate();

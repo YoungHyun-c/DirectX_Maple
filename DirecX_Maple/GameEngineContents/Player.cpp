@@ -36,12 +36,13 @@ void Player::Start()
 				{
 					{
 						std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-						Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{100.0f * i, 0.0f, 0.0f});
+						Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{100.0f * i, 0.0f, 0.0f});
 					}
 
 					{
 						std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-						Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{-100.0f * i, 0.0f, 0.0f});
+						// Effect->setAtt(PlayerAtt);
+						Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-100.0f * i, 0.0f, 0.0f});
 					}
 
 				},
@@ -57,67 +58,12 @@ void Player::Start()
 		}
 
 		// 20에서 사용 가능
-		Skill.State.CreateState(11, {
+		Skill.State.CreateState(10, {
 			.Start =
 			[=](class GameEngineState* _Parent)
 			{
 					CurSkill = nullptr;
 			}});
-
-
-
-		//// 20에서 사용 가능
-		//Skill.State.CreateState(1, {
-		//	.Start =
-		//	[=](class GameEngineState* _Parent)
-		//	{
-		//		{
-		//			std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-		//			Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{250.0f, 0.0f, 0.0f});
-		//		}
-
-		//		{
-		//			std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-		//			Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{-250.0f, 0.0f, 0.0f});
-		//		}
-
-		//	},
-		//	.Stay =
-		//	[=](float DeltaTime, class GameEngineState* _Parent)
-		//	{
-		//		if (1.0f <= _Parent->GetStateTime())
-		//		{
-		//			_Parent->ChangeState(2);
-		//		}
-		//	}
-		//	});
-
-		//// 20에서 사용 가능
-		//Skill.State.CreateState(2, {
-		//	.Start =
-		//	[=](class GameEngineState* _Parent)
-		//	{
-		//		{
-		//			std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-		//			Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{350.0f, 0.0f, 0.0f});
-		//		}
-
-		//		{
-		//			std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-		//			Effect->Transform.SetWorldPosition(this->Transform.GetWorldPosition() + float4{-350.0f, 0.0f, 0.0f});
-		//		}
-
-		//	},
-		//	.Stay =
-		//	[=](float DeltaTime, class GameEngineState* _Parent)
-		//	{
-		//		if (1.0f <= _Parent->GetStateTime())
-		//		{
-		//			this->CurSkill = nullptr;
-		//		}
-		//	}
-		//	});
-
 
 		SkillState['D'] = Skill;
 	}
@@ -633,6 +579,7 @@ bool Player::SkillUseCheck()
 			Skill& UseSkill = pair.second;
 
 			CurSkill = &UseSkill;
+			CurSkill->SkillUsePos = Transform.GetWorldPosition();
 			UseSkill.State.ChangeState(0);
 			return true;
 		}
