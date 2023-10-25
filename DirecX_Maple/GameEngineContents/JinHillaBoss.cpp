@@ -148,36 +148,6 @@ void JinHillaBoss::Update(float _Delta)
 	{
 		ChangeState(MonsterState::Skill1After);
 	}
-	//if (GameEngineInput::IsDown('6', this))
-	//{
-	//	MonsterRenderer->ChangeAnimation("Attack");
-	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	//}
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	MonsterRenderer->ChangeAnimation("Attack2");
-	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	//}
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	MonsterRenderer->ChangeAnimation("Attack3");
-	//	MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	//}
-	//if (GameEngineInput::IsDown('9', this))
-	//{
-	//	MonsterRenderer->ChangeAnimation("Attack4");
-	//	MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
-	//}
-	//if (GameEngineInput::IsDown('0', this))
-	//{
-	//	MonsterRenderer->ChangeAnimation("Attack5");
-	//	MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-	//}
 
 	if (GameEngineInput::IsDown('-', this))
 	{
@@ -185,74 +155,15 @@ void JinHillaBoss::Update(float _Delta)
 	}
 
 
-	//PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
-	//MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
-	//if (PlayerDirX > MonsterDirX)
-	//{
-	//	Dir = ActorDir::Right;
-	//}
-	//if (PlayerDirX < MonsterDirX)
-	//{
-	//	Dir = ActorDir::Left;
-	//}
-
 	InsideLockMap();
 	//AttackEvent(_Delta);
-
-	// 넉백 만들어보려했는데 이대로 만드는게 아니라 플레이어에 넉백함수를 만들어서 플레이어가 직접 넉백당하게만들어야 될꺼같음.
-	// 방향, 거리, 시간영향, 힘? 필요할듯
-	EventParameter KnockAttack;
-	{
-		KnockAttack.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Player)
-			{
-				//_Player->GetParentObject()->Transform.AddLocalPosition({300.0f});
-				//float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 100 } - Transform.GetWorldPosition();
-				//Dir.Normalize();
-				//_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->KnockBack(Dir, 150.0f,300.0f, 1.0f);
-				int a = 0;
-			};
-		JinHillKnockSkillCol->CollisionEvent(ContentsCollisionType::Player, KnockAttack);
-	}
-
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
-	//if (JinHillKnockSkillCol == true)
-	//{
-	//	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 100 } - Transform.GetWorldPosition();
-	//	Dir.Normalize();
-	//	Player::GetMainPlayer()->KnockBack(Dir, 150.0f, 300.0f, 1.0f);
-	//}
-	//if (PlayerBind == true)
-	//{
-	//	Player::GetMainPlayer()->PlayerBind();
-	//}
-	//
-	//EventParameter BindAttack;
-	//{
-	//	BindAttack.Enter = [](GameEngineCollision* _this, GameEngineCollision* _Player)
-	//		{
-	//			//Player::GetMainPlayer()->PlayerBind();
-	//			//PlayerBind = true;
-	//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
-	//		};
-	//	BindAttack.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Player)
-	//		{
-	//			//Player::GetMainPlayer()->PlayerBind();
-	//			//PlayerBind = true;
-	//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
-	//		};
-	//	JinHillBindSkillCol->CollisionEvent(ContentsCollisionType::Player, BindAttack);
-	//}
-
-	//if (true == JinHillBindSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1)))
-	//{
-	//	Player::GetMainPlayer()->PlayerBind(1.5f);
-	//}
 }
 
 void JinHillaBoss::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
 {
 	//Player::GetMainPlayer()->PlayerBind(1.5f);
-	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 100 } - Transform.GetWorldPosition();
+	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 25 } - Transform.GetWorldPosition();
 	Dir.Normalize();
 	Player::GetMainPlayer()->KnockBack(Dir, 150.0f, 300.0f, 1.0f);
 }
@@ -282,9 +193,9 @@ void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 	JinHillaCurHp = 45000000000000;  // 4페
 }
 
+///////////////////// 공격스킬 애니메이션 관련////////////////////
 void JinHillaBoss::SkillAnimation()
 {
-	// 공격스킬 애니메이션
 	{
 		// Attack3
 		MonsterRenderer->SetFrameEvent("Attack3", 14, [&](GameEngineSpriteRenderer*)
@@ -347,3 +258,101 @@ void JinHillaBoss::SkillAnimation()
 		);
 	}
 }
+
+
+/////// 확인 해보던 것
+
+	//if (GameEngineInput::IsDown('6', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('7', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack2");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('8', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack3");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+	//if (GameEngineInput::IsDown('9', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack4");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
+	//}
+	//if (GameEngineInput::IsDown('0', this))
+	//{
+	//	MonsterRenderer->ChangeAnimation("Attack5");
+	//	MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
+	//	MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+	//}
+
+	//PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
+	//MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
+	//if (PlayerDirX > MonsterDirX)
+	//{
+	//	Dir = ActorDir::Right;
+	//}
+	//if (PlayerDirX < MonsterDirX)
+	//{
+	//	Dir = ActorDir::Left;
+	//}
+
+
+
+
+////////// 넉백
+// 넉백 만들어보려했는데 이대로 만드는게 아니라 플레이어에 넉백함수를 만들어서 플레이어가 직접 넉백당하게만들어야 될꺼같음.
+	// 방향, 거리, 시간영향, 힘? 필요할듯
+//EventParameter KnockAttack;
+//{
+//	KnockAttack.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Player)
+//		{
+//			//_Player->GetParentObject()->Transform.AddLocalPosition({300.0f});
+//			//float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 100 } - Transform.GetWorldPosition();
+//			//Dir.Normalize();
+//			//_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->KnockBack(Dir, 150.0f,300.0f, 1.0f);
+//			int a = 0;
+//		};
+//	JinHillKnockSkillCol->CollisionEvent(ContentsCollisionType::Player, KnockAttack);
+//}
+//
+//JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
+//if (JinHillKnockSkillCol == true)
+//{
+//	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 100 } - Transform.GetWorldPosition();
+//	Dir.Normalize();
+//	Player::GetMainPlayer()->KnockBack(Dir, 150.0f, 300.0f, 1.0f);
+//}
+//if (PlayerBind == true)
+//{
+//	Player::GetMainPlayer()->PlayerBind();
+//}
+//
+//EventParameter BindAttack;
+//{
+//	BindAttack.Enter = [](GameEngineCollision* _this, GameEngineCollision* _Player)
+//		{
+//			//Player::GetMainPlayer()->PlayerBind();
+//			//PlayerBind = true;
+//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
+//		};
+//	BindAttack.Stay = [](GameEngineCollision* _this, GameEngineCollision* _Player)
+//		{
+//			//Player::GetMainPlayer()->PlayerBind();
+//			//PlayerBind = true;
+//			_Player->GetParentObject()->GetDynamic_Cast_This<Player>()->GetMainPlayer()->PlayerBind();
+//		};
+//	JinHillBindSkillCol->CollisionEvent(ContentsCollisionType::Player, BindAttack);
+//}
+
+//if (true == JinHillBindSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1)))
+//{
+//	Player::GetMainPlayer()->PlayerBind(1.5f);
+//}
