@@ -8,29 +8,37 @@ class GameEngineFrameAnimation
 
 public:
 	GameEngineSpriteRenderer* Parent = nullptr;
-	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
+
 	std::string AnimationName;
 	std::string SpriteName;
 
+	std::shared_ptr<GameEngineSprite> Sprite = nullptr;
+
+	// float Inter;
 	bool Loop;
 	bool IsEnd;
+
+	bool EventCheck = false;
 
 	unsigned int Start;
 	unsigned int End;
 	unsigned int CurIndex;
-	float CurTime = 0.0f; // CurAnimationTime;
+	float CurTime = 0.0f;
+
 	std::vector<int> Index;
 
 	void Reset();
+
+	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
+
+	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
+
 	SpriteData Update(float _DeltaTime);
 
-	// FrameEvent
-	bool EventCheck = false;
-	std::map<int, std::function<void(GameEngineSpriteRenderer*)>> FrameEventFunction;
-	std::function<void(GameEngineSpriteRenderer*)> EndEvent;
 	void EventCall(int _Frame);
+
 public:
-	std::vector<float> Inter; // AnimationSpeed;
+	std::vector<float> Inter;
 };
 
 enum class PivotType
@@ -44,6 +52,13 @@ enum class PivotType
 	LeftBottom,
 	Left,
 	LeftTop,
+};
+
+
+enum class MaskMode
+{
+	StaticMask, // 스크린 좌표계로 마스크를 
+	DynamicMask, // 스크린좌표계인데 랜더러의 위치에 따라서 마스크 위치를 변경한다.
 };
 
 struct SpriteRendererInfo
@@ -203,7 +218,7 @@ public:
 		return ColorDataValue;
 	}
 
-	void SetMaskTexture(std::string_view _Texture);
+	void SetMaskTexture(std::string_view _Texture, MaskMode _Mask = MaskMode::StaticMask);
 
 protected:
 	void Start() override;
