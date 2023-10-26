@@ -111,6 +111,9 @@
     <ClCompile Include="PlayerValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="BossSkillManager.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -219,6 +222,9 @@
     </ClInclude>
     <ClInclude Include="PlayerValue.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSkillManager.h">
+      <Filter>Object\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

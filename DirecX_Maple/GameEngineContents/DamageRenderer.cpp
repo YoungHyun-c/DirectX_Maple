@@ -28,6 +28,7 @@ DamageRenderer::~DamageRenderer()
 		for (int i = 0; i < Vec->size(); i++)
 		{
 			(*Vec)[i]->Death();
+			(*Vec)[i] = nullptr;
 		}
 
 		delete (Vec);
@@ -216,6 +217,7 @@ void DamageRenderer::DeleteDamage()
 			for (int i = 0; i < (*Start)->size(); i++)
 			{
 				(*Vec)[i]->Death();
+				(*Vec)[i] = nullptr;
 			}
 
 			delete (Vec);

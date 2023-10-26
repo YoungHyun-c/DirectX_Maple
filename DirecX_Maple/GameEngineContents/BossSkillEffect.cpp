@@ -24,6 +24,8 @@ void BossSkillEffect::Start()
 	SkillEffect->CreateAnimation("PurpleTile1", "PurpleFloorTile1", 0.1f);
 	SkillEffect->CreateAnimation("PurpleTile2", "PurpleFloorTile2", 0.1f);
 
+	SkillEffect->CreateAnimation("Attack6_Ball", "JinHilla_Attack6_Ball", 0.1f);
+
 	SkillEffect->ChangeAnimation("GreenTile2");
 	SkillEffect->AutoSpriteSizeOn();
 	SkillEffect->SetPivotType(PivotType::Bottom);

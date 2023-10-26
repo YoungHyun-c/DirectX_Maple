@@ -22,11 +22,11 @@ void Player::StandStart()
 }
 void Player::StandUpdate(float _Delta)
 {
-	//SkillUseCheck();
+	SkillUseCheck();
 
 
-	if (true == GameEngineInput::IsDown(VK_LEFT, this)
-		|| true == GameEngineInput::IsDown(VK_RIGHT, this))
+	if (true == GameEngineInput::IsPress(VK_LEFT, this)
+		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
 		ChangeState(PlayerState::Walk);
 		return;
@@ -37,7 +37,7 @@ void Player::StandUpdate(float _Delta)
 		ChangeState(PlayerState::Jump);
 	}
 
-	if (GameEngineInput::IsDown(VK_SHIFT, this))
+	if (GameEngineInput::IsPress(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack);
 	}

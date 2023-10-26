@@ -85,8 +85,6 @@ void JinHillaBoss::Start()
 	// 볼
 	//MonsterRenderer->CreateAnimation("Attack6", "JinHilla_Attack6_Ball", 0.1f, -1, -1, false);
 
-	// 공격 프레임 추가 해야됨
-
 	//몸통
 	{
 		MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
@@ -218,7 +216,8 @@ void JinHillaBoss::SkillAnimation()
 	{
 		MonsterRenderer->SetFrameEvent("Attack", 14, [&](GameEngineSpriteRenderer*)
 			{
-				SkillState[1];
+				SkillState['G'];
+				GreenAttack = true;
 				SkillUseCheck();
 			}
 		);
@@ -227,7 +226,8 @@ void JinHillaBoss::SkillAnimation()
 	{
 		MonsterRenderer->SetFrameEvent("Attack2", 14, [&](GameEngineSpriteRenderer*)
 			{
-				SkillState[2];
+				SkillState['P'];
+				PurpleAttack = true;
 				SkillUseCheck();
 			}
 		);
@@ -429,9 +429,10 @@ void JinHillaBoss::SkillAnimation()
 			{
 					CurSkill = nullptr;
 					Green = 0;
+					GreenAttack = false;
 			} });
 
-		SkillState[1] = Skill;
+		SkillState['G'] = Skill;
 	}
 
 	{
@@ -440,7 +441,7 @@ void JinHillaBoss::SkillAnimation()
 
 		for (int i = 0; i < 6; i++)
 		{
-			Skill2.StateTest2.CreateState(i, {
+			Skill2.StateTest.CreateState(i, {
 				.Start =
 				[=](class GameEngineState* _Parent)
 				{
@@ -561,15 +562,16 @@ void JinHillaBoss::SkillAnimation()
 		}
 
 		// 20에서 사용 가능
-		Skill2.StateTest2.CreateState(6, {
+		Skill2.StateTest.CreateState(6, {
 			.Start =
 			[=](class GameEngineState* _Parent)
 			{
 					CurSkill = nullptr;
 					Purple = 2;
+					PurpleAttack = false;
 			} });
 
-		SkillState[2] = Skill2;
+		SkillState['P'] = Skill2;
 	}
 }
 
@@ -580,13 +582,22 @@ bool JinHillaBoss::SkillUseCheck()
 		return false;
 	}
 
-	for (std::pair<const int, Skill>& pair : SkillState)
+	for (std::pair<const char, Skill>& pair : SkillState)
 	{
-		//if (AnimationName == "Attack")
-		if (pair.first == 1)
+		if (GreenAttack == true && pair.first == 'G')
 		{
 			Skill& UseSkill = pair.second;
 
+			CurSkill = &UseSkill;
+			CurSkill->SkillUsePos = Transform.GetWorldPosition();
+			CurSkill->SkillUseDir = Dir;
+			UseSkill.StateTest.ChangeState(0);
+			return true;
+		}
+
+		if (PurpleAttack = true && pair.first == 'P')
+		{
+			Skill& UseSkill = pair.second;
 			CurSkill = &UseSkill;
 			CurSkill->SkillUsePos = Transform.GetWorldPosition();
 			CurSkill->SkillUseDir = Dir;

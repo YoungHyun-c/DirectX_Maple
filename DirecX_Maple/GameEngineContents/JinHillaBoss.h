@@ -91,8 +91,6 @@ private:
 	std::shared_ptr<GameEngineCollision> JinHillSideSlapSkillCol;
 	std::shared_ptr<GameEngineCollision> JinHillChoppingSkillCol;
 
-	//std::shared_ptr<GameEngineCollision> JinHillGreenSkillCol;
-
 	std::shared_ptr<class BossSkillEffect> BossEffect;
 
 	bool IsAttack = false;
@@ -117,7 +115,6 @@ private:
 		ActorDir SkillUseDir = ActorDir::Max;
 		int TargetCollisionOrder;
 		GameEngineState StateTest;
-		GameEngineState StateTest2;
 
 		// void CoolUpdate();
 
@@ -129,8 +126,11 @@ private:
 
 	bool SkillUseCheck();
 	Skill* CurSkill = nullptr;
-	std::map<int, Skill > SkillState;
+	std::map<const char, Skill > SkillState;
 	int Green = 0;
 	int Purple = 2;
+
+	bool GreenAttack = false;
+	bool PurpleAttack = false;
 };
 

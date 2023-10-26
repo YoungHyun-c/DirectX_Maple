@@ -37,7 +37,7 @@ private:
 
 	float SkillPercentDam = 0.0f;
 	float SkillFinalDamage = 1.0f;
-	float Critical = 0.0f;
+	float Critical = 1.0f;
 	float CriticalRandomDam = 0.0f;
 	//float CriticalDam = 70.0f;
 	//float OffensePower = 2.12f;

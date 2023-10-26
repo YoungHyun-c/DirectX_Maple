@@ -116,7 +116,6 @@ void JinHillaBoss::AttackStart()
 {
 	std::string AnimationName = "Attack";
 	MonsterRenderer->SetPivotType(PivotType::Center);
-
 	//DirCheck();
 	// TestPattern
 	switch (TestPattern)
@@ -124,6 +123,7 @@ void JinHillaBoss::AttackStart()
 	case 1:
 		ChangeAnimationState("Attack");
 		AnimationName = "Attack";
+
 		if (Dir == ActorDir::Left)
 		{
 			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
