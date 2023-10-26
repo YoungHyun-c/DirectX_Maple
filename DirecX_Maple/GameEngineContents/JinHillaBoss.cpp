@@ -120,10 +120,8 @@ void JinHillaBoss::Update(float _Delta)
 	MonsterFunction::Update(_Delta);
 
 	//JinDirCheck();
-	//StateUpdate(_Delta);
-
-	//JinDirCheck();
 	StateUpdate(_Delta);
+
 	if (nullptr == CurSkill)
 	{
 		/*JinDirCheck();

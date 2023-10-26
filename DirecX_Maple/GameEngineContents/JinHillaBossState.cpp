@@ -60,6 +60,7 @@ void JinHillaBoss::MoveStart()
 {
 	ChangeAnimationState("Move");
 	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
+	DirCheck();
 }
 
 void JinHillaBoss::MoveUpdate(float _Delta)
@@ -73,8 +74,9 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 		return;
 	}
 
-	DirCheck();
 	AttackEvent(_Delta);
+
+	JinDirCheck();
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
 
@@ -116,6 +118,8 @@ void JinHillaBoss::AttackStart()
 {
 	std::string AnimationName = "Attack";
 	MonsterRenderer->SetPivotType(PivotType::Center);
+
+	JinDirCheck();
 	//DirCheck();
 	// TestPattern
 	switch (TestPattern)
