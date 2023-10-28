@@ -28,6 +28,7 @@ void JinHillaBoss::StandStart()
 void JinHillaBoss::StandUpdate(float _Delta)
 {
 	JinDirCheck();
+	//DirCheck();
 	M_FStopTime += _Delta;
 	if (M_FStopTime >= M_FStopLimitTime)
 	{
@@ -61,7 +62,7 @@ void JinHillaBoss::MoveStart()
 {
 	ChangeAnimationState("Move");
 	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
-	DirCheck();
+	JinDirCheck();
 }
 
 void JinHillaBoss::MoveUpdate(float _Delta)
@@ -75,8 +76,9 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 		return;
 	}
 
-	AttackEvent(_Delta);
+	//AttackEvent(_Delta);
 
+	//DirCheck();
 	JinDirCheck();
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
@@ -84,7 +86,7 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 	MonsterDirX = Transform.GetWorldPosition().X;
 	PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
 
-	float4 CompareDir = PlayerDirX - MonsterDirX - 1.0f;
+	float4 CompareDir = PlayerDirX - MonsterDirX;// -1.0f;
 	CompareDir.Normalize();
 
 	switch (Dir)
@@ -102,17 +104,28 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 	if (Dir == ActorDir::Left)
 	{
 		MoveDistance += MoveSpeed * _Delta;
-		//MonsterRenderer->RightFlip();
 		MovePos += MoveDir * -CompareDir * MoveSpeed * _Delta;
 	}
 	if (Dir == ActorDir::Right)
 	{
 		MoveDistance += MoveSpeed * _Delta;
-		//MonsterRenderer->LeftFlip();
 		MovePos += MoveDir * CompareDir * MoveSpeed * _Delta;
 	}
 
-	Transform.AddLocalPosition(MovePos);
+	if (Dir == ActorDir::Right && PlayerDirX - MonsterDirX <= 100.0f)
+	{
+		Dir = ActorDir::Right;
+		return;
+	}
+	if (Dir == ActorDir::Left && MonsterDirX - PlayerDirX <= 100.0f)
+	{
+		Dir = ActorDir::Left;
+		return;
+	}
+	//if (CompareDir.X >= 1.0f || CompareDir.X <= -1.0f)
+	{
+		Transform.AddLocalPosition(MovePos);
+	}
 }
 
 void JinHillaBoss::AttackStart()
@@ -120,8 +133,9 @@ void JinHillaBoss::AttackStart()
 	std::string AnimationName = "Attack";
 	MonsterRenderer->SetPivotType(PivotType::Center);
 
-	JinDirCheck();
 	//DirCheck();
+	JinDirCheck();
+
 	// TestPattern
 	switch (TestPattern)
 	{
@@ -146,13 +160,11 @@ void JinHillaBoss::AttackStart()
 		AnimationName = "Attack2";
 		if (Dir == ActorDir::Left)
 		{
-			Dir = ActorDir::Left;
 			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
 			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
 		}
 		if (Dir == ActorDir::Right)
 		{
-			Dir = ActorDir::Right;
 			MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
 		}
@@ -162,7 +174,6 @@ void JinHillaBoss::AttackStart()
 		ChangeAnimationState("Attack3");
 		if (Dir == ActorDir::Left)
 		{
-			Dir = ActorDir::Left;
 			MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
 
@@ -171,7 +182,6 @@ void JinHillaBoss::AttackStart()
 		}
 		if (Dir == ActorDir::Right)
 		{
-			Dir = ActorDir::Right;
 			MonsterRenderer->Transform.SetLocalPosition({ 330.0f, 120.0f });
 			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
 
@@ -229,19 +239,6 @@ void JinHillaBoss::AttackStart()
 	default:
 		break;
 	}
-
-	//ChangeAnimationState("Attack7");
-
-	//if (Dir == ActorDir::Left)
-	//{
-	//	MonsterRenderer->Transform.SetLocalPosition({ -200.0f, 120.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ -50.0f, 120.0f });
-	//}
-	//if (Dir == ActorDir::Right)
-	//{
-	//	MonsterRenderer->Transform.SetLocalPosition({ 200.0f, 120.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 120.0f });
-	//}
 }
 
 void JinHillaBoss::AttackUpdate(float _Delta)

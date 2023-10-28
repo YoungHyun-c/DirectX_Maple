@@ -115,6 +115,7 @@ void Player::Start()
 		//MainSpriteRenderer->RenderBaseInfoValue.BaseColorOnly = 1;
 	}
 
+	PlayerPos = Transform.GetWorldPosition();
 	Dir = ActorDir::Right;
 	Clothes = PlayerClothes::Normal;
 	ChangeState(PlayerState::Stand);

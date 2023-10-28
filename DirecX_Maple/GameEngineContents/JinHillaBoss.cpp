@@ -203,13 +203,23 @@ void JinHillaBoss::JinDirCheck()
 	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
 	if (PlayerDirX >= MonsterDirX)
 	{
+		/*Dir = ActorDir::Right;
+		MonsterRenderer->LeftFlip();*/
 		Dir = ActorDir::Right;
+		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
+			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
 		MonsterRenderer->LeftFlip();
+		return;
 	}
 	if (PlayerDirX < MonsterDirX)
 	{
+		/*Dir = ActorDir::Left;
+		MonsterRenderer->RightFlip();*/
 		Dir = ActorDir::Left;
+		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
+			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
 		MonsterRenderer->RightFlip();
+		return;
 	}
 }
 
@@ -305,40 +315,6 @@ void JinHillaBoss::SkillAnimation()
 	}
 }
 
-//bool JinHillaBoss::SkillUseCheck()
-//{
-//	if (nullptr != CurSkill)
-//	{
-//		return false;
-//	}
-//
-//	for (std::pair<const char, BossSkillManager>& pair : SkillState)
-//	{
-//		if (GreenAttack == true && pair.first == 'G')
-//		{
-//			BossSkillManager& UseSkill = pair.second;
-//
-//			CurSkill = &UseSkill;
-//			CurSkill->SkillUsePos = Transform.GetWorldPosition();
-//			CurSkill->SkillUseDir = Dir;
-//			UseSkill.StateTest.ChangeState(0);
-//			return true;
-//		}
-//
-//		if (PurpleAttack = true && pair.first == 'P')
-//		{
-//			BossSkillManager& UseSkill = pair.second;
-//			CurSkill = &UseSkill;
-//			CurSkill->SkillUsePos = Transform.GetWorldPosition();
-//			CurSkill->SkillUseDir = Dir;
-//			UseSkill.StateTest.ChangeState(0);
-//			return true;
-//		}
-//	}
-//
-//	return false;
-//}
-
 
 /////// 확인 해보던 것
 
@@ -383,7 +359,6 @@ void JinHillaBoss::SkillAnimation()
 	//{
 	//	Dir = ActorDir::Left;
 	//}
-
 
 
 
