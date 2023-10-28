@@ -1,6 +1,7 @@
 #pragma once
 #include "MonsterFunction.h"
 #include <GameEngineCore/GameEngineState.h>
+#include "BossSkillManager.h"
 
 // Ό³Έν :
 class JinHillaBoss : public MonsterFunction
@@ -12,6 +13,17 @@ public:
 	{
 		return MainBoss;
 	}
+
+	inline ActorDir GetDir()
+	{
+		return Dir;
+	}
+
+	float4 GetJinHillaTransform()
+	{
+		return Pos;
+	}
+
 	// constructer destructer
 	JinHillaBoss();
 	~JinHillaBoss();
@@ -59,6 +71,8 @@ protected:
 	//void Skill_1End();
 	//void Skill_1After();
 
+
+
 	void DeathStart();
 	void DeathUpdate(float _Delta);
 
@@ -66,6 +80,7 @@ protected:
 
 private:
 	ActorDir Dir = ActorDir::Max;
+	float4 Pos = float4::ZERO;
 	void JinDirCheck();
 	float4 JinBossScale = float4::ZERO;
 
@@ -97,40 +112,13 @@ private:
 	bool PlayerBind = false;
 	int TestPattern = 1;
 
-	std::shared_ptr<class CravingMonster> CravingMob;
+	std::shared_ptr<class CravingMonster> CravingMob1 = nullptr;
+	std::shared_ptr<class CravingMonster> CravingMob2 = nullptr;
+	
+	float DeathTime = 0.0f;
+	float DeathLimitTime = 5.0f;
 
 	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
 	void SkillAnimation();
-
-	int Test = 0;
-
-
-	class Skill
-	{
-	public:
-		bool IsControll;
-		float MaxCoolTime;
-		float CurCoolTime;
-		float4 SkillUsePos;
-		ActorDir SkillUseDir = ActorDir::Max;
-		int TargetCollisionOrder;
-		GameEngineState StateTest;
-
-		// void CoolUpdate();
-
-		void Update(float _Delta)
-		{
-			StateTest.Update(_Delta);
-		}
-	};
-
-	bool SkillUseCheck();
-	Skill* CurSkill = nullptr;
-	std::map<const char, Skill > SkillState;
-	int Green = 0;
-	int Purple = 2;
-
-	bool GreenAttack = false;
-	bool PurpleAttack = false;
 };
 

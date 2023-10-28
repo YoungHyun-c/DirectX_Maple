@@ -27,6 +27,7 @@ protected:
 
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> SkillEffect;
+	std::shared_ptr<GameEngineCollision> SkillEffectCollision;
 
 	std::string EffectName = "";
 };

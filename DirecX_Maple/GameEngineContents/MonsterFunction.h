@@ -65,6 +65,19 @@ public:
 	{
 		ChangeState(MonsterState::Regen);
 	}
+	virtual void CallDie()
+	{
+		ChangeState(MonsterState::Die);
+	}
+	virtual void CallDeath()
+	{
+		ChangeState(MonsterState::Death);
+	}
+
+	virtual MonsterState GetState()
+	{
+		return State;
+	}
 
 	bool GetGround()
 	{
@@ -82,6 +95,7 @@ protected:
 	float YColPos = 0.0f;
 	float MonsterDirX = 0.0f;
 	float PlayerDirX = 0.0f;
+	float CompareDirX = 0.0f;
 
 	GameEngineColor CheckColor;
 	float4 MonsterMovePos = float4::ZERO;

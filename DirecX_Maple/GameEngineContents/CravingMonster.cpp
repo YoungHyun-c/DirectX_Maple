@@ -98,10 +98,10 @@ void CravingMonster::Update(float _Delta)
 	MonsterFunction::Update(_Delta);
 	AttackEvent(_Delta);
 
-	if (GameEngineInput::IsDown('5', this))
-	{
-		ChangeState(MonsterState::Regen);
-	}
+	//if (GameEngineInput::IsDown('5', this))
+	//{
+	//	ChangeState(MonsterState::Regen);
+	//}
 	if (GameEngineInput::IsDown('6', this))
 	{
 		ChangeState(MonsterState::Attack);
@@ -158,6 +158,13 @@ void CravingMonster::DieingEnd()
 	CravingDieCol->Off();
 }
 
+void CravingMonster::DeathStart()
+{
+	ChangeAnimationState("Death");
+	CravingSkillCol->Off();
+	CravingAttackRangeCol->Off();
+}
+
 void CravingMonster::DeathUpdate(float _Delta)
 {
 	if (true == MonsterRenderer->IsCurAnimationEnd())
@@ -166,12 +173,12 @@ void CravingMonster::DeathUpdate(float _Delta)
 		CravingAttackRangeCol->Off();
 	}
 
-	DeathTime += _Delta;
-	if (DeathTime > RegenCool)
-	{
-		ChangeState(MonsterState::Regen);
-		DeathTime = 0.0f;
-	}
+	//DeathTime += _Delta;
+	//if (DeathTime > RegenCool)
+	//{
+	//	ChangeState(MonsterState::Regen);
+	//	DeathTime = 0.0f;
+	//}
 }
 
 void CravingMonster::AttackUpdate(float _Delta)
@@ -249,4 +256,9 @@ void CravingMonster::Hit(long long _Damage, bool _Attack)
 void CravingMonster::CallRegen()
 {
 	ChangeState(MonsterState::Regen);
+}
+
+void CravingMonster::CallDie()
+{
+	ChangeState(MonsterState::Die);
 }

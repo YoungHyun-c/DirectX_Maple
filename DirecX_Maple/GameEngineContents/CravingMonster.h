@@ -37,7 +37,13 @@ public:
 		return Hp;
 	}
 
+	int GetMonsterDeathCount()
+	{
+		return DeathCount;
+	}
+
 	void CallRegen() override;
+	void CallDie();
 
 protected:
 	void Start();
@@ -49,6 +55,7 @@ protected:
 	void DieStart() override;
 	void DieingStart() override;
 	void DieingEnd() override;
+	void DeathStart() override;
 	void DeathUpdate(float _Delta) override;
 
 	void AttackEvent(float _Delta);
@@ -76,6 +83,7 @@ private:
 
 
 	//std::shared_ptr<GameEngineSpriteRenderer> CravingMob;
-
+	
+	std::string CurState = "";
 };
 

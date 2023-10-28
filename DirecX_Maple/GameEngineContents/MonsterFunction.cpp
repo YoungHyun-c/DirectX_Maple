@@ -375,7 +375,7 @@ void MonsterFunction::DirCheck()
 {
 	PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
 	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
-	
+
 	if (PlayerDirX > MonsterDirX)
 	{
 		Dir = ActorDir::Right;
@@ -388,12 +388,14 @@ void MonsterFunction::DirCheck()
 	{
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+		MonsterRenderer->RightFlip();
 		return;
 	}
 	else if (Dir == ActorDir::Right)
 	{
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
+		MonsterRenderer->LeftFlip();
 		return;
 	}
 }

@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "JinHillaBoss.h"
 #include "Player.h"
+#include "CravingMonster.h"
 
 #define TelePortX 50.0f
 

@@ -15,6 +15,7 @@
 #include "BossLevelUi.h"
 
 #include "SkillManager.h"
+#include "BossSkillManager.h"
 
 BossLevel::BossLevel()
 {
@@ -82,6 +83,10 @@ void BossLevel::Start()
 
 	{
 		CreateActor<SkillManager>();
+	}
+
+	{
+		CreateActor<BossSkillManager>();
 	}
 
 	// 사령 스우, 스우 구체
