@@ -57,8 +57,14 @@ PixelOutPut TextureShader_VS(GameEngineVertex2D _Input)
     // 6의 버텍스가 들어올것이다.
     
     float4 CalUV = _Input.TEXCOORD;
+
+    CalUV.x *= VertexUVMul.x;
+    CalUV.y *= VertexUVMul.y;
     
-    
+       
+    CalUV.x += VertexUVPlus.x;
+    CalUV.y += VertexUVPlus.y;
+
     
     // hlsl은 사용하지 않은 녀석은 인식하지 못합니다.
     // 결과에 유의미한 영향을 주는 리소스가 아니면 hlsl은 최적화를 통해서 그 리소스를 배제한다.
@@ -106,9 +112,6 @@ SamplerState DiffuseTexSampler : register(s0);
 
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
-   
-    _Input.TEXCOORD.x += VertexUVPlus.x;
-    _Input.TEXCOORD.y += VertexUVPlus.y;
 
     
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);

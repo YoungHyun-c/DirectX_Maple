@@ -3,21 +3,21 @@
 #include "GameEngineVertexBuffer.h"
 #include "GameEngineIndexBuffer.h"
 
-// 레스터라이저 전에 범위를 잡을때 사용하는 버텍스와 인덱스 버퍼를 관리하는 클래스이다.
+// 레스터라이저 전에 범위를 잡을때 사용하는 버텍스와 인덱스버퍼를 관리하는 클래스입니다.
 
-// 설명 :
+// 설명 : 
 class GameEngineMesh : public GameEngineResources<GameEngineMesh>
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineMesh();
 	~GameEngineMesh();
 
 	// delete Function
 	GameEngineMesh(const GameEngineMesh& _Other) = delete;
 	GameEngineMesh(GameEngineMesh&& _Other) noexcept = delete;
-	GameEngineMesh& operator = (const GameEngineMesh& _Other) = delete;
-	GameEngineMesh& operator = (GameEngineMesh&& _Other) noexcept = delete;
+	GameEngineMesh& operator=(const GameEngineMesh& _Other) = delete;
+	GameEngineMesh& operator=(GameEngineMesh&& _Other) noexcept = delete;
 
 	void InputAssembler1();
 	void InputAssembler2();
@@ -32,7 +32,7 @@ public:
 		std::shared_ptr<GameEngineMesh> Res = GameEngineResources::CreateRes(_Name);
 		Res->VertexBufferPtr = GameEngineVertexBuffer::Find(_VtxName);
 		Res->IndexBufferPtr = GameEngineIndexBuffer::Find(_IdxName);
-		
+
 		if (nullptr == Res->VertexBufferPtr
 			|| nullptr == Res->IndexBufferPtr)
 		{
@@ -46,6 +46,12 @@ public:
 	{
 		return VertexBufferPtr;
 	}
+
+	void SetTOPOLOGY(D3D11_PRIMITIVE_TOPOLOGY _TOPOLOGY)
+	{
+		TOPOLOGY = _TOPOLOGY;
+	}
+
 
 	void Draw();
 
