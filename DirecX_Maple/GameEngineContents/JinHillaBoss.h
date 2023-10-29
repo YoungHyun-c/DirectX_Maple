@@ -71,6 +71,9 @@ protected:
 	//void Skill_1End();
 	//void Skill_1After();
 
+	//void SKill_2Start();
+	void Skill_3Start();
+	void Skill_3Update(float _Delta);
 
 
 	void DeathStart();
@@ -108,6 +111,7 @@ private:
 
 	std::shared_ptr<class BossSkillEffect> BossEffect;
 
+	bool CallMob = false;
 	bool IsAttack = false;
 	bool PlayerBind = false;
 	int TestPattern = 1;
@@ -116,7 +120,7 @@ private:
 	std::shared_ptr<class CravingMonster> CravingMob2 = nullptr;
 	
 	float DeathTime = 0.0f;
-	float DeathLimitTime = 5.0f;
+	float DeathLimitTime = 10.0f;
 
 	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
 	void SkillAnimation();

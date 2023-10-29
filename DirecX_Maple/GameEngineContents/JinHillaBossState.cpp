@@ -28,7 +28,23 @@ void JinHillaBoss::StandStart()
 void JinHillaBoss::StandUpdate(float _Delta)
 {
 	JinDirCheck();
-	//DirCheck();
+
+	if (CravingMob1->GetState() == (MonsterState::Death))
+	{
+		DeathTime += _Delta;
+		if (DeathTime > DeathLimitTime && IsAttack == false)
+		{
+			DeathTime = 0.0f;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
+
+	if (CravingMob1->GetState() == (MonsterState::Max))
+	{
+		ChangeState(MonsterState::Skill3);
+	}
+
 	M_FStopTime += _Delta;
 	if (M_FStopTime >= M_FStopLimitTime)
 	{
@@ -71,14 +87,21 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 	{
 		// 상태 함수 테스트 (순간이동?)
 		BossStateCheck();
-		//ChangeState(MonsterState::Stand);
 		MoveDistance = 0.0f;
 		return;
 	}
 
-	//AttackEvent(_Delta);
+	if (CravingMob1->GetState() == (MonsterState::Death))
+	{
+		DeathTime += _Delta;
+		if (DeathTime > DeathLimitTime && IsAttack == false)
+		{
+			DeathTime = 0.0f;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
 
-	//DirCheck();
 	JinDirCheck();
 	float4 MovePos = float4::ZERO;
 	float4 MoveDir = float4::ZERO;
@@ -133,7 +156,6 @@ void JinHillaBoss::AttackStart()
 	std::string AnimationName = "Attack";
 	MonsterRenderer->SetPivotType(PivotType::Center);
 
-	//DirCheck();
 	JinDirCheck();
 
 	// TestPattern
@@ -251,8 +273,12 @@ void JinHillaBoss::AttackUpdate(float _Delta)
 
 void JinHillaBoss::AttackEvent(float _Delta)
 {
-	EventParameter AttackRange;
+	if (CallMob == true)
+	{
+		return;
+	}
 
+	EventParameter AttackRange;
 	if (IsAttack == false && StartAttack < AttackCool)
 	{
 		AttackRange.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Player)
@@ -319,6 +345,30 @@ void JinHillaBoss::Skill_1AfterUpdate(float _Delta)
 {
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
+		ChangeState(MonsterState::Stand);
+		return;
+	}
+}
+
+
+
+void JinHillaBoss::Skill_3Start()
+{
+	ChangeAnimationState("SKill3");
+	CallMob = true;
+}
+
+void JinHillaBoss::Skill_3Update(float _Delta)
+{
+	if (true == MonsterRenderer->IsCurAnimationEnd())
+	{
+		CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CravingMob1->CallRegen();
+
+		CravingMob2->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CravingMob2->CallRegen();
+
+		CallMob = false;
 		ChangeState(MonsterState::Stand);
 		return;
 	}

@@ -144,15 +144,15 @@ void JinHillaBoss::Update(float _Delta)
 	/*CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 50.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
 	CravingMob1->CallRegen();*/
 
-	if (CravingMob1->GetState() == (MonsterState::Death))
+	/*if (CravingMob1->GetState() == (MonsterState::Death))
 	{
 		DeathTime += _Delta;
 		if (DeathTime > DeathLimitTime)
 		{
 			DeathTime = 0.0f;
-			CravingMob1->CallRegen();
+			ChangeState(MonsterState::Skill3);
 		}
-	}
+	}*/
 
 
 	if (JinHillaCurHp <= 0)
