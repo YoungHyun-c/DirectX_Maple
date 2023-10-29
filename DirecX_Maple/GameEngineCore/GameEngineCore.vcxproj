@@ -335,12 +335,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ThirdParty\FW1FontWrapper\inc\FW1FontWrapper.h" />
-    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Library>
+    <ClInclude Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h" />
     <ClInclude Include="EngineEnum.h" />
     <ClInclude Include="GameEngineActor.h">
       <SubType>
@@ -522,13 +517,9 @@
     </Library>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.inl">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    <None Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.inl">
       <FileType>Document</FileType>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Library>
+    </None>
     <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Debug\DirectXTex.pdb">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <FileType>Document</FileType>

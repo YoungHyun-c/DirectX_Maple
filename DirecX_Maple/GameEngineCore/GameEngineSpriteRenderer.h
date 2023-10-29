@@ -175,6 +175,9 @@ public:
 	void SetEndEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function);
 	void SetFrameEvent(std::string_view _AnimationName, int _Frame, std::function<void(GameEngineSpriteRenderer*)> _Function);
 
+	// "EngineBaseWRAPSampler"
+	void SetSampler(std::string_view _Name);
+
 	void SetPivotValue(const float4& _Value)
 	{
 		Pivot = _Value;
@@ -219,6 +222,8 @@ public:
 	}
 
 	void SetMaskTexture(std::string_view _Texture, MaskMode _Mask = MaskMode::StaticMask);
+
+	void SetText(const std::string& _Font, const std::string& _Text, float _Scale = 20.0f, float4 Color = float4::RED, FW1_TEXT_FLAG Flag = FW1_LEFT);
 
 protected:
 	void Start() override;

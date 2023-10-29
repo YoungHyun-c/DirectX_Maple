@@ -375,6 +375,13 @@ void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_p
 	}
 }
 
+void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::string_view _SamplerName)
+{
+	std::shared_ptr<GameEngineSampler> Samper = GameEngineSampler::Find(_SamplerName);
+
+	SetSampler(_Name, Samper);
+}
+
 void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::shared_ptr<GameEngineSampler> _TextureSampler)
 {
 	if (false == IsSampler(_Name))

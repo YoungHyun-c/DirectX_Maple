@@ -226,6 +226,9 @@
     <ClInclude Include="GameEngineFont.h">
       <Filter>Resources\Font</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h">
+      <Filter>ThirdParty\inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -381,12 +384,6 @@
     <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Release\DirectXTex.pdb">
       <Filter>ThirdParty\Release</Filter>
     </Library>
-    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.inl">
-      <Filter>ThirdParty\inc</Filter>
-    </Library>
-    <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h">
-      <Filter>ThirdParty\inc</Filter>
-    </Library>
     <Library Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\lib\Debug\DirectXTex.pdb">
       <Filter>ThirdParty\Debug</Filter>
     </Library>
@@ -404,5 +401,10 @@
     <CopyFileToFolders Include="ThirdParty\FW1FontWrapper\lib\Release\FW1FontWrapper.dll">
       <Filter>ThirdParty\Release</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.inl">
+      <Filter>ThirdParty\inc</Filter>
+    </None>
   </ItemGroup>
 </Project>
