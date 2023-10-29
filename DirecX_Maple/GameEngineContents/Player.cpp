@@ -69,10 +69,10 @@ void Player::Start()
 	}
 
 	// ÆùÆ® Å×½ºÆ®
-	{
-		std::shared_ptr<GameEngineSpriteRenderer> FontRender = CreateComponent<GameEngineSpriteRenderer>(30);
-		FontRender->SetText("µ¸¿ò", "¾È³ç", 0.0f, float4::RED, FW1_CENTER);
-	}
+	//{
+	//	std::shared_ptr<GameEngineSpriteRenderer> FontRender = CreateComponent<GameEngineSpriteRenderer>(30);
+	//	FontRender->SetText("µ¸¿ò", "¾È³ç", 0.0f, float4::RED, FW1_CENTER);
+	//}
 
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);

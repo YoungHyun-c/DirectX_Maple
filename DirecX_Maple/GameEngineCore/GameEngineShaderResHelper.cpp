@@ -331,7 +331,7 @@ void GameEngineShaderResHelper::SetConstantBufferLink(std::string_view _Name, co
 }
 
 
-void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_view _TextureName)
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_view _TextureName, bool _SamplerCheck /*= true*/)
 {
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find(_TextureName);
 	if (nullptr == Tex)
@@ -342,7 +342,7 @@ void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::string_v
 	SetTexture(_Name, Tex);
 }
 
-void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture)
+void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_ptr<GameEngineTexture> _Texture, bool _SamplerCheck /*= true*/)
 {
 	if (false == IsTexture(_Name))
 	{
@@ -366,7 +366,7 @@ void GameEngineShaderResHelper::SetTexture(std::string_view _Name, std::shared_p
 
 		Setter.Res = _Texture;
 
-		if (true == IsSampler(SamplerName))
+		if (true == _SamplerCheck && true == IsSampler(SamplerName))
 		{
 			std::shared_ptr<GameEngineSampler> Sampler = Setter.Res->GetBaseSampler();
 
