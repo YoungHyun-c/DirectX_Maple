@@ -20,9 +20,10 @@ public:
 
 	bool EventCheck = false;
 
-	unsigned int Start;
-	unsigned int End;
-	unsigned int CurIndex;
+	int Start;
+	int End;
+	int InterIndex;
+	int CurIndex;
 	float CurTime = 0.0f;
 
 	std::vector<int> Index;
