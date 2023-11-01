@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "MonsterFunction.h"
 #include <GameEngineBase/GameEngineRandom.h>
+
 #include "BackGroundMap.h"
 #include "Player.h"
 
@@ -97,7 +98,20 @@ void MonsterFunction::MoveUpdate(float _Delta)
 		MovePos += MoveDir * CompareDir * MoveSpeed * _Delta;
 	}
 
-	Transform.AddLocalPosition(MovePos);
+	if (Dir == ActorDir::Right && PlayerDirX - MonsterDirX <= 100.0f)
+	{
+		Dir = ActorDir::Right;
+		return;
+	}
+	if (Dir == ActorDir::Left && MonsterDirX - PlayerDirX <= 100.0f)
+	{
+		Dir = ActorDir::Left;
+		return;
+	}
+	//if (CompareDir.X >= 1.0f || CompareDir.X <= -1.0f)
+	{
+		Transform.AddLocalPosition(MovePos);
+	}
 
 }
 
@@ -204,6 +218,7 @@ void MonsterFunction::Skill_1AfterUpdate(float _Delta)
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Stand);
+		return;
 	}
 }
 
@@ -424,11 +439,13 @@ void MonsterFunction::InsideLockMap()
 		MonsterRenderer->Transform.SetLocalPosition(MonsterPos.X + 100.0f);
 		Dir = ActorDir::Right;
 		ChangeState(MonsterState::Move);
+		return;
 	}
 	else if (Transform.GetWorldPosition().X > RightCheck)
 	{
 		MonsterRenderer->Transform.SetLocalPosition(MonsterPos.X - 200.0f);
 		Dir = ActorDir::Left;
 		ChangeState(MonsterState::Move);
+		return;
 	}
 }

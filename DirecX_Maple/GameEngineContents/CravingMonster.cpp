@@ -95,40 +95,18 @@ void CravingMonster::Start()
 
 void CravingMonster::Update(float _Delta)
 {
-	MonsterFunction::Update(_Delta);
-	AttackEvent(_Delta);
+	//MonsterFunction::Update(_Delta);
 
 	//if (GameEngineInput::IsDown('5', this))
 	//{
 	//	ChangeState(MonsterState::Regen);
 	//}
-	if (GameEngineInput::IsDown('6', this))
-	{
-		ChangeState(MonsterState::Attack);
-	}
-	if (GameEngineInput::IsDown('7', this))
-	{
-		ChangeState(MonsterState::Die);
-	}
-	if (GameEngineInput::IsDown('8', this))
-	{
-		ChangeState(MonsterState::Awake);
-	}
-	if (GameEngineInput::IsDown('9', this))
-	{
-		ChangeState(MonsterState::Dieing);
-		//CravingDieCol->On();
-	}
 
-	if (GameEngineInput::IsDown('0', this))
-	{
-		ChangeState(MonsterState::Death);
-	}
-
+	AttackEvent(_Delta);
 	TimeCounting();
-	StateUpdate(_Delta);
-	
 	DirCheck();
+	
+	StateUpdate(_Delta);
 	InsideLockMap();
 }
 

@@ -160,6 +160,14 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TestMonster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <SubType>
       </SubType>
@@ -302,6 +310,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SummonUi.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="TestMonster.h">
       <SubType>
       </SubType>
     </ClInclude>

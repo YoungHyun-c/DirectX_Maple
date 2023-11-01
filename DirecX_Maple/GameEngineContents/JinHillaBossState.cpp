@@ -2,6 +2,7 @@
 #include "JinHillaBoss.h"
 #include "Player.h"
 #include "CravingMonster.h"
+//#include "GhostDamien.h"
 
 #define TelePortX 50.0f
 
@@ -43,6 +44,7 @@ void JinHillaBoss::StandUpdate(float _Delta)
 	if (CravingMob1->GetState() == (MonsterState::Max))
 	{
 		ChangeState(MonsterState::Skill3);
+		return;
 	}
 
 	M_FStopTime += _Delta;
@@ -362,16 +364,26 @@ void JinHillaBoss::Skill_3Update(float _Delta)
 {
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
-		CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 20.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
 		CravingMob1->CallRegen();
 
-		CravingMob2->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CravingMob2->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 20.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
 		CravingMob2->CallRegen();
 
 		CallMob = false;
 		ChangeState(MonsterState::Stand);
 		return;
 	}
+
+	//if (true == MonsterRenderer->IsCurAnimationEnd())
+	//{
+	//	DamienMob->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y  });
+	//	DamienMob->CallRegen();
+
+	//	CallMob = false;
+	//	ChangeState(MonsterState::Stand);
+	//	return;
+	//}
 }
 
 void JinHillaBoss::DeathStart()

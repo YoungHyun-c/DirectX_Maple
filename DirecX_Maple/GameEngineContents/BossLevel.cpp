@@ -58,6 +58,9 @@ void BossLevel::Start()
 		NewPlayer->PlayerEnterBind();
 		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
+	{
+		CreateActor<SkillManager>();
+	}
 
 	// 진힐라 낫베기
 	//{
@@ -70,39 +73,27 @@ void BossLevel::Start()
 		//std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
 	}
 
-	// 욕망의 헌신 Craving Monster
+
 	//{
 	//	CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-	//	CravingMob->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	CravingMob->SetDebugMap("BossDebugMap.Png");
-
-	//	CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-	//	CravingMob->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	CravingMob->SetDebugMap("BossDebugMap.Png");
+	//	CravingMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
+	//	CravingMob->SetDebugMap("BOssDebugMap.Png");
 	//}
-
-	{
-		CreateActor<SkillManager>();
-	}
-
-	{
-		CreateActor<BossSkillManager>();
-	}
 
 	// 사령 스우, 스우 구체
-	//{
-	//	GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
-	//	GhostSwooMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
-	//	GhostSwooMob->SetDebugMap("BossDebugMap.Png");
+	{
+		//GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
+		//GhostSwooMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
+		//GhostSwooMob->SetDebugMap("BossDebugMap.Png");
 
 
-	//}
+	}
 
 	//// 사령 데미안, 이펙트
 	//{
-	//	GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
-	//	GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -800.0f });
-	//	GhostDamienMob->SetDebugMap("BossDebugMap.Png");
+		/*GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
+		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
+		GhostDamienMob->SetDebugMap("BossDebugMap.Png");*/
 
 	//}
 
@@ -111,6 +102,10 @@ void BossLevel::Start()
 		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
 		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
 		BossJin->SetDebugMap("BossDebugMap.Png");
+	}
+
+	{
+		CreateActor<BossSkillManager>();
 	}
 
 	{
@@ -132,10 +127,10 @@ void BossLevel::Update(float _Delta)
 		Map->SwitchRenderer();
 	}
 
-	if (GameEngineInput::IsDown('4', this))
-	{
-		GameEngineCore::ChangeLevel("BossRewardLevel");
-	}
+	//if (GameEngineInput::IsDown('4', this))
+	//{
+	//	GameEngineCore::ChangeLevel("BossRewardLevel");
+	//}
 
 	// 보스 타이머 만들어야됨 분, 초에 맞추도록
 	//if (AniEnd == true)

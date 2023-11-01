@@ -210,30 +210,4 @@ private:
 
 	float PrevTime = 0.0f;
 	float TimeCount = 0.0f;
-
-	// 여기안에 넣어놓은
-	// 스킬중 그 어떤거라도 사용하면 무조건 스킬로 상태가 체인지 되면 된다.
-	// 누르는 키
-
-	class Skill 
-	{
-	public:
-		bool IsControll;
-	    float MaxCoolTime;
-	    float CurCoolTime;
-		float4 SkillUsePos;
-		int TargetCollisionOrder;
-		GameEngineState State;
-
-		// void CoolUpdate();
-
-		void Update(float _Delta) 
-		{
-			State.Update(_Delta);
-		}
-	};
-
-	bool SkillUseCheck();
-	Skill* CurSkill = nullptr;
-	std::map<const char, Skill > SkillState;
 };

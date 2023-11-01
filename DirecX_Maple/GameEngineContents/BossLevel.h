@@ -24,14 +24,14 @@ protected:
 
 private:
 	std::shared_ptr<class BackGroundMap> Map;
-	std::shared_ptr<class JinHillaAnime> JinHillaAttackAni;
 	std::shared_ptr<class Player> NewPlayer;
+	std::shared_ptr<class JinHillaAnime> JinHillaAttackAni;
 
 	std::shared_ptr<class CravingMonster> CravingMob;
 	std::shared_ptr<class GhostSwoo> GhostSwooMob;
 	std::shared_ptr<class GhostDamien> GhostDamienMob;
-	std::shared_ptr<class GhostSwoo> SwooBall;
 	std::shared_ptr<class JinHillaBoss> BossJin;
+	//std::shared_ptr<class GhostSwoo> SwooBall;
 
 	//std::shared_ptr<class BossSkillEffect> BossEffect;
 	// Ui

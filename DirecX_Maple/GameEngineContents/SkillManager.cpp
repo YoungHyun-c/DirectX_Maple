@@ -126,7 +126,7 @@ void SkillManager::HitPrint(GameEngineObject* _Object, std::string_view _HitSpri
 
 		HitAnimation->CreateAnimation("Hit", _HitSpriteName, Hit_Ani_Time);
 		HitAnimation->ChangeAnimation("Hit");
-		HitAnimation->Transform.SetLocalPosition(_Object->Transform.GetWorldPosition() + HitData->RandomPos[i]);
+		HitAnimation->Transform.SetWorldPosition(_Object->Transform.GetWorldPosition() + HitData->RandomPos[i]);
 		HitAnimation->AutoSpriteSizeOn();
 		HitAnimation->SetEndEvent("Hit", [&](GameEngineSpriteRenderer* _Renderer)
 			{

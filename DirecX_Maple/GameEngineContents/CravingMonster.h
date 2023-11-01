@@ -46,7 +46,7 @@ public:
 	void CallDie();
 
 protected:
-	void Start();
+	void Start() override;
 	void Update(float _Delta) override;
 
 	void StandStart() override;

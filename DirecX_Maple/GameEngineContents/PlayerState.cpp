@@ -22,9 +22,6 @@ void Player::StandStart()
 }
 void Player::StandUpdate(float _Delta)
 {
-	SkillUseCheck();
-
-
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{

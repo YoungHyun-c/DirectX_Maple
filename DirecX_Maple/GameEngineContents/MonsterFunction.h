@@ -54,6 +54,11 @@ public:
 		MoveSpeed = _MoveSpeed;
 	}
 
+	void SetStandLimitTime(float _StandTime)
+	{
+		M_FStopLimitTime = _StandTime;
+	}
+
 	void SetColPos(float _LeftColPos = 0, float _RightColPos = 0, float _YColPos = 0)
 	{
 		LeftColPos = _LeftColPos;

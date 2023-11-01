@@ -22,52 +22,6 @@ Player::~Player()
 
 void Player::Start()
 {
-	{
-		// 
-		Skill Skill;
-		Skill.IsControll = true;
-
-		for (int i = 0; i < 10; i++)
-		{
-			// 20에서 사용 가능
-			Skill.State.CreateState(i, {
-				.Start =
-				[=](class GameEngineState* _Parent)
-				{
-					{
-						std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-						Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{100.0f * i, 0.0f, 0.0f});
-					}
-
-					{
-						std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-						// Effect->setAtt(PlayerAtt);
-						Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-100.0f * i, 0.0f, 0.0f});
-					}
-
-				},
-				.Stay =
-				[=](float DeltaTime, class GameEngineState* _Parent)
-				{
-					if (0.2f <= _Parent->GetStateTime())
-					{
-						_Parent->ChangeState(i + 1);
-					}
-				}
-				});
-		}
-
-		// 20에서 사용 가능
-		Skill.State.CreateState(10, {
-			.Start =
-			[=](class GameEngineState* _Parent)
-			{
-					CurSkill = nullptr;
-			}});
-
-		SkillState['D'] = Skill;
-	}
-
 	// 폰트 테스트
 	//{
 	//	std::shared_ptr<GameEngineSpriteRenderer> FontRender = CreateComponent<GameEngineSpriteRenderer>(30);
@@ -198,20 +152,8 @@ void Player::Update(float _Delta)
 	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 
 	DirCheck();
-	//StateUpdate(_Delta);
-	if (nullptr == CurSkill)
-	{
-		StateUpdate(_Delta);
-	}
-	else 
-	{
-		if (true == CurSkill->IsControll)
-		{
-			StateUpdate(_Delta);
-		}
+	StateUpdate(_Delta);
 
-		CurSkill->Update(_Delta);
-	}
 	InsideLockMap();
 
 	//float Speed = 500.0f;
@@ -570,27 +512,4 @@ void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainPlayer = this;
 	CurMapScale = BackGroundMap::MainMap->GetMapScale();
-}
-
-bool Player::SkillUseCheck()
-{
-	if (nullptr != CurSkill)
-	{
-		return false;
-	}
-
-	for (std::pair<const char, Skill>& pair : SkillState)
-	{
-		if (true == GameEngineInput::IsDown(pair.first, this))
-		{
-			Skill& UseSkill = pair.second;
-
-			CurSkill = &UseSkill;
-			CurSkill->SkillUsePos = Transform.GetWorldPosition();
-			UseSkill.State.ChangeState(0);
-			return true;
-		}
-	}
-
-	return false;
 }

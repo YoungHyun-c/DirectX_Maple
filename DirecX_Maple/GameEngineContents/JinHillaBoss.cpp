@@ -3,6 +3,7 @@
 #include "Player.h"
 
 #include "CravingMonster.h"
+//#include "GhostDamien.h"
 #include "MonsterFunction.h"
 
 #include "BossSkillEffect.h"
@@ -128,6 +129,13 @@ void JinHillaBoss::Start()
 		CravingMob2->SetDebugMap("BossDebugMap.Png");
 	}
 
+
+	//if (nullptr == DamienMob)
+	//{
+	//	DamienMob = GetLevel()->CreateActor<GhostDamien>();
+	//	DamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
+	//	DamienMob->SetDebugMap("BossDebugMap.Png");
+	//}
 }
 
 void JinHillaBoss::Update(float _Delta)
@@ -169,14 +177,14 @@ void JinHillaBoss::Update(float _Delta)
 		MonsterRenderer->On();
 		MonsterCollision->On();*/
 	}
-	if (GameEngineInput::IsDown('6', this))
-	{
-		ChangeState(MonsterState::Skill1);
-	}
-	if (GameEngineInput::IsDown('7', this))
-	{
-		ChangeState(MonsterState::Skill1After);
-	}
+	//if (GameEngineInput::IsDown('6', this))
+	//{
+	//	ChangeState(MonsterState::Skill1);
+	//}
+	//if (GameEngineInput::IsDown('7', this))
+	//{
+	//	ChangeState(MonsterState::Skill1After);
+	//}
 
 	if (GameEngineInput::IsDown('-', this))
 	{

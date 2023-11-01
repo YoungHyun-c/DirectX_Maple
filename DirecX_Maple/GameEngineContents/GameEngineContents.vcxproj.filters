@@ -114,6 +114,12 @@
     <ClCompile Include="BossSkillManager.cpp">
       <Filter>Object\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMonster.cpp">
+      <Filter>Object\Boss\SummonMonster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -225,6 +231,12 @@
     </ClInclude>
     <ClInclude Include="BossSkillManager.h">
       <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMonster.h">
+      <Filter>Object\Boss\SummonMonster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
