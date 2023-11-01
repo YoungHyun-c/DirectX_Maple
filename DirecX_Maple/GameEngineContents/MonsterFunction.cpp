@@ -229,6 +229,15 @@ void MonsterFunction::Skill_2Start()
 
 void MonsterFunction::Skill_2Update(float _Delta)
 {
+	int a = 0;
+}
+
+void MonsterFunction::Skill_2After()
+{
+	ChangeAnimationState("Skill2After");
+}
+void MonsterFunction::Skill_2AfterUpdate(float _Delta)
+{
 
 }
 
@@ -314,6 +323,9 @@ void MonsterFunction::ChangeState(MonsterState _State)
 		case MonsterState::Skill2:
 			Skill_2Start();
 			break;
+		case MonsterState::Skill2After:
+			Skill_2After();
+			break;
 		case MonsterState::Skill3:
 			Skill_3Start();
 			break;
@@ -357,6 +369,8 @@ void MonsterFunction::StateUpdate(float _Delta)
 		return Skill_1AfterUpdate(_Delta);
 	case MonsterState::Skill2:
 		return Skill_2Update(_Delta);
+	case MonsterState::Skill2After:
+		return Skill_2AfterUpdate(_Delta);
 	case MonsterState::Skill3:
 		return Skill_3Update(_Delta);
 	case MonsterState::Die:

@@ -60,7 +60,7 @@ private:
 	//float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
 	float GravityForce = 0.0f;
 	float GravityPower = 2300.0f;
-	float MaxGravity = 2000.0f;
+	float MaxGravity = 1500.0f;
 	std::string DebugMapName;
 	std::shared_ptr<GameEngineTexture> DebugMap;
 

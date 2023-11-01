@@ -161,6 +161,8 @@ protected:
 	
 	virtual void Skill_2Start();
 	virtual void Skill_2Update(float _Delta);
+	virtual void Skill_2After();
+	virtual void Skill_2AfterUpdate(float _Delta);
 	
 	virtual void Skill_3Start();
 	virtual void Skill_3Update(float _Delta);

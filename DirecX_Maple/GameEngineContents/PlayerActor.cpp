@@ -59,7 +59,7 @@ void PlayerActor::Gravity(float _Delta)
 	if (0.0f > MoveVectorForce.Y)
 	{
 		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
-		GameEngineColor GroundColor = CheckGroundColor();
+		GameEngineColor GroundColor = CheckGroundColor(float4{ 0.0f, -35.0f });
 		float Count = 0.0f;
 		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
 		{
@@ -67,7 +67,7 @@ void PlayerActor::Gravity(float _Delta)
 			{
 				break;
 			}
-			 GroundColor = CheckGroundColor(float4{ 0.0f, 30.0f * Count });
+			 GroundColor = CheckGroundColor(float4{ 0.0f, -35.0f * Count });
 		}
 		if (0 != Count)
 		{

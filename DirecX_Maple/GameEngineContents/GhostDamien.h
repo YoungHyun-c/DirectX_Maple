@@ -38,23 +38,37 @@ protected:
 	void Skill_1After() override;
 	void Skill_1AfterUpdate(float _Delta)override;
 
-	void Skill_2Start();
-	void Skill_2Update(float _Delta);
+	void Skill_2Start() override;
+	void Skill_2Update(float _Delta) override;
+	void Skill_2After() override;
+	void Skill_2AfterUpdate(float _Delta) override;
 
 	void DeathStart();
-	void DeathUpdate(float _Delat);
+	void DeathUpdate(float _Delta);
+
+	void AttackEvent(float _Delta);
 
 private:
 	void DamienDirCheck();
+	void InsideLockMap();
 	float4 DamienBossScale = float4::ZERO;
 	float MoveSpeed = 70.0f;
 	float SlideSpeed = 200.0f;
 	long long Hp = 18688692000;
 	int Defense = 300;
-	float LeftCheck = 200.0f;
-	float RightCheck = 1750.0f;
+	float LeftCheck = 100.0f;
+	float RightCheck = 1700.0f;
 
 	std::shared_ptr<class GameEngineSpriteRenderer> HitEffect;
 
+	std::shared_ptr<GameEngineCollision> DamienAttackRangeCol;
+	std::shared_ptr<GameEngineCollision> SlideAttackCol;
+	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
+	std::shared_ptr<GameEngineCollision> HewAttackCol;
+
+	float AttackCool = 6.0f;
+	float StartAttack = 0.0f;
+	bool IsAttack = false;
+	bool SlideAttack = false;
 };
 
