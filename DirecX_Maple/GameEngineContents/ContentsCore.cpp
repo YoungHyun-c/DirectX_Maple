@@ -71,7 +71,7 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
 	GameEngineCore::CreateLevel<TestLevel>("TestLevel");
 
-	GameEngineCore::ChangeLevel("TitleLevel");
+	GameEngineCore::ChangeLevel("TestLevel");
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 }

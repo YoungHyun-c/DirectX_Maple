@@ -28,13 +28,6 @@ void TestLevel::Start()
 		Dir.MoveParentToExistsChild("ContentsResources");
 		Dir.MoveChild("ContentsResources");
 		Dir.MoveChild("BackGround");
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
-		}
 
 		GameEngineSprite::CreateSingle("BossMap.png");
 		GameEngineSprite::CreateSingle("BossDebugMap.png");
@@ -50,6 +43,7 @@ void TestLevel::Start()
 		NewPlayer->SetDebugMap("BossDebugMap.png");
 		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
+
 	{
 		CreateActor<SkillManager>();
 	}
@@ -59,6 +53,8 @@ void TestLevel::Start()
 		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
 		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 	}
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void TestLevel::Update(float _Delta)
