@@ -263,13 +263,13 @@ void GhostDamien::Skill_1After()
 {
 	ChangeAnimationState("Skill1After");
 	DirCheck();
-	float4 TestPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
-	if (TestPos.X <= LeftCheck + 100.0f)
+	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	if (PlayerPos.X <= LeftCheck + 100.0f)
 	{
-		Transform.SetWorldPosition({ TestPos.X + LeftCheck + 100.0f, -650.0f });
+		Transform.SetWorldPosition({ PlayerPos.X + LeftCheck + 100.0f, -650.0f });
 		return;
 	}
-	else if (TestPos.X >= RightCheck)
+	else if (PlayerPos.X >= RightCheck)
 	{
 		Transform.SetWorldPosition({ RightCheck - 20.0f, -650.0f });
 		return;
@@ -280,7 +280,7 @@ void GhostDamien::Skill_1After()
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
 		MonsterRenderer->LeftFlip();
-		Transform.SetWorldPosition({ TestPos.X - 200.0f, -650.0f });
+		Transform.SetWorldPosition({ PlayerPos.X - 200.0f, -650.0f });
 		return;
 	}
 }
@@ -299,12 +299,15 @@ void GhostDamien::Skill_2Start()
 	ChangeAnimationState("Skill2");
 	//MonsterRenderer->Transform.GetWorldPosition();
 	//MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 250.0f });
-	Transform.SetWorldPosition({ MonsterRenderer->Transform.GetWorldPosition().X, MonsterRenderer->Transform.GetWorldPosition().Y + 250.0f });
+
+	MonsterRenderer->Transform.SetWorldPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 30.0f, MonsterRenderer->Transform.GetWorldPosition().Y + 200.0f });
 }
 
 void GhostDamien::Skill_2Update(float _Delta)
 {
 	DirCheck();
+	MonsterRenderer->Transform.SetLocalPosition({ 30.0f, 200.0f });
+	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Skill2After);
@@ -314,7 +317,7 @@ void GhostDamien::Skill_2Update(float _Delta)
 void GhostDamien::Skill_2After()
 {
 	ChangeAnimationState("Skill2After");
-	//Transform.SetLocalPosition({ 0.0f, 250.0f });
+	
 }
 void GhostDamien::Skill_2AfterUpdate(float _Delta)
 {
@@ -385,7 +388,7 @@ void GhostDamien::AttackEvent(float _Delta)
 		if (0.5f > StartAttack)
 		{
 			GameEngineRandom AttackRan;
-			switch (1)
+			switch (2)
 			{
 			case 1:
 				ChangeState(MonsterState::Attack);
