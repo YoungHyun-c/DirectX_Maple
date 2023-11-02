@@ -73,6 +73,9 @@
     <Filter Include="Resources\Font">
       <UniqueIdentifier>{d77049ed-56e1-4a12-88ff-1b8320d8d618}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PathFind">
+      <UniqueIdentifier>{aca45308-6eb8-44c2-a3d9-a779a3205840}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -229,6 +232,9 @@
     <ClInclude Include="..\..\..\Teacher\AR47\Directx\AR47DX\GameEngineCore\ThirdParty\DirectXTex\inc\DirectXTex.h">
       <Filter>ThirdParty\inc</Filter>
     </ClInclude>
+    <ClInclude Include="AStartPathFinder.h">
+      <Filter>PathFind</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -372,6 +378,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineFont.cpp">
       <Filter>Resources\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="AStartPathFinder.cpp">
+      <Filter>PathFind</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
