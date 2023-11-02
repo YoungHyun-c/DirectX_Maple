@@ -47,21 +47,21 @@ void GameEngineDevice::ResourcesInit()
 
 		GameEngineVertex BaseVertexs[2];
 
-		BaseVertexs[0] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
+		BaseVertexs[0] = { { 0.5f, 0.5f, 0.0f, 1.0f } };
 		BaseVertexs[1] = { { 0.0f, 0.0f, 0.0f, 1.0f } };
 
 		GameEngineVertexBuffer::Create("Line", Vertex);
 
 		std::vector<unsigned int> Index =
 		{
-			0, 1
+			0, 1, 1, 0
 		};
 		GameEngineIndexBuffer::Create("Line", Index);
 
 		std::shared_ptr<GameEngineMesh> LineMesh = GameEngineMesh::Create("Line");
 		LineMesh->SetTOPOLOGY(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		// LineMesh->SetTOPOLOGY(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	}
-
 
 	{
 		std::vector<GameEngineVertex> Vertex;
@@ -337,6 +337,7 @@ void GameEngineDevice::ResourcesInit()
 		std::shared_ptr<GameEngineDepthStencil> Rasterizer = GameEngineDepthStencil::Create("EngineDepth", Desc);
 	}
 
+
 	{
 		// 이걸 세팅하는 순간
 		// order가 2d랜더링의 순서가 되는것이 아니라
@@ -359,6 +360,7 @@ void GameEngineDevice::ResourcesInit()
 		Desc.StencilEnable = false;
 		std::shared_ptr<GameEngineDepthStencil> Rasterizer = GameEngineDepthStencil::Create("AlwaysDepth", Desc);
 	}
+
 
 	{
 
@@ -519,7 +521,6 @@ void GameEngineDevice::ResourcesInit()
 		Mat->SetPixelShader("TextureShader_PS");
 	}
 
-
 	{
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTextureWire");
 		Mat->SetVertexShader("DebugColor_VS");
@@ -527,6 +528,14 @@ void GameEngineDevice::ResourcesInit()
 		Mat->SetRasterizer("EngineWireRasterizer");
 	}
 
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DDebugLine");
+		Mat->SetVertexShader("DebugLine_VS");
+		Mat->SetPixelShader("DebugLine_PS");
+		// Mat->SetRasterizer("EngineWireRasterizer");
+
+		Mat->SetRasterizer("EngineRasterizer");
+	}
 
 
 	// 엔진수준에서 지원해주는 가장 기초적인 리소스들은 여기에서 만들어질 겁니다.
