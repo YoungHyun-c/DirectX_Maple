@@ -110,6 +110,13 @@ Texture2D DiffuseTex : register(t0);
 Texture2D MaskTex : register(t1);
 SamplerState DiffuseTexSampler : register(s0);
 
+struct PixelOut
+{
+    float4 Color0 : SV_Target0;
+    float4 Color1 : SV_Target1;
+    float4 Color2 : SV_Target2;
+};
+
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
 

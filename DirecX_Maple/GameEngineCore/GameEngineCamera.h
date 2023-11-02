@@ -131,6 +131,8 @@ private:
 	std::set<int> ZSortMap;
 	std::set<int> YSortMap;
 
+	std::shared_ptr<class GameEngineRenderTarget> CameraTarget;
+
 	void CameraUpdate(float _DeltaTime);
 };
 
