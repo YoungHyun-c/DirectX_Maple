@@ -45,6 +45,7 @@ void BossLevel::Start()
 
 		GameEngineSprite::CreateSingle("BossMap.png");
 		GameEngineSprite::CreateSingle("BossDebugMap.png");
+		GameEngineSprite::CreateSingle("Dark.Png");
 	}
 
 	{

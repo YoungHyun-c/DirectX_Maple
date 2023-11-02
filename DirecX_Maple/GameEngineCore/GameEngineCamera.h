@@ -9,6 +9,8 @@
 // Ό³Έν :
 class GameEngineCamera : public GameEngineActor
 {
+	static std::shared_ptr<class GameEngineRenderTarget> AllRenderTarget;
+
 	friend class GameEngineRenderer;
 	friend class GameEngineActor;
 	friend class GameEngineLevel;

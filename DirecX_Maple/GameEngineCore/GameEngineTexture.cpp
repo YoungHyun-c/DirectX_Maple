@@ -19,7 +19,6 @@ const GameEngineColor GameEngineColor::WHITE = { 255, 255, 255, 255 };
 
 GameEngineTexture::GameEngineTexture()
 {
-
 }
 
 GameEngineTexture::~GameEngineTexture()
@@ -48,6 +47,7 @@ GameEngineTexture::~GameEngineTexture()
 	}
 }
 
+
 void GameEngineTexture::CreateRenderTargetView()
 {
 	if (nullptr != RTV)
@@ -57,19 +57,20 @@ void GameEngineTexture::CreateRenderTargetView()
 
 	if (nullptr == Texture2D)
 	{
-		MsgBoxAssert("만들어지지 않은 텍스처로 렌더타겟뷰를 생성하려고 했습니다.");
+		MsgBoxAssert("만들어지지 않은 텍스처로 랜더타겟뷰를 생성하려고 했습니다.");
 		return;
 	}
 
-	// 이미지를 수정할 수 있는 권한을 '만든다'
+	// 이미지를 수정할수 있는 권한을 '만든다'
 
 	HRESULT Result = GameEngineCore::GetDevice()->CreateRenderTargetView(Texture2D, nullptr, &RTV);
 
 	if (S_OK != Result)
 	{
-		MsgBoxAssert("렌더타겟뷰 생성에 실패했습니다.");
+		MsgBoxAssert("랜더타겟뷰 생성에 실패했습니다.");
 		return;
 	}
+
 }
 
 // 쉐이더 세팅용
@@ -98,7 +99,7 @@ void GameEngineTexture::CreateShaderResourceView()
 
 }
 
-// 깊이버퍼 세팅용
+// 깊버거 세팅용
 void GameEngineTexture::CreateDepthStencilView()
 {
 	if (nullptr != DSV)
@@ -125,8 +126,9 @@ void GameEngineTexture::CreateDepthStencilView()
 
 void GameEngineTexture::ResLoad(std::string_view _Path)
 {
-	// png 및 다수의 이미지를 로드 가능한 함수
-	//DirectX::LoadFromWICFile(L"안될꺼", DirectX::WIC_FLAGS_NONE, &Data, Image);
+	// 팩토리니 어뎁터니 
+
+	// png 및 다수의 이미지를 로드 가능한 함수 
 
 	GameEnginePath NewPath = _Path;
 
@@ -134,7 +136,7 @@ void GameEngineTexture::ResLoad(std::string_view _Path)
 
 	std::wstring wPath = GameEngineString::AnsiToUnicode(_Path);
 
-	// 그래픽
+	// 그래픽 
 	if (Ext == ".DDS")
 	{
 		if (S_OK != DirectX::LoadFromDDSFile(wPath.c_str(), DirectX::DDS_FLAGS_NONE, &Data, Image))
@@ -148,19 +150,20 @@ void GameEngineTexture::ResLoad(std::string_view _Path)
 		{
 			MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
 		}
+
 	}
 	else if (S_OK != DirectX::LoadFromWICFile(wPath.c_str(), DirectX::WIC_FLAGS_NONE, &Data, Image))
 	{
 		MsgBoxAssert("텍스처 로드에 실패했습니다." + std::string(_Path.data()));
 	}
 
-	// 로드의 목적은 쉐이더 세팅 권한을 얻어오는 것이 최종적인 목적인 것이다.
+	// 로드의 목적은 쉐이더 세팅 권한을 얻어오는것이 최종적인 목적인것이다
 	// 이것도 라이브러리 함수
 	if (S_OK != DirectX::CreateShaderResourceView
 	(
 		GameEngineCore::GetDevice(),
 		Image.GetImages(),
-		Image.GetImageCount(), // 이미지가 겹쳐있을 수 있다.
+		Image.GetImageCount(), // 이미지가 겹쳐있을수 있다.
 		Image.GetMetadata(),
 		&SRV
 	))
@@ -180,6 +183,17 @@ void GameEngineTexture::VSSetting(UINT _Slot)
 void GameEngineTexture::PSSetting(UINT _Slot)
 {
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
+}
+
+void GameEngineTexture::VSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* ResetRes = nullptr;
+	GameEngineCore::GetContext()->VSSetShaderResources(_Slot, 1, &ResetRes);
+}
+void GameEngineTexture::PSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* ResetRes = nullptr;
+	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &ResetRes);
 }
 
 void GameEngineTexture::ResCreate(ID3D11Texture2D* _Res)
@@ -220,6 +234,7 @@ void GameEngineTexture::ResCreate(const D3D11_TEXTURE2D_DESC& _Desc)
 
 GameEngineColor GameEngineTexture::GetColor(unsigned int _X, unsigned int _Y, GameEngineColor _DefaultColor)
 {
+
 	if (0 > _X)
 	{
 		return _DefaultColor;
@@ -241,6 +256,7 @@ GameEngineColor GameEngineTexture::GetColor(unsigned int _X, unsigned int _Y, Ga
 	}
 
 	DXGI_FORMAT Fmt = Image.GetMetadata().format;
+
 
 	// 첫번째 주소를 1바이트 자료형으로 줬다.
 	unsigned char* Ptr = Image.GetPixels();
@@ -273,9 +289,10 @@ GameEngineColor GameEngineTexture::GetColor(unsigned int _X, unsigned int _Y, Ga
 		return ResultColor;
 	}
 	default:
-		MsgBoxAssert("색깔을 처리하는 함수를 만들지 않은 포맷입니다.");
+		MsgBoxAssert("색깔을 처리하는 함수를 만들지 없는 포맷입니다");
 		break;
 	}
+
 
 	return _DefaultColor;
 }

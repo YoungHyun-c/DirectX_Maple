@@ -15,11 +15,10 @@ public:
 	static const GameEngineColor BLACK;
 	static const GameEngineColor WHITE;
 
-
-	unsigned int R = 0;
-	unsigned int G = 0;
-	unsigned int B = 0;
-	unsigned int A = 0;
+	unsigned char R = 0;
+	unsigned char G = 0;
+	unsigned char B = 0;
+	unsigned char A = 0;
 
 	bool operator==(const GameEngineColor& _Other) const
 	{
@@ -27,20 +26,19 @@ public:
 	}
 };
 
-
 // 설명 :
 class GameEngineTexture : public GameEngineResources<GameEngineTexture>
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineTexture();
 	~GameEngineTexture();
 
 	// delete Function
 	GameEngineTexture(const GameEngineTexture& _Other) = delete;
 	GameEngineTexture(GameEngineTexture&& _Other) noexcept = delete;
-	GameEngineTexture& operator = (const GameEngineTexture& _Other) = delete;
-	GameEngineTexture& operator = (GameEngineTexture&& _Other) noexcept = delete;
+	GameEngineTexture& operator=(const GameEngineTexture& _Other) = delete;
+	GameEngineTexture& operator=(GameEngineTexture&& _Other) noexcept = delete;
 
 	// 스왑체인에서 얻어온 백버퍼를 우리 리소스로 등록시켜서 사용할때 썼음
 	static std::shared_ptr<GameEngineTexture> Create(ID3D11Texture2D* _Res)
@@ -87,6 +85,7 @@ public:
 		return DSV;
 	}
 
+
 	inline float4 GetScale()
 	{
 		return { static_cast<float>(Desc.Width), static_cast<float>(Desc.Height), 1.0f, 0.0f };
@@ -99,6 +98,9 @@ public:
 
 	void VSSetting(UINT _Slot);
 	void PSSetting(UINT _Slot);
+
+	void VSReset(UINT _Slot);
+	void PSReset(UINT _Slot);
 
 	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor)
 	{
@@ -116,18 +118,19 @@ public:
 	void CreateRenderTargetView();
 	// 쉐이더 세팅용
 	void CreateShaderResourceView();
-	// 깊이버퍼 세팅용
+	// 깊버거 세팅용
 	void CreateDepthStencilView();
 
 protected:
 
 private:
-	D3D11_TEXTURE2D_DESC Desc; // 텍스처를 Create할때 정보인데, 그냥 Load할 때도 사용할 것이다.
+	D3D11_TEXTURE2D_DESC Desc; // 텍스처를 Create할때 정보인데. 그냥 load할때도 사용할것이다.
 
 	ID3D11Texture2D* Texture2D = nullptr;
-	ID3D11RenderTargetView* RTV = nullptr; // 이 텍스처를 수정대상으로 삼거나 수정할 수 있는 권한.
-	ID3D11ShaderResourceView* SRV = nullptr; // 이 쉐이더에 세팅할 수 있는 권한
-	ID3D11DepthStencilView* DSV = nullptr; // 쉐이더에 세팅해줄 수 있는 권한
+
+	ID3D11RenderTargetView* RTV = nullptr; // 이 텍스처를 수정대상으로 삼거나 수정할수 있는 권한.
+	ID3D11ShaderResourceView* SRV = nullptr; // 쉐이더에 세팅해줄수 있는 권한다.
+	ID3D11DepthStencilView* DSV = nullptr; // 쉐이더에 세팅해줄수 있는 권한다.
 
 	DirectX::TexMetadata Data;
 	DirectX::ScratchImage Image;

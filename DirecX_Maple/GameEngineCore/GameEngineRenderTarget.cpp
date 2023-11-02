@@ -4,6 +4,14 @@
 
 bool GameEngineRenderTarget::IsDepth = true;
 
+GameEngineRenderUnit GameEngineRenderTarget::MergeUnit;
+
+void GameEngineRenderTarget::MergeRenderUnitInit()
+{
+	GameEngineRenderTarget::MergeUnit.SetMesh("FullRect");
+	GameEngineRenderTarget::MergeUnit.SetMaterial("TargetMerge");
+};
+
 GameEngineRenderTarget::GameEngineRenderTarget()
 {
 }
@@ -44,7 +52,9 @@ void GameEngineRenderTarget::Setting()
 		DSV = nullptr;
 	}
 
+	// 8개 이상 넣으면 터진다.
 	GameEngineCore::GetContext()->OMSetRenderTargets(static_cast<UINT>(RTV.size()), &RTV[0], DSV);
+	GameEngineCore::GetContext()->RSSetViewports(static_cast<UINT>(ViewPorts.size()), &ViewPorts[0]);
 }
 
 void GameEngineRenderTarget::AddNewTexture(DXGI_FORMAT _Format, float4 _Scale, float4 _Color)
@@ -65,21 +75,29 @@ void GameEngineRenderTarget::AddNewTexture(DXGI_FORMAT _Format, float4 _Scale, f
 	// D3D11_BIND_SHADER_RESOURCE 텍스처로 쉐이더에 세팅할수 있게 하기 위해서 만든다.
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Create(Desc);
+
+	AddNewTexture(Tex, _Color);
+}
+
+void GameEngineRenderTarget::AddNewTexture(std::shared_ptr<GameEngineTexture> _Texture, float4 _Color)
+{
+	std::shared_ptr<GameEngineTexture> Tex = _Texture;
+
 	Textures.push_back(Tex);
 
 	// 뷰포트도 생성
 	D3D11_VIEWPORT ViewPortData;
 	ViewPortData.TopLeftX = 0;
 	ViewPortData.TopLeftY = 0;
-	ViewPortData.Width = static_cast<float>(_Scale.uiX());
-	ViewPortData.Height = static_cast<float>(_Scale.uiY());
+	ViewPortData.Width = static_cast<float>(_Texture->GetScale().uiX());
+	ViewPortData.Height = static_cast<float>(_Texture->GetScale().uiY());
 	ViewPortData.MinDepth = 0.0f;
 	ViewPortData.MaxDepth = 1.0f;
 
 	RTV.push_back(Tex->GetRTV());
 	SRV.push_back(Tex->GetSRV());
 	ClearColor.push_back(_Color);
-	ViewPort.push_back(ViewPortData);
+	ViewPorts.push_back(ViewPortData);
 
 }
 
@@ -109,4 +127,20 @@ void GameEngineRenderTarget::CreateDepthTexture(int _Index/* = 0*/)
 	Desc.CPUAccessFlags = 0;
 	Desc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
 	DepthTexture = GameEngineTexture::Create(Desc);
+}
+
+void GameEngineRenderTarget::Copy(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget)
+{
+	Clear();
+	Merge(ThisTarget, _Target, _CopyTarget);
+}
+
+void GameEngineRenderTarget::Merge(unsigned int ThisTarget, std::shared_ptr<GameEngineRenderTarget> _Target, unsigned int _CopyTarget)
+{
+	Setting();
+
+	MergeUnit.ShaderResHelper.SetTexture("DiffuseTex", _Target->Textures[_CopyTarget]);
+	MergeUnit.ShaderResHelper.SetSampler("DiffuseTexSampler", "POINT");
+	MergeUnit.Render();
+	MergeUnit.ShaderResHelper.AllShaderResourcesReset();
 }

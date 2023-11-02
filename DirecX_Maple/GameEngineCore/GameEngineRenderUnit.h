@@ -1,7 +1,6 @@
 #pragma once
 #include "GameEngineShaderResHelper.h"
 #include "GameEngineFont.h"
-
 // 설명 :
 // 랜더링의 최소단위
 // 이녀석을 돌리면 랜더링이 된다.
@@ -28,6 +27,8 @@ public:
 
 	void ResSetting();
 	void Draw();
+
+	void Render();
 
 	void SetParentRenderer(class GameEngineRenderer* _Renderer)
 	{

@@ -117,6 +117,12 @@ struct PixelOut
     float4 Color2 : SV_Target2;
 };
 
+// SV_Target0
+// SV_Target1
+// SV_Target2
+// SV_Target3
+// SV_Target4
+
 float4 TextureShader_PS(PixelOutPut _Input) : SV_Target0
 {
 
