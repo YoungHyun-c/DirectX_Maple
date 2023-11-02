@@ -127,6 +127,7 @@ public:
 		return NewChild;
 	}
 
+	void ChangeParent(GameEngineObject* _Parent, int _Order);
 
 	void SetParent(GameEngineObject* _Parent, int _Order)
 	{
