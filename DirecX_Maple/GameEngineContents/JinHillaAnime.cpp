@@ -13,6 +13,7 @@ JinHillaAnime::~JinHillaAnime()
 
 void JinHillaAnime::Start()
 {
+
 	{
 		JinHillaAnimeRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::JinHillaAnime);
 		JinHillaAnimeRenderer->CreateAnimation("JinHillaTitle", "JinHillaTitle", 0.2f, 0, 7, true);
@@ -20,7 +21,6 @@ void JinHillaAnime::Start()
 
 		JinHillaAnimeRenderer->ChangeAnimation("JinHillaTitle");
 		JinHillaAnimeRenderer->SetImageScale({ 1366, 768 });
-		//JinHillaAnimeSpriteRenderer->SetPivotType(PivotType::Center);
 	}
 	GameEngineInput::AddInputObject(this);
 }
