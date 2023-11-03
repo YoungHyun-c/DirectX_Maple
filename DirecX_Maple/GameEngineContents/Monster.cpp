@@ -3,7 +3,7 @@
 #include "Player.h"
 #include "Monster.h"
 
-Monster* Monster::Monsters;
+Monster* Monster::Monsters = nullptr;
 
 Monster::Monster()
 {
@@ -20,23 +20,22 @@ void Monster::Start()
 {
 	{
 		Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
-		Renderer->SetSprite("Mugong_stand.png");
+		Renderer->CreateAnimation("Mugong_Appear", "Mugong_Appear", 0.1f, -1, -1, false);
+		Renderer->CreateAnimation("Mugong_Disappear", "Mugong_Disappear", 0.1f, -1, -1, false);
+		Renderer->CreateAnimation("Mugong_Idle", "Mugong_Idle");
+		Renderer->ChangeAnimation("Mugong_Idle");
+
 		Renderer->AutoSpriteSizeOn();
 		Renderer->Off();
 
-		{	
-			std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Mugong_stand.Png");
-			MonsterScale = Sprite->GetSpriteData(0).GetScale();
-			Sprite = nullptr;
-		}
 
 		{
-			Col = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-			//Col->Transform.SetLocalScale({ 300.0f, 300.0f, 1.0f });
-			Col->Transform.SetLocalScale(MonsterScale);
-			Col->SetCollisionType(ColType::AABBBOX2D);
-			Col->Off();
-			Col->SetName(std::string("Mugong"));
+			MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+			MonsterCollision->Transform.SetLocalPosition({ -30.0f, 0.0f });
+			MonsterCollision->Transform.SetLocalScale({ 300.0f, 330.0f });
+			MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
+			MonsterCollision->SetName(std::string("Mugong"));
+			MonsterCollision->Off();
 		}
 
 	}
@@ -69,32 +68,58 @@ void Monster::Update(float _Delta)
 
 	if (RenderOn == true && MonsterAppear == false)
 	{
+		Renderer->ChangeAnimation("Mugong_Appear");
 		Renderer->On();
-		Col->On();
+		MonsterCollision->On();
 		MonsterAppear = true;
 	}
 	else if (RenderOn == false && MonsterAppear == true)
 	{
-		Renderer->Off();
-		Col->Off();
-		MonsterAppear = false;
+		Renderer->ChangeAnimation("Mugong_Disappear");
+		MonsterCollision->Off();
+		if (true == Renderer->IsCurAnimationEnd())
+		{
+			MonsterAppear = false;
+			Renderer->Off();
+		}
 	}
 	
-	Col->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
+	//MonsterCollision->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
 }
 
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	//Monsters = this;
 	MonsterHp = 100000000000;
+	//{
+	//	Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
+	//	Renderer->CreateAnimation("Mugong_Appear", "Mugong_Appear", 0.1f, -1, -1, false);
+	//	Renderer->CreateAnimation("Mugong_Disappear", "Mugong_Disappear", 0.1f, -1, -1, false);
+	//	Renderer->CreateAnimation("Mugong_Idle", "Mugong_Idle");
+	//	Renderer->ChangeAnimation("Mugong_Idle");
+
+	//	Renderer->AutoSpriteSizeOn();
+	//	Renderer->Off();
+
+
+	//	{
+	//		MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	//		MonsterCollision->Transform.SetLocalPosition({ -30.0f, 0.0f });
+	//		MonsterCollision->Transform.SetLocalScale({300.0f, 330.0f});
+	//		MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
+	//		MonsterCollision->SetName(std::string("Mugong"));
+	//		MonsterCollision->Off();
+	//	}
+
+	//}
 }
 
 void Monster::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	//Death();
+	Death();
 }
 
 void Monster::Hit(long long _Damage, bool _Attack)
 {
-
+	return;
 }

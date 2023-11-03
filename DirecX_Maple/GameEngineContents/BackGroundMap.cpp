@@ -36,6 +36,23 @@ void BackGroundMap::Update(float _DeltaTime)
 
 void BackGroundMap::Start()
 {
+	{ 
+		if (nullptr == GameEngineSprite::Find("Dark.png"))
+		{
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExistsChild("ContentsResources");
+			Dir.MoveChild("ContentsResources");
+			Dir.MoveChild("BackGround");
+			std::vector<GameEngineFile> Files = Dir.GetAllFile();
+			for (size_t i = 0; i < Files.size(); i++)
+			{
+				GameEngineFile& File = Files[i];
+				GameEngineTexture::Load(File.GetStringPath());
+			}
+			GameEngineSprite::CreateSingle("Dark.png");
+		}
+	}
+
 	Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
 	DebugRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsRenderType::BackGround);
 	// 마스크기능

@@ -54,8 +54,7 @@ protected:
 	//void CollisionEnter(GameEngineCollision* _this, GameEngineCollision* _Other);
 
 private:
-	EventParameter MonsterEvent;
-	long long MonsterHp;
+	long long MonsterHp = 0;
 	bool MonsterAppear = false;
 	float4 MonsterScale = float4::ZERO;
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;

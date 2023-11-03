@@ -31,7 +31,7 @@ void SkillManager::LevelStart(class GameEngineLevel* _PrevLevel)
 
 void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 {
-	//Death();
+	Death();
 }
 
 void SkillManager::Start()
@@ -111,6 +111,9 @@ void SkillManager::HitPrint(GameEngineObject* _Object, std::string_view _HitSpri
 	HitData->Object = _Object;
 	HitData->HitAnimations.resize(_HitCount);
 	HitData->RandomPos.resize(_HitCount);
+
+	/*std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+	NewDR->PushDamage(_Object, _HitCount, 480, 220);*/
 
 	for (size_t i = 0; i < _HitCount; i++)
 	{

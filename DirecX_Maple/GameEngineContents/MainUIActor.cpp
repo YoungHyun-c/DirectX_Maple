@@ -14,11 +14,6 @@ MainUIActor::~MainUIActor()
 void MainUIActor::Start()
 {
 	{
-		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	}
-
-	{
 		AtereAnime = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		AtereAnime->CreateAnimation("AtereAnime_Back", "AtereAnime", 0.3f, -1, -1, true);
 		AtereAnime->ChangeAnimation("AtereAnime_Back");

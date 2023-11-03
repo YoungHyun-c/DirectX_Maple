@@ -17,7 +17,19 @@ TitleLevel::~TitleLevel()
 void TitleLevel::Start()
 {
 	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
+	GameEngineInput::AddInputObject(this);
+}
 
+void TitleLevel::Update(float _Delta)
+{
+	if (GameEngineInput::IsPress('1', this))
+	{
+		GameEngineCore::ChangeLevel("PracticeLevel");
+	}
+}
+
+void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
+{
 	if (nullptr == GameEngineSprite::Find("JinHillaTitle"))
 	{
 		GameEngineDirectory Dir;
@@ -45,24 +57,12 @@ void TitleLevel::Start()
 	{
 		std::shared_ptr<JinHillaAnime> NewMonster = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	}
-
-	GameEngineInput::AddInputObject(this);
-}
-
-void TitleLevel::Update(float _Delta)
-{
-	if (GameEngineInput::IsPress('1', this))
-	{
-		GameEngineCore::ChangeLevel("PracticeLevel");
-	}
-}
-
-void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
-{
-	
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	
+	if (nullptr != GameEngineSprite::Find("JinHillaAnime"))
+	{
+		GameEngineSprite::Release("JinHillaTitle");
+	}
 }

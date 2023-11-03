@@ -41,3 +41,10 @@ void JinHillaAnime::Update(float _Delta)
 		JinAnimeEnd = true;
 	}
 }
+
+
+void JinHillaAnime::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	JinAnimeEnd = false;
+	JinHillaAnimeRenderer->ChangeAnimation("JinHillaTitle");
+}

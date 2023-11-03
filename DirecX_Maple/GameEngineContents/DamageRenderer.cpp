@@ -156,7 +156,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		{
 			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
 		}
-
+		//_Object->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
 
 		int NumArr[15] = { 0, };
 		int Digit;
@@ -228,4 +228,31 @@ void DamageRenderer::DeleteDamage()
 
 		Start++;
 	}
+}
+
+void DamageRenderer::Release()
+{
+	std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*>::iterator Start = DamageRenderList.begin();
+	std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*>::iterator End = DamageRenderList.end();
+
+	for (; Start != End;)
+	{
+		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vec = *Start;
+
+		//float Alpha = (*Vec)[0]->ColorOptionValue.MulColor.a;
+
+		for (int i = 0; i < Vec->size(); i++)
+		{
+			(*Vec)[i]->Death();
+			(*Vec)[i] = nullptr;
+		}
+
+		delete (Vec);
+		Start = DamageRenderList.erase(Start);
+	}
+}
+
+void DamageRenderer::LevelEnd(GameEngineLevel* NextLevel)
+{
+	Death();
 }

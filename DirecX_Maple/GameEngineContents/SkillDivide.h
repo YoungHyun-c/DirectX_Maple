@@ -19,10 +19,13 @@ public:
 protected:
 	void UseSkill() override;
 	void EndSkill() override;
+	
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-	void Start();
-	void Update(float _Delta);
+	void Start() override;
+	void Update(float _Delta) override;
+	void Release() override;
 
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
@@ -30,6 +33,7 @@ private:
 	bool UseFirst = false;
 	EventParameter SkillEvent;
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
+	std::shared_ptr<class DamageRenderer> NewDR = nullptr;
 
 
 	size_t DivideHitCount;
@@ -42,5 +46,6 @@ private:
 
 	float CurTime = 0.0f;
 	float LimitTime = 0.12f;
+	EventParameter HitEvent;
 };
 

@@ -23,9 +23,11 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-	std::shared_ptr<class BackGroundMap> Map;
+	std::shared_ptr<class BackGroundMap> Map = nullptr;
 
-	std::shared_ptr<class Player> NewPlayer = nullptr;
+	std::shared_ptr<class Player> PlayerObject = nullptr;
+	std::shared_ptr<class AdeleSkill> PlayerSkill = nullptr;
+	std::shared_ptr<class SkillManager> Skill = nullptr;
 
 };
 

@@ -67,11 +67,11 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
 	GameEngineCore::CreateLevel<PracticeLevel>("PracticeLevel");
 	GameEngineCore::CreateLevel<BossEntranceLevel>("BossEntranceLevel");
-	GameEngineCore::CreateLevel<BossLevel>("BossLevel");
-	GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
-	GameEngineCore::CreateLevel<TestLevel>("TestLevel");
+	//GameEngineCore::CreateLevel<BossLevel>("BossLevel");
+	//GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
+	//GameEngineCore::CreateLevel<TestLevel>("TestLevel");
 
-	GameEngineCore::ChangeLevel("TestLevel");
+	GameEngineCore::ChangeLevel("PracticeLevel");
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 }

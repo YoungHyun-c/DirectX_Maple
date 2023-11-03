@@ -211,6 +211,7 @@ void SkillDivide::UseSkill()
 	Divide1->ChangeAnimation("DIvide1");*/
 	SkillRender1->ChangeAnimation("Divide1", true, 0);
 	DivideHitCount = 7;
+
 	AttackEvent();
 }
 
@@ -267,11 +268,9 @@ void SkillDivide::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision
 
 void SkillDivide::AttackEvent()
 {
-	EventParameter HitEvent;
-
 	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
-			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+			NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(_Other, DivideHitCount, 480, 220);
 		};
 	HitEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
@@ -280,4 +279,28 @@ void SkillDivide::AttackEvent()
 		};
 	AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 	AttackCol->CollisionEvent(ContentsCollisionType::Craving, HitEvent);
+}
+
+void SkillDivide::Release()
+{
+	if (nullptr != SkillCollision)
+	{
+		SkillCollision = nullptr;
+	}
+
+	if (nullptr != AttackCol)
+	{
+		AttackCol = nullptr;
+	}
+
+	if (nullptr != NewDR)
+	{
+		NewDR = nullptr;
+	}
+}
+
+
+void SkillDivide::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
 }
