@@ -23,6 +23,6 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-	std::shared_ptr<class BackGroundMap> Map;
+	std::shared_ptr<class JinHillaAnime> JinHillaAniMation = nullptr;
 };
 

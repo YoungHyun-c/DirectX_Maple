@@ -1,8 +1,15 @@
 #include "PreCompile.h"
 #include "BossRewardLevel.h"
 #include "BackGroundMap.h"
+#include "BossLevel.h"
 
 #include "Player.h"
+#include "AdeleSkill.h"
+#include "SkillManager.h"
+
+#include "MainUIActor.h"
+#include "Mouse.h"
+#include "SummonUi.h"
 
 BossRewardLevel::BossRewardLevel()
 {
@@ -30,6 +37,26 @@ void BossRewardLevel::Start()
 	//	std::shared_ptr<PlayMap> Object2 = CreateActor<PlayMap>(ContentsObjectType::Monster);
 	//	std::shared_ptr<PlayMap> Object3 = CreateActor<PlayMap>(ContentsObjectType::Monster);
 	//}
+
+	GameEngineInput::AddInputObject(this);
+}
+
+void BossRewardLevel::Update(float _Delta)
+{
+	if (GameEngineInput::IsDown('B', this))
+	{
+		Map->SwitchRenderer();
+	}
+
+	if (GameEngineInput::IsDown('7', this))
+	{
+		GameEngineCore::ChangeLevel("7.TestLevel");
+	}
+}
+
+void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	if (nullptr == GameEngineSprite::Find("RewardMap.png"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
@@ -46,38 +73,120 @@ void BossRewardLevel::Start()
 		GameEngineSprite::CreateSingle("RewardMap.png");
 		GameEngineSprite::CreateSingle("RewardDebugMap.png");
 	}
+	if (nullptr == GameEngineSprite::Find("Adele_Character"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Adele_Character");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("RewardMap.png");
-	//float4 HScale = Tex->GetScale().Half();
-	//GlobalValue::MapScale = Tex->GetScale();
-	//HScale.Y *= -1.0f;
-	//GetMainCamera()->Transform.SetLocalPosition({ HScale.X, HScale.Y, -500.0f });
-	//GetMainCamera()->SetProjectionType(EPROJECTIONTYPE::Orthographic);
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Adele_Battle_Character");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("Skill"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Skill");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSprite::Find("UITexture"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	}
+
+
+	if (Map == nullptr)
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
 		Map->Init("RewardMap.png", "RewardDebugMap.png");
 	}
 
+	if (nullptr == PlayerObject)
 	{
-		std::shared_ptr<Player> NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
-		NewPlayer->SetDebugMap("RewardDebugMap.png");
-		NewPlayer->Transform.SetWorldPosition({ 250.0f, -600.0f });
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
+		BossLevel* Level = dynamic_cast<BossLevel*>(_PrevLevel);
+		PlayerObject->SetDebugMap("RewardDebugMap.png");
+		PlayerObject->Transform.SetWorldPosition({ 250.0f, -600.0f });
+	}
+	if (nullptr == PlayerSkill)
+	{
+		PlayerSkill = CreateActor<AdeleSkill>();
+	}
+	if (nullptr == Skill)
+	{
+		Skill = CreateActor<SkillManager>();
+	}
+	if (nullptr == UIObject)
+	{
+		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+		BossLevel* Level = dynamic_cast<BossLevel*>(_PrevLevel);
+	}
+	if (nullptr == MouseObject)
+	{
+		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+		BossLevel* Level = dynamic_cast<BossLevel*>(_PrevLevel);
 	}
 
-	GameEngineInput::AddInputObject(this);
-}
 
-void BossRewardLevel::Update(float _Delta)
-{
-	if (GameEngineInput::IsDown('B', this))
-	{
-		Map->SwitchRenderer();
-	}
-}
 
-void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
-{
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("RewardMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
@@ -91,5 +200,40 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void BossRewardLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	if (nullptr != GameEngineSprite::Find("RewardMap.png"))
+	{
+		GameEngineSprite::Release("RewardMap.png");
+		GameEngineSprite::Release("RewardDebugMap.png");
+	}
 
+	if (nullptr != Map)
+	{
+		Map->Death();
+		Map = nullptr;
+	}
+	if (nullptr != PlayerSkill)
+	{
+		PlayerSkill->Death();
+		PlayerSkill = nullptr;
+	}
+	if (nullptr != Skill)
+	{
+		Skill->Death();
+		Skill = nullptr;
+	}
+	if (nullptr != PlayerObject)
+	{
+		PlayerObject->Death();
+		PlayerObject = nullptr;
+	}
+	if (nullptr != UIObject)
+	{
+		UIObject->Death();
+		UIObject = nullptr;
+	}
+	if (nullptr != MouseObject)
+	{
+		MouseObject->Death();
+		MouseObject = nullptr;
+	}
 }

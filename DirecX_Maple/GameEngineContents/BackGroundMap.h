@@ -42,8 +42,8 @@ private:
 
 	std::shared_ptr<class GameEngineSpriteRenderer> Renderer;
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;
-	std::shared_ptr<class GameEngineSpriteRenderer> DarkRenderer;
-	std::shared_ptr<GameEngineTexture> BackTexture = nullptr;
+	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
+	std::shared_ptr<class GameEngineTexture> BackTexture = nullptr;
 
 	std::shared_ptr<class Mouse> MouseObject;
 

@@ -19,6 +19,7 @@ enum class ContentsObjectType
 	JinHillaAnime,
 	DamageRender,
 	UI,
+	JinHillEnteraAnime,
 	Mouse,
 	Max,
 };

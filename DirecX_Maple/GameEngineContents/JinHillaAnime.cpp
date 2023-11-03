@@ -31,7 +31,7 @@ void JinHillaAnime::Update(float _Delta)
 	{
 		if (JinHillaAnimeRenderer->IsCurAnimationEnd())
 		{
-			GameEngineCore::ChangeLevel("PracticeLevel");
+			GameEngineCore::ChangeLevel("2.PracticeLevel");
 		}
 	}
 

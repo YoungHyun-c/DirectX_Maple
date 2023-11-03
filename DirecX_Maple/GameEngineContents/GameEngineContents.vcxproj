@@ -27,6 +27,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossEnterAniLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BossEntranceLevel.cpp">
       <SubType>
       </SubType>
@@ -183,6 +187,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="BasicFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossEnterAniLevel.h">
       <SubType>
       </SubType>
     </ClInclude>

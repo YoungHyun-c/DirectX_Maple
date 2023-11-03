@@ -32,8 +32,7 @@ private:
 	std::shared_ptr<class SkillManager> Skill = nullptr;
 
 	std::shared_ptr<class MainUIActor> UIObject = nullptr;
-	std::shared_ptr<class SummonUi> SummonObject = nullptr;
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
-	std::shared_ptr<class DamageRenderer> DamageRender = nullptr;
+	std::shared_ptr<class SummonUi> SummonObject = nullptr;
 };
 

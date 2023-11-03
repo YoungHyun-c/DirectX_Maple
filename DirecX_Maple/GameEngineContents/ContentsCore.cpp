@@ -8,6 +8,7 @@
 #include "TitleLevel.h"
 #include "PracticeLevel.h"
 #include "BossEntranceLevel.h"
+#include "BossEnterAniLevel.h"
 #include "BossLevel.h"
 #include "BossRewardLevel.h"
 #include "MapEditorLevel.h"
@@ -64,14 +65,16 @@ void ContentsCore::Start()
 
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
 
-	GameEngineCore::CreateLevel<TitleLevel>("TitleLevel");
-	GameEngineCore::CreateLevel<PracticeLevel>("PracticeLevel");
-	GameEngineCore::CreateLevel<BossEntranceLevel>("BossEntranceLevel");
-	//GameEngineCore::CreateLevel<BossLevel>("BossLevel");
-	//GameEngineCore::CreateLevel<BossRewardLevel>("BossRewardLevel");
-	//GameEngineCore::CreateLevel<TestLevel>("TestLevel");
+	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
+	GameEngineCore::CreateLevel<PracticeLevel>("2.PracticeLevel");
+	GameEngineCore::CreateLevel<BossEntranceLevel>("3.BossEntranceLevel");
+	GameEngineCore::CreateLevel<BossEnterAniLevel>("4.BossEnterAniLevel");
+	GameEngineCore::CreateLevel<BossLevel>("5.BossLevel");
+	GameEngineCore::CreateLevel<BossRewardLevel>("6.BossRewardLevel");
+	
+	GameEngineCore::CreateLevel<TestLevel>("7.TestLevel");
 
-	GameEngineCore::ChangeLevel("PracticeLevel");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 }

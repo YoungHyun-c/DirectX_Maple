@@ -241,6 +241,12 @@ void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 	JinHillaCurHp = 45000000000000;  // 4페
 }
 
+void JinHillaBoss::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}
+
+
 ///////////////////// 공격스킬 애니메이션 관련////////////////////
 void JinHillaBoss::SkillAnimation()
 {

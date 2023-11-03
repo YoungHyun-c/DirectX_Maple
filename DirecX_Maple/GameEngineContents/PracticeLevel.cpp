@@ -11,7 +11,6 @@
 #include "MainUIActor.h"
 #include "Mouse.h"
 #include "SummonUi.h"
-#include "DamageRenderer.h"
 
 
 PracticeLevel::PracticeLevel()
@@ -27,7 +26,6 @@ PracticeLevel::~PracticeLevel()
 void PracticeLevel::Start()
 {
 	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
-
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -62,22 +60,20 @@ void PracticeLevel::Update(float _Delta)
 
 void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
+	if (nullptr == GameEngineSprite::Find("PracticeMap.png"))
 	{
-		if (nullptr == GameEngineSprite::Find("PracticeMap.png"))
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("BackGround");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
 		{
-			GameEngineDirectory Dir;
-			Dir.MoveParentToExistsChild("ContentsResources");
-			Dir.MoveChild("ContentsResources");
-			Dir.MoveChild("BackGround");
-			std::vector<GameEngineFile> Files = Dir.GetAllFile();
-			for (size_t i = 0; i < Files.size(); i++)
-			{
-				GameEngineFile& File = Files[i];
-				GameEngineTexture::Load(File.GetStringPath());
-			}
-			GameEngineSprite::CreateSingle("PracticeMap.png");
-			GameEngineSprite::CreateSingle("PracticeDebugMap.png");
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
 		}
+		GameEngineSprite::CreateSingle("PracticeMap.png");
+		GameEngineSprite::CreateSingle("PracticeDebugMap.png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Mugong"))
@@ -205,11 +201,13 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == UIObject)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 	}
 	if (nullptr == MouseObject)
 	{
 		SummonObject = CreateActor<SummonUi>(ContentsObjectType::UI);
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 	}
 
 
@@ -235,18 +233,18 @@ void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		GameEngineSprite::Release("Mugong");
 	}
-	if (nullptr != GameEngineSprite::Find("LWGaugeUI_background.png"))
-	{
-		GameEngineSprite::Release("LWGaugeUI_background.png");
-		GameEngineSprite::Release("LWGaugeUI.gauge.png");
-	}
-	if (nullptr != GameEngineSprite::Find("Adele_Character"))
-	{
-		GameEngineSprite::Release("Adele_Character");
-		GameEngineSprite::Release("Adele_Battle_Character");
-		GameEngineSprite::Release("Skill");
-		GameEngineSprite::Release("UITexture");
-	}
+	//if (nullptr != GameEngineSprite::Find("LWGaugeUI_background.png"))
+	//{
+	//	GameEngineSprite::Release("LWGaugeUI_background.png");
+	//	GameEngineSprite::Release("LWGaugeUI.gauge.png");
+	//}
+	//if (nullptr != GameEngineSprite::Find("Adele_Character"))
+	//{
+	//	GameEngineSprite::Release("Adele_Character");
+	//	GameEngineSprite::Release("Adele_Battle_Character");
+	//	GameEngineSprite::Release("UITexture");
+	//	GameEngineSprite::Release("Skill");
+	//}
 
 	if (nullptr != MonsterObject)
 	{
@@ -269,11 +267,11 @@ void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		Skill->Death();
 		Skill = nullptr;
 	}
-	if (nullptr != PlayerObject)
+	/*if (nullptr != PlayerObject)
 	{
 		PlayerObject->Death();
 		PlayerObject = nullptr;
-	}
+	}*/
 	if (nullptr != UIObject)
 	{
 		UIObject->Death();

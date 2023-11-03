@@ -25,33 +25,46 @@ void PotalManager::Start()
 
 void PotalManager::Update(float _Detla)
 {
-	if (LinkedMap == "PracticeLevel")
+	if (LinkedMap == "2.PracticeLevel")
 	{
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
 			{
 				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
-					GameEngineCore::ChangeLevel("PracticeLevel");
+					GameEngineCore::ChangeLevel("2.PracticeLevel");
 				}
 			};
 		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
 	}
 
-	if (LinkedMap == "BossEntranceLevel")
+	if (LinkedMap == "3.BossEntranceLevel")
 	{
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
 			{
 				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
-					GameEngineCore::ChangeLevel("BossEntranceLevel");
+					GameEngineCore::ChangeLevel("3.BossEntranceLevel");
 				}
 			};
 		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
 	}
 
-	if (LinkedMap == "BossLevel")
+	if (LinkedMap == "4.BossEnterAniLevel")
+	{
+		EventParameter PotalEvent;
+		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
+			{
+				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
+				{
+					GameEngineCore::ChangeLevel("4.BossEnterAniLevel");
+				}
+			};
+		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
+	}
+
+	/*if (LinkedMap == "BossLevel")
 	{
 		EventParameter PotalEvent;
 		PotalEvent.Stay = [](GameEngineCollision* _this, GameEngineCollision* Col)
@@ -62,6 +75,6 @@ void PotalManager::Update(float _Detla)
 				}
 			};
 		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
-	}
+	}*/
 
 }

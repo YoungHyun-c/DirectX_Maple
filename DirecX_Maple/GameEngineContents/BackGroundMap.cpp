@@ -30,7 +30,7 @@ void BackGroundMap::Update(float _DeltaTime)
 
 	// Fade in Fade Out 테스트
 	{
-		DarkRenderer->GetColorData().MulColor.A -= _DeltaTime * 0.5f;
+		//DarkRenderer->GetColorData().MulColor.A -= _DeltaTime * 0.5f;
 	}
 }
 
@@ -60,8 +60,8 @@ void BackGroundMap::Start()
 	Renderer->On();
 	DebugRenderer->Off();
 
-	DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsRenderType::Fade);
-	DarkRenderer->SetSprite("Dark.Png");
+	//DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsRenderType::Fade);
+	//DarkRenderer->SetSprite("Dark.Png");
 }
 
 void BackGroundMap::Init(const std::string& _FileName, const std::string& _DebugFileName)
@@ -112,26 +112,26 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 	
 	//Fade in Fade Out 테스트
 	{
-		DarkRenderer->GetColorData().MulColor.A = 1;
-		DarkRenderer->Transform.SetWorldPosition(0);
-		DarkRenderer->On();
+		//DarkRenderer->GetColorData().MulColor.A = 1;
+		//DarkRenderer->Transform.SetWorldPosition(0);
+		//DarkRenderer->On();
 	}
 
 	if (FileName == "PracticeMap.png")
 	{
 		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("BossEntranceLevel");
+		Potal->SetLinkedMap("3.BossEntranceLevel");
 		Potal->Transform.SetWorldPosition({ 180.0f, -855.0f });
 	}
 
 	if (FileName == "EntranceMap.png")
 	{
 		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("PracticeLevel");
+		Potal->SetLinkedMap("2.PracticeLevel");
 		Potal->Transform.SetWorldPosition({ 110.0f, -750.0f });
 
 		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("BossLevel");
+		Potal->SetLinkedMap("4.BossEnterAniLevel");
 		Potal->Transform.SetWorldPosition({ 785.0f, -750.0f });
 	}
 

@@ -24,7 +24,7 @@ void TitleLevel::Update(float _Delta)
 {
 	if (GameEngineInput::IsPress('1', this))
 	{
-		GameEngineCore::ChangeLevel("PracticeLevel");
+		GameEngineCore::ChangeLevel("2.PracticeLevel");
 	}
 }
 
@@ -55,14 +55,20 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	{
-		std::shared_ptr<JinHillaAnime> NewMonster = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
+		JinHillaAniMation = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	}
 }
 
 void TitleLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	if (nullptr != GameEngineSprite::Find("JinHillaAnime"))
+	if (nullptr != GameEngineSprite::Find("JinHillaTitle"))
 	{
 		GameEngineSprite::Release("JinHillaTitle");
+	}
+
+	if (nullptr != JinHillaAniMation)
+	{
+		JinHillaAniMation->Death();
+		JinHillaAniMation = nullptr;
 	}
 }

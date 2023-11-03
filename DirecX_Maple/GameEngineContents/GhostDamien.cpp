@@ -433,3 +433,8 @@ void GhostDamien::CallRegen()
 {
 	ChangeState(MonsterState::Regen);
 }
+
+void GhostDamien::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}

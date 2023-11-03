@@ -120,6 +120,9 @@
     <ClCompile Include="TestMonster.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
+    <ClCompile Include="BossEnterAniLevel.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -237,6 +240,9 @@
     </ClInclude>
     <ClInclude Include="TestMonster.h">
       <Filter>Object\Boss\SummonMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEnterAniLevel.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

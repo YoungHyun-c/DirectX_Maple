@@ -17,23 +17,7 @@ CravingMonster::~CravingMonster()
 
 void CravingMonster::Start()
 {
-	//CravingMob = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
-	//CravingMob->CreateAnimation("Craving_Regen", "Craving_Regen", 0.1f, -1, -1, false);
-	//CravingMob->CreateAnimation("Craving_Stand", "Craving_Stand", 0.1f, -1, -1, true);
-	//CravingMob->CreateAnimation("Craving_Move", "Craving_Move", 0.1f, -1, -1, true);
-	//CravingMob->CreateAnimation("Craving_Attack", "Craving_Attack", 0.1f, -1, -1, false);
-	//CravingMob->CreateAnimation("Craving_Die", "Craving_Die", 0.1f, -1, -1, false);
-	//CravingMob->CreateAnimation("Craving_Dieing", "Craving_Dieing", 0.1f, -1, -1, true);
-	//CravingMob->CreateAnimation("Craving_Awake", "Craving_Awake", 0.1f, -1, -1, false);
-	//CravingMob->CreateAnimation("Craving_Death", "Craving_Death", 0.1f, -1, -1, false);
-
-	//CravingMob->ChangeAnimation("Craving_Regen");
-	//CravingMob->AutoSpriteSizeOn();
-	//CravingMob->SetPivotType(PivotType::Bottom);
-	//CravingMob->Off();
-
 	TimeCounting();
-
 	MonsterRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
 	MonsterRenderer->CreateAnimation("Regen", "Craving_Regen", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Stand", "Craving_Stand", 0.1f, -1, -1, true);
@@ -239,4 +223,9 @@ void CravingMonster::CallRegen()
 void CravingMonster::CallDie()
 {
 	ChangeState(MonsterState::Die);
+}
+
+void CravingMonster::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
 }

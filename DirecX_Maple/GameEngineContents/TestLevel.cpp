@@ -1,15 +1,22 @@
 #include "PreCompile.h"
+#include "BackGroundMap.h"
 #include "TestLevel.h"
 
-#include "BackGroundMap.h"
-#include "MonsterFunction.h"
 
-#include "SkillManager.h"
 #include "Player.h"
+#include "AdeleSkill.h"
+#include "SkillManager.h"
+
+#include "MainUIActor.h"
+#include "Mouse.h"
+#include "SummonUi.h"
+
 #include "GhostDamien.h"
+
+
+#include "MonsterFunction.h"
 #include "CravingMonster.h"
 #include "JinHillaBoss.h"
-
 
 TestLevel::TestLevel()
 {
@@ -23,6 +30,19 @@ TestLevel::~TestLevel()
 
 
 void TestLevel::Start()
+{
+	GameEngineInput::AddInputObject(this);
+}
+
+void TestLevel::Update(float _Delta)
+{
+	if (GameEngineInput::IsDown('B', this))
+	{
+		Map->SwitchRenderer();
+	}
+}
+
+void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	if (nullptr == GameEngineSprite::Find("BossMap.png"))
 	{
@@ -39,7 +59,6 @@ void TestLevel::Start()
 		}
 		GameEngineSprite::CreateSingle("BossMap.png");
 		GameEngineSprite::CreateSingle("BossDebugMap.png");
-		GameEngineSprite::CreateSingle("Dark.Png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
@@ -88,41 +107,93 @@ void TestLevel::Start()
 		}
 	}
 
+	/*if (nullptr == GameEngineSprite::Find("UITexture"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	}*/
+
+	if (Map == nullptr)
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
 		Map->Init("BossMap.png", "BossDebugMap.png");
 	}
 
+	if (nullptr == PlayerObject)
 	{
-		NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
-		NewPlayer->SetDebugMap("BossDebugMap.png");
-		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
+		PlayerObject->SetDebugMap("BossDebugMap.png");
+		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
 
+	if (nullptr == PlayerSkill)
 	{
-		CreateActor<SkillManager>();
+		PlayerSkill = CreateActor<AdeleSkill>();
+	}
+	if (nullptr == Skill)
+	{
+		Skill = CreateActor<SkillManager>();
+	}
+	/*if (nullptr == UIObject)
+	{
+		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+	}
+	if (nullptr == MouseObject)
+	{
+		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+	}*/
+
+	if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("GhostDamienMob");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
 	}
 
-	//{
-	//	GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
-	//	GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	GhostDamienMob->SetDebugMap("BossDebugMap.Png");
-	//}
-
-	GameEngineInput::AddInputObject(this);
-}
-
-void TestLevel::Update(float _Delta)
-{
-	if (GameEngineInput::IsDown('B', this))
+	if (nullptr == GhostDamienMob)
 	{
-		Map->SwitchRenderer();
+		GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
+		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
+		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 	}
-}
 
-void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
-{
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
@@ -132,4 +203,44 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	HScale.Z = 500.0f;
 	Map->Transform.SetLocalPosition(HScale);
+}
+
+void TestLevel::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	if (nullptr != GameEngineSprite::Find("BossMap.png"))
+	{
+		GameEngineSprite::Release("BossMap.png");
+		GameEngineSprite::Release("BossDebugMap.png");
+	}
+
+	if (nullptr != Map)
+	{
+		Map->Death();
+		Map = nullptr;
+	}
+	if (nullptr != PlayerSkill)
+	{
+		PlayerSkill->Death();
+		PlayerSkill = nullptr;
+	}
+	if (nullptr != Skill)
+	{
+		Skill->Death();
+		Skill = nullptr;
+	}
+	if (nullptr != PlayerObject)
+	{
+		PlayerObject->Death();
+		PlayerObject = nullptr;
+	}
+	if (nullptr != UIObject)
+	{
+		UIObject->Death();
+		UIObject = nullptr;
+	}
+	if (nullptr != MouseObject)
+	{
+		MouseObject->Death();
+		MouseObject = nullptr;
+	}
 }

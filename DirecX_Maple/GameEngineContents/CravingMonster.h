@@ -46,6 +46,8 @@ public:
 	void CallDie();
 
 protected:
+	void LevelEnd(GameEngineLevel* NexLevel) override;
+
 	void Start() override;
 	void Update(float _Delta) override;
 

@@ -50,6 +50,7 @@ public:
 
 protected:
 	void LevelStart(GameEngineLevel* _PreveLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Start();
 	void Update(float _Delta) override;
 

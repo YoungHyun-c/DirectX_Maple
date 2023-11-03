@@ -7,6 +7,7 @@
 #include "JinHillaAnime.h"
 #include "JinHillaEnterAnime.h"
 #include "Mouse.h"
+#include "MainUIActor.h"
 
 #include "JinHillaBoss.h"
 #include "CravingMonster.h"
@@ -37,9 +38,9 @@ void BossLevel::Start()
 
 
 	// 입장 컷신
-	{
-		//std::shared_ptr<JinHillaEnterAnime> EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
-	}
+	/*{
+		EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
+	}*/
 
 
 	//{
@@ -75,24 +76,24 @@ void BossLevel::Update(float _Delta)
 		Map->SwitchRenderer();
 	}
 
-	//if (GameEngineInput::IsDown('4', this))
-	//{
-	//	GameEngineCore::ChangeLevel("BossRewardLevel");
-	//}
+	if (GameEngineInput::IsDown('4', this))
+	{
+		GameEngineCore::ChangeLevel("6.BossRewardLevel");
+	}
 
 	// 보스 타이머 만들어야됨 분, 초에 맞추도록
-	//if (AniEnd == true)
+	if (AniEnd == true)
 	{
 		CurTime -= _Delta * 0.01f;
 	}
 
 	// 입장 컷신
-	//if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
+	/*if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
 	{
 		NewPlayer->PlayerEnterBindEnd();
-		//AniEnd = true;
-		//BossJin->CallRegen();
-	}
+		AniEnd = true;
+		BossJin->CallRegen();
+	}*/
 
 	std::string BossTimer = "시간 타이머 : ";
 	BossTimer += std::to_string(CurTime);
@@ -132,48 +133,196 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("BossDebugMap.png");
 	}
 
-
+	if (nullptr == Map)
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
 		Map->Init("BossMap.png", "BossDebugMap.png");
 	}
 
-
-	if (nullptr == NewPlayer)
+	if (nullptr == GameEngineSprite::Find("Adele_Character"))
 	{
-		NewPlayer = CreateActor<Player>(ContentsObjectType::Player);
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Adele_Character");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Adele_Battle_Character");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == PlayerObject)
+	{
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
 		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
-		NewPlayer->SetDebugMap("BossDebugMap.png");
-		NewPlayer->PlayerEnterBind();
-		NewPlayer->Transform.SetWorldPosition({ 900.0f, -500.0f });
+		PlayerObject->SetDebugMap("BossDebugMap.png");
+		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
-
+	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
-		CreateActor<SkillManager>();
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Skill");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == PlayerSkill)
+	{
+		PlayerSkill = CreateActor<AdeleSkill>();
+	}
+	if (nullptr == Skill)
+	{
+		Skill = CreateActor<SkillManager>();
 	}
 
-	//// 보스
-	//{
-	//	BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-	//	BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	BossJin->SetDebugMap("BossDebugMap.Png");
-	//}
+	if (nullptr == GameEngineSprite::Find("Craving"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("Craving");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//{
-	//	CreateActor<BossSkillManager>();
-	//}
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("GhostDamienMob");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//{
-	//	MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
-	//}
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 
-	//// 보스레벨 Ui
-	//{
-	//	BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	//}
+	if (nullptr == GameEngineSprite::Find("BossJin"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("BossJin");
+		Dir.MoveChild("BossJinHilla");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("JinHillaUI"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("BossJin");
+		Dir.MoveChild("JinHillaUI");
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+	
 
+	// 보스
+	if (nullptr == BossJin)
+	{
+		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+		BossJin->SetDebugMap("BossDebugMap.Png");
+		BossJin->CallRegen();
+	}
+	if (nullptr ==  BossJinSkill)
+	{
+		BossJinSkill = CreateActor<BossSkillManager>();
+	}
+	// 보스레벨 Ui
+	if (nullptr == BossUi)
+	{
+		BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	}
 
+	if (nullptr == GameEngineSprite::Find("UITexture"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	}
+
+	if (nullptr == UIObject)
+	{
+		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
+	}
+	if (nullptr == MouseObject)
+	{
+		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+	}
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
@@ -193,5 +342,68 @@ void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		GameEngineSprite::Release("BossMap.png");
 		GameEngineSprite::Release("BossDebugMap.png");
+	}
+	if (nullptr != GameEngineSprite::Find("BossJin"))
+	{
+		GameEngineSprite::Release("BossJin");
+		GameEngineSprite::Release("JinHillaUI");
+		GameEngineSprite::Release("Craving");
+		GameEngineSprite::Release("GhostDamienMob");
+	}
+	if (nullptr != GameEngineSprite::Find("JinHillaAnime"))
+	{
+		GameEngineSprite::Release("JinHillaAnime");
+	}
+
+	if (nullptr != Map)
+	{
+		Map->Death();
+		Map = nullptr;
+	}
+
+	if (nullptr != BossJin)
+	{
+		BossJin->Death();
+		BossJin = nullptr;
+
+		BossJinSkill->Death();
+		BossJinSkill = nullptr;
+
+	}
+	if (nullptr != JinHillaAttackAni)
+	{
+		JinHillaAttackAni->Death();
+		JinHillaAttackAni = nullptr;
+	}
+
+	if (nullptr != PlayerSkill)
+	{
+		PlayerSkill->Death();
+		PlayerSkill = nullptr;
+	}
+	if (nullptr != Skill)
+	{
+		Skill->Death();
+		Skill = nullptr;
+	}
+	if (nullptr != PlayerObject)
+	{
+		PlayerObject->Death();
+		PlayerObject = nullptr;
+	}
+	if (nullptr != UIObject)
+	{
+		UIObject->Death();
+		UIObject = nullptr;
+	}
+	if (nullptr != BossUi)
+	{
+		BossUi->Death();
+		BossUi = nullptr;
+	}
+	if (nullptr != MouseObject)
+	{
+		MouseObject->Death();
+		MouseObject = nullptr;
 	}
 }
