@@ -11,6 +11,8 @@
 #include "Mouse.h"
 #include "SummonUi.h"
 
+#include "BossBoxReward.h"
+
 BossRewardLevel::BossRewardLevel()
 {
 
@@ -73,6 +75,36 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("RewardMap.png");
 		GameEngineSprite::CreateSingle("RewardDebugMap.png");
 	}
+
+	if (nullptr == GameEngineSprite::Find("BossBoxDie"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("BossJin");
+		Dir.MoveChild("BossReWardBox");
+
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("BossBoxStand.Png");
+		GameEngineSprite::CreateSingle("GoTongIcon.png");
+		GameEngineSprite::CreateSingle("DayBreakIcon.png");
+		GameEngineSprite::CreateSingle("JenesisIcon.png");
+	}
+
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
 	{
 		GameEngineDirectory Dir;
@@ -150,6 +182,13 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	}
+
+	if (BossBox == nullptr)
+	{
+		BossBox = CreateActor<BossBoxReward>(ContentsObjectType::Monster);
+		//BossBox->Transform.SetWorldPosition({ 740.0f, -660.0f });
+		BossBox->Transform.SetWorldPosition({ 740.0f, -880.0f });
 	}
 
 

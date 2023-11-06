@@ -69,3 +69,10 @@ enum class MonstersName
 	GhostDamien,
 	Max,
 };
+
+enum class ItemType
+{
+	Equip,
+	Use,
+	Etc,
+};

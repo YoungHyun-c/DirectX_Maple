@@ -71,6 +71,7 @@ void BackGroundMap::Init(const std::string& _FileName, const std::string& _Debug
 
 	GameEngineSprite::CreateSingle(FileName);
 	BackTexture = GameEngineTexture::Find(FileName);
+	BackColTexture = GameEngineTexture::Find(DebugFileName);
 	float4 RenderScale = BackTexture->GetScale().Half();
 	RenderScale.Y *= -1.0f;
 

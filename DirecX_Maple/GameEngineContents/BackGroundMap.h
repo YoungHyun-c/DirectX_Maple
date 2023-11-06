@@ -25,6 +25,11 @@ public:
 		return BackTexture->GetScale();
 	}
 
+	std::shared_ptr<class GameEngineTexture> GetColMap()
+	{
+		return BackColTexture;
+	}
+
 	void Init(const std::string& _FileName, const std::string& _DebugFileName);
 
 	void SwitchRenderer();
@@ -44,6 +49,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> DebugRenderer;
 	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
 	std::shared_ptr<class GameEngineTexture> BackTexture = nullptr;
+	std::shared_ptr<class GameEngineTexture> BackColTexture = nullptr;
 
 	std::shared_ptr<class Mouse> MouseObject;
 

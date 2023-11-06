@@ -123,6 +123,12 @@
     <ClCompile Include="BossEnterAniLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
+    <ClCompile Include="BossBoxReward.cpp">
+      <Filter>Object\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="DropItem.cpp">
+      <Filter>Object\Boss\UI\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -244,6 +250,12 @@
     <ClInclude Include="BossEnterAniLevel.h">
       <Filter>Level</Filter>
     </ClInclude>
+    <ClInclude Include="BossBoxReward.h">
+      <Filter>Object\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="DropItem.h">
+      <Filter>Object\Boss\UI\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -293,6 +305,9 @@
     </Filter>
     <Filter Include="Level\Editor">
       <UniqueIdentifier>{82ebd5e1-4441-45f3-a96a-b4484a23fb03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\UI\Item">
+      <UniqueIdentifier>{d6bd5da1-9f8f-4cb9-b4b4-8368c8e238b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
