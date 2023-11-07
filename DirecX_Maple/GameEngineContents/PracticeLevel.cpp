@@ -75,7 +75,21 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("PracticeMap.png");
 		GameEngineSprite::CreateSingle("PracticeDebugMap.png");
 	}
+	if (nullptr == GameEngineSprite::Find("Potal"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("PotalFolder");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 	if (nullptr == GameEngineSprite::Find("Mugong"))
 	{
 		GameEngineDirectory Dir;

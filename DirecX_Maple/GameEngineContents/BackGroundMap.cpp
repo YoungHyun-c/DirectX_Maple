@@ -1,6 +1,9 @@
 #include"PreCompile.h"
 #include "BackGroundMap.h"
 #include "PotalManager.h"
+#include "RingPotalManager.h"
+
+#include "Player.h"
 
 #pragma comment(lib, "msimg32.lib")
 
@@ -118,22 +121,89 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		//DarkRenderer->On();
 	}
 
+	if (FileName == "TownMap.png")
+	{
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("3.CrossLoadLevel");
+		Potal->Transform.SetWorldPosition({ 180.0f, -1020.0f });
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("5.PracticeLevel");
+		Potal->Transform.SetWorldPosition({ 1500.0f, -1020.0f });
+	}
+
+	if (FileName == "CrossLoadMap.png")
+	{
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("2.TownLevel");
+		Potal->Transform.SetWorldPosition({ 640.0f, -300.0f });
+
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("3_1.HuntLevel");
+		Potal->Transform.SetWorldPosition({ 630.0f, -800.0f });
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("3_2_1.");
+		Potal->Transform.SetWorldPosition({ 2100.0f, -800.0f });
+	}
+
+	if (FileName == "HuntMap.png")
+	{
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("4.FormerLevel");
+		Potal->Transform.SetWorldPosition({ 180.0f, -1000.0f });
+
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("3.CrossLoadLevel");
+		Potal->Transform.SetWorldPosition({ 2780.0f, -1000.0f });
+
+		//Potal = GetLevel()->CreateActor<PotalManager>();
+		//Potal->SetLinkedMap("3_1.HuntLevel");
+		//Potal->Transform.SetWorldPosition({ 2540.0f, -500.0f });
+		//Player::GetMainPlayer()->Transform.SetWorldPosition({ 325.0f, -480.0f });
+
+		//Potal = GetLevel()->CreateActor<PotalManager>();
+		//Potal->SetLinkedMap("3_1.HuntLevel");
+		//Potal->Transform.SetWorldPosition({ 325.0f, -480.0f });
+		//Player::GetMainPlayer()->Transform.SetWorldPosition({ 2540.0f, -500.0f });
+	}
+
+	if (FileName == "6thMap.png")
+	{
+		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal->SetLinkedMap("2.TownLevel");
+		RingPotal->Transform.SetWorldPosition({ 120.0f, -950.0f });
+	}
+
 	if (FileName == "PracticeMap.png")
 	{
 		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("3.BossEntranceLevel");
-		Potal->Transform.SetWorldPosition({ 180.0f, -855.0f });
+		Potal->SetLinkedMap("2.TownLevel");
+		Potal->Transform.SetWorldPosition({ 180.0f, -850.0f });
+
+
+		Potal = GetLevel()->CreateActor<PotalManager>();
+		Potal->SetLinkedMap("6.BossEntranceLevel");
+		Potal->Transform.SetWorldPosition({ 1230.0f, -850.0f });
 	}
 
 	if (FileName == "EntranceMap.png")
 	{
 		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("2.PracticeLevel");
-		Potal->Transform.SetWorldPosition({ 110.0f, -750.0f });
+		Potal->SetLinkedMap("5.PracticeLevel");
+		Potal->Transform.SetWorldPosition({ 110.0f, -740.0f });
 
-		Potal = GetLevel()->CreateActor<PotalManager>();
-		Potal->SetLinkedMap("4.BossEnterAniLevel");
-		Potal->Transform.SetWorldPosition({ 785.0f, -750.0f });
+		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal->SetLinkedMap("7.BossEnterAniLevel");
+		RingPotal->Transform.SetWorldPosition({ 785.0f, -740.0f });
 	}
 
+	if (FileName == "RewardMap.png")
+	{
+		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal->SetLinkedMap("9_2.LiberationLevel");
+		RingPotal->Transform.SetWorldPosition({ 95.0f, -740.0f });
+	}
 }

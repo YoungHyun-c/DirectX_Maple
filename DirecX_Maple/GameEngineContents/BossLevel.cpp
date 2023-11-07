@@ -76,9 +76,9 @@ void BossLevel::Update(float _Delta)
 		Map->SwitchRenderer();
 	}
 
-	if (GameEngineInput::IsDown('4', this))
+	if (GameEngineInput::IsDown('9', this))
 	{
-		GameEngineCore::ChangeLevel("6.BossRewardLevel");
+		GameEngineCore::ChangeLevel("9.BossRewardLevel");
 	}
 
 	// 보스 타이머 만들어야됨 분, 초에 맞추도록

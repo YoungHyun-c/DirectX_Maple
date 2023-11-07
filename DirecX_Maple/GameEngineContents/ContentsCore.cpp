@@ -6,12 +6,19 @@
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
 
 #include "TitleLevel.h"
+#include "TownLevel.h"
+#include "CrossLoadLevel.h"
+#include "HuntLevel.h"
+
+#include "FormerLevel.h"
+
 #include "PracticeLevel.h"
 #include "BossEntranceLevel.h"
 #include "BossEnterAniLevel.h"
 #include "BossLevel.h"
 #include "BossRewardLevel.h"
-#include "MapEditorLevel.h"
+#include "LiberationLevel.h"
+
 #include "ContentsControlWindow.h"
 
 #include "TestLevel.h"
@@ -66,15 +73,26 @@ void ContentsCore::Start()
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
 
 	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
-	GameEngineCore::CreateLevel<PracticeLevel>("2.PracticeLevel");
-	GameEngineCore::CreateLevel<BossEntranceLevel>("3.BossEntranceLevel");
-	GameEngineCore::CreateLevel<BossEnterAniLevel>("4.BossEnterAniLevel");
-	GameEngineCore::CreateLevel<BossLevel>("5.BossLevel");
-	GameEngineCore::CreateLevel<BossRewardLevel>("6.BossRewardLevel");
-	
-	GameEngineCore::CreateLevel<TestLevel>("7.TestLevel");
+	GameEngineCore::CreateLevel<TownLevel>("2.TownLevel");
+	GameEngineCore::CreateLevel<CrossLoadLevel>("3.CrossLoadLevel");
+	GameEngineCore::CreateLevel<HuntLevel>("3_1.HuntLevel");
 
-	GameEngineCore::ChangeLevel("6.BossRewardLevel");
+
+
+	GameEngineCore::CreateLevel<FormerLevel>("4.FormerLevel");
+	GameEngineCore::CreateLevel<PracticeLevel>("5.PracticeLevel");
+	
+	GameEngineCore::CreateLevel<BossEntranceLevel>("6.BossEntranceLevel");
+	GameEngineCore::CreateLevel<BossEnterAniLevel>("7.BossEnterAniLevel");
+	GameEngineCore::CreateLevel<BossLevel>("8.BossLevel");
+	GameEngineCore::CreateLevel<BossRewardLevel>("9.BossRewardLevel");
+	GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
+
+	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
+	//GameEngineCore::ChangeLevel("6.BossRewardLevel");
+	 
+	GameEngineCore::ChangeLevel("9.BossRewardLevel");
+	
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
 }

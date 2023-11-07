@@ -56,6 +56,21 @@ void BossEntranceLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("EntranceMap.png");
 		GameEngineSprite::CreateSingle("EntranceDebugMap.png");
 	}
+	if (nullptr == GameEngineSprite::Find("Potal"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("PotalFolder");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
 	{
 		GameEngineDirectory Dir;

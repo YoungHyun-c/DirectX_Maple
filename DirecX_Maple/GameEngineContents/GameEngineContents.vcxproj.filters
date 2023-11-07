@@ -3,23 +3,8 @@
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp" />
     <ClCompile Include="ContentsCore.cpp" />
-    <ClCompile Include="PracticeLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="TileMap.cpp">
       <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="BossLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="BossEntranceLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="BossRewardLevel.cpp">
-      <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="BackGroundMap.cpp">
       <Filter>Global</Filter>
@@ -120,39 +105,57 @@
     <ClCompile Include="TestMonster.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
-    <ClCompile Include="BossEnterAniLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="BossBoxReward.cpp">
       <Filter>Object\Boss</Filter>
     </ClCompile>
     <ClCompile Include="DropItem.cpp">
       <Filter>Object\Boss\UI\Item</Filter>
     </ClCompile>
+    <ClCompile Include="TitleLevel.cpp">
+      <Filter>Level\1</Filter>
+    </ClCompile>
+    <ClCompile Include="TownLevel.cpp">
+      <Filter>Level\2</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossLoadLevel.cpp">
+      <Filter>Level\3</Filter>
+    </ClCompile>
+    <ClCompile Include="HuntLevel.cpp">
+      <Filter>Level\3</Filter>
+    </ClCompile>
+    <ClCompile Include="FormerLevel.cpp">
+      <Filter>Level\4</Filter>
+    </ClCompile>
+    <ClCompile Include="RingPotalManager.cpp">
+      <Filter>Object\Potal</Filter>
+    </ClCompile>
+    <ClCompile Include="PracticeLevel.cpp">
+      <Filter>Level\5</Filter>
+    </ClCompile>
+    <ClCompile Include="BossEntranceLevel.cpp">
+      <Filter>Level\6</Filter>
+    </ClCompile>
+    <ClCompile Include="BossEnterAniLevel.cpp">
+      <Filter>Level\7</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevel.cpp">
+      <Filter>Level\8</Filter>
+    </ClCompile>
+    <ClCompile Include="BossRewardLevel.cpp">
+      <Filter>Level\9</Filter>
+    </ClCompile>
+    <ClCompile Include="LiberationLevel.cpp">
+      <Filter>Level\9</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="ContentsCore.h" />
-    <ClInclude Include="PracticeLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="BossLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="BossEntranceLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="BossRewardLevel.h">
-      <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="BackGroundMap.h">
       <Filter>Global</Filter>
@@ -247,14 +250,47 @@
     <ClInclude Include="TestMonster.h">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClInclude>
-    <ClInclude Include="BossEnterAniLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="BossBoxReward.h">
       <Filter>Object\Boss</Filter>
     </ClInclude>
     <ClInclude Include="DropItem.h">
       <Filter>Object\Boss\UI\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLevel.h">
+      <Filter>Level\1</Filter>
+    </ClInclude>
+    <ClInclude Include="TownLevel.h">
+      <Filter>Level\2</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossLoadLevel.h">
+      <Filter>Level\3</Filter>
+    </ClInclude>
+    <ClInclude Include="HuntLevel.h">
+      <Filter>Level\3</Filter>
+    </ClInclude>
+    <ClInclude Include="FormerLevel.h">
+      <Filter>Level\4</Filter>
+    </ClInclude>
+    <ClInclude Include="RingPotalManager.h">
+      <Filter>Object\Potal</Filter>
+    </ClInclude>
+    <ClInclude Include="PracticeLevel.h">
+      <Filter>Level\5</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEntranceLevel.h">
+      <Filter>Level\6</Filter>
+    </ClInclude>
+    <ClInclude Include="BossEnterAniLevel.h">
+      <Filter>Level\7</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevel.h">
+      <Filter>Level\8</Filter>
+    </ClInclude>
+    <ClInclude Include="BossRewardLevel.h">
+      <Filter>Level\9</Filter>
+    </ClInclude>
+    <ClInclude Include="LiberationLevel.h">
+      <Filter>Level\9</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -308,6 +344,33 @@
     </Filter>
     <Filter Include="Object\Boss\UI\Item">
       <UniqueIdentifier>{d6bd5da1-9f8f-4cb9-b4b4-8368c8e238b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\1">
+      <UniqueIdentifier>{2c1ee710-0f13-410e-aca3-238f1ae3c6ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\2">
+      <UniqueIdentifier>{47df0060-2c46-4ca6-bb26-bd0b26e17e19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\3">
+      <UniqueIdentifier>{a8558afe-f707-431e-ac98-bd0b2816eb56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\4">
+      <UniqueIdentifier>{984d9902-3c2e-45ad-8f7c-5d6de21c78eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\5">
+      <UniqueIdentifier>{e6f21fd8-41d0-4071-8807-d92a97e8be29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\6">
+      <UniqueIdentifier>{f794a21f-24b0-46e9-a61e-246107ea5c49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\7">
+      <UniqueIdentifier>{4a0af1a3-8a1b-4a23-b0dd-2d2fc89b836f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\8">
+      <UniqueIdentifier>{63fd09b8-d9f6-43b9-9f2a-b37a7106f555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\9">
+      <UniqueIdentifier>{2834aef0-c7d7-45cf-8c66-21543a796f3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

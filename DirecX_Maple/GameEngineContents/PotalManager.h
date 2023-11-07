@@ -20,12 +20,18 @@ public:
 		LinkedMap = _MapName;
 	}
 
+	std::string GetLinkedMap()
+	{
+		return LinkedMap;
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
 private:
 	std::string LinkedMap = "";
+	std::shared_ptr<class GameEngineSpriteRenderer> PotalSprite;
 	std::shared_ptr<GameEngineCollision> PotalCol;
 };
 

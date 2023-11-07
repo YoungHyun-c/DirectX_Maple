@@ -1,7 +1,5 @@
 #pragma once
 #include <GameEngineCore/GameEngineLevel.h>
-#include <GameEngineCore/GameEngineGUI.h>
-
 
 // Ό³Έν :
 class PracticeLevel : public GameEngineLevel

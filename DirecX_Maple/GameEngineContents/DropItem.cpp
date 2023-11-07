@@ -61,12 +61,6 @@ void DropItem::MoveDropItem(float _DeltaTime)
 
 			Transform.AddLocalPosition(GetDir * -250.0f * _DeltaTime);
 		}
-
-		/*if (DropItemCollision->Collision(static_cast<int>(CollisionOrder::PlayerPoint), ColType::AABBBOX2D, ColType::AABBBOX2D) != nullptr)
-		{
-			Death();
-			return;
-		}*/
 	}
 
 	if (isGround == true)

@@ -75,7 +75,21 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("RewardMap.png");
 		GameEngineSprite::CreateSingle("RewardDebugMap.png");
 	}
+	if (nullptr == GameEngineSprite::Find("Potal"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("PotalFolder");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 	if (nullptr == GameEngineSprite::Find("BossBoxDie"))
 	{
 		GameEngineDirectory Dir;
@@ -249,6 +263,11 @@ void BossRewardLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		Map->Death();
 		Map = nullptr;
+	}
+	if (nullptr != BossBox)
+	{
+		BossBox->Death();
+		BossBox = nullptr;
 	}
 	if (nullptr != PlayerSkill)
 	{
