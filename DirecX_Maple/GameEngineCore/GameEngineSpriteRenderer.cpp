@@ -174,7 +174,6 @@ void GameEngineSpriteRenderer::ChangeCurSprite(int _Index)
 	CurSprite = Sprite->GetSpriteData(_Index);
 }
 
-
 void GameEngineSpriteRenderer::CreateAnimation(
 	std::string_view _AnimationName,
 	std::string_view _SpriteName,
@@ -438,6 +437,18 @@ void GameEngineSpriteRenderer::SetText(const std::string& _Font, const std::stri
 {
 	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(0);
 	Unit->SetText(_Font, _Text, _Scale, Color, Flag);
+}
+
+void GameEngineSpriteRenderer::SetTextColor(const float4& _Color /*= float4::RED*/, unsigned int _Index /*= 0*/)
+{
+	std::weak_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit.lock()->SetTextColor(_Color);
+}
+
+void GameEngineSpriteRenderer::SetTextAlpha(float _AlphaValue /*= 1.0f*/, unsigned int _Index /*= 0*/)
+{
+	std::weak_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
+	Unit.lock()->SetTextAlpha(_AlphaValue);
 }
 
 void GameEngineSpriteRenderer::SetSampler(std::string_view _Name)
