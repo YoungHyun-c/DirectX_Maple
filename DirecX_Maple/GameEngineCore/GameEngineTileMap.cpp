@@ -7,18 +7,16 @@
 
 GameEngineTileMap::GameEngineTileMap()
 {
-
 }
 
 GameEngineTileMap::~GameEngineTileMap()
 {
-
 }
 
 void GameEngineTileMap::CreateTileMap(const CreateTileParameter& _Parameter)
 {
 	Tiles.resize(_Parameter.TileCountY);
-	
+
 	for (size_t i = 0; i < _Parameter.TileCountY; i++)
 	{
 		Tiles[i].resize(_Parameter.TileCountX);
@@ -37,6 +35,7 @@ void GameEngineTileMap::Start()
 
 void GameEngineTileMap::SetTilePos(const SetTileParameterPos& _Parameter)
 {
+
 	SetTileParameterIndex Parameter;
 	Parameter.X = static_cast<size_t>(_Parameter.Pos.X / TileData.TileScale.X);
 	Parameter.Y = static_cast<size_t>(_Parameter.Pos.Y / TileData.TileScale.Y);
@@ -50,7 +49,7 @@ void GameEngineTileMap::SetTileIndex(const SetTileParameterIndex& _Parameter)
 {
 	if (Tiles.size() <= _Parameter.Y)
 	{
-		MsgBoxAssert("타일 인데스를 Y 오버했습니다.");
+		MsgBoxAssert("타일 인덱스를 Y 오버했습니다.");
 	}
 
 	if (Tiles[_Parameter.Y].size() <= _Parameter.X)
@@ -75,7 +74,6 @@ void GameEngineTileMap::SetTileIndex(const SetTileParameterIndex& _Parameter)
 
 void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 {
-	
 
 	float4 CameraPos = _Camera->Transform.GetWorldPosition();
 	float4 WindowScale = GameEngineCore::MainWindow.GetScale();
@@ -135,36 +133,31 @@ void GameEngineTileMap::Render(GameEngineCamera* _Camera, float _Delta)
 	TransformData Data;
 	GetShaderResHelper().SetConstantBufferLink("TransformData", Data);
 
-	for (size_t y = StartY ; y < EndY; y++)
+	for (size_t y = StartY; y < EndY; y++)
 	{
 		for (size_t x = StartX; x < EndX; x++)
 		{
+
 			if (0 > Tiles[y][x].Index)
 			{
 				continue;
 			}
-			// 이게 100 x 100번 만큼
-			//if (카메라에 나오지 않는다면)
-			//{
-			//	continue;
-			//}
-
-
 
 			float4 Pos;
 			Pos = Transform.GetWorldPosition();
 			Pos.X += TileData.TileScale.X * x + TileData.TileScale.hX();
-			Pos.Y -= TileData.TileScale.Y * y + TileData.TileScale.hX();
+			Pos.Y -= TileData.TileScale.Y * y + TileData.TileScale.hY();
 
 			Data = Transform.GetConstTransformDataRef();
 			Data.Position = Pos;
-			Data.Scale = TileData.TileScale * 1.01f;
+
+			Data.Scale = TileData.TileScale;
+
 			Data.LocalCalculation(); // 로컬 월드 생성
 
 			Data.ParentMatrix = Transform.GetConstTransformDataRef().WorldMatrix;
 			Data.WorldMatrix = Data.LocalWorldMatrix * Data.ParentMatrix;
 			Data.WorldViewProjectionCalculation();
-			// 내 행렬을 전부다 계산하고 넘긴다.
 
 			GetShaderResHelper().SetConstantBufferLink("SpriteData", Tiles[y][x].Data.SpritePivot);
 			SpriteData TileSprite = DefaultSprite->GetSpriteData(static_cast<unsigned int>(Tiles[y][x].Index));
