@@ -359,6 +359,14 @@ void GameEngineSpriteRenderer::SetEndEvent(std::string_view _AnimationName, std:
 	Animation->EndEvent = _Function;
 }
 
+void GameEngineSpriteRenderer::SetFrameChangeFunctionAll(std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
+{
+	for (std::pair<const std::string, std::shared_ptr<GameEngineFrameAnimation>>& _Pair : FrameAnimations)
+	{
+		_Pair.second->FrameChangeFunction = _Function;
+	}
+}
+
 void GameEngineSpriteRenderer::SetFrameChangeFunction(std::string_view _AnimationName, std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
