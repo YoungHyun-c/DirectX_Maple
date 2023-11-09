@@ -10,6 +10,8 @@
 #include "Mouse.h"
 
 #include <GameEngineCore/FadePostEffect.h>
+#include <GameEngineCore/GameEngineCoreWindow.h>
+
 
 TownLevel::TownLevel()
 {
@@ -24,6 +26,14 @@ TownLevel::~TownLevel()
 void TownLevel::Start() 
 {
 	GameEngineInput::AddInputObject(this);
+
+	// ·»´õÅ¸°Ù ÀÌ¿ë Å×½ºÆ®
+	//std::shared_ptr<GameEngineCoreWindow> Window = GameEngineGUI::FindGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow");
+
+	//if (nullptr != Window)
+	//{
+	//	Window->AddDebugRenderTarget(0, "PlayLevelRenderTarget", GetMainCamera()->GetCameraAllRenderTarget());
+	//}
 }
 void TownLevel::Update(float _Delta)
 {

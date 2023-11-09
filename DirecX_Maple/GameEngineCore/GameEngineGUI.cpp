@@ -1,19 +1,18 @@
 #include "PreCompile.h"
 #include "GameEngineGUI.h"
 #include "imgui.h"
-#include "imgui_impl_dx11.h"
 #include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 #include "GameEngineRenderTarget.h"
-
 
 void GameEngineGUIWindow::Begin()
 {
-	ImGui::Begin(GetName().c_str());
+    ImGui::Begin(GetName().c_str());
 }
 
 void GameEngineGUIWindow::End()
 {
-	ImGui::End();
+    ImGui::End();
 }
 
 std::map<std::string, std::shared_ptr<GameEngineGUIWindow>> GameEngineGUI::GUIWindows;
@@ -74,6 +73,16 @@ void GameEngineGUI::Release()
     ImGui::DestroyContext();
 }
 
+void GameEngineGUI::WindowInit(GameEngineGUIWindow* _NewWindow)
+{
+    if (nullptr == _NewWindow)
+    {
+        MsgBoxAssert("윈도우 생성에 실패햇습니다.");
+    }
+
+    _NewWindow->Start();
+}
+
 void GameEngineGUI::GUIRender(GameEngineLevel* _Level, float _DeltaTime)
 {
     // Start the Dear ImGui frame
@@ -104,6 +113,7 @@ void GameEngineGUI::GUIRender(GameEngineLevel* _Level, float _DeltaTime)
         Pair.second->End();
     }
 
+
     ImGui::Render();
 
     ImGuiIO& io = ImGui::GetIO();
@@ -116,4 +126,5 @@ void GameEngineGUI::GUIRender(GameEngineLevel* _Level, float _DeltaTime)
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
     }
+
 }

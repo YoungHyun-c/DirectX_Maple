@@ -32,6 +32,7 @@ void Player::Start()
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
 		//MainSpriteRenderer->SetMaterial("2DTextureOver"); //10/10
 		//MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
+		// MainSpriteRenderer->RenderBaseInfoValue.Target1 = 1; // ·»´õÅ¸°Ù ÀÌ¿ë ¾÷µ¥ÀÌÆ®
 
 		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Battle_Walk", "Battle_Walk", 0.3f, -1, -1, true);

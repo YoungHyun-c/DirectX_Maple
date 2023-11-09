@@ -79,6 +79,9 @@
     <Filter Include="PostEffect">
       <UniqueIdentifier>{118daa51-1469-473b-b1ad-c116a6c0f8b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\Engine">
+      <UniqueIdentifier>{f7c53388-9221-4abf-a9dc-1cf53af0b976}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h">
@@ -241,6 +244,9 @@
     <ClInclude Include="FadePostEffect.h">
       <Filter>PostEffect</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineCoreWIndow.h">
+      <Filter>GUI\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -390,6 +396,9 @@
     </ClCompile>
     <ClCompile Include="FadePostEffect.cpp">
       <Filter>PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineCoreWIndow.cpp">
+      <Filter>GUI\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
