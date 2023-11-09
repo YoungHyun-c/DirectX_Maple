@@ -39,36 +39,40 @@ ContentsCore::~ContentsCore()
 void ContentsCore::UserRes()
 {
 	{
-		D3D11_BLEND_DESC Desc = {};
-		Desc.IndependentBlendEnable = false;
-		Desc.RenderTarget[0].BlendEnable = true;
-		Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-		Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-		Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE; // src팩터
-		Desc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+		{
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExistsChild("ContentsResources");
+			Dir.MoveChild("GameEngineContentsShader");
+			std::vector<GameEngineFile> Files = Dir.GetAllFile({ ".fx" });
 
-		Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-		Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
-		Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
-
-		std::shared_ptr<GameEngineBlend> Blend = GameEngineBlend::Create("OverRay", Desc);
+			for (size_t i = 0; i < Files.size(); i++)
+			{
+				GameEngineFile& File = Files[i];
+				GameEngineShader::AutoCompile(File);
+			}
+		}
 	}
 
 	{
-		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("2DTextureOver");
-		Mat->SetVertexShader("TextureShader_VS");
-		Mat->SetPixelShader("TextureShader_PS");
-		Mat->SetBlendState("OverRay");
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("Contents2DTexture");
+		Mat->SetVertexShader("ContentsTextureShader_VS");
+		Mat->SetPixelShader("ContentsTextureShader_PS");
+	}
+
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("PlayerEffect");
+		Mat->SetVertexShader("PlayerEffect_VS");
+		Mat->SetPixelShader("PlayerEffect_PS");
 	}
 }
 
 void ContentsCore::Start()
 {
 	// 만드는쉐이더
-	//UserRes();
+	UserRes();
 
-	// GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); 렌더타겟 이용 테스트
+	GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
 
 	GameEngineGUI::CreateGUIWindow<ContentsControlWindow>("ContentsControlWindow");
 	// 깊이 버퍼 사용 안함

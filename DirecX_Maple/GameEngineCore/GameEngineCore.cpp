@@ -119,5 +119,8 @@ void GameEngineCore::EngineProcess(HINSTANCE _Inst, const std::string& _WindowNa
 void GameEngineCore::LevelInit(std::shared_ptr<GameEngineLevel> _Level, std::string_view _Name)
 {
 	_Level->SetName(_Name);
+
+
+
 	_Level->Start();
 }

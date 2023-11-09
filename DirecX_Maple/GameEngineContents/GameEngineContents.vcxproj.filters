@@ -153,6 +153,9 @@
     <ClCompile Include="MonsterSpawnZone.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerEffect.cpp">
+      <Filter>Render\PostEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -304,6 +307,9 @@
     <ClInclude Include="MonsterSpawnZone.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerEffect.h">
+      <Filter>Render\PostEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -383,6 +389,12 @@
     </Filter>
     <Filter Include="Level\9">
       <UniqueIdentifier>{2834aef0-c7d7-45cf-8c66-21543a796f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render">
+      <UniqueIdentifier>{c47ca23c-9358-4d69-8508-7e90da201301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Render\PostEffect">
+      <UniqueIdentifier>{47ae751f-602a-4fbf-a7c1-121ac3a5e64e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
