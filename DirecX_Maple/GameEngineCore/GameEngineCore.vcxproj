@@ -171,6 +171,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BlurPostEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FadePostEffect.cpp">
       <SubType>
       </SubType>
@@ -343,6 +347,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AStartPathFinder.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BlurPostEffect.h">
       <SubType>
       </SubType>
     </ClInclude>

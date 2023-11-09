@@ -64,6 +64,7 @@ void ContentsCore::UserRes()
 		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("PlayerEffect");
 		Mat->SetVertexShader("PlayerEffect_VS");
 		Mat->SetPixelShader("PlayerEffect_PS");
+		Mat->SetDepthState("AlwaysDepth");
 	}
 }
 
