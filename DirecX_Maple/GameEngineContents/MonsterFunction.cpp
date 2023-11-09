@@ -251,6 +251,10 @@ void MonsterFunction::Skill_3Update(float _Delta)
 
 }
 
+void MonsterFunction::Spawn(float _Delta)
+{
+
+}
 
 // 몬스터 상태관련
 void MonsterFunction::StateCheck()
@@ -341,6 +345,8 @@ void MonsterFunction::ChangeState(MonsterState _State)
 		case MonsterState::Death:
 			DeathStart();
 			break;
+		case MonsterState::Spawn:
+			break;
 		case MonsterState::Max:
 			break;
 		default:
@@ -381,6 +387,8 @@ void MonsterFunction::StateUpdate(float _Delta)
 		return AwakeUpdate(_Delta);
 	case MonsterState::Death:
 		return DeathUpdate(_Delta);
+	case MonsterState::Spawn:
+		return Spawn(_Delta);
 	case MonsterState::Max:
 		break;
 	default:

@@ -57,9 +57,7 @@ private:
 	long long MonsterHp = 0;
 	bool MonsterAppear = false;
 	float4 MonsterScale = float4::ZERO;
-	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;
-	std::shared_ptr<GameEngineCollision> Col = nullptr;
-	
+	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;	
 
 	bool RenderOn = false;
 };

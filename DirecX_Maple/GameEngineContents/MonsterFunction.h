@@ -24,6 +24,7 @@ enum class MonsterState
 	Hit,
 	Awake,
 	Death,
+	Spawn,
 	Max,
 };
 
@@ -47,6 +48,22 @@ public:
 	{
 		DebugMap = GameEngineTexture::Find(_DebugMapName);
 		DebugMapName = _DebugMapName;
+	}
+
+	std::string GetDebugMap()
+	{
+		return DebugMapName;
+	}
+
+	void SetMyZone(class MonsterSpawnZone* _Zone, std::function<void(MonsterSpawnZone&, int)> _StartFunc)
+	{
+		if (_Zone == nullptr)
+		{
+			MsgBoxAssert("Nullptr인 함수포인터를 사용했습니다. , 함수 MonsterBasicFunction::SetMyZone ");
+		}
+
+		MyZone = _Zone;
+		_StartFunc(*MyZone, MyName);
 	}
 
 	void SetMoveSpeed(float _MoveSpeed)
@@ -92,6 +109,13 @@ public:
 	virtual void Hit(long long _Damge, bool _Attack) = 0;
 
 protected:
+	int MyName = 0;
+	virtual void Spawn(float _Delta);
+	MonsterSpawnZone* GetMyZone()
+	{
+		return MyZone;
+	}
+
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	float LeftCheck = 100.0f;
 	float RightCheck = 1750.0f;
@@ -192,6 +216,6 @@ private:
 	std::string DebugMapName;
 	std::shared_ptr<GameEngineTexture> DebugMap;
 
-
+	class MonsterSpawnZone* MyZone = nullptr;
 };
 

@@ -65,6 +65,7 @@ enum class ActorDir
 enum class MonstersName
 {
 	Mugong,
+	Crane,
 	CarvingMonster,
 	GhostSwoo,
 	GhostDamien,

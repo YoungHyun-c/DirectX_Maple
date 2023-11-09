@@ -102,6 +102,8 @@ void DamageRenderer::PlayerDamageCal()
 
 }
 
+//GameEngineRandom CriticalRan;
+
 void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage)
 {
 	float LastNumYPos = 0.0f;
@@ -113,8 +115,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 
 		PlayerDamageCal();
 		
-		GameEngineRandom CriticalRan;
-		CriticalRan.SetSeed(time(nullptr)+j);
+		//CriticalRan.SetSeed(time(nullptr)+j);
 		CriticalRandomDam = CriticalRan.RandomFloat(120, 150);
 		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
 		

@@ -78,5 +78,7 @@ private:
 
 	std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*> DamageRenderList;
 	std::shared_ptr<GameEngineSpriteRenderer> NewNumberRender;
+
+	GameEngineRandom CriticalRan;
 };
 
