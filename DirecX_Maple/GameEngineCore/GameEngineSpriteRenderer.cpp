@@ -19,6 +19,8 @@ void GameEngineFrameAnimation::Reset()
 	CurIndex = 0;
 	IsEnd = false;
 	EventCheck = true;
+	Once = false;
+
 }
 
 SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
@@ -39,18 +41,24 @@ SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
 		EventCheck = false;
 	}
 
+	//if (nullptr != FrameChangeFunction && Once == false)
+	//{
+	//	SpriteData Data = Sprite->GetSpriteData(Index[CurIndex]);
+	//	FrameChangeFunction(Data, CurIndex);
+	//	Once = true; 
+	//}
+
+
 	CurTime += _DeltaTime;
 
 	if (Inter[CurIndex] <= CurTime)
 	{
 		CurTime -= Inter[CurIndex];
+
+
+
 		++CurIndex;
 
-		if (nullptr != FrameChangeFunction)
-		{
-			SpriteData Data = Sprite->GetSpriteData(Index[CurIndex]);
-			FrameChangeFunction(Data, CurIndex);
-		}
 
 		EventCheck = true;
 
@@ -63,6 +71,7 @@ SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
 
 			IsEnd = true;
 
+
 			if (true == Loop)
 			{
 				CurIndex = 0;
@@ -71,7 +80,15 @@ SpriteData GameEngineFrameAnimation::Update(float _DeltaTime)
 			{
 				--CurIndex;
 			}
+
 		}
+
+		if (nullptr != FrameChangeFunction)
+		{
+			SpriteData Data = Sprite->GetSpriteData(Index[CurIndex]);
+			FrameChangeFunction(Data, CurIndex);
+		}
+
 	}
 
 	return Sprite->GetSpriteData(Index[CurIndex]);
@@ -93,6 +110,7 @@ void GameEngineSpriteRenderer::Start()
 
 	GameEngineRenderer::SetMesh("Rect");
 	GameEngineRenderer::SetMaterial("2DTexture");
+
 }
 
 // Update Order에 영향을 받는다.
@@ -113,7 +131,6 @@ void GameEngineSpriteRenderer::Update(float _Delta)
 	}
 
 	RenderBaseInfoValue.RenderScreenScale = CurSprite.GetScale();
-	// 
 }
 
 void GameEngineSpriteRenderer::SetImageScale(const float4& _Scale)
@@ -147,10 +164,7 @@ void GameEngineSpriteRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 
 	GetShaderResHelper().SetTexture("DiffuseTex", CurSprite.Texture, IsUserSampler);
 
-
 	GameEngineRenderer::Render(_Camera, _Delta);
-
-
 
 }
 
@@ -167,18 +181,6 @@ void GameEngineSpriteRenderer::SetSprite(std::string_view _Name, unsigned int in
 
 	CurSprite = Sprite->GetSpriteData(index);
 	SetImageScale(CurSprite.GetScale() * AutoScaleRatio);
-}
-
-void GameEngineSpriteRenderer::ChangeCurSprite(int _Index)
-{
-	CurFrameAnimations = nullptr;
-
-	if (nullptr == Sprite)
-	{
-		MsgBoxAssert("존재하지 않는 스프라이트를 사용하려고 했습니다.");
-	}
-
-	CurSprite = Sprite->GetSpriteData(_Index);
 }
 
 void GameEngineSpriteRenderer::CreateAnimation(
@@ -292,6 +294,12 @@ void GameEngineSpriteRenderer::ChangeAnimation(std::string_view _AnimationName, 
 	CurFrameAnimations->CurIndex = _FrameIndex;
 	Sprite = CurFrameAnimations->Sprite;
 	CurSprite = CurFrameAnimations->Sprite->GetSpriteData(CurFrameAnimations->CurIndex);
+
+	if (nullptr != CurFrameAnimations->FrameChangeFunction)
+	{
+		SpriteData Data = Sprite->GetSpriteData(CurFrameAnimations->Index[CurFrameAnimations->CurIndex]);
+		CurFrameAnimations->FrameChangeFunction(Data, CurFrameAnimations->CurIndex);
+	}
 }
 
 void GameEngineSpriteRenderer::AutoSpriteSizeOn()
@@ -318,22 +326,6 @@ void GameEngineSpriteRenderer::SetFrameEvent(std::string_view _AnimationName, in
 	}
 
 	Animation->FrameEventFunction[_Frame] = _Function;
-}
-
-void GameEngineSpriteRenderer::SetFrameChangeFunction(std::string_view _AnimationName, std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
-{
-	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
-
-	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>>::iterator FindIter = FrameAnimations.find(UpperName);
-
-	std::shared_ptr<GameEngineFrameAnimation> Animation = FindIter->second;
-
-	if (nullptr == Animation)
-	{
-		MsgBoxAssert("존재하지 않는 애니메이션에 이벤트를 만들려고 했습니다.");
-	}
-
-	Animation->FrameChangeFunction = _Function;
 }
 
 void GameEngineSpriteRenderer::SetStartEvent(std::string_view _AnimationName, std::function<void(GameEngineSpriteRenderer*)> _Function)
@@ -366,6 +358,22 @@ void GameEngineSpriteRenderer::SetEndEvent(std::string_view _AnimationName, std:
 	}
 
 	Animation->EndEvent = _Function;
+}
+
+void GameEngineSpriteRenderer::SetFrameChangeFunction(std::string_view _AnimationName, std::function<void(const SpriteData& CurSprite, int _SpriteIndex)> _Function)
+{
+	std::string UpperName = GameEngineString::ToUpperReturn(_AnimationName);
+
+	std::map<std::string, std::shared_ptr<GameEngineFrameAnimation>>::iterator FindIter = FrameAnimations.find(UpperName);
+
+	std::shared_ptr<GameEngineFrameAnimation> Animation = FindIter->second;
+
+	if (nullptr == Animation)
+	{
+		MsgBoxAssert("존재하지 않는 애니메이션에 이벤트를 만들려고 했습니다.");
+	}
+
+	Animation->FrameChangeFunction = _Function;
 }
 
 void GameEngineSpriteRenderer::AnimationPauseSwitch()
@@ -473,6 +481,7 @@ void GameEngineSpriteRenderer::SetTextAlpha(float _AlphaValue /*= 1.0f*/, unsign
 	std::weak_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(_Index);
 	Unit.lock()->SetTextAlpha(_AlphaValue);
 }
+
 
 void GameEngineSpriteRenderer::SetSampler(std::string_view _Name)
 {

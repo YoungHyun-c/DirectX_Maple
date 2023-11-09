@@ -97,7 +97,6 @@ public:
 	// 스프라이트는 기본적으로 
 	// 강제로 애니메이션을 정지한다는 뜻으로 받아들이겠다.
 	void SetSprite(std::string_view _Name, unsigned int index = 0);
-	void ChangeCurSprite(int _Index);
 
 	void CreateAnimation(
 		std::string_view _AnimationName,
@@ -240,6 +239,7 @@ protected:
 	void SetMaterialEvent(std::string_view _Name, int _Index) override;
 
 	int Index = 0;
+
 
 private:
 	// 부모인 actor를 기준으로한
