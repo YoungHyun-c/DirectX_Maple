@@ -9,9 +9,9 @@
 #include "MainUIActor.h"
 #include "Mouse.h"
 
-#include <GameEngineCore/GameEngineCoreWindow.h>
-#include <GameEngineCore/FadePostEffect.h>
-#include "PlayerEffect.h"
+//#include <GameEngineCore/GameEngineCoreWindow.h>
+//#include <GameEngineCore/FadePostEffect.h>
+//#include "PlayerEffect.h"
 
 TownLevel::TownLevel()
 {
@@ -28,25 +28,25 @@ void TownLevel::Start()
 	GameEngineInput::AddInputObject(this);
 
 	// ·»´õÅ¸°Ù ÀÌ¿ë Å×½ºÆ®
-	std::shared_ptr<GameEngineCoreWindow> Window = GameEngineGUI::FindGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow");
+	//std::shared_ptr<GameEngineCoreWindow> Window = GameEngineGUI::FindGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow");
 
-	if (nullptr != Window)
-	{
-		Window->AddDebugRenderTarget(0, "PlayLevelRenderTarget", GetMainCamera()->GetCameraAllRenderTarget());
-	}
+	//if (nullptr != Window)
+	//{
+	//	Window->AddDebugRenderTarget(0, "PlayLevelRenderTarget", GetMainCamera()->GetCameraAllRenderTarget());
+	//}
 
-	{
-		std::shared_ptr<GameEngineActor> NewTest = CreateActor<GameEngineActor>(3, "Test");
-		float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
-		NewTest->Transform.SetLocalPosition({ HalfWindowScale.X, -900.0f, -100.0f });
-		std::shared_ptr<GameEngineRenderer> NewRender = NewTest->CreateComponent<GameEngineSpriteRenderer>(5);
-		NewRender->SetRenderOrder(5);
-		NewRender->RenderBaseInfoValue.Target2 = 1;
-	}
+	//{
+	//	std::shared_ptr<GameEngineActor> NewTest = CreateActor<GameEngineActor>(3, "Test");
+	//	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
+	//	NewTest->Transform.SetLocalPosition({ HalfWindowScale.X, -900.0f, -100.0f });
+	//	std::shared_ptr<GameEngineRenderer> NewRender = NewTest->CreateComponent<GameEngineSpriteRenderer>(5);
+	//	NewRender->SetRenderOrder(5);
+	//	NewRender->RenderBaseInfoValue.Target2 = 1;
+	//}
 
-	{
-		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<PlayerEffect>();
-	}
+	//{
+	//	GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<PlayerEffect>();
+	//}
 }
 void TownLevel::Update(float _Delta)
 {

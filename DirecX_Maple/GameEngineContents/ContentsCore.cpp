@@ -4,7 +4,7 @@
 #include <GameEngineCore/GameEngineSampler.h>
 #include <GameEngineCore/GameEngineBlend.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
-#include <GameEngineCore/GameEngineCoreWindow.h>
+//#include <GameEngineCore/GameEngineCoreWindow.h>
 
 
 #include "TitleLevel.h"
@@ -70,9 +70,9 @@ void ContentsCore::UserRes()
 void ContentsCore::Start()
 {
 	// 만드는쉐이더
-	UserRes();
+	//UserRes();
 
-	GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
+	//GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
 
 	GameEngineGUI::CreateGUIWindow<ContentsControlWindow>("ContentsControlWindow");
 	// 깊이 버퍼 사용 안함
