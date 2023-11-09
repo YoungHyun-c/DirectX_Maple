@@ -196,7 +196,7 @@ void JinHillaBoss::Update(float _Delta)
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
 }
 
-void JinHillaBoss::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+void JinHillaBoss::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	//Player::GetMainPlayer()->PlayerBind(1.5f);
 	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 25 } - Transform.GetWorldPosition();

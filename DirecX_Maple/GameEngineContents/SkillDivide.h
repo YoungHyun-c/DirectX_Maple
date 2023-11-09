@@ -28,7 +28,7 @@ private:
 	void Release() override;
 
 	void RenderEvent(GameEngineRenderer* _Renderer);
-	void CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup);
+	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
 	bool UseFirst = false;
 	EventParameter SkillEvent;

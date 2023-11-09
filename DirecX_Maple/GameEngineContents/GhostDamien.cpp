@@ -193,7 +193,7 @@ void GhostDamien::Update(float _Delta)
 	SlideAttackCol->Collision(ContentsCollisionType::Player, std::bind(&GhostDamien::CollisionEvent, this, std::placeholders::_1));
 }
 
-void GhostDamien::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+void GhostDamien::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	//Player::GetMainPlayer()->PlayerBind(1.5f);
 	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition().X - Transform.GetWorldPosition().X;

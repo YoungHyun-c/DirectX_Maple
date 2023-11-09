@@ -256,11 +256,11 @@ void SkillDivide::RenderEvent(GameEngineRenderer* _Renderer)
 	UseFirst = false;
 }
 
-void SkillDivide::CollisionEvent(std::vector<std::shared_ptr<GameEngineCollision>>& _CollisionGroup)
+void SkillDivide::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	for (int i = 0; i < _CollisionGroup.size(); i++)
 	{
-		std::shared_ptr<GameEngineCollision> _Other = _CollisionGroup[i];
+		GameEngineCollision* _Other = _CollisionGroup[i];
 		SkillManager::PlayerSkillManager->HitPrint(_Other->GetParentObject(), "Divide1_Hit", DivideHitCount);
 	}
 }
