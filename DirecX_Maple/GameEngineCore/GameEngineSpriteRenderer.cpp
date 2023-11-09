@@ -19,7 +19,6 @@ void GameEngineFrameAnimation::Reset()
 	CurIndex = 0;
 	IsEnd = false;
 	EventCheck = true;
-	Once = false;
 
 }
 
