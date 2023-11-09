@@ -9,6 +9,8 @@
 #include "MainUIActor.h"
 #include "Mouse.h"
 
+#include <GameEngineCore/FadePostEffect.h>
+
 TownLevel::TownLevel()
 {
 
@@ -179,6 +181,8 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
+	// 포스트 이펙트 테스트
+	//FadeEffect = GetLevelRenderTarget()->CreateEffect<FadePostEffect>();
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("TownMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

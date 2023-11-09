@@ -20,6 +20,9 @@
     <FxCompile Include="TargetMerge.fx">
       <Filter>Target</Filter>
     </FxCompile>
+    <FxCompile Include="FadePostEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="쉐이더 규칙.txt" />
@@ -36,6 +39,9 @@
     </Filter>
     <Filter Include="Target">
       <UniqueIdentifier>{4b47e7b9-571e-4cda-abb4-9e0de1f6f399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{5e399d54-db3f-4a21-b527-9a7041ecd7ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
