@@ -100,6 +100,8 @@ public:
 	void PlayerBind(float _Time = 1.0f);
 	void KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime);
 
+	void GetItem();
+
 protected:
 	void StateUpdate(float _Delta);
 
@@ -178,6 +180,7 @@ private:
 	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };*/
 
 	std::shared_ptr<GameEngineCollision> PlayerCol;
+	std::shared_ptr<GameEngineCollision> PlayerDropCol;
 
 	float4 Pos = float4::ZERO;
 	float4 GroundCheck = { 0.0f, -10.0f };

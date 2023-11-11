@@ -54,6 +54,7 @@ private:
 	std::shared_ptr<class Mouse> MouseObject;
 
 	std::shared_ptr<class PotalManager> Potal = nullptr;
-	std::shared_ptr<class RingPotalManager> RingPotal = nullptr;
+	std::shared_ptr<class RingPotalManager> RingPotal1 = nullptr;
+	std::shared_ptr<class RingPotalManager> RingPotal2 = nullptr;
 };
 

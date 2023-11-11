@@ -7,6 +7,8 @@
 #include "SkillManager.h"
 #include "BossSkillEffect.h"
 
+#include "DropItem.h"
+
 Player* Player::MainPlayer = nullptr;
 
 
@@ -86,6 +88,11 @@ void Player::Start()
 		PlayerCol->SetCollisionType(ColType::AABBBOX2D); //10/10
 		PlayerCol->Transform.SetLocalPosition({ -5.0f, -10.0f});
 		PlayerCol->Transform.SetLocalScale({ 30.0f, 50.0f, 1.0f });
+
+		PlayerDropCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::PlayerDropBody);
+		PlayerDropCol->SetCollisionType(ColType::AABBBOX2D); //10/10
+		PlayerDropCol->Transform.SetLocalPosition({ 0.0f, 0.0f });
+		PlayerDropCol->Transform.SetLocalScale({ 500.0f, 500.0f });
 	}
 
 	//std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Normal_Stand");
@@ -152,6 +159,7 @@ void Player::Update(float _Delta)
 
 	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 
+	GetItem();
 	DirCheck();
 	StateUpdate(_Delta);
 
@@ -506,6 +514,37 @@ void Player::KnockBackUpdate(float _Delta)
 		isKnockBack = false;
 		MyKnockBackInfo = nullptr;
 	}
+}
+
+void Player::GetItem()
+{
+	//if (GameEngineInput::IsDown('0',this) == false)
+	//{
+	//	return;
+	//}
+
+	EventParameter DropEvent;
+	DropEvent.Enter = [=](GameEngineCollision* _this, GameEngineCollision* _Other)
+		{
+			//if (GameEngineInput::IsDown('0', this) == true)
+			{
+				std::shared_ptr<DropItem> _Item = _Other->GetActor()->GetDynamic_Cast_This<DropItem>();
+				_Item->GetItem();
+			}
+		};
+	DropEvent.Stay = [=](GameEngineCollision* _this, GameEngineCollision* _Other)
+		{
+			//if (GameEngineInput::IsDown('0', this) == true)
+			{
+				std::shared_ptr<DropItem> _Item = _Other->GetActor()->GetDynamic_Cast_This<DropItem>();
+				_Item->GetItem();
+			}
+		};
+	PlayerDropCol->CollisionEvent(ContentsCollisionType::DropItem, DropEvent);
+
+	/*std::shared_ptr<GameEngineCollision> collision = PlayerCol->Collision(ContentsCollisionType::DropItem, )
+		Collision(static_cast<int>(CollisionOrder::DropItem), ColType::AABBBOX2D, ColType::AABBBOX2D);*/
+
 }
 
 

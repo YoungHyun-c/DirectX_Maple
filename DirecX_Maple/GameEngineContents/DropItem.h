@@ -6,6 +6,7 @@ class GameEngineCollision;
 
 class DropItem : public GameEngineActor
 {
+	friend class GlobalValue;
 public:
 
 	DropItem();
@@ -16,7 +17,7 @@ public:
 	DropItem& operator=(const DropItem& _Other) = delete;
 	DropItem& operator=(DropItem&& _Other) noexcept = delete;
 
-	void MoveDropItem(float _DeltaTime);
+	void MoveDropItem(float _Delta);
 
 	const std::string_view GetItemName()
 	{
@@ -63,7 +64,7 @@ public:
 
 protected:
 	void Start();
-	void Update(float _DeltaTime) override;
+	void Update(float _Delta) override;
 
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> DropItemRender;

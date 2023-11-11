@@ -57,9 +57,6 @@
     <ClCompile Include="CravingMonster.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterFunction.cpp">
-      <Filter>Object\Boss\SummonMonster</Filter>
-    </ClCompile>
     <ClCompile Include="GhostSwoo.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClCompile>
@@ -156,6 +153,9 @@
     <ClCompile Include="PlayerEffect.cpp">
       <Filter>Render\PostEffect</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterFunction.cpp">
+      <Filter>Object\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -212,9 +212,6 @@
       <Filter>Object\Boss</Filter>
     </ClInclude>
     <ClInclude Include="CravingMonster.h">
-      <Filter>Object\Boss\SummonMonster</Filter>
-    </ClInclude>
-    <ClInclude Include="MonsterFunction.h">
       <Filter>Object\Boss\SummonMonster</Filter>
     </ClInclude>
     <ClInclude Include="GhostSwoo.h">
@@ -309,6 +306,9 @@
     </ClInclude>
     <ClInclude Include="PlayerEffect.h">
       <Filter>Render\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFunction.h">
+      <Filter>Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

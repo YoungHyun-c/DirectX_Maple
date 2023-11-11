@@ -159,7 +159,13 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		Potal->SetLinkedMap("3.CrossLoadLevel");
 		Potal->Transform.SetWorldPosition({ 2780.0f, -1000.0f });
 
-		//Potal = GetLevel()->CreateActor<PotalManager>();
+		RingPotal1 = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal1->Transform.SetWorldPosition({ 2540.0f, -500.0f });
+		RingPotal1->SetLinkedPos({ 325.0f, -480.0f });
+
+		RingPotal2 = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal2->Transform.SetWorldPosition({ 325.0f, -480.0f });
+		RingPotal2->SetLinkedPos({ 2540.0f, -500.0f });
 		//Potal->SetLinkedMap("3_1.HuntLevel");
 		//Potal->Transform.SetWorldPosition({ 2540.0f, -500.0f });
 		//Player::GetMainPlayer()->Transform.SetWorldPosition({ 325.0f, -480.0f });
@@ -172,9 +178,9 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (FileName == "6thMap.png")
 	{
-		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
-		RingPotal->SetLinkedMap("2.TownLevel");
-		RingPotal->Transform.SetWorldPosition({ 120.0f, -950.0f });
+		RingPotal1 = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal1->SetLinkedMap("2.TownLevel");
+		RingPotal1->Transform.SetWorldPosition({ 120.0f, -950.0f });
 	}
 
 	if (FileName == "PracticeMap.png")
@@ -195,15 +201,15 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		Potal->SetLinkedMap("5.PracticeLevel");
 		Potal->Transform.SetWorldPosition({ 110.0f, -740.0f });
 
-		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
-		RingPotal->SetLinkedMap("7.BossEnterAniLevel");
-		RingPotal->Transform.SetWorldPosition({ 785.0f, -740.0f });
+		RingPotal1 = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal1->SetLinkedMap("7.BossEnterAniLevel");
+		RingPotal1->Transform.SetWorldPosition({ 785.0f, -740.0f });
 	}
 
 	if (FileName == "RewardMap.png")
 	{
-		RingPotal = GetLevel()->CreateActor<RingPotalManager>();
-		RingPotal->SetLinkedMap("9_2.LiberationLevel");
-		RingPotal->Transform.SetWorldPosition({ 95.0f, -740.0f });
+		RingPotal1 = GetLevel()->CreateActor<RingPotalManager>();
+		RingPotal1->SetLinkedMap("9_2.LiberationLevel");
+		RingPotal1->Transform.SetWorldPosition({ 95.0f, -740.0f });
 	}
 }

@@ -20,6 +20,11 @@ public:
 		LinkedMap = _MapName;
 	}
 
+	void SetLinkedPos(float4 _Pos)
+	{
+		LinkedPos = _Pos;
+	}
+
 	std::string GetLinkedMap()
 	{
 		return LinkedMap;
@@ -33,5 +38,10 @@ private:
 	std::string LinkedMap = "";
 	std::shared_ptr<class GameEngineSpriteRenderer> RingPotalSprite;
 	std::shared_ptr<GameEngineCollision> RingPotalCol;
+
+
+	void SetPlayerLinkedPos();
+
+	float4 LinkedPos = { 0, 0 };
 };
 

@@ -1,6 +1,7 @@
 #include "Precompile.h"
 #include "CraneMonster.h"
 #include "BackGroundMap.h"
+
 #include "MonsterSpawnZone.h"
 #include "DropItem.h"
 
@@ -27,6 +28,7 @@ void CraneMonster::LevelEnd(GameEngineLevel* _NextLevel)
 
 void CraneMonster::Start()
 {
+	SetDropItemList();
 	MonsterRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
 	MonsterRenderer->CreateAnimation("Stand", "Crane_Stand", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Move", "Crane_Move", 0.1f, -1, -1, true);
@@ -79,25 +81,39 @@ void CraneMonster::Start()
 
 void CraneMonster::Update(float _Delta)
 {
-	StateUpdate(_Delta);
 
 	//if (DeathCount == true)
 	//{
 	//	ChangeState(MonsterState::Spawn);
 	//}
 
-	//if (DeathCount == true)
-	//{
-	//	IsRegenStart += _Delta;
-	//}
+	if (DeathCount == true)
+	{
+		IsRegenStart += _Delta;
+	}
 
-	//if (IsRegenStart >= RegenCool)
-	//{
-	//	IsRegenStart = 0.0f;
-	//	DeathCount = false;
-	//	GetMyZone()->NumOfMonsterDown(static_cast<int>(MonstersName::Crane));
-	//	Death();
-	//}
+	if (IsRegenStart >= RegenCool)
+	{
+		IsRegenStart = 0.0f;
+		DeathCount = false;
+		GetMyZone()->MonsterNumDown(static_cast<int>(MonstersName::Crane));
+		Death();
+	}
+
+	if (DeathValue == true)
+	{
+		size_t Size = DropItemList.size();
+		for (size_t i = 0; i < Size; i++)
+		{
+			std::shared_ptr<DropItem> NewItem = GetLevel()->CreateActor<DropItem>();
+			NewItem->SetQuadraticFunction(-30.0f + (i * 50) + 5.0f, Transform.GetWorldPosition() + float4{ 0.0f, 50.0f }, 100.0f);
+			NewItem->SetDropItemInfo(DropItemList[i].first, static_cast<int>(ItemType::Etc));
+		}
+		DeathValue = false;
+		return;
+	}
+
+	StateUpdate(_Delta);
 
 	if (Hp <= 0)
 	{
@@ -110,13 +126,6 @@ void CraneMonster::Update(float _Delta)
 
 void CraneMonster::Spawn(float _Delta)
 {
-	/*MonsterRenderer->GetColorData().MulColor.A += 1.0f * _DeltaTime;
-
-	if (MonsterRenderer->GetColorData().MulColor.A >= 1.0f)
-	{
-		MonsterRenderer->GetColorData().MulColor.A = 1.0f;
-		ChangeState(MonsterState::Move);
-	}*/
 	//if (DeathCount == true)
 	//{
 	//	IsRegenStart += _Delta;
@@ -131,6 +140,14 @@ void CraneMonster::Spawn(float _Delta)
 	//	Death();
 	//}
 	ChangeState(MonsterState::Move);
+}
+
+void CraneMonster::SetDropItemList()
+{
+	DropItemList.reserve(2);
+
+	DropItemList.push_back({ "SolElda", 75 });
+	DropItemList.push_back({ "SolEldaPiece", 75 });
 }
 
 void CraneMonster::StandStart()
@@ -267,6 +284,7 @@ void CraneMonster::DeathStart()
 	CraneAttackRangeCol->Off();
 	CraneSkillCol->Off();
 	DeathCount = true;
+	GlobalValue::GetMonsterValue()->AddMonsterCatchCount(1);
 }
 
 void CraneMonster::DeathUpdate(float _Delta)
@@ -274,8 +292,8 @@ void CraneMonster::DeathUpdate(float _Delta)
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		MonsterRenderer->Off();
-		GetMyZone()->MonsterNumDown(static_cast<int>(MonstersName::Crane));
-		Death();
+		//GetMyZone()->MonsterNumDown(static_cast<int>(MonstersName::Crane));
+		//Death();
 	}
 	
 	//IsRegenStart += _Delta;
@@ -331,6 +349,7 @@ void CraneMonster::Hit(long long _Damage, bool _Attack)
 
 	if (Hp <= 0)
 	{
+		DeathValue = true;
 		ChangeState(MonsterState::Death);
 	}
 }

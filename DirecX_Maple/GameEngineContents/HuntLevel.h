@@ -42,5 +42,20 @@ private:
 	std::shared_ptr<class MonsterSpawnZone> Zone1 = nullptr;
 	std::shared_ptr<class MonsterSpawnZone> Zone2 = nullptr;
 	std::shared_ptr<class MonsterSpawnZone> Zone3 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone4 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone5 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone6 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone7 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone8 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone9 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone10 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone11 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone12 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone13 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone14 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone15 = nullptr;
+	std::shared_ptr<class MonsterSpawnZone> Zone16 = nullptr;
+
+	int Count = 0;
 };
 

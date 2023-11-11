@@ -3,15 +3,26 @@
 #define DefaultGroundColor GameEngineColor(255, 0, 0, 255)
 #define DefaultWallColor GameEngineColor(0, 0, 128, 255)
 
+#include "CraneMonster.h"
+#include "DropItem.h"
+
 // Ό³Έν :
 class GlobalValue
 {
+	friend CraneMonster;
+	friend DropItem;
 private:
 	static GlobalValue MonsterValue;
+	static GlobalValue DropValue;
 public:
 	static GlobalValue* GetMonsterValue()
 	{
 		return &MonsterValue;
+	}
+
+	static GlobalValue* GetDropValue()
+	{
+		return &DropValue;
 	}
 public:
 	// constructer destructer
@@ -40,10 +51,33 @@ public:
 		MugongDefense = _Value;
 	}
 
+	void AddMonsterCatchCount(int _Value)
+	{
+		MonsterCount += _Value;
+	}
+
+	unsigned int GetCurMonsterValue()
+	{
+		return MonsterCount;
+	}
+
+	void AddDropItemCount(int _Value)
+	{
+		DropItemCount += _Value;
+	}
+
+	unsigned int GetDropItemValue()
+	{
+		return DropItemCount;
+	}
+
 protected:
 
 private:
 	int MonsterDefense = 10;
 	int MugongDefense = 10;
+
+	unsigned int MonsterCount = 0;
+	unsigned int DropItemCount = 0;
 };
 

@@ -15,7 +15,7 @@ BossBoxReward::~BossBoxReward()
 
 void BossBoxReward::Start()
 {
-	GameEngineInput::AddInputObject(this);
+
 }
 
 void BossBoxReward::Update(float _Delta)

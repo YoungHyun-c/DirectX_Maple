@@ -27,6 +27,13 @@ void RingPotalManager::Start()
 
 void RingPotalManager::Update(float _Delta)
 {
+	SetPlayerLinkedPos();
+
+	if (LinkedMap == "")
+	{
+		return;
+	}
+
 	if (LinkedMap == GetLinkedMap())
 	{
 		EventParameter PotalEvent;
@@ -39,4 +46,23 @@ void RingPotalManager::Update(float _Delta)
 			};
 		RingPotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
 	}
+}
+
+
+void RingPotalManager::SetPlayerLinkedPos()
+{
+	EventParameter RingPotalEvent;
+	RingPotalEvent.Stay = [=](GameEngineCollision* _this, GameEngineCollision* Col)
+		{
+			if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()) == true)
+			{
+				Player::GetMainPlayer()->Transform.SetWorldPosition(LinkedPos);
+			}
+		};
+	RingPotalCol->CollisionEvent(ContentsCollisionType::Player, RingPotalEvent);
+	
+	/*if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()) == true)
+	{
+		Player::GetMainPlayer()->Transform.SetWorldPosition(LinkedPos);
+	}*/
 }

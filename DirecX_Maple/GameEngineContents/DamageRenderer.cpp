@@ -143,10 +143,10 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		}
 
 		SumDamage += OneLineDamage;
-		std::string CurDamage = "OneLineDamage : ";
+		/*std::string CurDamage = "OneLineDamage : ";
 		CurDamage += std::to_string(static_cast<unsigned long long>(OneLineDamage));
 		CurDamage += "\n";
-		OutputDebugStringA(CurDamage.c_str());
+		OutputDebugStringA(CurDamage.c_str());*/
 
 		// 몬스터에게 데미지
 		if (_Object->GetName() == "CravingDiebody")

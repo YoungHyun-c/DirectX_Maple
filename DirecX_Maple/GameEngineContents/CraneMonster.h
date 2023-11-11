@@ -4,6 +4,7 @@
 // Ό³Έν :
 class CraneMonster : public MonsterFunction
 {
+	friend class GlobalValue;
 public:
 	// constructer destructer
 	CraneMonster();
@@ -48,6 +49,7 @@ private:
 	int Defense = 10;
 
 	bool DeathCount = false;
+	bool DeathValue = false;
 	float RegenCool = 7.0f;
 	float IsRegenStart = 0.0f;
 
@@ -66,5 +68,8 @@ private:
 	std::shared_ptr<GameEngineCollision> CraneSkillCol;
 	std::shared_ptr<GameEngineCollision> CraneAttackRangeCol;
 	std::shared_ptr<GameEngineTexture> ColMap;
+
+	void SetDropItemList();
+	std::vector<std::pair<std::string, int>> DropItemList;
 };
 

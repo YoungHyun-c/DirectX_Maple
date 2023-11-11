@@ -19,6 +19,7 @@ enum class ContentsObjectType
 	FrontSkill,
 	JinHillaAnime,
 	DamageRender,
+	DropItem,
 	UI,
 	JinHillEnteraAnime,
 	Mouse,
@@ -43,6 +44,7 @@ enum class DeepBufferType
 enum class ContentsCollisionType
 {
 	Player,
+	PlayerDropBody,
 	Monster,
 	Boss,
 	MonsterSkill,
@@ -50,6 +52,7 @@ enum class ContentsCollisionType
 	Craving,
 	Skill,
 	Potal,
+	DropItem,
 	UI,
 	Mouse,
 	Max,
