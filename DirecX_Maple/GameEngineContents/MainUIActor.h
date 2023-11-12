@@ -23,5 +23,8 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> AtereGaugeBack;
 	std::shared_ptr<GameEngineUIRenderer> AtereGauge;
 	std::shared_ptr<GameEngineUIRenderer> AtereAnime;
+
+	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
+	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;
 };
 

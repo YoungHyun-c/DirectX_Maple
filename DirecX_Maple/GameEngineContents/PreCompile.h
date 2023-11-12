@@ -21,3 +21,4 @@
 #include <GameEngineCore/GameEngineTileMap.h>
 #include "ContentsEnum.h"
 #include "GlobalValue.h"
+#include "PlayerValue.h"

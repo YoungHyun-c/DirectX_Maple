@@ -100,11 +100,83 @@ public:
 		ProPertyIgnorePer = _Value;
 	}
 
+	int GetLevel()
+	{
+		return Level;
+	}
+
+	void SetLevel(int _Level)
+	{
+		Level = _Level;
+	}
+
+	void LevelUp()
+	{
+		++Level;
+		Exp -= MaxExp;
+		MaxExp = static_cast<int>(MaxExp * 1.05f);
+		/*MaxHp = static_cast<int>(Hp * 1.035f);
+		MaxMp = static_cast<int>(Mp * 1.02f);
+		Hp = MaxHp;
+		Mp = MaxMp;*/
+
+		//Player::GetMainPlayer()->Level_Up();
+		Str += 5;
+	}
+
+	void AddLevel(int _Value)
+	{
+		Level += _Value;
+	}
+
+	void SetMaxExp(int _MaxExp)
+	{
+		MaxExp = _MaxExp;
+	}
+
+	void AddExp(int _Exp)
+	{
+		Exp += _Exp;
+
+		while (Exp >= MaxExp)
+		{
+			LevelUp();
+		}
+	}
+
+	int GetMaxExp()
+	{
+		return MaxExp;
+	}
+
+	int GetExp()
+	{
+		return Exp;
+	}
+
+	void UpGradeClass()
+	{
+		if (Grade == 5)
+		{
+			return;
+		}
+
+		if (Class == "HighAtere" && Level >= 260)
+		{
+			Class = "Maestro";
+			Grade++;
+		}
+	}
 
 protected:
 
 private:
+	std::string Class = "HighAtere";
+	int Grade = 5;
+	int Level = 259;
 
+	int Exp = 0;
+	int MaxExp = 100;
 
 // 플레이어 정보
 private:

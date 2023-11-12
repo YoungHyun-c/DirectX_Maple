@@ -285,6 +285,7 @@ void CraneMonster::DeathStart()
 	CraneSkillCol->Off();
 	DeathCount = true;
 	GlobalValue::GetMonsterValue()->AddMonsterCatchCount(1);
+	PlayerValue::GetValue()->AddExp(1);
 }
 
 void CraneMonster::DeathUpdate(float _Delta)

@@ -190,6 +190,8 @@ void HuntLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+		GameEngineSprite::CreateSingle("ExpBar.Png");
+		GameEngineSprite::CreateSingle("ExpMax.Png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Crane"))

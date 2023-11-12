@@ -144,6 +144,11 @@ void BossLevelUi::LevelStart(GameEngineLevel* _PrevLevel)
 	MainHpCal = static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
 }
 
+void BossLevelUi::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}
+
 void BossLevelUi::BossHpPerUiRenderer()
 {
 	// 보스의 체력을 렌더러로 하는 것을 좀 더 생각해봐야됨. 렌더러 지우게도 만들어야 돼서. 그냥 텍스처로 할지.
