@@ -20,11 +20,16 @@ protected:
 	void Update(float _Delta)override;
 
 private:
+	float4 WindowHalfPos = float4::ZERO;
 	std::shared_ptr<GameEngineUIRenderer> AtereGaugeBack;
 	std::shared_ptr<GameEngineUIRenderer> AtereGauge;
 	std::shared_ptr<GameEngineUIRenderer> AtereAnime;
 
 	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
 	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;
+
+	std::shared_ptr<GameEngineUIRenderer> EldaGaugeBar;
+	std::shared_ptr<GameEngineUIRenderer> EldaGauge;
+	std::shared_ptr<class GameEngineSpriteRenderer> EldaMax;
 };
 

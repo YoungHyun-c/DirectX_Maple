@@ -63,6 +63,12 @@ public:
 
 	void AddDropItemCount(int _Value)
 	{
+		if (DropItemCount >= 100)
+		{
+			DropItemCount = 100;
+			return;
+		}
+
 		DropItemCount += _Value;
 	}
 
