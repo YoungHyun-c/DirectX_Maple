@@ -73,11 +73,11 @@ void HuntLevel::Update(float _Delta)
 	//MobCount += "\n";
 	//OutputDebugStringA(MobCount.c_str());
 
-	Count = (GlobalValue::GetDropValue()->GetDropItemValue() / 2);
-	std::string ItemCount = "드랍 수 : ";
-	ItemCount += std::to_string(Count);
-	ItemCount += "\n";
-	OutputDebugStringA(ItemCount.c_str());
+	//Count = (GlobalValue::GetDropValue()->GetDropItemValue() / 2);
+	//std::string ItemCount = "드랍 수 : ";
+	//ItemCount += std::to_string(Count);
+	//ItemCount += "\n";
+	//OutputDebugStringA(ItemCount.c_str());
 
 }
 

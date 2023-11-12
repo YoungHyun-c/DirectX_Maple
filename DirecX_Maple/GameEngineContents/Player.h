@@ -213,4 +213,11 @@ private:
 
 	float PrevTime = 0.0f;
 	float TimeCount = 0.0f;
+
+
+
+
+	void Level_Up();
+	std::shared_ptr<GameEngineSpriteRenderer> LevelUp = nullptr;
+	std::shared_ptr<GameEngineCollision> LevelUpCol = nullptr;
 };

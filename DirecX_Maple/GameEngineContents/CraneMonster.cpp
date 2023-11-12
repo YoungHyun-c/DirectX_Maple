@@ -30,7 +30,7 @@ void CraneMonster::Start()
 {
 	SetDropItemList();
 	MonsterRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
-	MonsterRenderer->CreateAnimation("Stand", "Crane_Stand", 0.1f, -1, -1, false);
+	MonsterRenderer->CreateAnimation("Stand", "Crane_Stand", 0.1f, -1, -1, true);
 	MonsterRenderer->CreateAnimation("Move", "Crane_Move", 0.1f, -1, -1, true);
 	MonsterRenderer->CreateAnimation("Attack", "Crane_Attack", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Death", "Crane_Death", 0.1f, -1, -1, false);

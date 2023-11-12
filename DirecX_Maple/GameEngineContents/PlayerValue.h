@@ -120,7 +120,7 @@ public:
 		Hp = MaxHp;
 		Mp = MaxMp;*/
 
-		//Player::GetMainPlayer()->Level_Up();
+		Player::GetMainPlayer()->Level_Up();
 		Str += 5;
 	}
 

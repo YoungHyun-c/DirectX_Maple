@@ -63,7 +63,7 @@ private:
 	float4 CheckPos = float4::ZERO;
 
 	float MoveDistance = 0.0f;
-	float MoveLimitDistance = 200.0f;
+	float MoveLimitDistance = 400.0f;
 
 	std::shared_ptr<GameEngineCollision> CraneSkillCol;
 	std::shared_ptr<GameEngineCollision> CraneAttackRangeCol;

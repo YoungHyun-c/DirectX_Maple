@@ -136,6 +136,14 @@ void Player::Start()
 	GameEngineInput::AddInputObject(this);
 
 	//GetLevel()->GetMainCamera()->CameraTargetSetting(Transform, float4::BACKWARD * 500.0f);
+
+	//LevelUp = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+
+	//LevelUp->CreateAnimation("LevelUp", "LevelUp", 0.1f, false);
+	//LevelUp->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 150.0f });
+	//LevelUp->AutoSpriteSizeOn();
+	//LevelUp->ChangeAnimation("LevelUp");
+	//LevelUp->Off();
 }
 
 void Player::Update(float _Delta)
@@ -545,6 +553,43 @@ void Player::GetItem()
 	/*std::shared_ptr<GameEngineCollision> collision = PlayerCol->Collision(ContentsCollisionType::DropItem, )
 		Collision(static_cast<int>(CollisionOrder::DropItem), ColType::AABBBOX2D, ColType::AABBBOX2D);*/
 
+}
+
+void Player::Level_Up()
+{
+	if (LevelUp != nullptr && true != LevelUp->IsCurAnimationEnd())
+	{
+		return;
+	}
+
+	LevelUp = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	LevelUp->CreateAnimation("LevelUp", "LevelUp", 0.1f, false);
+	LevelUp->Transform.SetLocalPosition({0.0f, 150.0f });
+	LevelUp->AutoSpriteSizeOn();
+	LevelUp->ChangeAnimation("LevelUp");
+	LevelUp->On();
+	LevelUp->SetEndEvent("LevelUp", [&](GameEngineSpriteRenderer*)
+		{
+			LevelUp->Off();
+			LevelUpCol->Off();
+		}
+	);
+
+
+	EventParameter HitEvent;
+
+	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
+		{
+			std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+			NewDR->PushDamage(_Other, 1, INT_MAX, 1);
+		};
+
+	LevelUpCol =  CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+	LevelUpCol->SetCollisionType(ColType::AABBBOX2D);
+	LevelUpCol->Transform.SetLocalPosition({ 0.0f, 150.0f });
+	LevelUpCol->Transform.SetLocalScale({ 1000.0f, 800.0f });
+	LevelUpCol->On();
+	LevelUpCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 }
 
 
