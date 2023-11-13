@@ -27,10 +27,9 @@ void RingPotalManager::Start()
 
 void RingPotalManager::Update(float _Delta)
 {
-	SetPlayerLinkedPos();
-
 	if (LinkedMap == "")
 	{
+		SetPlayerLinkedPos();
 		return;
 	}
 

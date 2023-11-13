@@ -101,6 +101,7 @@ void ContentsCore::Start()
 	//GameEngineCore::ChangeLevel("6.BossRewardLevel");
 	 
 	GameEngineCore::ChangeLevel("3_1.HuntLevel");
+	//GameEngineCore::ChangeLevel("4.FormerLevel");
 	
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");

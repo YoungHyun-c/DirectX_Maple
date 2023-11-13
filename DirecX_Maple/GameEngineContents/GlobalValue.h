@@ -5,6 +5,7 @@
 
 #include "CraneMonster.h"
 #include "DropItem.h"
+#include "MainUIActor.h"
 
 // Ό³Έν :
 class GlobalValue

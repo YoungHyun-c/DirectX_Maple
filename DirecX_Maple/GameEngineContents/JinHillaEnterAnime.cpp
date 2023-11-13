@@ -30,10 +30,10 @@ void JinHillaEnterAnime::Update(float _Delta)
 	{
 		AniEnd = true;
 		JinHillaEnterAni->Death();
-		GameEngineCore::ChangeLevel("5.BossLevel");
+		GameEngineCore::ChangeLevel("8.BossLevel");
 	}
 	if (true == GameEngineInput::IsDown(VK_RETURN, this))
 	{
-		GameEngineCore::ChangeLevel("5.BossLevel");
+		GameEngineCore::ChangeLevel("8.BossLevel");
 	}
 }

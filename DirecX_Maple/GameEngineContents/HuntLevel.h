@@ -35,8 +35,9 @@ private:
 	float RegenTime = 0.0f;
 	float RegenCoolTime = 7.0f;
 
-	std::shared_ptr<class MainUIActor> UIObject = nullptr;
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
+	std::shared_ptr<class MainUIActor> UIObject = nullptr;
+	std::shared_ptr<class SolErdaGauge> SolObject = nullptr;
 
 
 	std::shared_ptr<class MonsterSpawnZone> Zone1 = nullptr;

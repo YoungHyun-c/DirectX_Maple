@@ -4,6 +4,9 @@
 // Ό³Έν :
 class MainUIActor : public GameEngineActor
 {
+	friend class GlobalValue;
+public:
+	static MainUIActor* PlayerUiActor;
 public:
 	// constructer destructer
 	MainUIActor();
@@ -28,8 +31,9 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
 	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;
 
-	std::shared_ptr<GameEngineUIRenderer> EldaGaugeBar;
-	std::shared_ptr<GameEngineUIRenderer> EldaGauge;
-	std::shared_ptr<class GameEngineSpriteRenderer> EldaMax;
+	//std::shared_ptr<GameEngineUIRenderer> EldaGaugeBar;
+	//std::shared_ptr<GameEngineUIRenderer> EldaGauge;
+	//std::shared_ptr<class GameEngineSpriteRenderer> EldaMax;
+	//bool EldaMaxEffect = false;
 };
 

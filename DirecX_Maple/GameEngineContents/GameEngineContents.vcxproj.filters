@@ -156,6 +156,12 @@
     <ClCompile Include="MonsterFunction.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="GrandisGoddess.cpp">
+      <Filter>Object\Boss\UI\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="SolErdaGauge.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -310,6 +316,12 @@
     <ClInclude Include="MonsterFunction.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="GrandisGoddess.h">
+      <Filter>Object\Boss\UI\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="SolErdaGauge.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -395,6 +407,9 @@
     </Filter>
     <Filter Include="Render\PostEffect">
       <UniqueIdentifier>{47ae751f-602a-4fbf-a7c1-121ac3a5e64e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\UI\NPC">
+      <UniqueIdentifier>{e414775d-1a1f-4b2b-a709-7d82dbc0df43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

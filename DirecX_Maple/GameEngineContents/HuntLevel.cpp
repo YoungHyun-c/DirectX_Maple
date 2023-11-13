@@ -9,6 +9,7 @@
 #include "SkillManager.h"
 
 #include "MainUIActor.h"
+#include "SolErdaGauge.h"
 #include "Mouse.h"
 
 #include "CraneMonster.h"
@@ -345,6 +346,10 @@ void HuntLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
 
+	if (nullptr == SolObject)
+	{
+		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
+	}
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("HuntDebugMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
@@ -390,6 +395,11 @@ void HuntLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		UIObject->Death();
 		UIObject = nullptr;
 	}
+	//if (nullptr != SolObject)
+	//{
+	//	SolObject->Death();
+	//	SolObject = nullptr;
+	//}
 	if (nullptr != MouseObject)
 	{
 		MouseObject->Death();

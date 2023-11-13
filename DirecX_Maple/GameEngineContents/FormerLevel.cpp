@@ -7,6 +7,7 @@
 #include "SkillManager.h"
 
 #include "MainUIActor.h"
+#include "SolErdaGauge.h"
 #include "Mouse.h"
 
 FormerLevel::FormerLevel()
@@ -141,6 +142,11 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+		GameEngineSprite::CreateSingle("ExpBar.Png");
+		GameEngineSprite::CreateSingle("ExpMax.Png");
+		GameEngineSprite::CreateSingle("ErdaGauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
 	}
 
 
@@ -172,6 +178,10 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == MouseObject)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+	}
+	if (nullptr == SolObject)
+	{
+		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
 	}
 
 
@@ -217,6 +227,11 @@ void FormerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		UIObject->Death();
 		UIObject = nullptr;
+	}
+	if (nullptr != SolObject)
+	{
+		SolObject->Death();
+		SolObject = nullptr;
 	}
 	if (nullptr != MouseObject)
 	{

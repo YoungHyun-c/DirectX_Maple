@@ -166,14 +166,6 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		RingPotal2 = GetLevel()->CreateActor<RingPotalManager>();
 		RingPotal2->Transform.SetWorldPosition({ 325.0f, -480.0f });
 		RingPotal2->SetLinkedPos({ 2540.0f, -500.0f });
-		//Potal->SetLinkedMap("3_1.HuntLevel");
-		//Potal->Transform.SetWorldPosition({ 2540.0f, -500.0f });
-		//Player::GetMainPlayer()->Transform.SetWorldPosition({ 325.0f, -480.0f });
-
-		//Potal = GetLevel()->CreateActor<PotalManager>();
-		//Potal->SetLinkedMap("3_1.HuntLevel");
-		//Potal->Transform.SetWorldPosition({ 325.0f, -480.0f });
-		//Player::GetMainPlayer()->Transform.SetWorldPosition({ 2540.0f, -500.0f });
 	}
 
 	if (FileName == "6thMap.png")

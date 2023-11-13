@@ -11,9 +11,11 @@ MainUIActor::~MainUIActor()
 
 }
 
+MainUIActor* MainUIActor::PlayerUiActor = nullptr;
+
 void MainUIActor::Start()
 {
-
+	PlayerUiActor = this;
 	WindowHalfPos = GlobalValue::WinScale.Half();
 
 	{
@@ -39,31 +41,31 @@ void MainUIActor::Start()
 	}
 
 
-	{
-		EldaGaugeBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		EldaGaugeBar->SetSprite("ErdaGauge.png");
-		EldaGaugeBar->Transform.SetLocalPosition({ WindowHalfPos.X - 200.0f, 30.0f});
-		EldaGaugeBar->SetPivotType(PivotType::Left);
-		EldaGaugeBar->AutoSpriteSizeOn();
+	//{
+	//	EldaGaugeBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+	//	EldaGaugeBar->SetSprite("ErdaGauge.png");
+	//	EldaGaugeBar->Transform.SetLocalPosition({ WindowHalfPos.X - 200.0f, 30.0f});
+	//	EldaGaugeBar->SetPivotType(PivotType::Left);
+	//	EldaGaugeBar->AutoSpriteSizeOn();
 
-		EldaGauge = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		EldaGauge->SetSprite("SolErdagauge.png");
-		//EldaGauge->SetImageScale({ 100.0f, 11.0f });
-		EldaGauge->Transform.SetLocalPosition({ WindowHalfPos.X - 192.0f, 32.0f });
-		EldaGauge->SetPivotType(PivotType::Left);
+	//	EldaGauge = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+	//	EldaGauge->SetSprite("SolErdagauge.png");
+	//	//EldaGauge->SetImageScale({ 100.0f, 11.0f });
+	//	EldaGauge->Transform.SetLocalPosition({ WindowHalfPos.X - 192.0f, 32.0f });
+	//	EldaGauge->SetPivotType(PivotType::Left);
 
-		EldaMax = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
-		EldaMax->AutoSpriteSizeOn();
-		EldaMax->CreateAnimation("MaxSolErdaEffect", "MainSolErdaEffect", 0.08f, -1, -1, false);
-		EldaMax->ChangeAnimation("MaxSolErdaEffect");
-		EldaMax->Off();
-		
-		EldaMax->SetEndEvent("MaxSolErdaEffect", [&](GameEngineSpriteRenderer*)
-			{
-				EldaMax->Off();
-			}
-		);
-	}
+	//	EldaMax = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
+	//	EldaMax->AutoSpriteSizeOn();
+	//	EldaMax->CreateAnimation("MaxSolErdaEffect", "MainSolErdaEffect", 0.08f, -1, -1, false);
+	//	EldaMax->ChangeAnimation("MaxSolErdaEffect");
+	//	EldaMax->Off();
+	//	
+	//	EldaMax->SetEndEvent("MaxSolErdaEffect", [&](GameEngineSpriteRenderer*)
+	//		{
+	//			EldaMax->Off();
+	//		}
+	//	);
+	//}
 
 	{
 		ExpBarUi = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
@@ -91,17 +93,17 @@ void MainUIActor::Update(float _Delta)
 	float ExpRatio = (1366.0f / static_cast<float>(PlayerValue::GetValue()->GetMaxExp()));
 	ExpBarMin->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetExp()) * ExpRatio , 7.0f});
 
-	if (GlobalValue::GetDropValue()->GetDropItemValue() >= 100)
-	{
-		EldaGauge->SetSprite("SolErdagaugeMax.Png");
-		EldaGauge->SetImageScale({ 160.0f, 11.0f });
-		EldaMax->Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
-		EldaMax->On();
-	}
-	else
-	{
-		EldaGauge->SetImageScale({ (GlobalValue::GetDropValue()->GetDropItemValue() / 2.0f) * 3.2f, 11.0f});
-	}
+	//if (GlobalValue::GetDropValue()->GetDropItemValue() >= 100)
+	//{
+	//	EldaGauge->SetSprite("SolErdagaugeMax.Png");
+	//	EldaGauge->SetImageScale({ 160.0f, 11.0f });
+	//	EldaMax->Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
+	//	EldaMax->On();
+	//}
+	//else
+	//{
+	//	EldaGauge->SetImageScale({ (GlobalValue::GetDropValue()->GetDropItemValue() / 2.0f) * 3.2f, 11.0f});
+	//}
 
 	if (GameEngineInput::IsDown('=', this))
 	{
