@@ -164,8 +164,24 @@ public:
 		if (Class == "HighAtere" && Level >= 260)
 		{
 			Class = "Maestro";
-			Grade++;
 		}
+	}
+
+	int GetGrade()
+	{
+		return Grade;
+	}
+
+	const std::string& GetClass()
+	{
+		return Class;
+	}
+
+	void SetGrade(int _Grade)
+	{
+		Grade = _Grade;
+
+		UpGradeClass();
 	}
 
 protected:

@@ -33,5 +33,7 @@ private:
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
 	std::shared_ptr<class MainUIActor> UIObject = nullptr;
 	std::shared_ptr<class SolErdaGauge> SolObject = nullptr;
-};
 
+	std::shared_ptr<class GrandisGoddess> FormerNpc = nullptr;
+
+};

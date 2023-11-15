@@ -56,6 +56,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ChatManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentsControlWindow.cpp">
       <SubType>
       </SubType>
@@ -81,6 +85,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="DropItem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FormerEffect.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -271,6 +279,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ChatManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentsControlWindow.h">
       <SubType>
       </SubType>
@@ -297,6 +309,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="DropItem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FormerEffect.h">
       <SubType>
       </SubType>
     </ClInclude>

@@ -101,7 +101,7 @@ void DropItem::MoveDropItem(float _Delta)
 			float4 GetDir = { PlayerPos.X - CurPos.X , PlayerPos.Y - CurPos.Y + 15.0f };
 			GetDir.Normalize();
 
-			Transform.AddLocalPosition(GetDir * 500.0f * _Delta);
+			Transform.AddLocalPosition(GetDir * 600.0f * _Delta);
 			//float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 
 			//float4 UiPos = { 600.0f, 90.0f };

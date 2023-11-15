@@ -74,7 +74,7 @@ void ContentsCore::Start()
 	//UserRes();
 
 	//GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
-
+	GameEngineFont::Load("메이플스토리");
 	GameEngineGUI::CreateGUIWindow<ContentsControlWindow>("ContentsControlWindow");
 	// 깊이 버퍼 사용 안함
 	GameEngineRenderTarget::IsDepth = false;
@@ -100,8 +100,8 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
 	//GameEngineCore::ChangeLevel("6.BossRewardLevel");
 	 
-	GameEngineCore::ChangeLevel("3_1.HuntLevel");
-	//GameEngineCore::ChangeLevel("4.FormerLevel");
+	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
+	GameEngineCore::ChangeLevel("4.FormerLevel");
 	
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");

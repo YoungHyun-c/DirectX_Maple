@@ -10,6 +10,8 @@
 #include "SolErdaGauge.h"
 #include "Mouse.h"
 
+#include "GrandisGoddess.h"
+
 FormerLevel::FormerLevel()
 {
 
@@ -148,6 +150,45 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("SolErdagauge.Png");
 		GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
 	}
+	if (nullptr == GameEngineSprite::Find("Npc"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Npc");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("ChatBack.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Npc");
+		Dir.MoveChild("Chat");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("ChatBack.Png");
+		GameEngineSprite::CreateSingle("ChatBackBig.Png");
+		GameEngineSprite::CreateSingle("OK.Png");
+		GameEngineSprite::CreateSingle("NameTag.Png");
+		GameEngineSprite::CreateSingle("FormerNpc0.Png");
+		GameEngineSprite::CreateSingle("FormerNpc1.Png");
+		GameEngineSprite::CreateSingle("FormerNpc2.Png");
+		GameEngineSprite::CreateSingle("FormerNpc3.Png");
+	}
 
 
 	if (Map == nullptr)
@@ -182,6 +223,11 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == SolObject)
 	{
 		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
+	}
+	if (nullptr == FormerNpc)
+	{
+		FormerNpc = CreateActor<GrandisGoddess>(ContentsObjectType::UI);
+		FormerNpc->Transform.SetWorldPosition({ 1275.0f, -535.0f });
 	}
 
 
@@ -237,5 +283,10 @@ void FormerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	{
 		MouseObject->Death();
 		MouseObject = nullptr;
+	}
+	if (nullptr != FormerNpc)
+	{
+		FormerNpc->Death();
+		FormerNpc = nullptr;
 	}
 }
