@@ -23,7 +23,7 @@ void CraneMonster::LevelStart(GameEngineLevel* _PrevLevel)
 
 void CraneMonster::LevelEnd(GameEngineLevel* _NextLevel)
 {
-
+	Death();
 }
 
 void CraneMonster::Start()
@@ -100,17 +100,20 @@ void CraneMonster::Update(float _Delta)
 		Death();
 	}
 
-	if (DeathValue == true)
+	if (true == GlobalValue::GetNeedGlobalValue()->GetCurQuestValue())
 	{
-		size_t Size = DropItemList.size();
-		for (size_t i = 0; i < Size; i++)
+		if (DeathValue == true)
 		{
-			std::shared_ptr<DropItem> NewItem = GetLevel()->CreateActor<DropItem>();
-			NewItem->SetQuadraticFunction(-30.0f + (i * 50) + 5.0f, Transform.GetWorldPosition() + float4{ 0.0f, 50.0f }, 100.0f);
-			NewItem->SetDropItemInfo(DropItemList[i].first, static_cast<int>(ItemType::Etc));
+			size_t Size = DropItemList.size();
+			for (size_t i = 0; i < Size; i++)
+			{
+				std::shared_ptr<DropItem> NewItem = GetLevel()->CreateActor<DropItem>();
+				NewItem->SetQuadraticFunction(-30.0f + (i * 50) + 5.0f, Transform.GetWorldPosition() + float4{ 0.0f, 50.0f }, 100.0f);
+				NewItem->SetDropItemInfo(DropItemList[i].first, static_cast<int>(ItemType::Etc));
+			}
+			DeathValue = false;
+			return;
 		}
-		DeathValue = false;
-		return;
 	}
 
 	StateUpdate(_Delta);
@@ -284,7 +287,7 @@ void CraneMonster::DeathStart()
 	CraneAttackRangeCol->Off();
 	CraneSkillCol->Off();
 	DeathCount = true;
-	GlobalValue::GetMonsterValue()->AddMonsterCatchCount(1);
+	GlobalValue::GetNeedGlobalValue()->AddMonsterCatchCount(1);
 	PlayerValue::GetValue()->AddExp(1);
 }
 

@@ -131,7 +131,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		}
 		if (_Object->GetName() == "Mugong")
 		{
-			MugongDefense = GlobalValue::GetMonsterValue()->GetMugongDefenseValue();
+			MugongDefense = GlobalValue::GetNeedGlobalValue()->GetMugongDefenseValue();
 			DefenseCal = ((100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f)) * (100 - SkillOption)) / 100.0f);
 			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
 				DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);

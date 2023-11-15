@@ -39,6 +39,7 @@ protected:
 	void Update(float _DeltaTime) override;
 
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
 	bool SwitchRenderValue = true;

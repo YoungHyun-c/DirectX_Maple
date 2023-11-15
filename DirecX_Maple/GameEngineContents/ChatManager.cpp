@@ -27,7 +27,7 @@ void ChatManager::Start()
 	ChatBack->Transform.SetLocalPosition({ 0.0f, -280.0f });
 
 	Face = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-	Face->SetSprite("FormerNpc1.Png");
+	Face->SetSprite("FormerNpc0.Png");
 	Face->AutoSpriteSizeOn();
 	Face->Transform.SetLocalPosition({ 310.0f, -100.0f });
 
@@ -68,8 +68,138 @@ void ChatManager::Start()
 
 	{
 		{
+			ChatState['S']; // Start
+			ChatState['I']; // Ing
 			ChatState['C']; // Clear
 			ChatState['F']; // Fail
+		}
+
+		{
+			{
+				Chat Chatting;
+				Chatting.IsControl = false;
+
+				for (int i = 0; i < 2; i++)
+				{
+					Chatting.StateChat.CreateState(i, {
+						.Start =
+						[=](class GameEngineState* _Parent)
+						{
+							On();
+						},
+						.Stay =
+						[=](float DeltaTime, class GameEngineState* _Parent)
+						{
+							if (GameEngineInput::IsDown(VK_SPACE,this))
+							{
+								_Parent->ChangeState(i + 1);
+							}
+							if (NextCol->CollisionEvent(ContentsCollisionType::Mouse, ClickEvent))
+							{
+								if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
+								{
+									_Parent->ChangeState(i + 1);
+								}
+							}
+
+							if (i == 0)
+							{
+								FontRender->SetText("메이플스토리", "용사님 제 목소리가 들리시나요...?", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+							}
+							if (i == 1)
+							{
+								FontRender->SetText("메이플스토리", "저를 좀 도와주셨으면 해요.\n제가있는 곳으로 와주시겠어요...?", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+								NextRen->SetSprite("Accept.Png");
+							}
+						}
+						});
+				}
+
+				Chatting.StateChat.CreateState(2, {
+					.Start =
+					[=](class GameEngineState* _Parent)
+					{
+							Player::GetMainPlayer()->PlayerEnterBindEnd();
+							QuestStart = false;
+							CurChat = nullptr;
+							Off();
+							GameEngineCore::ChangeLevel("4.FormerLevel");
+					} });
+
+				ChatState['S'] = Chatting;
+			}
+		}
+
+		{
+			{
+				Chat Chatting;
+				Chatting.IsControl = false;
+
+				for (int i = 0; i < 4; i++)
+				{
+					Chatting.StateChat.CreateState(i, {
+						.Start =
+						[=](class GameEngineState* _Parent)
+						{
+							On();
+						},
+						.Stay =
+						[=](float DeltaTime, class GameEngineState* _Parent)
+						{
+							if (GameEngineInput::IsDown(VK_SPACE,this))
+							{
+								_Parent->ChangeState(i + 1);
+							}
+							if (NextCol->CollisionEvent(ContentsCollisionType::Mouse, ClickEvent))
+							{
+								if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
+								{
+									_Parent->ChangeState(i + 1);
+								}
+							}
+
+							if (i == 0)
+							{
+								FontRender->SetText("메이플스토리", "보시다시피 아무것도 할 수 없어...\n용사님의 도움이 필요했어요.", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+								NextRen->SetSprite("Ok.Png");
+							}
+							if (i == 1)
+							{
+								FontRender->SetText("메이플스토리", "옆에 있는 게이지가 보이시나요?", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+								GlobalValue::GetNeedGlobalValue()->SetCurQuestValue(true);
+							}
+
+							if (i == 2)
+							{
+								FontRender->SetText("메이플스토리", "사냥을 통해 게이지를 얻고,\n260렙을 달성하여 저에게 다시 찾아와주세요.", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+							}
+							if (i == 3)
+							{
+								FontRender->SetText("메이플스토리", "시련에도 부디 무사하기를....", FontSize, float4::WHITE);
+								Face->SetSprite("FormerNpc0.Png");
+							}
+						}
+						});
+				}
+
+				Chatting.StateChat.CreateState(4, {
+					.Start =
+					[=](class GameEngineState* _Parent)
+					{
+							Player::GetMainPlayer()->PlayerEnterBindEnd();
+							GrandisGoddess::MainFormerNpc->NpcCollisionOn();
+							QuestIng = false;
+							Off();
+							CurChat = nullptr;
+					} });
+
+				ChatState['I'] = Chatting;
+			}
 		}
 
 		{
@@ -93,6 +223,7 @@ void ChatManager::Start()
 							{
 								Former = GetLevel()->CreateActor<FormerEffect>();
 								PlayerValue::GetValue()->SetGrade(6);
+								GlobalValue::GetNeedGlobalValue()->SetClearQuestValue(true);
 							}
 							_Parent->ChangeState(i + 1);
 						}
@@ -104,6 +235,7 @@ void ChatManager::Start()
 								{
 									Former = GetLevel()->CreateActor<FormerEffect>();
 									PlayerValue::GetValue()->SetGrade(6);
+									GlobalValue::GetNeedGlobalValue()->SetClearQuestValue(true);
 								}
 								_Parent->ChangeState(i + 1);
 							}
@@ -112,13 +244,12 @@ void ChatManager::Start()
 						if (i == 0)
 						{
 							FontRender->SetText("메이플스토리", "용사님... 시련을 견디고 이 곳에 와주었군요?", FontSize, float4::WHITE);
-							GrandisGoddess::MainFormerNpc->ChangeAnimation("FormerSay");
 							Face->SetSprite("FormerNpc1.Png");
 						}
 						if (i == 1)
 						{
 							FontRender->SetText("메이플스토리", "용사님 덕분에 저도 힘을 되찾을 수 있게 되었어요.", FontSize, float4::WHITE);
-							//GrandisGoddess::MainFormerNpc->ChangeAnimation("FormerSay");
+							GrandisGoddess::MainFormerNpc->ChangeAnimation("FormerSay");
 							Face->SetSprite("FormerNpc1.Png");
 						}
 						if (i == 2)
@@ -221,6 +352,7 @@ void ChatManager::Start()
 					[=](class GameEngineState* _Parent)
 					{
 							Player::GetMainPlayer()->PlayerEnterBindEnd();
+							GrandisGoddess::MainFormerNpc->NpcCollisionOn();
 							Off();
 							CurChat = nullptr;
 					} });
@@ -272,8 +404,7 @@ bool ChatManager::ChatUseCheck()
 
 	for (std::pair<const char, Chat>& Pair : ChatState)
 	{
-		//if (true == GameEngineInput::IsDown(VK_SPACE, this))
-		if (QuestClear == true && Pair.first == 'C')
+		if (QuestStart == true && Pair.first == 'S')
 		{
 			Chat& Catting = Pair.second;
 
@@ -282,7 +413,25 @@ bool ChatManager::ChatUseCheck()
 			return true;
 		}
 
-		if (QuestClear == false && Pair.first == 'F')
+		if (QuestIng == true && Pair.first == 'I')
+		{
+			Chat& Catting = Pair.second;
+
+			CurChat = &Catting;
+			Catting.StateChat.ChangeState(0);
+			return true;
+		}
+
+		if (QuestStart == false && QuestIng == false && QuestClear == true && Pair.first == 'C')
+		{
+			Chat& Catting = Pair.second;
+
+			CurChat = &Catting;
+			Catting.StateChat.ChangeState(0);
+			return true;
+		}
+
+		if (QuestStart == false && QuestIng == false && QuestClear == false && Pair.first == 'F')
 		{
 			Chat& Catting = Pair.second;
 
@@ -297,10 +446,26 @@ bool ChatManager::ChatUseCheck()
 
 void ChatManager::ChatUseKey(const char& _Value)
 {
+	if (_Value == 'S')
+	{
+		ChatState['S'];
+		QuestStart = true;
+		//GlobalValue::GetNeedGlobalValue()->SetCurQuestValue(true);
+		ChatUseCheck();
+	}
+
+	if (_Value == 'I')
+	{
+		ChatState['I'];
+		QuestIng = true;
+		ChatUseCheck();
+	}
+
 	if (_Value == 'C')
 	{
 		ChatState['C'];
 		QuestClear = true;
+		GlobalValue::GetNeedGlobalValue()->SetClearQuestValue(true);
 		ChatUseCheck();
 	}
 

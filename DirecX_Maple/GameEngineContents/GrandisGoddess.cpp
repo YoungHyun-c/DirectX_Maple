@@ -65,7 +65,7 @@ void GrandisGoddess::Update(float _Delta)
 	EventParameter ClickEvent;
 	ClickEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
-			if (GlobalValue::GetDropValue()->GetDropItemValue() >= 100 && PlayerValue::GetValue()->GetLevel() >= 260)
+			if (GlobalValue::GetNeedGlobalValue()->GetDropItemValue() >= 100 && PlayerValue::GetValue()->GetLevel() >= 260)
 			{
 				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
 				{
@@ -73,16 +73,30 @@ void GrandisGoddess::Update(float _Delta)
 					FormerChat->ChatUseKey('C');
 					Player::GetMainPlayer()->PlayerBind();
 					FormerNpc->ChangeAnimation("Special2");
+					NpcCol->Off();
 				}
 				
 			}
-			else
+			else if (GlobalValue::GetNeedGlobalValue()->GetClearQuestValue() == false)
 			{
-				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
+				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()) && QuestStart == true)
 				{
 					FormerChat = GetLevel()->CreateActor<ChatManager>();
 					FormerChat->ChatUseKey('F');
 					Player::GetMainPlayer()->PlayerBind();
+					NpcCol->Off();
+				}
+			}
+			//if (GlobalValue::GetNeedGlobalValue()->GetCurQuestValue() == true)
+			if (false == GlobalValue::GetNeedGlobalValue()->GetClearQuestValue())
+			{
+				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()) && QuestStart == false)
+				{
+					FormerChat = GetLevel()->CreateActor<ChatManager>();
+					FormerChat->ChatUseKey('I');
+					Player::GetMainPlayer()->PlayerBind();
+					QuestStart = true;
+					NpcCol->Off();
 				}
 			}
 		};

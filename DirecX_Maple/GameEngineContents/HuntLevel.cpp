@@ -11,9 +11,10 @@
 #include "MainUIActor.h"
 #include "SolErdaGauge.h"
 #include "Mouse.h"
+#include "QuestIcon.h"
+#include "SolErdaGauge.h"
 
 #include "CraneMonster.h"
-
 #include "MonsterSpawnZone.h"
 
 HuntLevel::HuntLevel()
@@ -345,7 +346,10 @@ void HuntLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
-
+	if (nullptr == QuestObject)
+	{
+		QuestObject = CreateActor<QuestIcon>(ContentsObjectType::NPC);
+	}
 	if (nullptr == SolObject)
 	{
 		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
@@ -395,11 +399,11 @@ void HuntLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		UIObject->Death();
 		UIObject = nullptr;
 	}
-	//if (nullptr != SolObject)
-	//{
-	//	SolObject->Death();
-	//	SolObject = nullptr;
-	//}
+	/*if (nullptr != SolObject)
+	{
+		SolObject->Death();
+		SolObject = nullptr;
+	}*/
 	if (nullptr != MouseObject)
 	{
 		MouseObject->Death();

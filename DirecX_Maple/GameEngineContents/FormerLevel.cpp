@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "FormerLevel.h"
 #include "BackGroundMap.h"
+#include "HuntLevel.h"
 
 #include "Player.h"
 #include "AdeleSkill.h"
@@ -265,21 +266,21 @@ void FormerLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		Skill->Death();
 		Skill = nullptr;
 	}
-	if (nullptr != PlayerObject)
-	{
-		PlayerObject->Death();
-		PlayerObject = nullptr;
-	}
+	//if (nullptr != PlayerObject)
+	//{
+	//	PlayerObject->Death();
+	//	PlayerObject = nullptr;
+	//}
 	if (nullptr != UIObject)
 	{
 		UIObject->Death();
 		UIObject = nullptr;
 	}
-	if (nullptr != SolObject)
+	/*if (nullptr != SolObject)
 	{
 		SolObject->Death();
 		SolObject = nullptr;
-	}
+	}*/
 	if (nullptr != MouseObject)
 	{
 		MouseObject->Death();

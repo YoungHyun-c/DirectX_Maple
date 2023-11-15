@@ -8,6 +8,8 @@
 
 #include "MainUIActor.h"
 #include "Mouse.h"
+#include "QuestIcon.h"
+#include "SolErdaGauge.h"
 
 //#include <GameEngineCore/GameEngineCoreWindow.h>
 //#include <GameEngineCore/FadePostEffect.h>
@@ -168,6 +170,51 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+		GameEngineSprite::CreateSingle("ExpBar.Png");
+		GameEngineSprite::CreateSingle("ExpMax.Png");
+		GameEngineSprite::CreateSingle("ErdaGauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
+	}
+	if (nullptr == GameEngineSprite::Find("Npc"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Npc");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("ChatBack.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Npc");
+		Dir.MoveChild("Chat");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("ChatBack.Png");
+		GameEngineSprite::CreateSingle("ChatBackBig.Png");
+		GameEngineSprite::CreateSingle("Accept.Png");
+		GameEngineSprite::CreateSingle("OK.Png");
+		GameEngineSprite::CreateSingle("NameTag.Png");
+		GameEngineSprite::CreateSingle("FormerNpc0.Png");
+		GameEngineSprite::CreateSingle("FormerNpc1.Png");
+		GameEngineSprite::CreateSingle("FormerNpc2.Png");
+		GameEngineSprite::CreateSingle("FormerNpc3.Png");
 	}
 
 
@@ -202,6 +249,14 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == MouseObject)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+	}
+	if (nullptr == QuestObject)
+	{
+		QuestObject = CreateActor<QuestIcon>(ContentsObjectType::NPC);
+	}
+	if (nullptr == SolObject)
+	{
+		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
 	}
 
 	// 포스트 이펙트 테스트

@@ -59,6 +59,8 @@ private:
 	Chat* CurChat = nullptr;
 	std::map<const char, Chat> ChatState;
 
+	bool QuestStart = false;
+	bool QuestIng = false;
 	bool QuestClear = false;
 };
 

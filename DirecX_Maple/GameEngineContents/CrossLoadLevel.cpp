@@ -9,6 +9,8 @@
 
 #include "MainUIActor.h"
 #include "Mouse.h"
+#include "QuestIcon.h"
+#include "SolErdaGauge.h"
 
 CrossLoadLevel::CrossLoadLevel()
 {
@@ -174,7 +176,14 @@ void CrossLoadLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 	}
-
+	if (nullptr == QuestObject)
+	{
+		QuestObject = CreateActor<QuestIcon>(ContentsObjectType::NPC);
+	}
+	if (nullptr == SolObject)
+	{
+		SolObject = CreateActor<SolErdaGauge>(ContentsObjectType::UI);
+	}
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("CrossLoadMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

@@ -154,7 +154,6 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		Potal->SetLinkedMap("4.FormerLevel");
 		Potal->Transform.SetWorldPosition({ 180.0f, -1000.0f });
 
-
 		Potal = GetLevel()->CreateActor<PotalManager>();
 		Potal->SetLinkedMap("3.CrossLoadLevel");
 		Potal->Transform.SetWorldPosition({ 2780.0f, -1000.0f });
@@ -203,5 +202,26 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 		RingPotal1 = GetLevel()->CreateActor<RingPotalManager>();
 		RingPotal1->SetLinkedMap("9_2.LiberationLevel");
 		RingPotal1->Transform.SetWorldPosition({ 95.0f, -740.0f });
+	}
+}
+
+void BackGroundMap::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	if (Potal != nullptr)
+	{
+		Potal->Death();
+		Potal = nullptr;
+	}
+
+	if (RingPotal1 != nullptr)
+	{
+		RingPotal1->Death();
+		RingPotal1 = nullptr;
+	}
+
+	if (RingPotal2 != nullptr)
+	{
+		RingPotal2->Death();
+		RingPotal2 = nullptr;
 	}
 }

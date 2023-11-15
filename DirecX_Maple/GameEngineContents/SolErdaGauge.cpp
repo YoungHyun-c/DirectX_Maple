@@ -20,12 +20,14 @@ void SolErdaGauge::Start()
 		EldaGaugeBar->Transform.SetLocalPosition({ WindowHalfPos.X - 200.0f, 30.0f });
 		EldaGaugeBar->SetPivotType(PivotType::Left);
 		EldaGaugeBar->AutoSpriteSizeOn();
+		EldaGaugeBar->Off();
 
 		EldaGauge = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		EldaGauge->SetSprite("SolErdagauge.png");
-		//EldaGauge->SetImageScale({ 100.0f, 11.0f });
+		EldaGauge->SetImageScale({ (GlobalValue::GetNeedGlobalValue()->GetDropItemValue() / 2.0f) * 3.2f, 11.0f });
 		EldaGauge->Transform.SetLocalPosition({ WindowHalfPos.X - 192.0f, 32.0f });
 		EldaGauge->SetPivotType(PivotType::Left);
+		EldaGauge->Off();
 
 		EldaMax = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
 		EldaMax->AutoSpriteSizeOn();
@@ -43,15 +45,25 @@ void SolErdaGauge::Start()
 
 void SolErdaGauge::Update(float _Delta)
 {
-	if (GlobalValue::GetDropValue()->GetDropItemValue() >= 100)
+	if (true == GlobalValue::GetNeedGlobalValue()->GetCurQuestValue())
 	{
-		EldaGauge->SetSprite("SolErdagaugeMax.Png");
-		EldaGauge->SetImageScale({ 160.0f, 11.0f });
-		EldaMax->Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
-		EldaMax->On();
+		if (GlobalValue::GetNeedGlobalValue()->GetDropItemValue() >= 100)
+		{
+			EldaGauge->SetSprite("SolErdagaugeMax.Png");
+			EldaGauge->SetImageScale({ 160.0f, 11.0f });
+			EldaMax->Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
+			EldaMax->On();
+		}
+		else
+		{
+			EldaGauge->SetImageScale({ (GlobalValue::GetNeedGlobalValue()->GetDropItemValue() / 2.0f) * 3.2f, 11.0f });
+			EldaGaugeBar->On();
+			EldaGauge->On();
+		}
 	}
-	else
+
+	if (true == GlobalValue::GetNeedGlobalValue()->GetClearQuestValue())
 	{
-		EldaGauge->SetImageScale({ (GlobalValue::GetDropValue()->GetDropItemValue() / 2.0f) * 3.2f, 11.0f });
+		Off();
 	}
 }

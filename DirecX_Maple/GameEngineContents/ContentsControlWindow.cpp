@@ -20,7 +20,7 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	AllAttack = PlayerStat->GetValue()->GetPlayerAllAttack();
 	AttackPer = PlayerStat->GetValue()->GetPlayerAttackPer();
 
-	MugongDefense = MugongStat->GetMonsterValue()->GetMugongDefenseValue();
+	MugongDefense = MugongStat->GetNeedGlobalValue()->GetMugongDefenseValue();
 
 	if (ImGui::InputInt("Str", &Str))
 	{
@@ -93,7 +93,7 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		{
 			MugongDefense = 10;
 		}
-		MugongStat->GetMonsterValue()->SetMugongDefenseValue(MugongDefense);
+		MugongStat->GetNeedGlobalValue()->SetMugongDefenseValue(MugongDefense);
 	}
 
 

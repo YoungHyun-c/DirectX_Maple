@@ -112,7 +112,7 @@ void MainUIActor::Update(float _Delta)
 	if (GameEngineInput::IsDown('-', this))
 	{
 		PlayerValue::GetValue()->AddExp(10);
-		GlobalValue::GetDropValue()->AddDropItemCount(10);
+		GlobalValue::GetNeedGlobalValue()->AddDropItemCount(10);
 	}
 	if (GameEngineInput::IsDown('0', this))
 	{

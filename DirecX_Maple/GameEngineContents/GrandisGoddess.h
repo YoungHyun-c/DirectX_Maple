@@ -19,6 +19,16 @@ public:
 
 	void ChangeAnimation(std::string_view _AnimationName);
 
+	void NpcCollisionOn()
+	{
+		NpcCol->On();
+	}
+
+	void NpcCollisionOff()
+	{
+		NpcCol->Off();
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
@@ -31,5 +41,6 @@ private:
 
 
 	std::shared_ptr<class ChatManager> FormerChat;
+	bool QuestStart = false;
 };
 

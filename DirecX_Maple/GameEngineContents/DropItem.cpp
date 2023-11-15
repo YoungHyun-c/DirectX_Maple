@@ -110,7 +110,7 @@ void DropItem::MoveDropItem(float _Delta)
 				{
 					{
 						_this->GetActor()->Death();
-						GlobalValue::GetDropValue()->AddDropItemCount(1);
+						GlobalValue::GetNeedGlobalValue()->AddDropItemCount(0.5);
 					}
 				};
 			DropItemCollision->CollisionEvent(ContentsCollisionType::Player, Droptrue);

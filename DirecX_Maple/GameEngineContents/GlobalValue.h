@@ -13,17 +13,11 @@ class GlobalValue
 	friend CraneMonster;
 	friend DropItem;
 private:
-	static GlobalValue MonsterValue;
-	static GlobalValue DropValue;
+	static GlobalValue NeedGlobalValue;
 public:
-	static GlobalValue* GetMonsterValue()
+	static GlobalValue* GetNeedGlobalValue()
 	{
-		return &MonsterValue;
-	}
-
-	static GlobalValue* GetDropValue()
-	{
-		return &DropValue;
+		return &NeedGlobalValue;
 	}
 public:
 	// constructer destructer
@@ -62,7 +56,7 @@ public:
 		return MonsterCount;
 	}
 
-	void AddDropItemCount(int _Value)
+	void AddDropItemCount(float _Value)
 	{
 		if (DropItemCount >= 100)
 		{
@@ -73,9 +67,29 @@ public:
 		DropItemCount += _Value;
 	}
 
-	unsigned int GetDropItemValue()
+	float GetDropItemValue()
 	{
 		return DropItemCount;
+	}
+
+	bool GetCurQuestValue()
+	{
+		return CurQuestValue;
+	}
+
+	void SetCurQuestValue(bool _Value)
+	{
+		CurQuestValue = _Value;
+	}
+
+	void SetClearQuestValue(bool _Value)
+	{
+		QuesetClearValue = _Value;
+	}
+
+	bool GetClearQuestValue()
+	{
+		return QuesetClearValue;
 	}
 
 protected:
@@ -85,6 +99,9 @@ private:
 	int MugongDefense = 10;
 
 	unsigned int MonsterCount = 0;
-	unsigned int DropItemCount = 0;
+	float DropItemCount = 0;
+
+	bool CurQuestValue = false;
+	bool QuesetClearValue = false;
 };
 
