@@ -168,6 +168,9 @@
     <ClCompile Include="FormerEffect.cpp">
       <Filter>Object\Player\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="QuestIcon.cpp">
+      <Filter>Object\Boss\UI\NPC</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -333,6 +336,9 @@
     </ClInclude>
     <ClInclude Include="FormerEffect.h">
       <Filter>Object\Player\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestIcon.h">
+      <Filter>Object\Boss\UI\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

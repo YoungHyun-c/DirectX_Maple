@@ -182,6 +182,7 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("ChatBack.Png");
 		GameEngineSprite::CreateSingle("ChatBackBig.Png");
+		GameEngineSprite::CreateSingle("Accept.Png");
 		GameEngineSprite::CreateSingle("OK.Png");
 		GameEngineSprite::CreateSingle("NameTag.Png");
 		GameEngineSprite::CreateSingle("FormerNpc0.Png");

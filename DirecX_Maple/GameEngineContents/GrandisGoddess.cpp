@@ -45,34 +45,44 @@ void GrandisGoddess::Start()
 
 void GrandisGoddess::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown('9', this))
-	{
-		FormerNpc->ChangeAnimation("Special2");
-	}
-	if (GameEngineInput::IsDown('0', this))
-	{
-		FormerNpc->ChangeAnimation("FormerStand");
-	}
+	//if (GameEngineInput::IsDown('9', this))
+	//{
+	//	FormerNpc->ChangeAnimation("Special2");
+	//}
+	//if (GameEngineInput::IsDown('0', this))
+	//{
+	//	FormerNpc->ChangeAnimation("FormerStand");
+	//}
 	//if (GameEngineInput::IsDown('-', this))
 	//{
 	//	FormerNpc->ChangeAnimation("FormerEye");
 	//}
-	if (GameEngineInput::IsDown('=', this))
-	{
-		FormerNpc->ChangeAnimation("FormerSay");
-	}
+	//if (GameEngineInput::IsDown('=', this))
+	//{
+	//	FormerNpc->ChangeAnimation("FormerSay");
+	//}
 
 	EventParameter ClickEvent;
 	ClickEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
-			if (GlobalValue::GetDropValue()->GetDropItemValue() == 100 && PlayerValue::GetValue()->GetLevel() >= 260)
+			if (GlobalValue::GetDropValue()->GetDropItemValue() >= 100 && PlayerValue::GetValue()->GetLevel() >= 260)
 			{
 				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
 				{
 					FormerChat = GetLevel()->CreateActor<ChatManager>();
-					FormerChat->ChatUseKey(VK_SPACE);
+					FormerChat->ChatUseKey('C');
 					Player::GetMainPlayer()->PlayerBind();
 					FormerNpc->ChangeAnimation("Special2");
+				}
+				
+			}
+			else
+			{
+				if (true == GameEngineInput::IsDown(VK_LBUTTON, Mouse::GetMouse()))
+				{
+					FormerChat = GetLevel()->CreateActor<ChatManager>();
+					FormerChat->ChatUseKey('F');
+					Player::GetMainPlayer()->PlayerBind();
 				}
 			}
 		};

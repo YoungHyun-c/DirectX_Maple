@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include <GameEngineCore/GameEngineState.h>
 
 // Ό³Έν :
 class ChatManager : public GameEngineActor
@@ -46,25 +47,18 @@ private:
 	class Chat
 	{
 	public:
-		bool IsControll;
-		float MaxCoolTime;
-
-		float4 SkillUsePos;
-
-		int TargetCollisionOrder;
-		GameEngineState StateTest;
-
+		bool IsControl = false;
+		GameEngineState StateChat;
 
 		void Update(float _Delta)
 		{
-			StateTest.Update(_Delta);
+			StateChat.Update(_Delta);
 		}
 	};
 
 	Chat* CurChat = nullptr;
 	std::map<const char, Chat> ChatState;
 
-	bool GreenAttack = false;
-	bool PurpleAttack = false;
+	bool QuestClear = false;
 };
 
