@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "JinHillaSickleCut.h"
 #include "ContentsTimer.h"
+#include "JinHillaBoss.h"
 
 JinHillaSickleCut::JinHillaSickleCut()
 {
@@ -48,9 +49,15 @@ void JinHillaSickleCut::Start()
 	GameEngineInput::AddInputObject(this);
 }
 
+void JinHillaSickleCut::LevelStart(GameEngineLevel* _NextLevel)
+{
+	PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
+}
+
 void JinHillaSickleCut::Update(float _Delta)
 {
 	CurTime += _Delta;
+
 	if (GameEngineInput::IsDown('-', this))
 	{
 		CurTime += 10.0f;
@@ -60,6 +67,14 @@ void JinHillaSickleCut::Update(float _Delta)
 	{
 		SickleCutAni->ChangeAnimation("JinHillaAnime");
 		SickleCutAni->On();
+		if (PercentFrontHp <= 60.0f && PercentFrontHp > 30.0f)
+		{
+			AttackTime = 125.0f;
+		}
+		if (PercentFrontHp <= 30.0f)
+		{
+			AttackTime = 100.0f;
+		}
 		CurTime = 0.0f;
 	}
 }

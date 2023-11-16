@@ -188,7 +188,7 @@ void JinHillaBoss::Update(float _Delta)
 
 	if (GameEngineInput::IsDown('-', this))
 	{
-		JinHillaCurHp -= 10000000000000;
+		//JinHillaCurHp -= 10000000000000;
 	}
 
 	InsideLockMap();

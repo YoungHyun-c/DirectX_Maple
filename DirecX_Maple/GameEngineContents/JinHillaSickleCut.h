@@ -21,6 +21,7 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void LevelStart(GameEngineLevel* _PrveLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
@@ -29,6 +30,9 @@ private:
 
 	float CurTime = 0.0f;
 	float AttackTime = 150.0f;
+	double CurBossHp = 0.0f;
+	double PercentFrontHp = 0.0f;
+	//                                              60%					30%
 	// float AttackTime = 150.0f; float AttackTime = 125.0f; float AttackTime = 100.0f;
 };
 
