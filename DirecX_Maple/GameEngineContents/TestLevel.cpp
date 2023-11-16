@@ -18,6 +18,8 @@
 #include "CravingMonster.h"
 #include "JinHillaBoss.h"
 
+#include "ContentsTimer.h"
+
 TestLevel::TestLevel()
 {
 
@@ -32,6 +34,9 @@ TestLevel::~TestLevel()
 void TestLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+	//std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
+	////ContentsTimer::TimeValue == 1744.0f;
+	//Test->SetTimeValue(1745.0f);
 }
 
 void TestLevel::Update(float _Delta)
@@ -107,7 +112,7 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
-	/*if (nullptr == GameEngineSprite::Find("UITexture"))
+	if (nullptr == GameEngineSprite::Find("UITexture"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
@@ -138,7 +143,7 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	}*/
+	}
 
 	if (Map == nullptr)
 	{
@@ -161,14 +166,14 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Skill = CreateActor<SkillManager>();
 	}
-	/*if (nullptr == UIObject)
+	if (nullptr == UIObject)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
 	}
 	if (nullptr == MouseObject)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
-	}*/
+	}
 
 	if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
 	{
@@ -193,6 +198,9 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
 		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 	}
+
+	std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
+	Test->SetTimeValue(1784.0f);
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

@@ -18,6 +18,29 @@ void MainUIActor::Start()
 	PlayerUiActor = this;
 	WindowHalfPos = GlobalValue::WinScale.Half();
 
+	if (nullptr == GameEngineSprite::Find("ExpBar.Png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+		GameEngineSprite::CreateSingle("ExpBar.Png");
+		GameEngineSprite::CreateSingle("ExpMax.Png");
+		GameEngineSprite::CreateSingle("ErdaGauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagauge.Png");
+		GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
+	}
+
 	{
 		AtereAnime = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		AtereAnime->CreateAnimation("AtereAnime_Back", "AtereAnime", 0.3f, -1, -1, true);
@@ -79,6 +102,7 @@ void MainUIActor::Start()
 		ExpBarMin->SetPivotType(PivotType::Left);
 		ExpBarMin->Transform.SetLocalPosition({ -GlobalValue::WinScale.hX() + 15, -GlobalValue::WinScale.hY() + 10.0f });
 	}
+
 	GameEngineInput::AddInputObject(this);
 
 	//Count = (GlobalValue::GetDropValue()->GetDropItemValue() / 2);

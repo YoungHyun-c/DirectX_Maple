@@ -87,23 +87,11 @@
     <ClCompile Include="BossLevelUi.cpp">
       <Filter>Object\Boss\UI</Filter>
     </ClCompile>
-    <ClCompile Include="BossSkillEffect.cpp">
-      <Filter>Object\Boss</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="BossSkillManager.cpp">
-      <Filter>Object\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="TestLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="TestMonster.cpp">
       <Filter>Object\Boss\SummonMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="BossBoxReward.cpp">
-      <Filter>Object\Boss</Filter>
     </ClCompile>
     <ClCompile Include="DropItem.cpp">
       <Filter>Object\Boss\UI\Item</Filter>
@@ -170,6 +158,21 @@
     </ClCompile>
     <ClCompile Include="QuestIcon.cpp">
       <Filter>Object\Boss\UI\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="BossSkillEffect.cpp">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClCompile>
+    <ClCompile Include="BossSkillManager.cpp">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBoxReward.cpp">
+      <Filter>Object\Boss\BossReward</Filter>
+    </ClCompile>
+    <ClCompile Include="ContentsTimer.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLevel.cpp">
+      <Filter>Level\0</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,23 +259,11 @@
     <ClInclude Include="BossLevelUi.h">
       <Filter>Object\Boss\UI</Filter>
     </ClInclude>
-    <ClInclude Include="BossSkillEffect.h">
-      <Filter>Object\Boss</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerValue.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="BossSkillManager.h">
-      <Filter>Object\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="TestLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="TestMonster.h">
       <Filter>Object\Boss\SummonMonster</Filter>
-    </ClInclude>
-    <ClInclude Include="BossBoxReward.h">
-      <Filter>Object\Boss</Filter>
     </ClInclude>
     <ClInclude Include="DropItem.h">
       <Filter>Object\Boss\UI\Item</Filter>
@@ -339,6 +330,21 @@
     </ClInclude>
     <ClInclude Include="QuestIcon.h">
       <Filter>Object\Boss\UI\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSkillManager.h">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSkillEffect.h">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBoxReward.h">
+      <Filter>Object\Boss\BossReward</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentsTimer.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLevel.h">
+      <Filter>Level\0</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +437,15 @@
     </Filter>
     <Filter Include="Object\Player\Effect">
       <UniqueIdentifier>{9a3b27ea-f115-4c05-8290-40f9c214b4e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\BossSKill">
+      <UniqueIdentifier>{2d7d4523-d9cb-4779-8848-3d50c90ac9e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\BossReward">
+      <UniqueIdentifier>{f387ae2d-fa66-4917-99f9-2149098721b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Level\0">
+      <UniqueIdentifier>{720b0d5a-10d1-4d29-8d9f-437c43f24d8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
