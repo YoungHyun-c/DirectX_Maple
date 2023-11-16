@@ -125,23 +125,23 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("UITexture");
+	//if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("UITexture");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
-		}
-		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	}
+	//	std::vector<GameEngineFile> Files = Dir.GetAllFile();
+	//	for (size_t i = 0; i < Files.size(); i++)
+	//	{
+	//		GameEngineFile& File = Files[i];
+	//		GameEngineTexture::Load(File.GetStringPath());
+	//	}
+	//	GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+	//	GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	//}
 
 	if (Map == nullptr)
 	{
@@ -168,10 +168,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
 	}
-	if (nullptr == MouseObject)
+	/*if (nullptr == MouseObject)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
-	}
+	}*/
 
 	if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
 	{
@@ -197,10 +197,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
 	}
 
-	std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
+	/*std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
 	Test->SetTimeValue(1785.0f);
 
-	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
+	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);*/
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

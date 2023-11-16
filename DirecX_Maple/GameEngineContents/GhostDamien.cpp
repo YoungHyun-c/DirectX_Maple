@@ -64,8 +64,8 @@ void GhostDamien::Start()
 	);
 	MonsterRenderer->SetFrameEvent("Skill2", 11, [&](GameEngineSpriteRenderer*)
 		{
-			MonsterCollision->Transform.SetLocalPosition({ 20.0f, 400.0f });
-			MonsterCollision->On();
+			//MonsterCollision->Transform.SetLocalPosition({ 20.0f, 400.0f });
+			//MonsterCollision->On();
 		}
 	);
 
@@ -134,40 +134,12 @@ void GhostDamien::Update(float _Delta)
 	}
 	if (GameEngineInput::IsDown('6', this))
 	{
-	//	HitEffect->ChangeAnimation("BackEffect");
-	//	HitEffect->Transform.SetLocalPosition({ -50.0f });
-	//	HitEffect->On();
-	//	MonsterRenderer->ChangeAnimation("Attack");
-	//	DirCheck();
-	//	MonsterRenderer->Transform.SetLocalPosition({ -10.0f, -50.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
 		ChangeState(MonsterState::Stand);
 	}
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	//ChangeState(MonsterState::Die);
-	//	//MonsterRenderer->RightFlip();
-	//	//Dir = ActorDir::Left;
-	//	MonsterRenderer->ChangeAnimation("Skill1");
-	//	DirCheck();
-	//	MonsterRenderer->Transform.SetLocalPosition({ -5.0f, -5.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
-	//}
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	//ChangeState(MonsterState::Skill1);
-	//	MonsterRenderer->ChangeAnimation("Skill1After");
-	//	DirCheck();
-	//	MonsterRenderer->Transform.SetLocalPosition({ 5.0f, -10.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
-	//}
+
 	if (GameEngineInput::IsDown('9', this))
 	{
 		ChangeState(MonsterState::Skill2);
-		//MonsterRenderer->ChangeAnimation("Skill2");
-		//DirCheck();
-		//MonsterRenderer->Transform.SetLocalPosition({ 30.0f, 0.0f });
-		//MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
 	}
 
 	if (GameEngineInput::IsDown('0', this))
@@ -249,6 +221,7 @@ void GhostDamien::AttackUpdate(float _Delta)
 	}
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
+		AttackNum += 1;
 		ChangeState(MonsterState::Stand);
 		return;
 	}
@@ -297,17 +270,13 @@ void GhostDamien::Skill_1AfterUpdate(float _Delta)
 void GhostDamien::Skill_2Start()
 {
 	ChangeAnimationState("Skill2");
-	//MonsterRenderer->Transform.GetWorldPosition();
-	//MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 250.0f });
-
-	MonsterRenderer->Transform.SetWorldPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 30.0f, MonsterRenderer->Transform.GetWorldPosition().Y + 200.0f });
 }
 
 void GhostDamien::Skill_2Update(float _Delta)
 {
 	DirCheck();
 	MonsterRenderer->Transform.SetLocalPosition({ 30.0f, 200.0f });
-	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
+	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 0.0f });
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Skill2After);
@@ -317,12 +286,31 @@ void GhostDamien::Skill_2Update(float _Delta)
 void GhostDamien::Skill_2After()
 {
 	ChangeAnimationState("Skill2After");
-	
+	if (MonsterRenderer->Transform.GetWorldPosition().X + 400.0f >= RightCheck && Dir == ActorDir::Right)
+	{
+		return;
+	}
+	if (MonsterRenderer->Transform.GetWorldPosition().X - 400.0f <= LeftCheck && Dir == ActorDir::Left)
+	{
+		return;
+	}
+	if (Dir == ActorDir::Right)
+	{
+		MonsterRenderer->Transform.SetLocalPosition({ 400.0f, 200.0f });
+	}
+	if (Dir == ActorDir::Left)
+	{
+		MonsterRenderer->Transform.SetLocalPosition({ -400.0f, 200.0f });
+	}
 }
 void GhostDamien::Skill_2AfterUpdate(float _Delta)
 {
+	InsideLockMap();
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
+		MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 0.0f });
+		MonsterCollision->Transform.SetLocalPosition({ 0.0f, 0.0f });
+		AttackNum = 1;
 		ChangeState(MonsterState::Stand);
 		return;
 	}
@@ -388,7 +376,7 @@ void GhostDamien::AttackEvent(float _Delta)
 		if (0.5f > StartAttack)
 		{
 			GameEngineRandom AttackRan;
-			switch (2)
+			switch (AttackNum)
 			{
 			case 1:
 				ChangeState(MonsterState::Attack);

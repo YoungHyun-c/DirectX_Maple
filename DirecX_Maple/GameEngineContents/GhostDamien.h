@@ -71,5 +71,6 @@ private:
 	float StartAttack = 0.0f;
 	bool IsAttack = false;
 	bool SlideAttack = false;
+	int AttackNum = 1;
 };
 
