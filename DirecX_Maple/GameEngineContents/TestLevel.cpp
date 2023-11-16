@@ -11,15 +11,10 @@
 #include "Mouse.h"
 #include "SummonUi.h"
 
-#include "GhostDamien.h"
-
-
-#include "MonsterFunction.h"
-#include "CravingMonster.h"
-#include "JinHillaBoss.h"
-
 #include "ContentsTimer.h"
 #include "JinHillaSickleCut.h"
+#include "JinHillaBoss.h"
+#include "BossLevelUi.h"
 
 TestLevel::TestLevel()
 {
@@ -125,23 +120,6 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	//if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("UITexture");
-
-	//	std::vector<GameEngineFile> Files = Dir.GetAllFile();
-	//	for (size_t i = 0; i < Files.size(); i++)
-	//	{
-	//		GameEngineFile& File = Files[i];
-	//		GameEngineTexture::Load(File.GetStringPath());
-	//	}
-	//	GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-	//	GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	//}
 
 	if (Map == nullptr)
 	{
@@ -168,19 +146,31 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
 	}
-	/*if (nullptr == MouseObject)
-	{
-		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
-	}*/
 
-	if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
+
+	if (nullptr == GameEngineSprite::Find("JinHillaUI"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
 		Dir.MoveChild("ContentsResources");
 		Dir.MoveChild("FolderTexture");
 		Dir.MoveChild("Monster");
-		Dir.MoveChild("GhostDamienMob");
+		Dir.MoveChild("BossJin");
+		Dir.MoveChild("JinHillaUI");
+		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+	}
+	{
+		std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	}
+	if (nullptr == GameEngineSprite::Find("BossJin"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("BossJin");
+		Dir.MoveChild("BossJinHilla");
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)
@@ -189,13 +179,32 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-
-	if (nullptr == GhostDamienMob)
+	if (nullptr == BossJin)
 	{
-		GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
-		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
-		GhostDamienMob->SetDebugMap("BossDebugMap.Png");
+		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+		BossJin->SetDebugMap("BossDebugMap.Png");
+		BossJin->CallRegen();
 	}
+
+	//if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Monster");
+	//	Dir.MoveChild("GhostDamienMob");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
+
+
 
 	/*std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
 	Test->SetTimeValue(1785.0f);

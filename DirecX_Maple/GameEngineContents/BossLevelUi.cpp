@@ -45,17 +45,19 @@ void BossLevelUi::Start()
 
 		BossHpNumberRender1 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		BossHpNumberRender1->SetSprite("HpNumber_9.Png");
-		BossHpNumberRender1->Transform.SetLocalPosition({ -391.0f, 330.0f});
+		BossHpNumberRender1->Transform.SetLocalPosition({ -412.0f, 330.0f });
+
+		BossHpNumberRender2= CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		BossHpNumberRender2->SetSprite("HpNumber_9.Png");
+		BossHpNumberRender2->Transform.SetLocalPosition({ -405.0f, 330.0f });
+
+		BossHpNumberRender3 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		BossHpNumberRender3->SetSprite("HpNumber_9.Png");
+		BossHpNumberRender3->Transform.SetLocalPosition({ -398.0f, 330.0f });
+
 		BossHpNumberRender4 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		BossHpNumberRender4->SetSprite("HpNumber_9.Png");
-		BossHpNumberRender4->Transform.SetLocalPosition({ -398.0f, 330.0f });
-
-		BossHpNumberRender3= CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		BossHpNumberRender3->SetSprite("HpNumber_5.Png");
-		BossHpNumberRender3->Transform.SetLocalPosition({ -405.0f, 330.0f });
-		BossHpNumberRender2 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		BossHpNumberRender2->SetSprite("HpNumber_2.Png");
-		BossHpNumberRender2->Transform.SetLocalPosition({ -412.0f, 330.0f });
+		BossHpNumberRender4->Transform.SetLocalPosition({ -391.0f, 330.0f});
 
 		
 		BossHpNumberRender5 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
@@ -127,8 +129,9 @@ void BossLevelUi::Update(float _Delta)
 
 
 	// 보스 체력 Ui렌더러
-	//BossHpUiRenderer();
+	BossHpPerUiRenderer();
 
+	// 보스 체력 바 Ui렌더러
 	BossHpBarUiRenderer();
 }
 void BossLevelUi::UiPosUpdate(float _Delta)
@@ -162,7 +165,7 @@ void BossLevelUi::BossHpPerUiRenderer()
 	percentBackHpCal = round(percentBackHpCal);
 
 	PercentBackHp = static_cast<int>(fmod(percentBackHpCal, 100));
-	PercentBackHp /= 10;
+	//PercentBackHp /= 10;
 
 	int MainBossHp = PercentFrontHp;
 	std::string CurMainBossHp = "MainBossHp : ";
@@ -171,35 +174,47 @@ void BossLevelUi::BossHpPerUiRenderer()
 	OutputDebugStringA(CurMainBossHp.c_str());
 
 	int NumArr[5] = { 0, };
-	NumArr[0] = PercentFrontHp % 10;
-	PercentFrontHp /= 10;
-	std::string TextureName = "HpNumber_" + std::to_string(NumArr[0]) + ".Png";
-	if (BossHpNumberRender1 != nullptr && PercentFrontHp == PercentFrontHp)
+	NumArr[0] = PercentFrontHp / 10;
+	NumArr[1] = PercentFrontHp % 10;
+	NumArr[2] = PercentBackHp / 10;
+	NumArr[3] = PercentBackHp % 10;
+	std::string TextureName1 = "HpNumber_" + std::to_string(NumArr[0]) + ".Png";
+	std::string TextureName2 = "HpNumber_" + std::to_string(NumArr[1]) + ".Png";
+	std::string TextureName3 = "HpNumber_" + std::to_string(NumArr[2]) + ".Png";
+	std::string TextureName4 = "HpNumber_" + std::to_string(NumArr[3]) + ".Png";
+
+	if (CurHpCal <= 0)
 	{
+		BossHpNumberRender1->SetSprite("HpNumber_0.Png");
+		BossHpNumberRender2->SetSprite("HpNumber_0.Png");
+		BossHpNumberRender3->SetSprite("HpNumber_0.Png");
+		BossHpNumberRender4->SetSprite("HpNumber_0.Png");
+
 		return;
 	}
-
-	BossHpNumberRender1 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-	BossHpNumberRender1->SetSprite(TextureName);
-	BossHpNumberRender1->Transform.SetLocalPosition({ CameraPos.X + -391.0f, CameraPos.Y + 330.0f });
+	BossHpNumberRender1->SetSprite(TextureName1);
+	BossHpNumberRender2->SetSprite(TextureName2);
+	BossHpNumberRender3->SetSprite(TextureName3);
+	BossHpNumberRender4->SetSprite(TextureName4);
+	//BossHpNumberRender1->Transform.SetLocalPosition({ CameraPos.X + -391.0f, CameraPos.Y + 330.0f });
 }
 
 void BossLevelUi::BossHpBarUiRenderer()
 {
 	CurHpCal = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp());
 
-	PercentFrontHp = static_cast<int>((CurHpCal * 100 / MainHpCal));
+	//PercentFrontHp = static_cast<int>((CurHpCal * 100 / MainHpCal));
 
-	percentBackHpCal = (CurHpCal / MainHpCal);
-	percentBackHpCal *= 10000;
+	//percentBackHpCal = (CurHpCal / MainHpCal);
+	//percentBackHpCal *= 10000;
 
-	PercentBackHp = static_cast<int>(fmod(percentBackHpCal, 100));
+	//PercentBackHp = static_cast<int>(fmod(percentBackHpCal, 100));
 
-	int MainBossHp = PercentFrontHp;
-	std::string CurMainBossHp = "MainBossHp : ";
-	CurMainBossHp += std::to_string(MainBossHp) + "." + std::to_string(PercentBackHp);
-	CurMainBossHp += "\n";
-	OutputDebugStringA(CurMainBossHp.c_str());
+	//int MainBossHp = PercentFrontHp;
+	//std::string CurMainBossHp = "MainBossHp : ";
+	//CurMainBossHp += std::to_string(MainBossHp) + "." + std::to_string(PercentBackHp);
+	//CurMainBossHp += "\n";
+	//OutputDebugStringA(CurMainBossHp.c_str());
 
 
 	// 임의로 체력을 낮췄을때 다른 줄의 체력도 끄기 위해 체력의 0, 1, 2 째줄도 끈다.

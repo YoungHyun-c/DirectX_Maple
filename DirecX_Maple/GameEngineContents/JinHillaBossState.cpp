@@ -390,11 +390,12 @@ void JinHillaBoss::DeathStart()
 {
 	ChangeAnimationState("Death");
 	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 250.0f });
+	MonsterCollision->Off();
 }
 void JinHillaBoss::DeathUpdate(float _Delta)
 {
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
-		GameEngineCore::ChangeLevel("6.BossRewardLevel");
+		GameEngineCore::ChangeLevel("9.BossRewardLevel");
 	}
 }

@@ -34,6 +34,6 @@ private:
 
 
 
-	std::shared_ptr<class GhostDamien> GhostDamienMob = nullptr;
+	std::shared_ptr<class JinHillaBoss> BossJin = nullptr;
 };
 

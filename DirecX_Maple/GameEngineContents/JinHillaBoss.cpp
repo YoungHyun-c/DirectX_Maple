@@ -192,7 +192,7 @@ void JinHillaBoss::Update(float _Delta)
 	}
 
 	InsideLockMap();
-	AttackEvent(_Delta);
+	//AttackEvent(_Delta);
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
 }
 

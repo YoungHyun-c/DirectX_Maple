@@ -17,6 +17,25 @@ CravingMonster::~CravingMonster()
 
 void CravingMonster::Start()
 {
+	{
+		if (nullptr == GameEngineSprite::Find("Craving"))
+		{
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExistsChild("ContentsResources");
+			Dir.MoveChild("ContentsResources");
+			Dir.MoveChild("FolderTexture");
+			Dir.MoveChild("Monster");
+			Dir.MoveChild("Craving");
+			std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+			for (size_t i = 0; i < Directorys.size(); i++)
+			{
+				GameEngineDirectory& Dir = Directorys[i];
+				GameEngineSprite::CreateFolder(Dir.GetStringPath());
+			}
+		}
+	}
+
 	TimeCounting();
 	MonsterRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
 	MonsterRenderer->CreateAnimation("Regen", "Craving_Regen", 0.1f, -1, -1, false);
