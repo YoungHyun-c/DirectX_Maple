@@ -19,6 +19,7 @@
 #include "JinHillaBoss.h"
 
 #include "ContentsTimer.h"
+#include "JinHillaSickleCut.h"
 
 TestLevel::TestLevel()
 {
@@ -34,9 +35,6 @@ TestLevel::~TestLevel()
 void TestLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
-	//std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
-	////ContentsTimer::TimeValue == 1744.0f;
-	//Test->SetTimeValue(1745.0f);
 }
 
 void TestLevel::Update(float _Delta)
@@ -200,7 +198,9 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 	std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
-	Test->SetTimeValue(1784.0f);
+	Test->SetTimeValue(1785.0f);
+
+	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

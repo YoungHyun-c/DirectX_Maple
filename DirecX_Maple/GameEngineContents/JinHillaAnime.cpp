@@ -13,7 +13,6 @@ JinHillaAnime::~JinHillaAnime()
 
 void JinHillaAnime::Start()
 {
-
 	{
 		JinHillaAnimeRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::JinHillaAnime);
 		JinHillaAnimeRenderer->CreateAnimation("JinHillaTitle", "JinHillaTitle", 0.2f, 0, 7, true);

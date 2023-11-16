@@ -3,6 +3,7 @@
 #include "MapEditorLevel.h"
 #include "Monster.h"
 #include "PlayerValue.h"
+#include "ContentsTimer.h"
 
 #include "DamageRenderer.h"
 void CharEditorTab::Start()
@@ -150,7 +151,23 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
+	GameEngineInput::AddInputObject(this);
 	std::string MousePos = GameEngineCore::MainWindow.GetMousePos().ToString();
+
+	CurTime = ContentsTimer->TimeValue;
+
+	if (ImGui::InputFloat("CurTime", &CurTime))
+	{
+		if (0 >= CurTime)
+		{
+			CurTime = 1;
+		}
+		//if (true == GameEngineInput::IsDown(VK_RETURN, this))
+		{
+			ContentsTimer->SetTimeValue(CurTime);
+		}
+	}
+
 
 	if (ImGui::Button(MousePos.c_str()))
 	{
@@ -202,15 +219,42 @@ void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 		}
 	}
+
+
 }
 
+//void TestTab::CalculateTime()
+//{
+//	int Minute = static_cast<int>(TimeValue) / 60;
+//	int Second = static_cast<int>(TimeValue) % 60;
+//
+//	if (PrevTenMinute != Minute / 10)
+//	{
+//		PrevTenMinute = Minute / 10;
+//		TimeFrame.TimerNum1->SetSprite("TimerNumber_" + std::to_string(PrevTenMinute) + ".png");
+//	}
+//
+//	if (PrevOneMinute != Minute % 10)
+//	{
+//		PrevOneMinute = Minute % 10;
+//		TimeFrame.TimerNum2->SetSprite("TimerNumber_" + std::to_string(PrevOneMinute) + ".png");
+//	}
+//
+//	if (PrevTenSecond != Second / 10)
+//	{
+//		PrevTenSecond = Second / 10;
+//		TimeFrame.TimerNum3->SetSprite("TimerNumber_" + std::to_string(PrevTenSecond) + ".png");
+//	}
+//
+//	TimeFrame.TimerNum4->SetSprite("TimerNumber_" + std::to_string(Second % 10) + ".png");
+//}
 
 void ContentsControlWindow::Start()
 {
 	Tabs.push_back(std::make_shared<LevelChangeTab>("LevelChangeTab"));
 	CurTab = Tabs[0];
 	Tabs.push_back(std::make_shared<CharEditorTab>("CharEditor"));
-	//Tabs.push_back(std::make_shared<TestTab>("Test"));
+	Tabs.push_back(std::make_shared<TestTab>("Test"));
 }
 
 void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)

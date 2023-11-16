@@ -21,8 +21,13 @@ class TestTab : public Tab
 	// TestLevelMemeber
 	int Select = 0;
 	std::shared_ptr<GameEngineObject> SelectObject = nullptr;
+	std::shared_ptr<class ContentsTimer> ContentsTimer = nullptr;
 
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
+
+	float CurTime = 0;
+
+	void CalCualteTime();
 
 public:
 	TestTab(std::string_view _Name)

@@ -35,6 +35,11 @@ public:
 		TimeValue = _Value;
 	}
 
+	void SubTimeValue(float _Value)
+	{
+		TimeValue -= _Value;
+	}
+
 	float static GetTimeValue()
 	{
 		return TimeValue;
