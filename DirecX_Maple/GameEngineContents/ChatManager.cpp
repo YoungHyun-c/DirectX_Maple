@@ -104,12 +104,12 @@ void ChatManager::Start()
 
 							if (i == 0)
 							{
-								FontRender->SetText("메이플스토리", "용사님 제 목소리가 들리시나요...?", FontSize, float4::WHITE);
+								FontRender->ChangeText("용사님 제 목소리가 들리시나요...?");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 							if (i == 1)
 							{
-								FontRender->SetText("메이플스토리", "저를 좀 도와주셨으면 해요.\n제가있는 곳으로 와주시겠어요...?", FontSize, float4::WHITE);
+								FontRender->ChangeText("저를 좀 도와주셨으면 해요.\n제가있는 곳으로 와주시겠어요...?");
 								Face->SetSprite("FormerNpc0.Png");
 								NextRen->SetSprite("Accept.Png");
 							}
@@ -162,25 +162,25 @@ void ChatManager::Start()
 
 							if (i == 0)
 							{
-								FontRender->SetText("메이플스토리", "보시다시피 아무것도 할 수 없어...\n용사님의 도움이 필요했어요.", FontSize, float4::WHITE);
+								FontRender->ChangeText("보시다시피 아무것도 할 수 없어...\n용사님의 도움이 필요했어요.");
 								Face->SetSprite("FormerNpc0.Png");
 								NextRen->SetSprite("Ok.Png");
 							}
 							if (i == 1)
 							{
-								FontRender->SetText("메이플스토리", "옆에 있는 게이지가 보이시나요?", FontSize, float4::WHITE);
+								FontRender->ChangeText("옆에 있는 게이지가 보이시나요?");
 								Face->SetSprite("FormerNpc0.Png");
 								GlobalValue::GetNeedGlobalValue()->SetCurQuestValue(true);
 							}
 
 							if (i == 2)
 							{
-								FontRender->SetText("메이플스토리", "사냥을 통해 게이지를 얻고,\n260렙을 달성하여 저에게 다시 찾아와주세요.", FontSize, float4::WHITE);
+								FontRender->ChangeText("사냥을 통해 게이지를 얻고,\n260렙을 달성하여 저에게 다시 찾아와주세요.");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 							if (i == 3)
 							{
-								FontRender->SetText("메이플스토리", "시련에도 부디 무사하기를....", FontSize, float4::WHITE);
+								FontRender->ChangeText("시련에도 부디 무사하기를....");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 						}
@@ -243,40 +243,40 @@ void ChatManager::Start()
 
 						if (i == 0)
 						{
-							FontRender->SetText("메이플스토리", "용사님... 시련을 견디고 이 곳에 와주었군요?", FontSize, float4::WHITE);
+							FontRender->ChangeText("용사님... 시련을 견디고 이 곳에 와주었군요?");
 							Face->SetSprite("FormerNpc1.Png");
 						}
 						if (i == 1)
 						{
-							FontRender->SetText("메이플스토리", "용사님 덕분에 저도 힘을 되찾을 수 있게 되었어요.", FontSize, float4::WHITE);
+							FontRender->ChangeText("용사님 덕분에 저도 힘을 되찾을 수 있게 되었어요.");
 							GrandisGoddess::MainFormerNpc->ChangeAnimation("FormerSay");
 							Face->SetSprite("FormerNpc1.Png");
 						}
 						if (i == 2)
 						{
-							FontRender->SetText("메이플스토리", "고마워요... \n용사님과 더 대화를 나누고 싶지만..", FontSize, float4::WHITE);
+							FontRender->ChangeText("고마워요... \n용사님과 더 대화를 나누고 싶지만..");
 							Face->SetSprite("FormerNpc1.Png");
 						}
 
 						if (i == 3)
 						{
-							FontRender->SetText("메이플스토리", "아직 이 곳을 위협하는 존재가 있어요... \n그녀를 무찌르고 한발짝 더 나아갈 수 있기를 바래요.", FontSize, float4::WHITE);
+							FontRender->ChangeText("아직 이 곳을 위협하는 존재가 있어요... \n그녀를 무찌르고 한발짝 더 나아갈 수 있기를 바래요.");
 							Face->SetSprite("FormerNpc3.Png");
 						}
 						if (i == 4)
 						{
-							FontRender->SetText("메이플스토리", "그 전에 저도 도움을 받았듯\n용사님께 도움을 드리고 싶어요.", FontSize, float4::WHITE);
+							FontRender->ChangeText("그 전에 저도 도움을 받았듯\n용사님께 도움을 드리고 싶어요.");
 							Face->SetSprite("FormerNpc2.Png");
 						}
 						if (i == 5)
 						{
-							FontRender->SetText("메이플스토리", "용사님... 그대를 위해 준비한 힘을 받아주시겠어요?", FontSize, float4::WHITE);
+							FontRender->ChangeText("용사님... 그대를 위해 준비한 힘을 받아주시겠어요?");
 							Face->SetSprite("FormerNpc1.Png");
 							NextRen->SetSprite("Accept.Png");
 						}
 						if (i == 6)
 						{
-							FontRender->SetText("메이플스토리", "그대에게 행운이 있기를.....", FontSize, float4::WHITE);
+							FontRender->ChangeText("그대에게 행운이 있기를.....");
 							GrandisGoddess::MainFormerNpc->ChangeAnimation("FormerStand");
 							Face->SetSprite("FormerNpc1.Png");
 							NextRen->SetSprite("Ok.Png");
@@ -329,18 +329,18 @@ void ChatManager::Start()
 
 							if (i == 0)
 							{
-								FontRender->SetText("메이플스토리", "그대는 아직 제 시련을 통과하지 못했어요...", FontSize, float4::WHITE);
+								FontRender->ChangeText("그대는 아직 제 시련을 통과하지 못했어요...");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 							if (i == 1)
 							{
-								FontRender->SetText("메이플스토리", "제 시련이 많이 어려웠나요?", FontSize, float4::WHITE);
+								FontRender->ChangeText("제 시련이 많이 어려웠나요?");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 
 							if (i == 2)
 							{
-								FontRender->SetText("메이플스토리", "시련을 극복하고 다시 와주길 바래요...\n기다리고 있을께요..", FontSize, float4::WHITE);
+								FontRender->ChangeText("시련을 극복하고 다시 와주길 바래요...\n기다리고 있을께요..");
 								Face->SetSprite("FormerNpc0.Png");
 							}
 						}
