@@ -184,6 +184,27 @@ public:
 		UpGradeClass();
 	}
 
+	void AddRedDeathCount(int _Value)
+	{
+		RedDeathCount += _Value;
+		GreenDeathCount -= _Value;
+	}
+
+	void RedToGreen(int _Value)
+	{
+		GreenDeathCount += _Value;
+	}
+
+	int GetGreenDeathValue()
+	{
+		return GreenDeathCount;
+	}
+
+	int GetRedDeathValue()
+	{
+		return RedDeathCount;
+	}
+
 protected:
 
 private:
@@ -206,5 +227,13 @@ private:
 	int AllAttack = 5772;
 	int AttackPer = 102;
 	int ProPertyIgnorePer = 5;
+
+
+// º¸½ºÀü
+private:
+	int GreenDeathCount = 5;
+	int RedDeathCount = 0;
+
+
 };
 

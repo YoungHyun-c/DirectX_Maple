@@ -92,6 +92,16 @@ public:
 		return QuesetClearValue;
 	}
 
+	bool GetSickleCutValue()
+	{
+		return SickleCutValue;
+	}
+
+	void SetSickleCutValue(bool _Value)
+	{
+		SickleCutValue = _Value;
+	}
+
 protected:
 
 private:
@@ -103,5 +113,8 @@ private:
 
 	bool CurQuestValue = false;
 	bool QuesetClearValue = false;
+
+// º¸½º
+	bool SickleCutValue = false;
 };
 

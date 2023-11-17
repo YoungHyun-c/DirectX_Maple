@@ -24,14 +24,10 @@ protected:
 private:
 	std::shared_ptr<GameEngineUIRenderer> DeathUIBack = nullptr;
 
-	std::shared_ptr<GameEngineUIRenderer> DeathUI1 = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> DeathUI2 = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> DeathUI3 = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> DeathUI4 = nullptr;
-	std::shared_ptr<GameEngineUIRenderer> DeathUI5 = nullptr;
-
-	std::vector<std::shared_ptr<GameEngineUIRenderer>>* DeathUI = nullptr;
+	std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* DeathUI = nullptr;
 	std::shared_ptr<GameEngineUIRenderer> DeathCountUI;
 
+	int GreenDeathUI = 0;
+	int RedDeathUI = 0;
 };
 
