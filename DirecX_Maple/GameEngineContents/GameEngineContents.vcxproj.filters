@@ -177,6 +177,9 @@
     <ClCompile Include="JinHillaSickleCut.cpp">
       <Filter>Object\Boss\BossAnime</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerDeathCountUI.cpp">
+      <Filter>Object\Boss\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -351,6 +354,9 @@
     </ClInclude>
     <ClInclude Include="JinHillaSickleCut.h">
       <Filter>Object\Boss\BossAnime</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeathCountUI.h">
+      <Filter>Object\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

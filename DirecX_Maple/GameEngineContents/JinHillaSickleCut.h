@@ -25,7 +25,7 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-	std::shared_ptr<GameEngineSpriteRenderer> SickleCutAni = nullptr;
+	std::shared_ptr<GameEngineUIRenderer> SickleCutAni = nullptr;
 	std::shared_ptr<class ContentsTimer> BossTimer = nullptr;
 
 	float CurTime = 0.0f;

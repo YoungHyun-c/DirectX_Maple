@@ -15,6 +15,7 @@
 #include "JinHillaSickleCut.h"
 #include "JinHillaBoss.h"
 #include "BossLevelUi.h"
+#include "PlayerDeathCountUI.h"
 
 TestLevel::TestLevel()
 {
@@ -158,34 +159,37 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveChild("BossJin");
 		Dir.MoveChild("JinHillaUI");
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-	}
-	{
-		std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	}
-	if (nullptr == GameEngineSprite::Find("BossJin"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Monster");
-		Dir.MoveChild("BossJin");
-		Dir.MoveChild("BossJinHilla");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
 	}
-	if (nullptr == BossJin)
-	{
-		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
-		BossJin->SetDebugMap("BossDebugMap.Png");
-		BossJin->CallRegen();
-	}
+	//{
+	//	std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	//}
+	//if (nullptr == GameEngineSprite::Find("BossJin"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Monster");
+	//	Dir.MoveChild("BossJin");
+	//	Dir.MoveChild("BossJinHilla");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
+	//if (nullptr == BossJin)
+	//{
+	//	BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+	//	BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+	//	BossJin->SetDebugMap("BossDebugMap.Png");
+	//	BossJin->CallRegen();
+	//}
+
+	
 
 	//if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
 	//{
@@ -206,10 +210,12 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 
 
-	std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
-	Test->SetTimeValue(1785.0f);
+	//std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
+	//Test->SetTimeValue(1785.0f);
 
-	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
+	//std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
+
+	std::shared_ptr<PlayerDeathCountUI> DeathUI = CreateActor<PlayerDeathCountUI>(ContentsObjectType::UI);
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
