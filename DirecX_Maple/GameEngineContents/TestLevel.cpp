@@ -17,6 +17,7 @@
 #include "BossLevelUi.h"
 #include "PlayerDeathCountUI.h"
 #include "CandleUi.h"
+#include "AltarUi.h"
 
 TestLevel::TestLevel()
 {
@@ -215,7 +216,8 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
 	std::shared_ptr<PlayerDeathCountUI> DeathUI = CreateActor<PlayerDeathCountUI>(ContentsObjectType::UI);
 
-	std::shared_ptr<CandleUi> CandleTest = CreateActor<CandleUi>(ContentsObjectType::UI);
+	std::shared_ptr<CandleUi> CandleTest = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+	std::shared_ptr<AltarUi> AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");

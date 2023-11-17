@@ -23,6 +23,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="AltarUi.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BasicFunction.cpp">
       <SubType>
       </SubType>
@@ -263,6 +267,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdeleSkill.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="AltarUi.h">
       <SubType>
       </SubType>
     </ClInclude>
