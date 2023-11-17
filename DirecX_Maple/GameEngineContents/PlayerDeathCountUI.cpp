@@ -55,7 +55,7 @@ void PlayerDeathCountUI::Start()
 		DeathCountUI->CreateAnimation("DeathUIWhiteToRed", "DeathUIWhiteToRed", 0.1f, -1, -1, false);
 		DeathCountUI->CreateAnimation("DeathUIwhiteBreak", "DeathUIwhiteBreak", 0.1f, -1, -1, false);
 		DeathCountUI->CreateAnimation("DeathUIRedLoop", "DeathUIRedLoop");
-		DeathCountUI->CreateAnimation("DeathUIRedToWhite", "DeathUIRedToWhite", 0.1f, -1. -1, false);
+		DeathCountUI->CreateAnimation("DeathUIRedToWhite", "DeathUIRedToWhite", 0.1f, -1, -1, false);
 		DeathCountUI->CreateAnimation("DeathUIredBreak", "DeathUIredBreak", 0.1f, -1, -1, false);
 		DeathCountUI->Transform.SetLocalPosition({ 290.0f - i*30.0f, GlobalValue::WinScale.hY() - 70.0f });
 

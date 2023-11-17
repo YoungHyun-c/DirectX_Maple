@@ -52,7 +52,8 @@ void JinHillaSickleCut::Start()
 
 void JinHillaSickleCut::LevelStart(GameEngineLevel* _NextLevel)
 {
-	PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
+	// 다시 풀어야됨. 11/18
+	//PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
 }
 
 void JinHillaSickleCut::Update(float _Delta)

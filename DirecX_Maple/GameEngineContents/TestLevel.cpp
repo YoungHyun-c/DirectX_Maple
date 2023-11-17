@@ -161,34 +161,34 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 
 	}
-	{
+	/*{
 		std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	}
-	if (nullptr == GameEngineSprite::Find("BossJin"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Monster");
-		Dir.MoveChild("BossJin");
-		Dir.MoveChild("BossJinHilla");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	}*/
+	//if (nullptr == GameEngineSprite::Find("BossJin"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Monster");
+	//	Dir.MoveChild("BossJin");
+	//	Dir.MoveChild("BossJinHilla");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
 
-	if (nullptr == BossJin)
-	{
-		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
-		BossJin->SetDebugMap("BossDebugMap.Png");
-		BossJin->CallRegen();
-	}
+	//if (nullptr == BossJin)
+	//{
+	//	BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+	//	BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+	//	BossJin->SetDebugMap("BossDebugMap.Png");
+	//	BossJin->CallRegen();
+	//}
 
 	
 

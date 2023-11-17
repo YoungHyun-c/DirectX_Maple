@@ -180,6 +180,9 @@
     <ClCompile Include="PlayerDeathCountUI.cpp">
       <Filter>Object\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="CandleUi.cpp">
+      <Filter>Object\Boss\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -356,6 +359,9 @@
       <Filter>Object\Boss\BossAnime</Filter>
     </ClInclude>
     <ClInclude Include="PlayerDeathCountUI.h">
+      <Filter>Object\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CandleUi.h">
       <Filter>Object\Boss\UI</Filter>
     </ClInclude>
   </ItemGroup>
