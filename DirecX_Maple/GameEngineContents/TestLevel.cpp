@@ -18,6 +18,7 @@
 #include "PlayerDeathCountUI.h"
 #include "CandleUi.h"
 #include "AltarUi.h"
+#include "HandAttack.h"
 
 TestLevel::TestLevel()
 {
@@ -285,6 +286,9 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	CandleTest3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
 	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
+
+	std::shared_ptr<HandAttack> HandTest = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	//HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
 
 	//AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 

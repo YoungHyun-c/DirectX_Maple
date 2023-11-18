@@ -186,6 +186,9 @@
     <ClCompile Include="AltarUi.cpp">
       <Filter>Object\Boss\UI</Filter>
     </ClCompile>
+    <ClCompile Include="HandAttack.cpp">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -369,6 +372,9 @@
     </ClInclude>
     <ClInclude Include="AltarUi.h">
       <Filter>Object\Boss\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HandAttack.h">
+      <Filter>Object\Boss\BossSKill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -209,3 +209,8 @@ void AltarUi::LevelStart(GameEngineLevel* _PreveLevel)
 	//AltarCol->Transform.SetLocalScale({ 300.0f, 150.0f });
 	//AltarCol->Off();
 }
+
+void AltarUi::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}

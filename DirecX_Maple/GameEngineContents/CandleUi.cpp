@@ -154,3 +154,8 @@ void CandleUi::LevelStart(GameEngineLevel* _PrevLevel)
 {
 
 }
+
+void CandleUi::LevelEnd(GameEngineLevel* _PrevLevel)
+{
+	Death();
+}
