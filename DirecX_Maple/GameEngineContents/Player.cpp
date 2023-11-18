@@ -155,7 +155,7 @@ void Player::Update(float _Delta)
 	if (Bind == true)
 	{
 		CurTime += _Delta;
-		//PlayerBind();
+		PlayerBind();
 		return;
 	}
 
@@ -473,12 +473,12 @@ void Player::InsideLockMap()
 void Player::PlayerBind(float _Time)
 {
 	Bind = true;
-	/*if (_Time >= CurTime)
+	if (CurTime >= _Time)
 	{
 		Bind = false;
 		CurTime = 0.0f;
 		return;
-	}*/
+	}
 }
 
 void Player::KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime)

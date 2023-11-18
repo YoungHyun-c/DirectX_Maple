@@ -288,7 +288,7 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
 
 	std::shared_ptr<HandAttack> HandTest = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	//HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
+	HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
 
 	//AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 
