@@ -21,8 +21,13 @@ protected:
 
 	void LevelStart(GameEngineLevel* _PreveLevel) override;
 
+	void GroundCheck(float _Delta);
+
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> Altar = nullptr;
 
+	std::shared_ptr<GameEngineCollision> AltarCol = nullptr;
+
+	std::shared_ptr<GameEngineTexture> ColMap;
 };
 

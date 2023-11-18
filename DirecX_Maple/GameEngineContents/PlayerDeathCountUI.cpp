@@ -96,17 +96,17 @@ void PlayerDeathCountUI::Update(float _Delta)
 {
 	if (GameEngineInput::IsDown('4', this))
 	{
-		(*DeathUI)[0]->ChangeAnimation("DeathUIwhiteLoop");
-		(*DeathUI)[1]->ChangeAnimation("DeathUIwhiteLoop");
-		(*DeathUI)[2]->ChangeAnimation("DeathUIwhiteLoop");
-		(*DeathUI)[3]->ChangeAnimation("DeathUIwhiteLoop");
-		(*DeathUI)[4]->ChangeAnimation("DeathUIwhiteLoop");
+		//(*DeathUI)[0]->ChangeAnimation("DeathUIwhiteLoop");
+		//(*DeathUI)[1]->ChangeAnimation("DeathUIwhiteLoop");
+		//(*DeathUI)[2]->ChangeAnimation("DeathUIwhiteLoop");
+		//(*DeathUI)[3]->ChangeAnimation("DeathUIwhiteLoop");
+		//(*DeathUI)[4]->ChangeAnimation("DeathUIwhiteLoop");
 		//DeathCountUI1->ChangeAnimation("DeathUIwhiteLoop");
 		//DeathCountUI2->ChangeAnimation("DeathUIwhiteLoop");
 	}
 	if (GameEngineInput::IsDown('5', this))
 	{
-		(*DeathUI)[0]->ChangeAnimation("DeathUIWhiteToRed");
+		//(*DeathUI)[0]->ChangeAnimation("DeathUIWhiteToRed");
 		//(*DeathUI)[1]->ChangeAnimation("DeathUIWhiteToRed");
 		//(*DeathUI)[2]->ChangeAnimation("DeathUIWhiteToRed");
 		//(*DeathUI)[3]->ChangeAnimation("DeathUIWhiteToRed");
@@ -116,7 +116,7 @@ void PlayerDeathCountUI::Update(float _Delta)
 	}
 	if (GameEngineInput::IsDown('6', this))
 	{
-		(*DeathUI)[1]->ChangeAnimation("DeathUIWhiteToRed");
+		//(*DeathUI)[1]->ChangeAnimation("DeathUIWhiteToRed");
 		/*(*DeathUI)[0]->ChangeAnimation("DeathUIwhiteBreak");
 		(*DeathUI)[1]->ChangeAnimation("DeathUIwhiteBreak");
 		(*DeathUI)[2]->ChangeAnimation("DeathUIwhiteBreak");

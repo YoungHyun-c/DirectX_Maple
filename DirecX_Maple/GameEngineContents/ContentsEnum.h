@@ -52,6 +52,7 @@ enum class ContentsCollisionType
 	MonsterAttackRange,
 	Craving,
 	Skill,
+	Altar,
 	Potal,
 	DropItem,
 	NPC,

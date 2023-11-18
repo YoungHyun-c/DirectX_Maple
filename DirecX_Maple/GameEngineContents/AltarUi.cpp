@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "AltarUi.h"
+#include "BackGroundMap.h"
 
 AltarUi::AltarUi()
 {
@@ -13,7 +14,7 @@ AltarUi::~AltarUi()
 
 void AltarUi::Start()
 {
-
+	
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -47,6 +48,8 @@ void AltarUi::Update(float _Delta)
 	{
 		Altar->ChangeAnimation("AltarStand3");
 	}
+
+	//GroundCheck(_Delta);
 }
 
 void AltarUi::LevelStart(GameEngineLevel* _PreveLevel)
@@ -82,4 +85,61 @@ void AltarUi::LevelStart(GameEngineLevel* _PreveLevel)
 	Altar->Transform.SetWorldPosition({ 980.0f, -610.0f });
 	Altar->AutoSpriteSizeOn();
 	Altar->ChangeAnimation("AltarAppear");
+
+	float4 AltarPos = Altar->Transform.GetWorldPosition();
+
+	AltarCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Altar);
+	AltarCol->SetCollisionType(ColType::AABBBOX2D);
+	AltarCol->Transform.SetLocalPosition({ AltarPos.X - 15.0f , AltarPos.Y - 50.0f});
+	AltarCol->Transform.SetLocalScale({ 300.0f, 150.0f });
+
+	ColMap = BackGroundMap::MainMap->GetColMap();
+}
+
+void AltarUi::GroundCheck(float _Delta)
+{
+	float4 NextPos;
+	float4 CurPos = Transform.GetLocalPosition();
+
+
+	float4 MapSize = ColMap->GetScale();
+
+	float4 ColorPos;
+	ColorPos.X = NextPos.X;
+	ColorPos.Y = -NextPos.Y + 50.0f;
+
+	GameEngineColor Color = { 255, 0, 0, 255 };
+	GameEngineColor MapColor = ColMap->GetColor(ColorPos, DefaultGroundColor);
+
+	if (Color == MapColor)
+	{
+		NextPos.X = CurPos.X;
+		NextPos.Y += 1.0f;
+	}
+	else
+	{
+		NextPos.Y -= 1.0f * _Delta;
+	}
+
+	ColorPos.X = +NextPos.X;
+	ColorPos.Y = -NextPos.Y;
+	MapColor = ColMap->GetColor(ColorPos, DefaultGroundColor);
+
+	//if (Color == MapColor)
+	//{
+	//	while (Color == MapColor)
+	//	{
+	//		NextPos.Y++;
+	//		ColorPos.Y--;
+
+	//		MapColor = ColMap->GetColor(ColorPos, DefaultGroundColor);
+	//	}
+
+	//	int ConvertYtoInt = static_cast<int>(NextPos.Y);
+
+	//	Transform.SetLocalPosition({ NextPos.X, NextPos.Y + 20.0f });
+	//	return;
+	//}
+
+	Transform.SetLocalPosition(NextPos);
 }
