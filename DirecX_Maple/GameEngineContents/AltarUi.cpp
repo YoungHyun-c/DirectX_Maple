@@ -64,10 +64,10 @@ void AltarUi::Start()
 			GlobalValue::GetNeedGlobalValue()->SetAltarValue(false);
 		});
 
-	//float SpwanX = XRandom.RandomFloat(300.0f, 1600.0f);
-	//Altar->Transform.SetWorldPosition({ SpwanX, -610.0f });
+	float SpwanX = XRandom.RandomFloat(300.0f, 1600.0f);
+	Altar->Transform.SetWorldPosition({ SpwanX, -610.0f });
 
-	Altar->Transform.SetWorldPosition({ 980.0f, -610.0f });
+	//Altar->Transform.SetWorldPosition({ 980.0f, -610.0f });
 	Altar->AutoSpriteSizeOn();
 	Altar->ChangeAnimation("AltarAppear");
 	Altar->On();

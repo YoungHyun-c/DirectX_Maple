@@ -41,6 +41,67 @@ void TestLevel::Update(float _Delta)
 	{
 		Map->SwitchRenderer();
 	}
+
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 1 && Fire1 == false)
+	{
+		CandleTest1->FrameChangeAni("CandleFireAppear");
+		CandleTest1->On();
+		Fire1 = true;
+	}
+
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 2 && Fire2 == false)
+	{
+		CandleTest2->FrameChangeAni("CandleFireAppear");
+		CandleTest2->On();
+		Fire2 = true;
+	}
+
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 3 && Fire3 == false)
+	{
+		CandleTest3->FrameChangeAni("CandleFireAppear");
+		CandleTest3->On();
+		Fire3 = true;
+	}
+
+	if (Fire3 == true && AltarAppear == false && GlobalValue::GetNeedGlobalValue()->GetAltarValue() == false)
+	{
+		AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
+		AltarAppear = true;
+	}
+
+
+	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == true)
+	{
+		CandleTest1->FrameChangeAni("CandleFireBreak");
+		CandleTest2->FrameChangeAni("CandleFireBreak");
+		CandleTest3->FrameChangeAni("CandleFireBreak");
+		Fire1 = false;
+		Fire2 = false;
+		Fire3 = false;
+		AltarAppear = false;
+	}
+
+	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
+	{
+		if (Fire1 == true)
+		{
+			CandleTest1->CandleChangeAni("CandleStickBreak");
+			CandleTest1->FrameChangeAni("CandleFireBreak");
+		}
+
+		if (Fire2 == true)
+		{
+			CandleTest2->CandleChangeAni("CandleStickBreak");
+			CandleTest2->FrameChangeAni("CandleFireBreak");
+		}
+
+		if (Fire3 == true)
+		{
+			CandleTest3->CandleChangeAni("CandleStickBreak");
+			CandleTest3->FrameChangeAni("CandleFireBreak");
+		}
+	}
+
 }
 
 void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -216,8 +277,16 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
 	std::shared_ptr<PlayerDeathCountUI> DeathUI = CreateActor<PlayerDeathCountUI>(ContentsObjectType::UI);
 
-	std::shared_ptr<CandleUi> CandleTest = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
-	std::shared_ptr<AltarUi> AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
+	CandleTest1 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+	CandleTest1->Transform.SetWorldPosition({ 810.0f, -410.0f });
+
+	CandleTest2 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+	CandleTest2->Transform.SetWorldPosition({ 900.0f, -437.0f });
+
+	CandleTest3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
+
+	//AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");

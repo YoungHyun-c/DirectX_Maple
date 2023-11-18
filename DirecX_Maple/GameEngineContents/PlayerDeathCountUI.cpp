@@ -136,44 +136,6 @@ void PlayerDeathCountUI::Update(float _Delta)
 		//DeathCountUI1->ChangeAnimation("DeathUIWhiteToRed");
 		//DeathCountUI2->ChangeAnimation("DeathUIWhiteToRed");
 	}
-	if (GameEngineInput::IsDown('6', this))
-	{
-		//(*DeathUI)[1]->ChangeAnimation("DeathUIWhiteToRed");
-		/*(*DeathUI)[0]->ChangeAnimation("DeathUIwhiteBreak");
-		(*DeathUI)[1]->ChangeAnimation("DeathUIwhiteBreak");
-		(*DeathUI)[2]->ChangeAnimation("DeathUIwhiteBreak");
-		(*DeathUI)[3]->ChangeAnimation("DeathUIwhiteBreak");
-		(*DeathUI)[4]->ChangeAnimation("DeathUIwhiteBreak");*/
-		//(*DeathUI)[3]->ChangeAnimation("DeathUIWhiteToRed");
-		//DeathCountUI2->ChangeAnimation("DeathUIWhiteToRed");
-	}
-
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	(*DeathUI)[0]->ChangeAnimation("DeathUIRedLoop");
-	//	(*DeathUI)[1]->ChangeAnimation("DeathUIRedLoop");
-	//	(*DeathUI)[2]->ChangeAnimation("DeathUIRedLoop");
-	//	(*DeathUI)[3]->ChangeAnimation("DeathUIRedLoop");
-	//	(*DeathUI)[4]->ChangeAnimation("DeathUIRedLoop");
-	//}
-
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	(*DeathUI)[0]->ChangeAnimation("DeathUIRedToWhite");
-	//	(*DeathUI)[1]->ChangeAnimation("DeathUIRedToWhite");
-	//	(*DeathUI)[2]->ChangeAnimation("DeathUIRedToWhite");
-	//	(*DeathUI)[3]->ChangeAnimation("DeathUIRedToWhite");
-	//	(*DeathUI)[4]->ChangeAnimation("DeathUIRedToWhite");
-	//}
-
-	//if (GameEngineInput::IsDown('9', this))
-	//{
-	//	(*DeathUI)[0]->ChangeAnimation("DeathUIredBreak");
-	//	(*DeathUI)[1]->ChangeAnimation("DeathUIredBreak");
-	//	(*DeathUI)[2]->ChangeAnimation("DeathUIredBreak");
-	//	(*DeathUI)[3]->ChangeAnimation("DeathUIredBreak");
-	//	(*DeathUI)[4]->ChangeAnimation("DeathUIredBreak");
-	//}
 	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == false)
 	{
 		//for (int i = 0; i < PlayerValue::GetValue()->GetGreenDeathValue(); i++)

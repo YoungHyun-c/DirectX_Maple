@@ -35,5 +35,21 @@ private:
 
 
 	std::shared_ptr<class JinHillaBoss> BossJin = nullptr;
+
+
+
+	std::shared_ptr<class CandleUi> CandleTest1 = nullptr;
+	bool Fire1 = false;
+
+	std::shared_ptr<class CandleUi> CandleTest2 = nullptr;
+	bool Fire2 = false;
+
+	std::shared_ptr<class CandleUi> CandleTest3 = nullptr;
+	bool Fire3 = false;
+
+	std::shared_ptr<class AltarUi> AltarTest = nullptr;
+	bool AltarAppear = false;
+
+	float CurPlayerDeathCount = 0.0f;
 };
 
