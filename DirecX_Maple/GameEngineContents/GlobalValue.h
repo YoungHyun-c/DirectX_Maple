@@ -102,6 +102,16 @@ public:
 		SickleCutValue = _Value;
 	}
 
+	bool GetAltarValue()
+	{
+		return Altar;
+	}
+
+	void SetAltarValue(bool _Value)
+	{
+		Altar = _Value;
+	}
+
 protected:
 
 private:
@@ -116,5 +126,6 @@ private:
 
 // º¸½º
 	bool SickleCutValue = false;
+	bool Altar = false;
 };
 

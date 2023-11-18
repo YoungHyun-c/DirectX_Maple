@@ -88,6 +88,28 @@ void PlayerDeathCountUI::Start()
 			(*DeathUI)[4]->ChangeAnimation("DeathUIRedLoop");
 		});
 
+	(*DeathUI)[0]->SetEndEvent("DeathUIRedToWhite", [&](GameEngineSpriteRenderer*)
+		{
+			(*DeathUI)[0]->ChangeAnimation("DeathUIwhiteLoop");
+		});
+
+	(*DeathUI)[1]->SetEndEvent("DeathUIRedToWhite", [&](GameEngineSpriteRenderer*)
+		{
+			(*DeathUI)[1]->ChangeAnimation("DeathUIwhiteLoop");
+		});
+	(*DeathUI)[2]->SetEndEvent("DeathUIRedToWhite", [&](GameEngineSpriteRenderer*)
+		{
+			(*DeathUI)[2]->ChangeAnimation("DeathUIwhiteLoop");
+		});
+	(*DeathUI)[3]->SetEndEvent("DeathUIRedToWhite", [&](GameEngineSpriteRenderer*)
+		{
+			(*DeathUI)[3]->ChangeAnimation("DeathUIwhiteLoop");
+		});
+	(*DeathUI)[4]->SetEndEvent("DeathUIRedToWhite", [&](GameEngineSpriteRenderer*)
+		{
+			(*DeathUI)[4]->ChangeAnimation("DeathUIwhiteLoop");
+		});
+
 
 	GameEngineInput::AddInputObject(this);
 }
@@ -152,10 +174,21 @@ void PlayerDeathCountUI::Update(float _Delta)
 	//	(*DeathUI)[3]->ChangeAnimation("DeathUIredBreak");
 	//	(*DeathUI)[4]->ChangeAnimation("DeathUIredBreak");
 	//}
-
-	for (int i = 0; i < PlayerValue::GetValue()->GetGreenDeathValue(); i++)
+	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == false)
 	{
-		(*DeathUI)[i]->ChangeAnimation("DeathUIwhiteLoop");
+		//for (int i = 0; i < PlayerValue::GetValue()->GetGreenDeathValue(); i++)
+		//{
+		//	(*DeathUI)[i]->ChangeAnimation("DeathUIwhiteLoop");
+		//}
+	}
+
+	if (PlayerValue::GetValue()->GetGreenDeathValue() == 0)
+	{
+		FailTime += _Delta;
+		if (FailTime >= ChangeTime)
+		{
+			GameEngineCore::ChangeLevel("6.BossEntranceLevel");
+		}
 	}
 
 	if (PlayerValue::GetValue()->GetRedDeathValue() >= 1)
@@ -166,23 +199,49 @@ void PlayerDeathCountUI::Update(float _Delta)
 			return;
 		}
 		if (RedDeathUI != PlayerValue::GetValue()->GetRedDeathValue())
+		{
+			for (int j = 0; j < PlayerValue::GetValue()->GetRedDeathValue(); j++)
+			{
+				if (RedDeathUI >= 5)
+				{
+					return;
+				}
+				//(*DeathUI)[PlayerValue::GetValue()->GetGreenDeathValue()]->ChangeAnimation("DeathUIWhiteToRed");
+				(*DeathUI)[PlayerValue::GetValue()->GetGreenDeathValue() + PlayerValue::GetValue()->GetRedDeathValue() - 1 - j]->ChangeAnimation("DeathUIWhiteToRed");
+				RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
+			}
+		}
+	}
+
+	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == true)
+	{
 		for (int j = 0; j < PlayerValue::GetValue()->GetRedDeathValue(); j++)
 		{
 			if (RedDeathUI >= 5)
 			{
 				return;
 			}
-			(*DeathUI)[4- RedDeathUI]->ChangeAnimation("DeathUIWhiteToRed");
-			RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
+			(*DeathUI)[PlayerValue::GetValue()->GetGreenDeathValue() + PlayerValue::GetValue()->GetRedDeathValue() - 1 - j]->ChangeAnimation("DeathUIRedToWhite");
+			//RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
 		}
 	}
 
 	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
 	{
+		if (PlayerValue::GetValue()->GetGreenDeathValue() < 0)
+		{
+			return;
+		}
 		for (int j = 0; j < PlayerValue::GetValue()->GetRedDeathValue(); j++)
 		{
-			(*DeathUI)[4 - j]->ChangeAnimation("DeathUIredBreak");
+			if (PlayerValue::GetValue()->GetGreenDeathValue() + 1 > 5)
+			{
+				return;
+			}
+			(*DeathUI)[PlayerValue::GetValue()->GetGreenDeathValue()+PlayerValue::GetValue()->GetRedDeathValue()-1 - j]->ChangeAnimation("DeathUIredBreak");
 		}
+		PlayerValue::GetValue()->RedDelete();
+		RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
 	}
 
 	if (GameEngineInput::IsDown('0', this))

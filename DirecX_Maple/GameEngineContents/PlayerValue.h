@@ -190,9 +190,15 @@ public:
 		GreenDeathCount -= _Value;
 	}
 
-	void RedToGreen(int _Value)
+	void RedToGreen()
 	{
-		GreenDeathCount += _Value;
+		GreenDeathCount += RedDeathCount;
+		RedDeathCount = 0;
+	}
+
+	void RedDelete()
+	{
+		RedDeathCount = 0;
 	}
 
 	int GetGreenDeathValue()

@@ -29,5 +29,8 @@ private:
 
 	int GreenDeathUI = 0;
 	int RedDeathUI = 0;
+
+	float FailTime = 0.0f;
+	float ChangeTime = 2.0f;
 };
 

@@ -68,6 +68,7 @@ void JinHillaSickleCut::Update(float _Delta)
 	if (CurTime >= AttackTime)
 	{
 		GlobalValue::GetNeedGlobalValue()->SetSickleCutValue(true);
+		//PlayerValue::GetValue()->RedDelete();
 		SickleCutAni->ChangeAnimation("JinHillaAnime");
 		SickleCutAni->On();
 		if (PercentFrontHp <= 60.0f && PercentFrontHp > 30.0f)
