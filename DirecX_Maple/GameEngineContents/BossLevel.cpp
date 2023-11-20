@@ -449,25 +449,25 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (Hand1 == nullptr)
 	{
 		Hand1 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand1->Transform.SetLocalPosition({ 100.0f, -200.0f }); 
+		Hand1->Transform.SetLocalPosition({ 70.0f, -200.0f }); 
 		Hand1->Off();
 		Hand2 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand2->Transform.SetLocalPosition({ 400.0f, -200.0f });
+		Hand2->Transform.SetLocalPosition({ 360.0f, -200.0f });
 		Hand2->Off();
 		Hand3 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill); 
-		Hand3->Transform.SetLocalPosition({ 700.0f, -200.0f });
+		Hand3->Transform.SetLocalPosition({ 650.0f, -200.0f });
 		Hand3->Off();
 		Hand4 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand4->Transform.SetLocalPosition({ 1050.0f, -200.0f });
+		Hand4->Transform.SetLocalPosition({ 950.0f, -200.0f });
 		Hand4->Off();
 		Hand5 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand5->Transform.SetLocalPosition({ 1300.0f, -200.0f });
+		Hand5->Transform.SetLocalPosition({ 1250.0f, -200.0f });
 		Hand5->Off();
 		Hand6 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand6->Transform.SetLocalPosition({ 1500.0f, -200.0f });
+		Hand6->Transform.SetLocalPosition({ 1475.0f, -200.0f });
 		Hand6->Off();
 		Hand7 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-		Hand7->Transform.SetLocalPosition({ 1800.0f, -200.0f });
+		Hand7->Transform.SetLocalPosition({ 1750.0f, -200.0f });
 		Hand7->Off();
 	}
 

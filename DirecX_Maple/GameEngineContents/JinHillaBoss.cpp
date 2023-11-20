@@ -241,10 +241,10 @@ void JinHillaBoss::JinDirCheck()
 void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainBoss = this;
-	//JinHillaCurHp = 176000000000000; // 1其
+	JinHillaCurHp = 176000000000000; // 1其
 	//JinHillaCurHp = 133000000000000; // 2其
 	//JinHillaCurHp = 89000000000000;  // 3其	
-	JinHillaCurHp = 45000000000000;  // 4其
+	//JinHillaCurHp = 45000000000000;  // 4其
 }
 
 void JinHillaBoss::LevelEnd(GameEngineLevel* _NextLevel)

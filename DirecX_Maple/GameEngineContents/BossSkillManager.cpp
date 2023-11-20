@@ -41,7 +41,7 @@ void BossSkillManager::Start()
 					{
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{350.0f + 150 * i, -100.0f, 0.0f});
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{400.0f + 150 * i, -100.0f, 0.0f});
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
 							if (i >= 1)
 							{
@@ -58,14 +58,19 @@ void BossSkillManager::Start()
 						}
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-200.0f - 150*i, -100.0f, 0.0f});
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							if (i == 0)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 20.0f, -100.0f, 0.0f });
+							}
 							if (i >= 1)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -230.0f - 200.0f * (i-1), -100.0f, 0.0f});
 								Green = 1;
 							}
 							if (i >= 3)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -200.0f - 150 * i, -100.0f, 0.0f });
 								Green = 2;
 							}
 							std::string AniName = "GreenTile";
@@ -79,7 +84,7 @@ void BossSkillManager::Start()
 					{
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -350.0f - 150 * i, -100.0f, 0.0f });
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -400.0f - 150 * i, -100.0f, 0.0f });
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
 							if (i >= 1)
 							{
@@ -97,14 +102,19 @@ void BossSkillManager::Start()
 
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f + 150 * i, -100.0f, 0.0f });
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							if (i == 0)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -20.0f, -100.0f, 0.0f });
+							}
 							if (i >= 1)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 230.0f + 200.0f * (i - 1), -100.0f, 0.0f });
 								Green = 1;
 							}
 							if (i >= 3)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f + 150 * i, -100.0f, 0.0f });
 								Green = 2;
 							}
 
@@ -153,14 +163,23 @@ void BossSkillManager::Start()
 					{
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{350.0f + 150 * i, -100.0f, 0.0f});
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
+							if (i == 0)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 100.0f, -100.0f, 0.0f });
+							}
+							if (i == 1)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 250.0f, -100.0f, 0.0f });
+							}
 							if (i >= 2 && i < 4)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 125.0f + 150.0f * i, -100.0f, 0.0f});
 								Purple = 1;
 							}
 							if (i >= 4)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 125.0f + 150.0f * i, -100.0f, 0.0f });
 								Purple = 0;
 							}
 
@@ -170,7 +189,7 @@ void BossSkillManager::Start()
 						}
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-200.0f - 150 * i, -100.0f, 0.0f});
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{-350.0f - 150 * i, -100.0f, 0.0f});
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
 							if (i >= 2)
 							{
@@ -192,7 +211,7 @@ void BossSkillManager::Start()
 					{
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -350.0f - 150 * i, -100.0f, 0.0f });
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 350.0f + 150.0f * i, -100.0f, 0.0f });
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
 							if (i >= 2)
 							{
@@ -210,14 +229,23 @@ void BossSkillManager::Start()
 
 						{
 							std::shared_ptr<BossSkillEffect> Effect = this->GetLevel()->CreateActor<BossSkillEffect>();
-							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f + 150 * i, -100.0f, 0.0f });
 							float4 EFfectPos = Effect->Transform.GetWorldPosition();
-							if (i >= 2)
+							if (i == 0)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -100.0f, -100.0f, 0.0f });
+							}
+							if (i == 1)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -250.0f, -100.0f, 0.0f });
+							}
+							if (i >= 2 && i < 4)
+							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -125.0f - 150.0f * i, -100.0f, 0.0f });
 								Purple = 1;
 							}
 							if (i >= 4)
 							{
+								Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -125.0f - 150.0f * i, -100.0f, 0.0f });
 								Purple = 0;
 							}
 

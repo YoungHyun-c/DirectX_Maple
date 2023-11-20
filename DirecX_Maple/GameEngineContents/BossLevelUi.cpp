@@ -183,19 +183,29 @@ void BossLevelUi::BossHpPerUiRenderer()
 	std::string TextureName3 = "HpNumber_" + std::to_string(NumArr[2]) + ".Png";
 	std::string TextureName4 = "HpNumber_" + std::to_string(NumArr[3]) + ".Png";
 
+	if (PercentFrontHp >= 100)
+	{
+		BossHpNumberRender1->SetSprite("HpNumber_1.Png");
+		BossHpNumberRender2->SetSprite("HpNumber_0.Png");
+		BossHpNumberRender3->SetSprite("HpNumber_0.Png");
+		BossHpNumberRender4->SetSprite("HpNumber_0.Png");
+		BossHpNumberRenderDot->Transform.SetLocalPosition({ -393.0f, 325.0f });
+		return;
+	}
+
 	if (CurHpCal <= 0)
 	{
 		BossHpNumberRender1->SetSprite("HpNumber_0.Png");
 		BossHpNumberRender2->SetSprite("HpNumber_0.Png");
 		BossHpNumberRender3->SetSprite("HpNumber_0.Png");
 		BossHpNumberRender4->SetSprite("HpNumber_0.Png");
-
 		return;
 	}
 	BossHpNumberRender1->SetSprite(TextureName1);
 	BossHpNumberRender2->SetSprite(TextureName2);
 	BossHpNumberRender3->SetSprite(TextureName3);
 	BossHpNumberRender4->SetSprite(TextureName4);
+	BossHpNumberRenderDot->Transform.SetLocalPosition({ -401.0f, 325.0f });
 	//BossHpNumberRender1->Transform.SetLocalPosition({ CameraPos.X + -391.0f, CameraPos.Y + 330.0f });
 }
 
