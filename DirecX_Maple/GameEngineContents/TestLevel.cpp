@@ -135,24 +135,25 @@ void TestLevel::Update(float _Delta)
 
 	if (EventTime1 >= EventCoolTime1)
 	{
-		HandTest1->Transform.SetLocalPosition({ 900.0f, -200.0f });
 		HandTest1->On();
 		EventTime1 = 0.0f;
 		HandApeear1 = true;
+		HandTest4->On();
+		HandTest7->On();
 	}
 	if (EventTime2 >= EventCoolTime2)
 	{
-		HandTest2->Transform.SetLocalPosition({ 700.0f, -200.0f });
 		HandTest2->On();
 		EventTime2 = 0.0f;
 		HandApeear2 = true;
+		HandTest5->On();
 	}
 	if (EventTime3 >= EventCoolTime3)
 	{
-		HandTest3->Transform.SetLocalPosition({ 1100.0f, -200.0f });
 		HandTest3->On();
 		EventTime3 = 0.0f;
 		HandApeear3 = true;
+		HandTest6->On();
 	}
 }
 
@@ -338,21 +339,34 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	CandleTest3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
 	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
 
-	//std::shared_ptr<HandAttack> HandTest = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	//HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
 
 	HandTest1 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest1->Transform.SetLocalPosition({ 1200.0f, -200.0f });
 	HandTest1->Off();
 	HandTest2 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest2->Transform.SetLocalPosition({ 1500.0f, -200.0f });
 	HandTest2->Off();
 	HandTest3 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest3->Transform.SetLocalPosition({ 1800.0f, -200.0f });
 	HandTest3->Off();
-	/*HandTest1->Transform.SetLocalPosition({ 900.0f, -200.0f });
-	HandTest2->Transform.SetLocalPosition({ 700.0f, -200.0f });
-	HandTest3->Transform.SetLocalPosition({ 1100.0f, -200.0f });*/
+
+	HandTest4 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest4->Transform.SetLocalPosition({ 0.0f, -200.0f });
+	HandTest4->Off();
+	HandTest5 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest5->Transform.SetLocalPosition({ 300.0f, -200.0f });
+	HandTest5->Off();
+	HandTest6 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest6->Transform.SetLocalPosition({ 600.0f, -200.0f });
+	HandTest6->Off();
+	HandTest7 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest7->Transform.SetLocalPosition({ 900.0f, -200.0f });
+	HandTest7->Off();
+
+
+
 
 	AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
-
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

@@ -32,37 +32,6 @@ void HandAttack::Start()
 		}
 	}
 
-	//Hand = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	//Hand->CreateAnimation("HandAppear", "HandAppear", 0.1f, -1, -1, false);
-	//Hand->CreateAnimation("HandAttackBall", "HandAttackBall", 0.1f, -1, -1, false);
-	//Hand->CreateAnimation("HandEnd", "HandEnd", 0.1f, -1, -1, false);
-	//Hand->CreateAnimation("HandLoop", "HandLoop", 0.1f, -1, -1, false);
-	//Hand->Transform.SetWorldPosition({ 900.0f, -200.0f });
-	//Hand->AutoSpriteSizeOn();
-	//Hand->ChangeAnimation("HandAppear");
-
-	//HandEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	//HandEffect->CreateAnimation("HandShooting", "HandShooting", 0.1f, -1, -1, true);
-	//HandEffect->Transform.SetWorldPosition({ 900.0f, -250.0f });
-	//HandEffect->AutoSpriteSizeOn();
-	//HandEffect->ChangeAnimation("HandShooting");
-	//HandEffect->Off();
-
-	//StringAttack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	//StringAttack->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
-	//StringAttack->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, false);
-	//StringAttack->Transform.SetWorldPosition({ 900.0f, -500.0f });
-	//StringAttack->Transform.SetWorldRotation({ 0.0f, 0.0f, 30.0f });
-	//StringAttack->AutoSpriteSizeOn();
-	//StringAttack->ChangeAnimation("StringAttack");
-	//StringAttack->Off();
-
-	//StringCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
-	//StringCol->SetCollisionType(ColType::AABBBOX2D);
-	//StringCol->Transform.SetLocalScale({ 24.0f, 760.0f });
-	//StringCol->Transform.SetWorldPosition(StringAttack->Transform.GetWorldPosition());
-	//StringCol->Transform.SetWorldRotation({ 0.0f, 0.0f, 30.0f });
-	//StringCol->Off();
 
 	Hand = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
 	Hand->CreateAnimation("HandAppear", "HandAppear", 0.1f, -1, -1, false);
@@ -83,8 +52,8 @@ void HandAttack::Start()
 	StringAttack1->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
 	StringAttack1->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
 	StringAttack1->AutoSpriteSizeOn();
-	StringAttack1->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
-	StringAttack1->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
+	StringAttack1->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
+	StringAttack1->Transform.SetLocalRotation({ 0.0f, 0.0f, 0.0f });
 	StringAttack1->ChangeAnimation("StringAttack");
 	StringAttack1->Off();
 
@@ -92,8 +61,8 @@ void HandAttack::Start()
 	StringAttack2->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
 	StringAttack2->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
 	StringAttack2->AutoSpriteSizeOn();
-	StringAttack2->Transform.SetLocalPosition({ 100.0f, -400.0f, 1.0f });
-	StringAttack2->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
+	StringAttack2->Transform.SetLocalPosition({ -90.0f, -300.0f, 1.0f });
+	StringAttack2->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
 	StringAttack2->ChangeAnimation("StringAttack");
 	StringAttack2->Off();
 
@@ -101,8 +70,8 @@ void HandAttack::Start()
 	StringAttack3->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
 	StringAttack3->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
 	StringAttack3->AutoSpriteSizeOn();
-	StringAttack3->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
-	StringAttack3->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
+	StringAttack3->Transform.SetLocalPosition({ 40.0f, -300.0f, 1.0f });
+	StringAttack3->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
 	StringAttack3->ChangeAnimation("StringAttack");
 	StringAttack3->Off();
 
@@ -110,8 +79,8 @@ void HandAttack::Start()
 	StringAttack4->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
 	StringAttack4->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
 	StringAttack4->AutoSpriteSizeOn();
-	StringAttack4->Transform.SetLocalPosition({ -130.0f, -400.0f, 1.0f });
-	StringAttack4->Transform.SetLocalRotation({ 0.0f, 0.0f, -20.0f });
+	StringAttack4->Transform.SetLocalPosition({ 40.0f, -390.0f, 1.0f });
+	StringAttack4->Transform.SetLocalRotation({ 0.0f, 0.0f, -3.0f });
 	StringAttack4->ChangeAnimation("StringAttack");
 	StringAttack4->Off();
 
@@ -119,8 +88,8 @@ void HandAttack::Start()
 	StringAttack5->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
 	StringAttack5->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
 	StringAttack5->AutoSpriteSizeOn();
-	StringAttack5->Transform.SetLocalPosition({ -150.0f, -400.0f, 1.0f });
-	StringAttack5->Transform.SetLocalRotation({ 0.0f, 0.0f, -30.0f });
+	StringAttack5->Transform.SetLocalPosition({ 120.0f, -300.0f, 1.0f });
+	StringAttack5->Transform.SetLocalRotation({ 0.0f, 0.0f, 0.0f });
 	StringAttack5->ChangeAnimation("StringAttack");
 	StringAttack5->Off();
 
@@ -128,39 +97,38 @@ void HandAttack::Start()
 	StringCol1 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 	StringCol1->SetCollisionType(ColType::OBBBOX2D);
 	StringCol1->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f});
-	StringCol1->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
-	StringCol1->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
+	StringCol1->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
+	StringCol1->Transform.SetLocalRotation({ 0.0f, 0.0f, 0.0f });
 	StringCol1->Off();
 
 	StringCol2 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 	StringCol2->SetCollisionType(ColType::OBBBOX2D);
 	StringCol2->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
-	StringCol2->Transform.SetLocalPosition({ 100.0f, -400.0f, 1.0f });
-	StringCol2->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
+	StringCol2->Transform.SetLocalPosition({ -90.0f, -300.0f, 1.0f });
+	StringCol2->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
 	StringCol2->Off();
 
 	StringCol3 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 	StringCol3->SetCollisionType(ColType::OBBBOX2D);
 	StringCol3->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
-	StringCol3->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
-	StringCol3->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
+	StringCol3->Transform.SetLocalPosition({ 40.0f, -300.0f, 1.0f });
+	StringCol3->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
 	StringCol3->Off();
 
 	StringCol4 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 	StringCol4->SetCollisionType(ColType::OBBBOX2D);
 	StringCol4->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
-	StringCol4->Transform.SetLocalPosition({ -130.0f, -400.0f, 1.0f });
-	StringCol4->Transform.SetLocalRotation({ 0.0f, 0.0f, -20.0f });
+	StringCol4->Transform.SetLocalPosition({ 40.0f, -390.0f, 1.0f  });
+	StringCol4->Transform.SetLocalRotation({ 0.0f, 0.0f, -3.0f });
 	StringCol4->Off();
 
 	StringCol5 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 	StringCol5->SetCollisionType(ColType::OBBBOX2D);
 	StringCol5->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
-	StringCol5->Transform.SetLocalPosition({ -150.0f, -400.0f, 1.0f });
-	StringCol5->Transform.SetLocalRotation({ 0.0f, 0.0f, -30.0f });
+	StringCol5->Transform.SetLocalPosition({ 120.0f, -300.0f, 1.0f });
+	StringCol5->Transform.SetLocalRotation({ 0.0f, 0.0f, 0.0f });
 	StringCol5->Off();
 
-	//StringCol->On();
 
 
 	Hand->SetEndEvent("HandAppear", [&](GameEngineSpriteRenderer*)

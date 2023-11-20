@@ -55,6 +55,10 @@ private:
 	std::shared_ptr<class HandAttack> HandTest1 = nullptr;
 	std::shared_ptr<class HandAttack> HandTest2 = nullptr;
 	std::shared_ptr<class HandAttack> HandTest3 = nullptr;
+	std::shared_ptr<class HandAttack> HandTest4 = nullptr;
+	std::shared_ptr<class HandAttack> HandTest5 = nullptr;
+	std::shared_ptr<class HandAttack> HandTest6 = nullptr;
+	std::shared_ptr<class HandAttack> HandTest7 = nullptr;
 
 	float CurPlayerDeathCount = 0.0f;
 
