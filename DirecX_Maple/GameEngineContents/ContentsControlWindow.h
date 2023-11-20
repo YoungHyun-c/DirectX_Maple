@@ -20,14 +20,14 @@ class TestTab : public Tab
 {
 	// TestLevelMemeber
 	int Select = 0;
-	std::shared_ptr<GameEngineObject> SelectObject = nullptr;
-	std::shared_ptr<class ContentsTimer> ContentsTimer = nullptr;
+	std::shared_ptr<class GameEngineObject> SelectObject = nullptr;
+	std::shared_ptr<class ContentsTimer> ContentsTime = nullptr;
 
 	void OnGUI(GameEngineLevel* _Level, float _DeltaTime);
 
 	float CurTime = 0;
-
-	void CalCualteTime();
+	float SickleCutTime = 0.0f;
+	float CalCulTime = 0.0f;
 
 public:
 	TestTab(std::string_view _Name)

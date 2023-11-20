@@ -78,7 +78,7 @@ void CandleUi::Start()
 	//FireFrame3->ChangeAnimation("CandleFireAppear");
 	//FireFrame3->Off();
 
-	Candle1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
+	Candle1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::MonsterSkill);
 	Candle1->CreateAnimation("CandleStickAppear", "CandleStickAppear", 0.1f, -1, -1, false);
 	Candle1->CreateAnimation("CandleStickBreak", "CandleStickBreak", 0.1f, -1, -1, false);
 	Candle1->SetEndEvent("CandleStickBreak", [&](GameEngineSpriteRenderer*)
@@ -89,7 +89,7 @@ void CandleUi::Start()
 	Candle1->AutoSpriteSizeOn();
 	Candle1->ChangeAnimation("CandleStickAppear");
 
-	FireFrame1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
+	FireFrame1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::MonsterSkill);
 	FireFrame1->CreateAnimation("CandleFireAppear", "CandleFireAppear", 0.1f, -1, -1, false);
 	FireFrame1->CreateAnimation("CandleFireBreak", "CandleFireBreak", 0.1f, -1, -1, false);
 	FireFrame1->CreateAnimation("CandleFireLoop", "CandleFireAppear", 0.1f, 7, 14, true);

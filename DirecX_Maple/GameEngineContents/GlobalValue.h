@@ -112,6 +112,16 @@ public:
 		Altar = _Value;
 	}
 
+	float GetSickleCutTime()
+	{
+		return SickleCut;
+	}
+
+	void SetSickleCutTime(float _Time)
+	{
+		SickleCut = _Time;
+	}
+
 protected:
 
 private:
@@ -127,5 +137,7 @@ private:
 // º¸½º
 	bool SickleCutValue = false;
 	bool Altar = false;
+
+	float SickleCut = 0.0f;
 };
 

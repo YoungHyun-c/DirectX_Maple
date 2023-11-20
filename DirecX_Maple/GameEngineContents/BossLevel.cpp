@@ -130,13 +130,12 @@ void BossLevel::Update(float _Delta)
 			CandleCut1 = true;
 			Candle1->FrameChangeAni("CandleFireBreak");
 			Candle2->FrameChangeAni("CandleFireBreak");
-			Candle3->FrameChangeAni("CandleFireBreak");
 			Fire1 = false;
 			Fire2 = false;
 			Fire3 = false;
 			return;
 		}
-		if (PlayerValue::GetValue()->GetGreenDeathValue() >= 2 && CandleCut2 == false)
+		if (PlayerValue::GetValue()->GetGreenDeathValue() == 2 && CandleCut2 == false)
 		{
 			Candle2->CandleChangeAni("CandleStickBreak");
 			Candle2->FrameChangeAni("CandleFireBreak");
@@ -419,7 +418,7 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == BossTimer)
 	{
 		BossTimer = CreateActor<ContentsTimer>(ContentsObjectType::UI);
-		BossTimer->SetTimeValue(1785.0f);
+		BossTimer->SetTimeValue(1784.0f);
 	}
 	if (nullptr == SickleAni)
 	{
@@ -436,13 +435,13 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 	if (Candle1 == nullptr)
 	{
-		Candle1 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle1 = CreateActor<CandleUi>(ContentsObjectType::MonsterSkill);
 		Candle1->Transform.SetWorldPosition({ 810.0f, -410.0f });
 
-		Candle2 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle2 = CreateActor<CandleUi>(ContentsObjectType::MonsterSkill);
 		Candle2->Transform.SetWorldPosition({ 900.0f, -437.0f });
 
-		Candle3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle3 = CreateActor<CandleUi>(ContentsObjectType::MonsterSkill);
 		Candle3->Transform.SetWorldPosition({ 980.0f, -415.0f });
 	}
 

@@ -32,6 +32,9 @@ private:
 	float AttackTime = 150.0f;
 	double CurBossHp = 0.0f;
 	double PercentFrontHp = 0.0f;
+
+	float CalCulTime = 0.0f;
+	std::shared_ptr<class ContentsTimer> ContentsTime = nullptr;
 	//                                              60%					30%
 	// float AttackTime = 150.0f; float AttackTime = 125.0f; float AttackTime = 100.0f;
 };

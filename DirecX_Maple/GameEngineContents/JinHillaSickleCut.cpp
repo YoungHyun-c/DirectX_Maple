@@ -46,14 +46,17 @@ void JinHillaSickleCut::Start()
 			}
 		);
 	}
-	//CurTime = BossTimer->TimeValue;
+
 	GameEngineInput::AddInputObject(this);
 }
 
 void JinHillaSickleCut::LevelStart(GameEngineLevel* _NextLevel)
 {
 	// 다시 풀어야됨. 11/18
-	//PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
+	PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
+	AttackTime = 150.0f;
+	CalCulTime = ContentsTime->TimeValue - AttackTime;
+	GlobalValue::GetNeedGlobalValue()->SetSickleCutTime(CalCulTime);
 }
 
 void JinHillaSickleCut::Update(float _Delta)
@@ -68,16 +71,25 @@ void JinHillaSickleCut::Update(float _Delta)
 	if (CurTime >= AttackTime)
 	{
 		GlobalValue::GetNeedGlobalValue()->SetSickleCutValue(true);
-		//PlayerValue::GetValue()->RedDelete();
 		SickleCutAni->ChangeAnimation("JinHillaAnime");
 		SickleCutAni->On();
+		PercentFrontHp = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp()) * 100 / static_cast<double>(JinHillaBoss::GetMainBoss()->GetMainBossHp());
+		if (PercentFrontHp > 60.0f)
+		{
+			CalCulTime = ContentsTime->TimeValue - AttackTime;
+			GlobalValue::GetNeedGlobalValue()->SetSickleCutTime(CalCulTime);
+		}
 		if (PercentFrontHp <= 60.0f && PercentFrontHp > 30.0f)
 		{
 			AttackTime = 125.0f;
+			CalCulTime = ContentsTime->TimeValue - AttackTime;
+			GlobalValue::GetNeedGlobalValue()->SetSickleCutTime(CalCulTime);
 		}
 		if (PercentFrontHp <= 30.0f)
 		{
 			AttackTime = 100.0f;
+			CalCulTime = ContentsTime->TimeValue - AttackTime;
+			GlobalValue::GetNeedGlobalValue()->SetSickleCutTime(CalCulTime);
 		}
 		CurTime = 0.0f;
 	}

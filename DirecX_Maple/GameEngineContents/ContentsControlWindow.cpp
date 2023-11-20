@@ -97,6 +97,10 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		MugongStat->GetNeedGlobalValue()->SetMugongDefenseValue(MugongDefense);
 	}
 
+	if (ImGui::Button("Collision OnOff"))
+	{
+		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
+	}
 
 	if (ImGui::Button("Save"))
 	{
@@ -151,110 +155,93 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 
 void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 {
-	GameEngineInput::AddInputObject(this);
-	std::string MousePos = GameEngineCore::MainWindow.GetMousePos().ToString();
+	// 시간 세팅은 보류
+	//CurTime = ContentsTime->TimeValue;
+	//float SetMinute = static_cast<int>(CurTime) / 60;
+	//float SetSecond = static_cast<int>(CurTime) % 60;
 
-	CurTime = ContentsTimer->TimeValue;
+	//if (ImGui::InputFloat("Set Minute :", &SetMinute))
+	//{
+	//	if (0 >= SetMinute)
+	//	{
+	//		SetMinute = 1;
+	//	}
+	//	{
+	//		ContentsTime->SetTimeValue(SetMinute * 60);
+	//	}
+	//}
+	////ImGui::SameLine();
+	//if (ImGui::InputFloat("Sec :", &SetSecond))
+	//{
+	//	if (0 >= SetSecond)
+	//	{
+	//		SetSecond = 1;
+	//	}
+	//	{
+	//		ContentsTime->SetTimeValue(SetMinute * 60 + SetSecond);
+	//	}
+	//}
 
-	if (ImGui::InputFloat("CurTime", &CurTime))
-	{
-		if (0 >= CurTime)
-		{
-			CurTime = 1;
-		}
-		//if (true == GameEngineInput::IsDown(VK_RETURN, this))
-		{
-			ContentsTimer->SetTimeValue(CurTime);
-		}
-	}
+	SickleCutTime = GlobalValue::GetNeedGlobalValue()->GetSickleCutTime();
+	int Minute = static_cast<int>(SickleCutTime) / 60;
+	int Second = static_cast<int>(SickleCutTime) % 60;
 
-
-	if (ImGui::Button(MousePos.c_str()))
-	{
-
-	}
-
-	if (ImGui::Button("Collision OnOff"))
-	{
-		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
-	}
-
-	std::list<std::shared_ptr<GameEngineObject>> ObjectLists = _Level->GetObjectGroupInt(0);
-
-	std::vector<std::shared_ptr<GameEngineObject>> Objects;
-
-	for (std::shared_ptr<GameEngineObject> Ptr : ObjectLists)
-	{
-		Objects.push_back(Ptr);
-	}
+	ImGui::Text("SickleCutTime : %d Minute", Minute);
+	ImGui::SameLine();
+	ImGui::Text("%d Sec", Second);
 
 
-	if (Objects.size())
-	{
-		std::vector<std::string> Names;
+	//std::list<std::shared_ptr<GameEngineObject>> ObjectLists = _Level->GetObjectGroupInt(0);
 
-		for (std::shared_ptr<GameEngineObject> Ptr : Objects)
-		{
-			Names.push_back(Ptr->GetName());
-		}
+	//std::vector<std::shared_ptr<GameEngineObject>> Objects;
 
-		std::vector<const char*> CNames;
+	//for (std::shared_ptr<GameEngineObject> Ptr : ObjectLists)
+	//{
+	//	Objects.push_back(Ptr);
+	//}
 
-		for (size_t i = 0; i < Names.size(); i++)
-		{
-			CNames.push_back(Names[i].c_str());
-		}
 
-		if (ImGui::ListBox("ObjectList", &Select, &CNames[0], static_cast<int>(Names.size())))
-		{
-			SelectObject = Objects[Select];
-		}
+	//if (Objects.size())
+	//{
+	//	std::vector<std::string> Names;
 
-		if (nullptr != SelectObject)
-		{
-			if (ImGui::Button("Select Object Off"))
-			{
-				SelectObject->Off();
-			}
+	//	for (std::shared_ptr<GameEngineObject> Ptr : Objects)
+	//	{
+	//		Names.push_back(Ptr->GetName());
+	//	}
 
-		}
-	}
+	//	std::vector<const char*> CNames;
+
+	//	for (size_t i = 0; i < Names.size(); i++)
+	//	{
+	//		CNames.push_back(Names[i].c_str());
+	//	}
+
+	//	if (ImGui::ListBox("ObjectList", &Select, &CNames[0], static_cast<int>(Names.size())))
+	//	{
+	//		SelectObject = Objects[Select];
+	//	}
+
+	//	if (nullptr != SelectObject)
+	//	{
+	//		if (ImGui::Button("Select Object Off"))
+	//		{
+	//			SelectObject->Off();
+	//		}
+
+	//	}
+	//}
 
 
 }
 
-//void TestTab::CalculateTime()
-//{
-//	int Minute = static_cast<int>(TimeValue) / 60;
-//	int Second = static_cast<int>(TimeValue) % 60;
-//
-//	if (PrevTenMinute != Minute / 10)
-//	{
-//		PrevTenMinute = Minute / 10;
-//		TimeFrame.TimerNum1->SetSprite("TimerNumber_" + std::to_string(PrevTenMinute) + ".png");
-//	}
-//
-//	if (PrevOneMinute != Minute % 10)
-//	{
-//		PrevOneMinute = Minute % 10;
-//		TimeFrame.TimerNum2->SetSprite("TimerNumber_" + std::to_string(PrevOneMinute) + ".png");
-//	}
-//
-//	if (PrevTenSecond != Second / 10)
-//	{
-//		PrevTenSecond = Second / 10;
-//		TimeFrame.TimerNum3->SetSprite("TimerNumber_" + std::to_string(PrevTenSecond) + ".png");
-//	}
-//
-//	TimeFrame.TimerNum4->SetSprite("TimerNumber_" + std::to_string(Second % 10) + ".png");
-//}
 
 void ContentsControlWindow::Start()
 {
 	Tabs.push_back(std::make_shared<LevelChangeTab>("LevelChangeTab"));
 	CurTab = Tabs[0];
 	Tabs.push_back(std::make_shared<CharEditorTab>("CharEditor"));
-	Tabs.push_back(std::make_shared<TestTab>("Test"));
+	Tabs.push_back(std::make_shared<TestTab>("BossTab"));
 }
 
 void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
