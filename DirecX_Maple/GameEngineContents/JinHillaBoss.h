@@ -124,7 +124,8 @@ private:
 	float DeathTime = 0.0f;
 	float DeathLimitTime = 10.0f;
 
-	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
+	void BindCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
+	void KnockBackCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 	void SkillAnimation();
 };
 

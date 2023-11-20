@@ -206,21 +206,21 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	//if (nullptr == GameEngineSprite::Find("Skill"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Skill");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	if (nullptr == GameEngineSprite::Find("Skill"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Skill");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 
 	if (nullptr == GameEngineSprite::Find("UITexture"))
 	{
@@ -251,14 +251,14 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
 
-	//if (nullptr == PlayerSkill)
-	//{
-	//	PlayerSkill = CreateActor<AdeleSkill>();
-	//}
-	//if (nullptr == Skill)
-	//{
-	//	Skill = CreateActor<SkillManager>();
-	//}
+	if (nullptr == PlayerSkill)
+	{
+		PlayerSkill = CreateActor<AdeleSkill>();
+	}
+	if (nullptr == Skill)
+	{
+		Skill = CreateActor<SkillManager>();
+	}
 	if (nullptr == UIObject)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
@@ -275,11 +275,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveChild("BossJin");
 		Dir.MoveChild("JinHillaUI");
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
-
 	}
-	/*{
-		std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	}*/
+	//{
+	//	std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	//}
 	//if (nullptr == GameEngineSprite::Find("BossJin"))
 	//{
 	//	GameEngineDirectory Dir;
@@ -362,8 +361,6 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	HandTest7 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
 	HandTest7->Transform.SetLocalPosition({ 900.0f, -200.0f });
 	HandTest7->Off();
-
-
 
 
 	AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);

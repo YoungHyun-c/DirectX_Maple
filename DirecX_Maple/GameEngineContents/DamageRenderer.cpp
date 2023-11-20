@@ -151,11 +151,11 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		// 몬스터에게 데미지
 		if (_Object->GetName() == "CravingDiebody")
 		{
-			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, false);
+			_Object->GetParentObject()->GetDynamic_Cast_This<class MonsterFunction>()->Hit(OneLineDamage, false);
 		}
 		else
 		{
-			_Object->GetParentObject()->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
+			_Object->GetParentObject()->GetDynamic_Cast_This<class MonsterFunction>()->Hit(OneLineDamage, true);
 		}
 		//_Object->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
 

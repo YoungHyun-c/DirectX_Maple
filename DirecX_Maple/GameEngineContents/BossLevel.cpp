@@ -1,23 +1,34 @@
 #include "PreCompile.h"
-#include "BossLevel.h"
 #include "BackGroundMap.h"
+#include "BossLevel.h"
 #include "BossEntranceLevel.h"
 
 #include "Player.h"
-#include "JinHillaAnime.h"
+#include "AdeleSkill.h"
+#include "SkillManager.h"
+
+//#include "JinHillaAnime.h"
 #include "JinHillaEnterAnime.h"
-#include "Mouse.h"
+#include "ContentsTimer.h"
+#include "JinHillaSickleCut.h"
+#include "JinHillaBoss.h"
+#include "BossLevelUi.h"
+#include "PlayerDeathCountUI.h"
+#include "CandleUi.h"
+#include "AltarUi.h"
+#include "HandAttack.h"
+
 #include "MainUIActor.h"
+#include "Mouse.h"
 
 #include "JinHillaBoss.h"
+#include "BossSkillManager.h"
+
 #include "CravingMonster.h"
 #include "GhostSwoo.h"
 #include "GhostDamien.h"
 #include "MonsterFunction.h"
-#include "BossLevelUi.h"
 
-#include "SkillManager.h"
-#include "BossSkillManager.h"
 
 BossLevel::BossLevel()
 {
@@ -76,41 +87,121 @@ void BossLevel::Update(float _Delta)
 		Map->SwitchRenderer();
 	}
 
-	if (GameEngineInput::IsDown('9', this))
+	/////////// 패턴 관련 /////////////
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 1 && Fire1 == false)
 	{
-		GameEngineCore::ChangeLevel("9.BossRewardLevel");
+		Candle1->FrameChangeAni("CandleFireAppear");
+		Candle1->On();
+		Fire1 = true;
 	}
 
-	// 보스 타이머 만들어야됨 분, 초에 맞추도록
-	if (AniEnd == true)
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 2 && Fire2 == false && CandleCut2 == false)
 	{
-		CurTime -= _Delta * 0.01f;
+		Candle2->FrameChangeAni("CandleFireAppear");
+		Candle2->On();
+		Fire2 = true;
 	}
 
-	// 입장 컷신
-	/*if (true == JinHillaEnterAnime::EnterAnime->GetEnterAniEnd() && AniEnd == false)
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 3 && Fire3 == false && CandleCut1 == false)
 	{
-		NewPlayer->PlayerEnterBindEnd();
-		AniEnd = true;
-		BossJin->CallRegen();
-	}*/
+		Candle3->FrameChangeAni("CandleFireAppear");
+		Candle3->On();
+		Fire3 = true;
+	}
 
-	std::string BossTimer = "시간 타이머 : ";
-	BossTimer += std::to_string(CurTime);
-	BossTimer += "\n";
 
-	//OutputDebugStringA(BossTimer.c_str());
-	/*long long MonsterHp = Monster::Monsters->GetMonsterHp();
-	std::string CurMonsterHp = "MonsterHp : ";
-	CurMonsterHp += std::to_string(MonsterHp);
-	CurMonsterHp += "\n";
-	OutputDebugStringA(CurMonsterHp.c_str());*/
+	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == true)
+	{
+		Candle1->FrameChangeAni("CandleFireBreak");
+		Candle2->FrameChangeAni("CandleFireBreak");
+		Candle3->FrameChangeAni("CandleFireBreak");
+		Fire1 = false;
+		Fire2 = false;
+		Fire3 = false;
+	}
 
-	/*long long MainBossHp = JinHillaBoss::GetMainBoss()->GetCurBossHp();
-	std::string CurMainBossHp = "MainBossHp : ";
-	CurMainBossHp += std::to_string(MainBossHp);
-	CurMainBossHp += "\n";
-	OutputDebugStringA(CurMainBossHp.c_str());*/
+	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
+	{
+		if (PlayerValue::GetValue()->GetGreenDeathValue() <= 4 && CandleCut1 == false
+			|| PlayerValue::GetValue()->GetGreenDeathValue() >= 3 && CandleCut1 == false)
+		{
+			Candle3->CandleChangeAni("CandleStickBreak");
+			Candle3->FrameChangeAni("CandleFireBreak");
+			CandleCut1 = true;
+			Candle1->FrameChangeAni("CandleFireBreak");
+			Candle2->FrameChangeAni("CandleFireBreak");
+			Candle3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
+		}
+		if (PlayerValue::GetValue()->GetGreenDeathValue() >= 2 && CandleCut2 == false)
+		{
+			Candle2->CandleChangeAni("CandleStickBreak");
+			Candle2->FrameChangeAni("CandleFireBreak");
+			CandleCut2 = true;
+			Candle1->FrameChangeAni("CandleFireBreak");
+			Candle2->FrameChangeAni("CandleFireBreak");
+			Candle3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
+		}
+
+		if (PlayerValue::GetValue()->GetGreenDeathValue() == 1 && CandleCut3 == false)
+		{
+			Candle1->CandleChangeAni("CandleStickBreak");
+			Candle1->FrameChangeAni("CandleFireBreak");
+			CandleCut3 = true;
+			Candle1->FrameChangeAni("CandleFireBreak");
+			Candle2->FrameChangeAni("CandleFireBreak");
+			Candle3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
+		}
+	}
+
+	if (HandApeear1 == false)
+	{
+		EventTime1 += _Delta;
+	}
+	if (HandApeear2 == false)
+	{
+		EventTime2 += _Delta;
+	}
+	if (HandApeear3 == false)
+	{
+		EventTime3 += _Delta;
+	}
+
+	if (EventTime1 >= EventCoolTime1)
+	{
+		Hand1->On();
+		EventTime1 = 0.0f;
+		HandApeear1 = true;
+		Hand4->On();
+		Hand7->On();
+	}
+	if (EventTime2 >= EventCoolTime2)
+	{
+		Hand2->On();
+		EventTime2 = 0.0f;
+		HandApeear2 = true;
+		Hand5->On();
+	}
+	if (EventTime3 >= EventCoolTime3)
+	{
+		Hand3->On();
+		EventTime3 = 0.0f;
+		HandApeear3 = true;
+		Hand6->On();
+	}
+
+
 }
 
 void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -262,7 +353,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 	
-
 	// 보스
 	if (nullptr == BossJin)
 	{
@@ -325,6 +415,63 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
+	/////////////// 패턴관련 ///////////////
+	if (nullptr == BossTimer)
+	{
+		BossTimer = CreateActor<ContentsTimer>(ContentsObjectType::UI);
+		BossTimer->SetTimeValue(1785.0f);
+	}
+	if (nullptr == SickleAni)
+	{
+		SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
+	}
+	if (nullptr == DeathUI)
+	{
+		DeathUI = CreateActor<PlayerDeathCountUI>(ContentsObjectType::UI);
+	}
+	if (nullptr == Altar)
+	{
+		Altar = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
+	}
+
+	if (Candle1 == nullptr)
+	{
+		Candle1 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle1->Transform.SetWorldPosition({ 810.0f, -410.0f });
+
+		Candle2 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle2->Transform.SetWorldPosition({ 900.0f, -437.0f });
+
+		Candle3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
+		Candle3->Transform.SetWorldPosition({ 980.0f, -415.0f });
+	}
+
+	if (Hand1 == nullptr)
+	{
+		Hand1 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand1->Transform.SetLocalPosition({ 100.0f, -200.0f }); 
+		Hand1->Off();
+		Hand2 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand2->Transform.SetLocalPosition({ 400.0f, -200.0f });
+		Hand2->Off();
+		Hand3 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill); 
+		Hand3->Transform.SetLocalPosition({ 700.0f, -200.0f });
+		Hand3->Off();
+		Hand4 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand4->Transform.SetLocalPosition({ 1050.0f, -200.0f });
+		Hand4->Off();
+		Hand5 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand5->Transform.SetLocalPosition({ 1300.0f, -200.0f });
+		Hand5->Off();
+		Hand6 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand6->Transform.SetLocalPosition({ 1500.0f, -200.0f });
+		Hand6->Off();
+		Hand7 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+		Hand7->Transform.SetLocalPosition({ 1800.0f, -200.0f });
+		Hand7->Off();
+	}
+
+
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
@@ -370,11 +517,6 @@ void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		BossJinSkill = nullptr;
 
 	}
-	if (nullptr != JinHillaAttackAni)
-	{
-		JinHillaAttackAni->Death();
-		JinHillaAttackAni = nullptr;
-	}
 
 	if (nullptr != PlayerSkill)
 	{
@@ -406,4 +548,56 @@ void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		MouseObject->Death();
 		MouseObject = nullptr;
 	}
+
+	if (nullptr != BossTimer)
+	{
+		BossTimer->Death();
+		BossTimer = nullptr;
+	}
+	if (nullptr != SickleAni)
+	{
+		SickleAni->Death();
+		SickleAni = nullptr;
+	}
+	if (nullptr != DeathUI)
+	{
+		DeathUI->Death();
+		DeathUI = nullptr;
+	}
+	if (nullptr != Altar)
+	{
+		Altar->Death();
+		Altar = nullptr;
+	}
+
+	if (Candle1 != nullptr)
+	{
+		Candle1->Death();
+		Candle1 = nullptr;
+
+		Candle2->Death();
+		Candle2 = nullptr;
+
+		Candle3->Death();
+		Candle3 = nullptr;
+	}
+
+	if (Hand1 != nullptr)
+	{
+		Hand1->Death();
+		Hand1 = nullptr;
+		Hand2->Death();
+		Hand2 = nullptr;
+		Hand3->Death();
+		Hand3 = nullptr;
+		Hand4->Death();
+		Hand4 = nullptr;
+		Hand5->Death();
+		Hand5 = nullptr;
+		Hand6->Death();
+		Hand6 = nullptr;
+		Hand7->Death();
+		Hand7 = nullptr;
+	}
+
 }

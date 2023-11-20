@@ -471,3 +471,8 @@ void MonsterFunction::InsideLockMap()
 		return;
 	}
 }
+
+void MonsterFunction::Hit(long long _Damge, bool _Attack)
+{
+
+}

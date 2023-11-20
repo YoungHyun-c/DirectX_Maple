@@ -53,6 +53,7 @@ enum class ContentsCollisionType
 	Craving,
 	Skill,
 	Altar,
+	String,
 	Potal,
 	DropItem,
 	NPC,

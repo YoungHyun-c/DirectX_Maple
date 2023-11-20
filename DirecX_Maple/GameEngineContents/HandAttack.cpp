@@ -94,35 +94,35 @@ void HandAttack::Start()
 	StringAttack5->Off();
 
 
-	StringCol1 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol1 = CreateComponent<GameEngineCollision>(ContentsCollisionType::String);
 	StringCol1->SetCollisionType(ColType::OBBBOX2D);
 	StringCol1->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f});
 	StringCol1->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
 	StringCol1->Transform.SetLocalRotation({ 0.0f, 0.0f, 0.0f });
 	StringCol1->Off();
 
-	StringCol2 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol2 = CreateComponent<GameEngineCollision>(ContentsCollisionType::String);
 	StringCol2->SetCollisionType(ColType::OBBBOX2D);
 	StringCol2->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
 	StringCol2->Transform.SetLocalPosition({ -90.0f, -300.0f, 1.0f });
 	StringCol2->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
 	StringCol2->Off();
 
-	StringCol3 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol3 = CreateComponent<GameEngineCollision>(ContentsCollisionType::String);
 	StringCol3->SetCollisionType(ColType::OBBBOX2D);
 	StringCol3->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
 	StringCol3->Transform.SetLocalPosition({ 40.0f, -300.0f, 1.0f });
 	StringCol3->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
 	StringCol3->Off();
 
-	StringCol4 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol4 = CreateComponent<GameEngineCollision>(ContentsCollisionType::String);
 	StringCol4->SetCollisionType(ColType::OBBBOX2D);
 	StringCol4->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
 	StringCol4->Transform.SetLocalPosition({ 40.0f, -390.0f, 1.0f  });
 	StringCol4->Transform.SetLocalRotation({ 0.0f, 0.0f, -3.0f });
 	StringCol4->Off();
 
-	StringCol5 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol5 = CreateComponent<GameEngineCollision>(ContentsCollisionType::String);
 	StringCol5->SetCollisionType(ColType::OBBBOX2D);
 	StringCol5->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
 	StringCol5->Transform.SetLocalPosition({ 120.0f, -300.0f, 1.0f });
@@ -192,7 +192,6 @@ void HandAttack::Start()
 
 	HandCoolTime = RanCoolTime.RandomFloat(7.0f, 14.0f);
 
-	GameEngineInput::AddInputObject(this);
 }
 
 void HandAttack::Update(float _Delta)
@@ -206,12 +205,12 @@ void HandAttack::Update(float _Delta)
 	}
 
 
-	if (Player::GetMainPlayer()->GetBindValue() == false && GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == false)
+	//if (Player::GetMainPlayer()->GetBindValue() == false && GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == false)
+	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == false)
 	{
 		if (String == false)
 		{
 			StringColEvent();
-
 		}
 	}
 
@@ -258,7 +257,6 @@ void HandAttack::StringColEvent()
 	{
 		StringCol5->CollisionEvent(ContentsCollisionType::Player, StringEvent);
 	}
-
 }
 
 void HandAttack::LevelStart(GameEngineLevel* _PreveLevel)

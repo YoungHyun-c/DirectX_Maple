@@ -171,7 +171,7 @@ void JinHillaBoss::Update(float _Delta)
 
 	if (GameEngineInput::IsDown('5', this))
 	{
-		ChangeState(MonsterState::Stand);
+		//ChangeState(MonsterState::Stand);
 		/*MonsterRenderer->ChangeAnimation("Move");
 		MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
 		MonsterRenderer->On();
@@ -192,16 +192,22 @@ void JinHillaBoss::Update(float _Delta)
 	}
 
 	InsideLockMap();
-	//AttackEvent(_Delta);
-	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::CollisionEvent, this, std::placeholders::_1));
+	AttackEvent(_Delta);
+	JinHillBindSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::BindCollisionEvent, this, std::placeholders::_1));
+	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::KnockBackCollisionEvent, this, std::placeholders::_1));
 }
 
-void JinHillaBoss::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
+void JinHillaBoss::BindCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
-	//Player::GetMainPlayer()->PlayerBind(1.5f);
-	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition() + float4{ 0, 25 } - Transform.GetWorldPosition();
+	Player::GetMainPlayer()->PlayerBind(2.0f);
+}
+
+void JinHillaBoss::KnockBackCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
+{
+	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition().X - Transform.GetWorldPosition().X;
+	Dir.Y = Player::GetMainPlayer()->Transform.GetWorldPosition().Y - Transform.GetWorldPosition().Y + 500.0f;
 	Dir.Normalize();
-	Player::GetMainPlayer()->KnockBack(Dir, 150.0f, 300.0f, 1.0f);
+	Player::GetMainPlayer()->KnockBack(Dir, 600.0f, 1200.0f, 1.5f);
 }
 
 
