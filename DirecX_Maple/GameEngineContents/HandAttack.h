@@ -28,11 +28,25 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> Hand;
 	std::shared_ptr<class GameEngineSpriteRenderer> HandEffect;
 	
-	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack;
-	std::shared_ptr<class GameEngineCollision> StringCol;
+	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack1;
+	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack2;
+	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack3;
+	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack4;
+	std::shared_ptr<class GameEngineSpriteRenderer> StringAttack5;
+
+	std::shared_ptr<class GameEngineCollision> StringCol1;
+	std::shared_ptr<class GameEngineCollision> StringCol2;
+	std::shared_ptr<class GameEngineCollision> StringCol3;
+	std::shared_ptr<class GameEngineCollision> StringCol4;
+	std::shared_ptr<class GameEngineCollision> StringCol5;
 
 
 	EventParameter StringEvent;
 	bool String = false;
+
+	float HandAttackTime = 0.0f;
+	float HandCoolTime = 7.0f;
+
+	GameEngineRandom RanCoolTime;
 };
 

@@ -61,22 +61,31 @@ void AltarUi::Start()
 	Altar->SetEndEvent("AltarSuccess", [&](GameEngineSpriteRenderer*)
 		{
 			Altar->Off();
+			AltarAppear = false;
 			GlobalValue::GetNeedGlobalValue()->SetAltarValue(false);
 		});
 
-	float SpwanX = XRandom.RandomFloat(300.0f, 1600.0f);
-	Altar->Transform.SetWorldPosition({ SpwanX, -610.0f });
+	Altar->SetStartEvent("AltarFail", [&](GameEngineSpriteRenderer*)
+		{
+			AltarCol->Off();
+		});
+	Altar->SetEndEvent("AltarFail", [&](GameEngineSpriteRenderer*)
+		{
+			Altar->Off();
+		});
 
-	//Altar->Transform.SetWorldPosition({ 980.0f, -610.0f });
+	/*SpwanX = XRandom.RandomFloat(300.0f, 1600.0f);
+	Altar->Transform.SetWorldPosition({ SpwanX, -610.0f });*/
+
 	Altar->AutoSpriteSizeOn();
 	Altar->ChangeAnimation("AltarAppear");
-	Altar->On();
+	Altar->Off();
 
-	float4 AltarPos = Altar->Transform.GetWorldPosition();
+	AltarPos = Altar->Transform.GetWorldPosition();
 
 	AltarCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Altar);
 	AltarCol->SetCollisionType(ColType::AABBBOX2D);
-	AltarCol->Transform.SetLocalPosition({ AltarPos.X - 15.0f , AltarPos.Y - 50.0f });
+	//AltarCol->Transform.SetLocalPosition({ AltarPos.X - 15.0f , AltarPos.Y - 50.0f });
 	AltarCol->Transform.SetLocalScale({ 300.0f, 150.0f });
 	AltarCol->Off();
 	GameEngineInput::AddInputObject(this);
@@ -84,34 +93,22 @@ void AltarUi::Start()
 
 void AltarUi::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown('4', this))
+	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
 	{
-		Altar->ChangeAnimation("AltarAppear");
+		Altar->ChangeAnimation("AltarFail");
+		AltarAppear = false;
 	}
-	//if (GameEngineInput::IsDown('5', this))
-	//{
-	//	Altar->ChangeAnimation("AltarFail");
-	//}
-	//if (GameEngineInput::IsDown('6', this))
-	//{
-	//	Altar->ChangeAnimation("AltarSuccess");
-	//}
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	Altar->ChangeAnimation("AltarStand0");
-	//}
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	Altar->ChangeAnimation("AltarStand1");
-	//}
-	//if (GameEngineInput::IsDown('9', this))
-	//{
-	//	Altar->ChangeAnimation("AltarStand2");
-	//}
-	//if (GameEngineInput::IsDown('0', this))
-	//{
-	//	Altar->ChangeAnimation("AltarStand3");
-	//}
+
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= PlayerValue::GetValue()->GetGreenDeathValue() && AltarAppear == false
+		&& GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == false)
+	{
+		SpwanX = XRandom.RandomFloat(300.0f, 1600.0f);
+		Altar->Transform.SetWorldPosition({ SpwanX, -610.0f });
+		AltarCol->Transform.SetLocalPosition({ Altar->Transform.GetWorldPosition().X - 15.0f , Altar->Transform.GetWorldPosition().Y - 50.0f });
+		Altar->ChangeAnimation("AltarAppear");
+		Altar->On();
+		AltarAppear = true;
+	}
 
 	AltarColEvent();
 }

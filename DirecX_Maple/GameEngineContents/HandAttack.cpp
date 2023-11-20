@@ -79,22 +79,87 @@ void HandAttack::Start()
 	HandEffect->ChangeAnimation("HandShooting");
 	HandEffect->Off();
 
-	StringAttack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	StringAttack->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
-	StringAttack->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
-	StringAttack->AutoSpriteSizeOn();
-	StringAttack->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
-	StringAttack->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
-	StringAttack->ChangeAnimation("StringAttack");
-	StringAttack->Off();
-	//StringAttack->On();
+	StringAttack1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	StringAttack1->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
+	StringAttack1->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
+	StringAttack1->AutoSpriteSizeOn();
+	StringAttack1->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
+	StringAttack1->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
+	StringAttack1->ChangeAnimation("StringAttack");
+	StringAttack1->Off();
 
-	StringCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-	StringCol->SetCollisionType(ColType::OBBBOX2D);
-	StringCol->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f});
-	StringCol->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
-	StringCol->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
-	StringCol->Off();
+	StringAttack2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	StringAttack2->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
+	StringAttack2->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
+	StringAttack2->AutoSpriteSizeOn();
+	StringAttack2->Transform.SetLocalPosition({ 100.0f, -400.0f, 1.0f });
+	StringAttack2->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
+	StringAttack2->ChangeAnimation("StringAttack");
+	StringAttack2->Off();
+
+	StringAttack3 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	StringAttack3->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
+	StringAttack3->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
+	StringAttack3->AutoSpriteSizeOn();
+	StringAttack3->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
+	StringAttack3->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
+	StringAttack3->ChangeAnimation("StringAttack");
+	StringAttack3->Off();
+
+	StringAttack4 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	StringAttack4->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
+	StringAttack4->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
+	StringAttack4->AutoSpriteSizeOn();
+	StringAttack4->Transform.SetLocalPosition({ -130.0f, -400.0f, 1.0f });
+	StringAttack4->Transform.SetLocalRotation({ 0.0f, 0.0f, -20.0f });
+	StringAttack4->ChangeAnimation("StringAttack");
+	StringAttack4->Off();
+
+	StringAttack5 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	StringAttack5->CreateAnimation("StringAttack", "StringAttack", 0.1f, -1, -1, true);
+	StringAttack5->CreateAnimation("StringEffect", "StringEffect", 0.1f, -1, -1, true);
+	StringAttack5->AutoSpriteSizeOn();
+	StringAttack5->Transform.SetLocalPosition({ -150.0f, -400.0f, 1.0f });
+	StringAttack5->Transform.SetLocalRotation({ 0.0f, 0.0f, -30.0f });
+	StringAttack5->ChangeAnimation("StringAttack");
+	StringAttack5->Off();
+
+
+	StringCol1 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol1->SetCollisionType(ColType::OBBBOX2D);
+	StringCol1->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f});
+	StringCol1->Transform.SetLocalPosition({ 130.0f, -400.0f, 1.0f });
+	StringCol1->Transform.SetLocalRotation({ 0.0f, 0.0f, 20.0f });
+	StringCol1->Off();
+
+	StringCol2 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol2->SetCollisionType(ColType::OBBBOX2D);
+	StringCol2->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
+	StringCol2->Transform.SetLocalPosition({ 100.0f, -400.0f, 1.0f });
+	StringCol2->Transform.SetLocalRotation({ 0.0f, 0.0f, 10.0f });
+	StringCol2->Off();
+
+	StringCol3 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol3->SetCollisionType(ColType::OBBBOX2D);
+	StringCol3->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
+	StringCol3->Transform.SetLocalPosition({ -100.0f, -400.0f, 1.0f });
+	StringCol3->Transform.SetLocalRotation({ 0.0f, 0.0f, -10.0f });
+	StringCol3->Off();
+
+	StringCol4 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol4->SetCollisionType(ColType::OBBBOX2D);
+	StringCol4->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
+	StringCol4->Transform.SetLocalPosition({ -130.0f, -400.0f, 1.0f });
+	StringCol4->Transform.SetLocalRotation({ 0.0f, 0.0f, -20.0f });
+	StringCol4->Off();
+
+	StringCol5 = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
+	StringCol5->SetCollisionType(ColType::OBBBOX2D);
+	StringCol5->Transform.SetLocalScale({ 26.0f, 760.0f, 1.0f });
+	StringCol5->Transform.SetLocalPosition({ -150.0f, -400.0f, 1.0f });
+	StringCol5->Transform.SetLocalRotation({ 0.0f, 0.0f, -30.0f });
+	StringCol5->Off();
+
 	//StringCol->On();
 
 
@@ -105,8 +170,16 @@ void HandAttack::Start()
 
 	Hand->SetFrameEvent("HandLoop", 9, [&](GameEngineSpriteRenderer*)
 		{
-			StringAttack->ChangeAnimation("StringAttack");
-			StringAttack->On();
+			StringAttack1->ChangeAnimation("StringAttack");
+			StringAttack1->On();
+			StringAttack2->ChangeAnimation("StringAttack");
+			StringAttack2->On();
+			StringAttack3->ChangeAnimation("StringAttack");
+			StringAttack3->On();
+			StringAttack4->ChangeAnimation("StringAttack");
+			StringAttack4->On();
+			StringAttack5->ChangeAnimation("StringAttack");
+			StringAttack5->On();
 		});
 	Hand->SetFrameEvent("HandLoop", 16, [&](GameEngineSpriteRenderer*)
 		{
@@ -115,11 +188,19 @@ void HandAttack::Start()
 		});
 	Hand->SetFrameEvent("HandLoop", 17, [&](GameEngineSpriteRenderer*)
 		{
-			StringCol->On();
+			StringCol1->On();
+			StringCol2->On();
+			StringCol3->On();
+			StringCol4->On();
+			StringCol5->On();
 		});
 	Hand->SetFrameEvent("HandLoop", 19, [&](GameEngineSpriteRenderer*)
 		{
-			StringCol->Off();
+			StringCol1->Off();
+			StringCol2->Off();
+			StringCol3->Off();
+			StringCol4->Off();
+			StringCol5->Off();
 			String = false;
 		});
 	Hand->SetEndEvent("HandLoop", [&](GameEngineSpriteRenderer*)
@@ -132,43 +213,38 @@ void HandAttack::Start()
 			HandEffect->Off();
 		});
 
-	StringAttack->SetEndEvent("StringAttack", [&](GameEngineSpriteRenderer*)
+	StringAttack1->SetEndEvent("StringAttack", [&](GameEngineSpriteRenderer*)
 		{
-			StringAttack->Off();
+			StringAttack1->Off();
+			StringAttack2->Off();
+			StringAttack3->Off();
+			StringAttack4->Off();
+			StringAttack5->Off();
 		});
+
+	HandCoolTime = RanCoolTime.RandomFloat(7.0f, 14.0f);
 
 	GameEngineInput::AddInputObject(this);
 }
 
 void HandAttack::Update(float _Delta)
 {
-	if (GameEngineInput::IsDown('4', this))
+	HandAttackTime += _Delta;
+	if (HandAttackTime >= HandCoolTime)
 	{
 		Hand->ChangeAnimation("HandAppear");
+		HandCoolTime = RanCoolTime.RandomFloat(7.0f, 12.0f);
+		HandAttackTime = 0.0f;
 	}
-	if (GameEngineInput::IsDown('5', this))
-	{
-		Hand->ChangeAnimation("HandAttackBall");
-	}
-	if (GameEngineInput::IsDown('6', this))
-	{
-		Hand->ChangeAnimation("HandEnd");
-	}
-	if (GameEngineInput::IsDown('7', this))
-	{
-		Hand->ChangeAnimation("HandLoop");
-		StringAttack->ChangeAnimation("StringAttack");
-	}
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	Hand->ChangeAnimation("HandLoop");
-	//	HandEffect->ChangeAnimation("HandShooting");
-	//	StringAttack->ChangeAnimation("StringEffect");
-	//}
 
-	if (String == false)
+
+	if (Player::GetMainPlayer()->GetBindValue() == false && GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == false)
 	{
-		StringColEvent();
+		if (String == false)
+		{
+			StringColEvent();
+
+		}
 	}
 
 	//StringCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
@@ -194,7 +270,27 @@ void HandAttack::StringColEvent()
 			Player::GetMainPlayer()->PlayerBind();
 			PlayerValue::GetValue()->AddRedDeathCount(1);
 		};
-	StringCol->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	if (String == false)
+	{
+		StringCol1->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	}
+	if (String == false)
+	{
+		StringCol2->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	}
+	if (String == false)
+	{
+		StringCol3->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	}
+	if (String == false)
+	{
+		StringCol4->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	}
+	if (String == false)
+	{
+		StringCol5->CollisionEvent(ContentsCollisionType::Player, StringEvent);
+	}
+
 }
 
 void HandAttack::LevelStart(GameEngineLevel* _PreveLevel)

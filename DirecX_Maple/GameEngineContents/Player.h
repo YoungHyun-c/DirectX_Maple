@@ -96,6 +96,11 @@ public:
 		Bind = false;
 	}
 
+	bool GetBindValue()
+	{
+		return Bind;
+	}
+
 	// 스킬을 맞았을때의 기능
 	void PlayerBind(float _Time = 1.0f);
 	void KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime);

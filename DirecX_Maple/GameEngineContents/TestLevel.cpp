@@ -50,24 +50,18 @@ void TestLevel::Update(float _Delta)
 		Fire1 = true;
 	}
 
-	if (PlayerValue::GetValue()->GetRedDeathValue() >= 2 && Fire2 == false)
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 2 && Fire2 == false && CandleCut2 == false)
 	{
 		CandleTest2->FrameChangeAni("CandleFireAppear");
 		CandleTest2->On();
 		Fire2 = true;
 	}
 
-	if (PlayerValue::GetValue()->GetRedDeathValue() >= 3 && Fire3 == false)
+	if (PlayerValue::GetValue()->GetRedDeathValue() >= 3 && Fire3 == false && CandleCut1 == false)
 	{
 		CandleTest3->FrameChangeAni("CandleFireAppear");
 		CandleTest3->On();
 		Fire3 = true;
-	}
-
-	if (Fire3 == true && AltarAppear == false && GlobalValue::GetNeedGlobalValue()->GetAltarValue() == false)
-	{
-		AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
-		AltarAppear = true;
 	}
 
 
@@ -79,30 +73,87 @@ void TestLevel::Update(float _Delta)
 		Fire1 = false;
 		Fire2 = false;
 		Fire3 = false;
-		AltarAppear = false;
 	}
 
 	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
 	{
-		if (Fire1 == true)
-		{
-			CandleTest1->CandleChangeAni("CandleStickBreak");
-			CandleTest1->FrameChangeAni("CandleFireBreak");
-		}
-
-		if (Fire2 == true)
-		{
-			CandleTest2->CandleChangeAni("CandleStickBreak");
-			CandleTest2->FrameChangeAni("CandleFireBreak");
-		}
-
-		if (Fire3 == true)
+		if (PlayerValue::GetValue()->GetGreenDeathValue() <= 4 && CandleCut1 == false
+			|| PlayerValue::GetValue()->GetGreenDeathValue() >= 3 && CandleCut1 == false)
 		{
 			CandleTest3->CandleChangeAni("CandleStickBreak");
 			CandleTest3->FrameChangeAni("CandleFireBreak");
+			CandleCut1 = true;
+			CandleTest1->FrameChangeAni("CandleFireBreak");
+			CandleTest2->FrameChangeAni("CandleFireBreak");
+			CandleTest3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
+		}
+		if (PlayerValue::GetValue()->GetGreenDeathValue() >= 2 && CandleCut2 == false)
+		{
+			CandleTest2->CandleChangeAni("CandleStickBreak");
+			CandleTest2->FrameChangeAni("CandleFireBreak");
+			CandleCut2 = true;
+			CandleTest1->FrameChangeAni("CandleFireBreak");
+			CandleTest2->FrameChangeAni("CandleFireBreak");
+			CandleTest3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
+		}
+
+		if (PlayerValue::GetValue()->GetGreenDeathValue() == 1 && CandleCut3 == false)
+		{
+			CandleTest1->CandleChangeAni("CandleStickBreak");
+			CandleTest1->FrameChangeAni("CandleFireBreak");
+			CandleCut3 = true;
+			CandleTest1->FrameChangeAni("CandleFireBreak");
+			CandleTest2->FrameChangeAni("CandleFireBreak");
+			CandleTest3->FrameChangeAni("CandleFireBreak");
+			Fire1 = false;
+			Fire2 = false;
+			Fire3 = false;
+			return;
 		}
 	}
 
+	if (HandApeear1 == false)
+	{
+		EventTime1 += _Delta;
+	}
+	if (HandApeear2 == false)
+	{
+		EventTime2 += _Delta;
+	}
+	if (HandApeear3 == false)
+	{
+		EventTime3 += _Delta;
+	}
+
+	if (EventTime1 >= EventCoolTime1)
+	{
+		HandTest1->Transform.SetLocalPosition({ 900.0f, -200.0f });
+		HandTest1->On();
+		EventTime1 = 0.0f;
+		HandApeear1 = true;
+	}
+	if (EventTime2 >= EventCoolTime2)
+	{
+		HandTest2->Transform.SetLocalPosition({ 700.0f, -200.0f });
+		HandTest2->On();
+		EventTime2 = 0.0f;
+		HandApeear2 = true;
+	}
+	if (EventTime3 >= EventCoolTime3)
+	{
+		HandTest3->Transform.SetLocalPosition({ 1100.0f, -200.0f });
+		HandTest3->On();
+		EventTime3 = 0.0f;
+		HandApeear3 = true;
+	}
 }
 
 void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -287,10 +338,20 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	CandleTest3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
 	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
 
-	std::shared_ptr<HandAttack> HandTest = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
+	//std::shared_ptr<HandAttack> HandTest = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	//HandTest->Transform.SetLocalPosition({ 900.0f, -200.0f });
 
-	//AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
+	HandTest1 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest1->Off();
+	HandTest2 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest2->Off();
+	HandTest3 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
+	HandTest3->Off();
+	/*HandTest1->Transform.SetLocalPosition({ 900.0f, -200.0f });
+	HandTest2->Transform.SetLocalPosition({ 700.0f, -200.0f });
+	HandTest3->Transform.SetLocalPosition({ 1100.0f, -200.0f });*/
+
+	AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");

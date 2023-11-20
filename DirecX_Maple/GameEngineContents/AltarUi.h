@@ -34,5 +34,9 @@ private:
 	
 	int StandState = 0;
 	GameEngineRandom XRandom;
+
+	bool AltarAppear = false;
+	float SpwanX = 0.0f;
+	float4 AltarPos = float4::ZERO;
 };
 

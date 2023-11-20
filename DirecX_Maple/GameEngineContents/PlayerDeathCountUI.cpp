@@ -184,8 +184,8 @@ void PlayerDeathCountUI::Update(float _Delta)
 				return;
 			}
 			(*DeathUI)[PlayerValue::GetValue()->GetGreenDeathValue() + PlayerValue::GetValue()->GetRedDeathValue() - 1 - j]->ChangeAnimation("DeathUIRedToWhite");
-			//RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
 		}
+		RedDeathUI = 0;
 	}
 
 	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
