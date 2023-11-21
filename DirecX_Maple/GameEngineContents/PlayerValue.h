@@ -144,6 +144,71 @@ public:
 		}
 	}
 
+	void AddHp(int _Hp)
+	{
+		MainHp += _Hp;
+
+		if (MainHp >= MaxHp)
+		{
+			MainHp = MaxHp;
+		}
+	}
+
+	void AddMp(int _Hp)
+	{
+		MainMp += _Hp;
+
+		if (MainMp >= MaxMp)
+		{
+			MainMp = MaxMp;
+		}
+	}
+
+	void SubHp(int _Hp)
+	{
+		MainHp -= _Hp;
+
+		if (MainHp <= MinHp)
+		{
+			MainHp = MinHp;
+		}
+	}
+
+	void SubMp(int _Mp)
+	{
+		MainMp -= _Mp;
+
+		if (MainMp <= MinMp)
+		{
+			MainMp = MinMp;
+		}
+	}
+
+	int GetHp()
+	{
+		return MainHp;
+	}
+
+	int GetMaxHp()
+	{
+		return MaxHp;
+	}
+
+	int GetMp()
+	{
+		return MainMp;
+	}
+
+	int GetMinMp()
+	{
+		return MinMp;
+	}
+
+	int GetMaxMp()
+	{
+		return MaxMp;
+	}
+
 	int GetMaxExp()
 	{
 		return MaxExp;
@@ -217,6 +282,14 @@ private:
 	std::string Class = "HighAtere";
 	int Grade = 5;
 	int Level = 259;
+
+	int MinHp = 0;
+	int MainHp = 100;
+	int MaxHp = 100;
+
+	int MinMp = 0;
+	int MainMp = 100;
+	int MaxMp = 100;
 
 	int Exp = 0;
 	int MaxExp = 100;

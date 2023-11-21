@@ -42,124 +42,11 @@ void TestLevel::Update(float _Delta)
 	{
 		Map->SwitchRenderer();
 	}
-
-	if (PlayerValue::GetValue()->GetRedDeathValue() >= 1 && Fire1 == false)
-	{
-		CandleTest1->FrameChangeAni("CandleFireAppear");
-		CandleTest1->On();
-		Fire1 = true;
-	}
-
-	if (PlayerValue::GetValue()->GetRedDeathValue() >= 2 && Fire2 == false && CandleCut2 == false)
-	{
-		CandleTest2->FrameChangeAni("CandleFireAppear");
-		CandleTest2->On();
-		Fire2 = true;
-	}
-
-	if (PlayerValue::GetValue()->GetRedDeathValue() >= 3 && Fire3 == false && CandleCut1 == false)
-	{
-		CandleTest3->FrameChangeAni("CandleFireAppear");
-		CandleTest3->On();
-		Fire3 = true;
-	}
-
-
-	if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == true)
-	{
-		CandleTest1->FrameChangeAni("CandleFireBreak");
-		CandleTest2->FrameChangeAni("CandleFireBreak");
-		CandleTest3->FrameChangeAni("CandleFireBreak");
-		Fire1 = false;
-		Fire2 = false;
-		Fire3 = false;
-	}
-
-	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
-	{
-		if (PlayerValue::GetValue()->GetGreenDeathValue() <= 4 && CandleCut1 == false
-			|| PlayerValue::GetValue()->GetGreenDeathValue() >= 3 && CandleCut1 == false)
-		{
-			CandleTest3->CandleChangeAni("CandleStickBreak");
-			CandleTest3->FrameChangeAni("CandleFireBreak");
-			CandleCut1 = true;
-			CandleTest1->FrameChangeAni("CandleFireBreak");
-			CandleTest2->FrameChangeAni("CandleFireBreak");
-			CandleTest3->FrameChangeAni("CandleFireBreak");
-			Fire1 = false;
-			Fire2 = false;
-			Fire3 = false;
-			return;
-		}
-		if (PlayerValue::GetValue()->GetGreenDeathValue() >= 2 && CandleCut2 == false)
-		{
-			CandleTest2->CandleChangeAni("CandleStickBreak");
-			CandleTest2->FrameChangeAni("CandleFireBreak");
-			CandleCut2 = true;
-			CandleTest1->FrameChangeAni("CandleFireBreak");
-			CandleTest2->FrameChangeAni("CandleFireBreak");
-			CandleTest3->FrameChangeAni("CandleFireBreak");
-			Fire1 = false;
-			Fire2 = false;
-			Fire3 = false;
-			return;
-		}
-
-		if (PlayerValue::GetValue()->GetGreenDeathValue() == 1 && CandleCut3 == false)
-		{
-			CandleTest1->CandleChangeAni("CandleStickBreak");
-			CandleTest1->FrameChangeAni("CandleFireBreak");
-			CandleCut3 = true;
-			CandleTest1->FrameChangeAni("CandleFireBreak");
-			CandleTest2->FrameChangeAni("CandleFireBreak");
-			CandleTest3->FrameChangeAni("CandleFireBreak");
-			Fire1 = false;
-			Fire2 = false;
-			Fire3 = false;
-			return;
-		}
-	}
-
-	if (HandApeear1 == false)
-	{
-		EventTime1 += _Delta;
-	}
-	if (HandApeear2 == false)
-	{
-		EventTime2 += _Delta;
-	}
-	if (HandApeear3 == false)
-	{
-		EventTime3 += _Delta;
-	}
-
-	if (EventTime1 >= EventCoolTime1)
-	{
-		HandTest1->On();
-		EventTime1 = 0.0f;
-		HandApeear1 = true;
-		HandTest4->On();
-		HandTest7->On();
-	}
-	if (EventTime2 >= EventCoolTime2)
-	{
-		HandTest2->On();
-		EventTime2 = 0.0f;
-		HandApeear2 = true;
-		HandTest5->On();
-	}
-	if (EventTime3 >= EventCoolTime3)
-	{
-		HandTest3->On();
-		EventTime3 = 0.0f;
-		HandApeear3 = true;
-		HandTest6->On();
-	}
 }
 
 void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == GameEngineSprite::Find("BossMap.png"))
+	if (nullptr == GameEngineSprite::Find("HuntMap.png"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
@@ -172,8 +59,8 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineFile& File = Files[i];
 			GameEngineTexture::Load(File.GetStringPath());
 		}
-		GameEngineSprite::CreateSingle("BossMap.png");
-		GameEngineSprite::CreateSingle("BossDebugMap.png");
+		GameEngineSprite::CreateSingle("HuntMap.png");
+		GameEngineSprite::CreateSingle("HuntDebugMap.png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
@@ -241,13 +128,13 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (Map == nullptr)
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
-		Map->Init("BossMap.png", "BossDebugMap.png");
+		Map->Init("HuntMap.png", "HuntDebugMap.png");
 	}
 
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		PlayerObject->SetDebugMap("BossDebugMap.png");
+		PlayerObject->SetDebugMap("HuntDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
 
@@ -265,107 +152,25 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	if (nullptr == GameEngineSprite::Find("JinHillaUI"))
+	if (nullptr == GameEngineSprite::Find("Potal"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
 		Dir.MoveChild("ContentsResources");
 		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Monster");
-		Dir.MoveChild("BossJin");
-		Dir.MoveChild("JinHillaUI");
-		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
+		Dir.MoveChild("PotalFolder");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
 	}
-	//{
-	//	std::shared_ptr<class BossLevelUi> BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	//}
-	//if (nullptr == GameEngineSprite::Find("BossJin"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Monster");
-	//	Dir.MoveChild("BossJin");
-	//	Dir.MoveChild("BossJinHilla");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
-
-	//if (nullptr == BossJin)
-	//{
-	//	BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-	//	BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	BossJin->SetDebugMap("BossDebugMap.Png");
-	//	BossJin->CallRegen();
-	//}
-
-	
-
-	//if (nullptr == GameEngineSprite::Find("GhostDamienMob"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Monster");
-	//	Dir.MoveChild("GhostDamienMob");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
-
-	std::shared_ptr<ContentsTimer> Test = CreateActor<ContentsTimer>(ContentsObjectType::UI);
-	Test->SetTimeValue(1785.0f);
-	std::shared_ptr<JinHillaSickleCut> SickleAni = CreateActor<JinHillaSickleCut>(ContentsObjectType::JinHillaAnime);
-	std::shared_ptr<PlayerDeathCountUI> DeathUI = CreateActor<PlayerDeathCountUI>(ContentsObjectType::UI);
-
-	CandleTest1 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
-	CandleTest1->Transform.SetWorldPosition({ 810.0f, -410.0f });
-
-	CandleTest2 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
-	CandleTest2->Transform.SetWorldPosition({ 900.0f, -437.0f });
-
-	CandleTest3 = CreateActor<CandleUi>(ContentsObjectType::BackSkill);
-	CandleTest3->Transform.SetWorldPosition({ 980.0f, -415.0f });
 
 
-	HandTest1 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest1->Transform.SetLocalPosition({ 1200.0f, -200.0f });
-	HandTest1->Off();
-	HandTest2 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest2->Transform.SetLocalPosition({ 1500.0f, -200.0f });
-	HandTest2->Off();
-	HandTest3 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest3->Transform.SetLocalPosition({ 1800.0f, -200.0f });
-	HandTest3->Off();
 
-	HandTest4 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest4->Transform.SetLocalPosition({ 0.0f, -200.0f });
-	HandTest4->Off();
-	HandTest5 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest5->Transform.SetLocalPosition({ 300.0f, -200.0f });
-	HandTest5->Off();
-	HandTest6 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest6->Transform.SetLocalPosition({ 600.0f, -200.0f });
-	HandTest6->Off();
-	HandTest7 = CreateActor<HandAttack>(ContentsObjectType::MonsterSkill);
-	HandTest7->Transform.SetLocalPosition({ 900.0f, -200.0f });
-	HandTest7->Off();
-
-
-	AltarTest = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
-
-	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("HuntDebugMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;
@@ -378,10 +183,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void TestLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	if (nullptr != GameEngineSprite::Find("BossMap.png"))
+	if (nullptr != GameEngineSprite::Find("HuntMap.png"))
 	{
-		GameEngineSprite::Release("BossMap.png");
-		GameEngineSprite::Release("BossDebugMap.png");
+		GameEngineSprite::Release("HuntMap.png");
+		GameEngineSprite::Release("HuntDebugMap.png");
 	}
 
 	if (nullptr != Map)
