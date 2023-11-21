@@ -54,6 +54,61 @@ void MainUIActor::Start()
 		GameEngineSprite::CreateSingle("Number_8.Png");
 		GameEngineSprite::CreateSingle("Number_9.Png");
 		GameEngineSprite::CreateSingle("Percent.Png");
+
+		GameEngineSprite::CreateSingle("Lv_0.Png");
+		GameEngineSprite::CreateSingle("Lv_1.Png");
+		GameEngineSprite::CreateSingle("Lv_2.Png");
+		GameEngineSprite::CreateSingle("Lv_3.Png");
+		GameEngineSprite::CreateSingle("Lv_4.Png");
+		GameEngineSprite::CreateSingle("Lv_5.Png");
+		GameEngineSprite::CreateSingle("Lv_6.Png");
+		GameEngineSprite::CreateSingle("Lv_7.Png");
+		GameEngineSprite::CreateSingle("Lv_8.Png");
+		GameEngineSprite::CreateSingle("Lv_9.Png");
+		GameEngineSprite::CreateSingle("Lv.Png");
+	}
+
+	if (nullptr == GameEngineSprite::Find("LevelUpMsgback"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+		Dir.MoveChild("LevelUpMsgback");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+
+	// 레벨업
+	{
+		LevelUpMsgBack = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		LevelUpMsgBack->CreateAnimation("LevelUpMsgback", "LevelUpMsgback", 0.1f, -1, -1, true);
+		LevelUpMsgBack->ChangeAnimation("LevelUpMsgback");
+		LevelUpMsgBack->Transform.SetLocalPosition({ 0.0f, 250.0f });
+		LevelUpMsgBack->AutoSpriteSizeOn();
+		LevelUpMsgBack->Off();
+		LevelUpMsgBack->SetEndEvent("LevelUpMsgback", [&](GameEngineSpriteRenderer*)
+			{
+				LevelUpMsgBack->Off();
+				LevelUpFontRender->Off();
+				LevelUpCongratuFont->Off();
+			});
+		LevelText = "레벨 " + std::to_string(PlayerValue::GetValue()->GetLevel());
+		LevelUpFontRender = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		LevelUpFontRender->SetText("메이플스토리", LevelText, 50.0f, float4::WHITE);
+		LevelUpFontRender->Transform.SetLocalPosition({ -100.0f, 300.0f });
+		LevelUpFontRender->Off();
+
+		LevelUpCongratuFont = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		LevelUpCongratuFont->SetText("메이플스토리", "레벨이 올랐습니다!", 25.0f, float4{1.0f, 1.0f, 0.0f, 1.0f});
+		LevelUpCongratuFont->Transform.SetLocalPosition({ -110.0f, 235.0f });
+		LevelUpCongratuFont->Off();
 	}
 
 	{
@@ -108,6 +163,30 @@ void MainUIActor::Start()
 		MainMpBar->SetPivotType(PivotType::Left);
 		MainMpBar->SetImageScale({ 172.0f,12.0f });
 		MainMpBar->Transform.SetLocalPosition({ -77.0f, -GlobalValue::WinScale.hY() + 34.0f });
+	}
+
+	////// Lv
+	{
+		MainLv = PlayerValue::GetValue()->GetLevel();
+		MainLvRender = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		MainLvRender->SetSprite("Lv.Png");
+		MainLvRender->SetImageScale(FontImageScale);
+		MainLvRender->Transform.SetLocalPosition({ -77.0f, -GlobalValue::WinScale.hY() + 71.0f });
+
+		PlayerLvNumberRender1 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		PlayerLvNumberRender1->SetSprite("Lv_2.Png");
+		PlayerLvNumberRender1->AutoSpriteSizeOn();
+		PlayerLvNumberRender1->Transform.SetLocalPosition({ -62.0f, -GlobalValue::WinScale.hY() + 71.0f });
+
+		PlayerLvNumberRender2 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		PlayerLvNumberRender2->SetSprite("Lv_5.Png");
+		PlayerLvNumberRender2->AutoSpriteSizeOn();
+		PlayerLvNumberRender2->Transform.SetLocalPosition({ -52.0f, -GlobalValue::WinScale.hY() + 71.0f });
+
+		PlayerLvNumberRender3 = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		PlayerLvNumberRender3->SetSprite("Lv_9.Png");
+		PlayerLvNumberRender3->AutoSpriteSizeOn();
+		PlayerLvNumberRender3->Transform.SetLocalPosition({ -42.0f, -GlobalValue::WinScale.hY() + 71.0f });
 	}
 
 	////// Hp, Mp 퍼센트
@@ -191,10 +270,45 @@ void MainUIActor::Update(float _Delta)
 		PlayerValue::GetValue()->SubMp(1);
 	}
 
+
+	/// Lv Ui
+	if (MainLv != PlayerValue::GetValue()->GetLevel())
+	{
+		PlayerLvUiRenderer();
+		LevelUpMsgBack->On();
+		LevelUpFontRender->On();
+		LevelUpCongratuFont->On();
+		LevelText = "레벨 " + std::to_string(PlayerValue::GetValue()->GetLevel());
+		LevelUpFontRender->SetText("메이플스토리", LevelText, 50.0f, float4::WHITE);
+	}
 	/// Hp 퍼센트 Ui
-	PlayerHpPerUiRenderer();
+	if (CurHpCal != PlayerValue::GetValue()->GetHp())
+	{
+		PlayerHpPerUiRenderer();
+	}
 	/// Mp 퍼센트 Ui
-	PlayerMpPerUiRenderer();
+	if (CurMpCal != PlayerValue::GetValue()->GetMp())
+	{
+		PlayerMpPerUiRenderer();
+	}
+}
+
+void MainUIActor::PlayerLvUiRenderer()
+{
+	MainLv = PlayerValue::GetValue()->GetLevel();
+	int LvNumArr[4] = { 0, };
+	LvNumArr[0] = MainLv / 100;
+	LvNumArr[1] = (MainLv / 10) % 10;
+	LvNumArr[2] = MainLv % 10;
+
+	// Lv
+	std::string LvTextureName1 = "Lv_" + std::to_string(LvNumArr[0]) + ".Png";
+	std::string LvTextureName2 = "Lv_" + std::to_string(LvNumArr[1]) + ".Png";
+	std::string LvTextureName3 = "Lv_" + std::to_string(LvNumArr[2]) + ".Png";
+
+	PlayerLvNumberRender1->SetSprite(LvTextureName1);
+	PlayerLvNumberRender2->SetSprite(LvTextureName2);
+	PlayerLvNumberRender3->SetSprite(LvTextureName3);
 }
 
 void MainUIActor::PlayerHpPerUiRenderer()
@@ -203,13 +317,13 @@ void MainUIActor::PlayerHpPerUiRenderer()
 	MainHpCal =(PlayerValue::GetValue()->GetMaxHp());
 	PercentFrontHp = (CurHpCal * 100 / MainHpCal);
 
-	int NumArr[3] = { 0, };
-	NumArr[0] = PercentFrontHp / 10;
-	NumArr[1] = PercentFrontHp % 10;
+	int HpNumArr[3] = { 0, };
+	HpNumArr[0] = PercentFrontHp / 10;
+	HpNumArr[1] = PercentFrontHp % 10;
 
 	// Hp
-	std::string TextureName1 = "Number_" + std::to_string(NumArr[0]) + ".Png";
-	std::string TextureName2 = "Number_" + std::to_string(NumArr[1]) + ".Png";
+	std::string HpTextureName1 = "Number_" + std::to_string(HpNumArr[0]) + ".Png";
+	std::string HpTextureName2 = "Number_" + std::to_string(HpNumArr[1]) + ".Png";
 
 	// Hp
 	{
@@ -231,7 +345,7 @@ void MainUIActor::PlayerHpPerUiRenderer()
 		{
 			PlayerHpNumberRender1->Off();
 			PlayerHpNumberRender2->Off();
-			PlayerHpNumberRender3->SetSprite(TextureName2);
+			PlayerHpNumberRender3->SetSprite(HpTextureName2);
 			PlayerHpNumberRender3->SetImageScale(FontImageScale);
 			PlayerHpNumberRender3->On();
 			return;
@@ -249,10 +363,10 @@ void MainUIActor::PlayerHpPerUiRenderer()
 		}
 
 		PlayerHpNumberRender1->Off();
-		PlayerHpNumberRender2->SetSprite(TextureName1);
+		PlayerHpNumberRender2->SetSprite(HpTextureName1);
 		PlayerHpNumberRender2->SetImageScale(FontImageScale);
 		PlayerHpNumberRender2->On();
-		PlayerHpNumberRender3->SetSprite(TextureName2);
+		PlayerHpNumberRender3->SetSprite(HpTextureName2);
 		PlayerHpNumberRender3->SetImageScale(FontImageScale);
 		PlayerHpNumberRender3->On();
 	}

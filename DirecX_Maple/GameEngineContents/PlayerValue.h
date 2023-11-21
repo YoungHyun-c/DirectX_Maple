@@ -115,10 +115,10 @@ public:
 		++Level;
 		Exp -= MaxExp;
 		MaxExp = static_cast<int>(MaxExp * 1.05f);
-		/*MaxHp = static_cast<int>(Hp * 1.035f);
-		MaxMp = static_cast<int>(Mp * 1.02f);
-		Hp = MaxHp;
-		Mp = MaxMp;*/
+		MaxHp = static_cast<int>(MaxHp * 1.03f);
+		MaxMp = static_cast<int>(MaxMp * 1.03f);
+		MainHp = MaxHp;
+		MainMp = MaxMp;
 
 		Player::GetMainPlayer()->Level_Up();
 		Str += 5;
@@ -136,6 +136,11 @@ public:
 
 	void AddExp(int _Exp)
 	{
+		if (Level == MaxLevel)
+		{
+			return;
+		}
+
 		Exp += _Exp;
 
 		while (Exp >= MaxExp)
@@ -282,6 +287,7 @@ private:
 	std::string Class = "HighAtere";
 	int Grade = 5;
 	int Level = 259;
+	int MaxLevel = 300;
 
 	int MinHp = 0;
 	int MainHp = 100;
