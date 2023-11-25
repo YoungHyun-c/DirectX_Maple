@@ -6,6 +6,8 @@
 #include "ContentsCore.h"
 #include "Player.h"
 
+#define Move_Check_Float 1.0f
+
 PlayerActor::PlayerActor()
 {
 
@@ -23,8 +25,10 @@ void PlayerActor::Start()
 
 void PlayerActor::Update(float _Delta)
 {
+	IsWall = false;
 	Gravity(_Delta);
-	IsGround = CheckGround(float4{0.0f, -35.0f});
+	CalCulateMove(_Delta);
+	IsGround = CheckGround(float4(0.0f, -35.0f));
 	
 	// 프리카메라 사용 설정
 	IsCameraFocus = GetLevel()->GetMainCamera();
@@ -56,28 +60,76 @@ void PlayerActor::Gravity(float _Delta)
 	}
 
 	MoveVectorForce.Y -= GravityForce * _Delta;
-	if (0.0f > MoveVectorForce.Y)
+	float MoveVectorForceDelta = MoveVectorForce.Y * _Delta;
+	if (-MaxGravitySpeed >= MoveVectorForceDelta)
 	{
-		float4 MoveVectorForceDelta = MoveVectorForce * _Delta;
-		GameEngineColor GroundColor = CheckGroundColor(float4{ 0.0f, -35.0f });
+		MoveVectorForceDelta = -MaxGravitySpeed;
+	}
+	if (0.0f > MoveVectorForce.Y && -1.0f > MoveVectorForceDelta)
+	{
 		float Count = 0.0f;
-		for (; Count <= static_cast<int>(-MoveVectorForceDelta.Y); Count += 1.0f)
+		//for (; Count <= static_cast<int>(-MoveVectorForceDelta); Count += 1.0f)
+		for (; ; Count -= 1.0f)
 		{
-			if (DefaultGroundColor == GroundColor)
+			if (Count <= MoveVectorForceDelta)
+			{
+				Count = MoveVectorForceDelta;
+				break;
+			}
+
+			if (true == CheckGround(float4(0, -35.0f + Count)))
 			{
 				break;
 			}
-			 GroundColor = CheckGroundColor(float4{ 0.0f, -35.0f * Count });
 		}
-		if (0 != Count)
+		/*if (0 != Count)
 		{
-			MoveVectorForceDelta.Y = -1.0f * Count;
-		}
-		Transform.AddLocalPosition(MoveVectorForceDelta);
+			MoveVectorForceDelta = -1.0f * Count;
+		}*/
+		Transform.AddLocalPosition(float4(0, Count));
 	}
 	else
 	{
-		Transform.AddLocalPosition(MoveVectorForce * _Delta);
+		Transform.AddLocalPosition(float4(0,MoveVectorForceDelta));
+	}
+}
+
+void PlayerActor::CalCulateMove(float _Delta)
+{
+	float MovePosDelta = MoveVectorForce.X * _Delta;
+	if (0.0f == MovePosDelta)
+	{
+		return;
+	}
+
+	float Count = 0.0f;
+	for (; abs(Count) < abs(MovePosDelta);)
+	{
+		float4 MovePos = float4::ZERO;
+		GameEngineColor CheckColor = GameEngineColor(0, 0, 0, 0);
+
+		if (0.0f > MovePosDelta)
+		{
+			Count -= Move_Check_Float;
+			MovePos = -Move_Check_Float;
+			if (Count < MovePosDelta)
+			{
+				MovePos = MovePosDelta - (Count + Move_Check_Float);
+				Count = MovePosDelta;
+			}
+		}
+		else if (0.0f < MovePosDelta)
+		{
+			Count += Move_Check_Float;
+			MovePos = Move_Check_Float;
+			if (Count > MovePosDelta)
+			{
+				MovePos = MovePosDelta - (Count - Move_Check_Float);
+				Count = MovePosDelta;
+			}
+		}
+
+		Transform.AddLocalPosition(MovePos);
 	}
 }
 
@@ -124,6 +176,7 @@ bool PlayerActor::CheckGround(float4 _CheckPos)
 	GameEngineColor CheckColor = BackGroundMap::MainMap->GetColor(Transform.GetWorldPosition() + _CheckPos, DefaultGroundColor, DebugMapName);
 	if (DefaultGroundColor == CheckColor)
 	{
+		GravityReset();
 		Result = true;
 	}
 	else

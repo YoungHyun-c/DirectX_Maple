@@ -1,8 +1,9 @@
 #pragma once
 #include <GameEngineCore/GameEngineActor.h>
+#include "BasicFunction.h"
 
 // Ό³Έν :
-class PlayerActor : public GameEngineActor
+class PlayerActor : public BasicFunction
 {
 public:
 	// constructer destructer
@@ -26,14 +27,29 @@ public:
 		GravityForce = 0.0f;
 	}
 
+	void GravityOn()
+	{
+		IsGravity = true;
+	}
+
+	void GravityOff()
+	{
+		IsGravity = false;
+	}
+
 	inline void MoveVectorForceReset()
 	{
 		MoveVectorForce = float4::ZERO;
 	}
 
-	void AddMoveVectorForce(float4 _Force)
+	void AddMoveVectorForce(const float4& _Force)
 	{
 		MoveVectorForce += _Force;
+	}
+
+	void SetMoveVectorXForce(float _Force)
+	{
+		MoveVectorForce.X = _Force;
 	}
 
 	const float4 GetMoveVectorForce()
@@ -45,26 +61,33 @@ public:
 	void Gravity(float _Delta);
 	void CameraFocus(float _Delta);
 
-	GameEngineColor CheckGroundColor(float4 _CheckPos = float4::ZERO);
-	bool CheckGround(float4 _CheckPos = float4::ZERO);
+	GameEngineColor CheckGroundColor(float4 _CheckPos = float4{ 0.0f, -35.0f,1.0f});
+	//virtual bool CheckGround(float4 _CheckPos = float4{0.0f, 35.0f, 1.0f});
+	bool CheckGround(float4 _CheckPos = float4{ 0.0f, -35.0f, 1.0f });
+	float4 MoveVectorForce = float4::ZERO;
+
+	void CalCulateMove(float _Delta);
 
 protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
 	bool IsGround = true;
+	bool WallCheck = true;
+	bool IsWall = false;
+	bool IsGroundVectorReset = true;
 	bool CameraFocusValue = false;
 	std::shared_ptr<class GameEngineCamera> IsCameraFocus = nullptr;
 private:
 	bool IsGravity = true;
-	//float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };
+
 	float GravityForce = 0.0f;
-	float GravityPower = 2300.0f;
-	float MaxGravity = 1500.0f;
+	float GravityPower = 14000.0f;
+	float MaxGravity = 1400.0f;
+	float MaxGravitySpeed = 5.0f;
 	std::string DebugMapName;
 	std::shared_ptr<GameEngineTexture> DebugMap;
 
 	float CameraSpeed = 2.0f;
-	float4 MoveVectorForce = float4::ZERO;
 };
 

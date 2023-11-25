@@ -17,7 +17,7 @@ enum class PlayerState
 	Attack,
 	ProneAttack,
 	Jump,
-	DoubleJump,
+	Rope,
 	Fly,
 	Dead,
 	Max,
@@ -107,48 +107,53 @@ public:
 
 	void GetItem();
 
-protected:
+	void ChangeState(PlayerState _State);
 	void StateUpdate(float _Delta);
+	void ChangeAnimationState(const std::string& _StateName);
+protected:
+	void ChangeToStand();
 
 	void StandStart();
-	void StandUpdate(float _Delta);
 	void StandEnd();
+	void StandUpdate(float _Delta);
 
 	void WalkStart();
-	void WalkUpdate(float _Delta);
 	void WalkEnd();
+	void WalkUpdate(float _Delta);
 
 	void AlertStart();
+	void AlertEnd();
 	void AlertUpdate(float _Delta);
-	//void AlertEnd();
 
 	void ProneStart();
+	void ProneEnd();
 	void ProneUpdate(float _Delta);
-	//void ProneEnd();
 
 	void AttackStart();
-	void AttackUpdate(float _Delta);
 	void AttackEnd();
+	void AttackUpdate(float _Delta);
 
 	void ProneAttackStart();
+	void ProneAttackEnd();
 	void ProneAttackUpdate(float _Delta);
-	//void ProneAttackEnd();
 
 	void JumpStart();
-	void JumpUpdate(float _Delta);
 	void JumpEnd();
+	void JumpUpdate(float _Delta);
 
-	void DoubleJumpStart();
-	void DoubleJumpUpdate(float _Delta);
-	//void DoubleJumpEnd();
+	void RopeStart();
+	void RopeEnd();
+	void RopeUpdate(float _Delta);
+
 
 	void FlyStart();
+	void FlyEnd();
 	void FlyUpdate(float _Delta);
-	//void FlyEnd();
+	void FlyCheckUpdate();
 
 	void DeadStart();
+	void DeadEnd();
 	void DeadUpdate(float _Delta);
-	//void DeadEnd();
 
 	// SkillUpdate();
 
@@ -157,55 +162,56 @@ protected:
 	bool IsAttack = false;
 	std::shared_ptr<class GameEngineCollision> RangeCheck = nullptr;
 	std::shared_ptr<GameEngineCollision> AttackCol;
-	int a = 0;
-
-	void ChangeState(PlayerState _State);
-	void ChangeAnimationState(const std::string& _StateName);
 
 	ActorDir Dir = ActorDir::Max;
-	PlayerState State = PlayerState::Max;
 	PlayerClothes Clothes = PlayerClothes::Max;
-	std::string CurState = "";
+	PlayerState State = PlayerState::Max;
 	std::string AnimationName = "";
 
 	void DirCheck();
+	void RopeCheck();
+	bool IsRope = false;
+
+	//bool CheckGround(float4 _CheckPos = float4::ZERO) override;
 	
+	void InsideLockMap();
 private:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void Start() override;
 	void Update(float _Delta) override;
 
-	std::shared_ptr<class GameEngineSpriteRenderer> MainSpriteRenderer;
-	std::shared_ptr<class GameEngineSpriteRenderer> SkillRenderer;
-	std::shared_ptr<class GameEngineComponenet> TestCollision;
-
-	// ø¢≈Õ∑Œ ¿Ãµø
-	//std::shared_ptr<GameEngineTexture> DebugMap;
-	/*std::string DebugMapName;
-	float4 GravityForce = { 0.0f, 0.0f, 0.0f, 1.0f };*/
+	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
+	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer = nullptr;
 
 	std::shared_ptr<GameEngineCollision> PlayerCol;
 	std::shared_ptr<GameEngineCollision> PlayerDropCol;
 
 	float4 Pos = float4::ZERO;
-	float4 GroundCheck = { 0.0f, -10.0f };
+	float4 PlayerPos = float4::ZERO;
+	float4 GroundCheck = { 0.0f, -35.0f };
 	float4 UpCheck = { 0.0f, 50.0f };
 	float4 PlayerScale = float4::ZERO;
-	float4 PlayerPos = float4::ZERO;
 	float4 LeftCheck = { -20.0f, 0.0f };
 	float4 RightCheck = { 20.0f, 0.0f };
 	GameEngineColor CheckColor = DefaultGroundColor;
+	float SkipGround = 0.0f;
+	std::set<float> NotGround;
+	bool IsGroundCheck = true;
 	float4 CurMapScale = float4::ZERO;
-	void InsideLockMap();
 
 	float WalkSpeed = 300.0f;
 	bool GroundJump = false;
 	bool DoubleJump = false;
 	float JumpAirSpeed = 30.0f;
 	float AirSpeed = 200.0f;
-
-	static Player* CurPlayer;
-
+	float AlertTime = 0.0f;
+	float RopePivot = 0.0f;
+	float FlyTime = 0.0f;
+	float FlyLimitTime = 3.5f;
+	bool UpClick = false;
+	bool UpDoubleClick = false;
+	float UpClickCount = 0.0f;
+	float UpDoubleClickCount = 0.0f;
 
 	bool Bind = false;
 	float BindTime = 0.0f;
@@ -218,8 +224,6 @@ private:
 
 	float PrevTime = 0.0f;
 	float TimeCount = 0.0f;
-
-
 
 
 	void Level_Up();

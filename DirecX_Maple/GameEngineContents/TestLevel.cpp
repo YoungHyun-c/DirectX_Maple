@@ -20,6 +20,7 @@
 #include "AltarUi.h"
 #include "HandAttack.h"
 
+
 TestLevel::TestLevel()
 {
 
@@ -48,17 +49,14 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	if (nullptr == GameEngineSprite::Find("HuntMap.png"))
 	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("BackGround");
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources");
+		FilePath.MoveChild("BackGround\\");
+		GameEngineTexture::Load(FilePath.GetStringPath() + "HuntMap.Png");
+		GameEngineTexture::Load(FilePath.GetStringPath() + "HuntDebugMap.Png");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
-		}
 		GameEngineSprite::CreateSingle("HuntMap.png");
 		GameEngineSprite::CreateSingle("HuntDebugMap.png");
 	}
@@ -78,21 +76,21 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Adele_Battle_Character");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	//if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Adele_Battle_Character");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;
@@ -109,21 +107,21 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
-	if (nullptr == GameEngineSprite::Find("UITexture"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("UITexture");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	//if (nullptr == GameEngineSprite::Find("UITexture"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("UITexture");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
 
 	if (Map == nullptr)
 	{
@@ -134,9 +132,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		PlayerObject->SetDebugMap("HuntDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
+		PlayerObject->SetDebugMap("HuntDebugMap.png");
 	}
+
 
 	if (nullptr == PlayerSkill)
 	{
@@ -146,10 +145,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Skill = CreateActor<SkillManager>();
 	}
-	if (nullptr == UIObject)
-	{
-		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
-	}
+	//if (nullptr == UIObject)
+	//{
+	//	UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+	//}
 
 
 	if (nullptr == GameEngineSprite::Find("Potal"))

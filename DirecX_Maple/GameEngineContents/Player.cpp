@@ -11,6 +11,9 @@
 
 Player* Player::MainPlayer = nullptr;
 
+#define Rope_Y_PIVOT 15.0f
+#define Laader_Color GameEngineColor(0, 255, 0, 255)
+
 
 Player::Player()
 {
@@ -32,28 +35,29 @@ void Player::Start()
 
 	{
 		MainSpriteRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Player);
+		MainSpriteRenderer->Transform.SetLocalPosition({ 0, 0, 1 });
 		//MainSpriteRenderer->SetMaterial("2DTextureOver"); //10/10
 		//MainSpriteRenderer->SetImageScale({ 256.0f, 256.0f });
 		//MainSpriteRenderer->RenderBaseInfoValue.Target1 = 1; // 렌더타겟 이용 업데이트
 
-		MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Walk", "Battle_Walk", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Alert", "Battle_Alert", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Prone", "Battle_Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Attack", "Battle_Attack", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_ProneAttack", "Battle_ProneAttack", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Jump", "Battle_Jump", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Fly", "Battle_Fly", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Impale", "Battle_Impale", 0.3f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Dead", "Battle_Dead", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Battle_Rope", "Battle_Rope", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Stand", "Battle_Stand", 0.3f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Walk", "Battle_Walk", 0.3f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Alert", "Battle_Alert", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Prone", "Battle_Prone", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Attack", "Battle_Attack", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_ProneAttack", "Battle_ProneAttack", 0.3f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Jump", "Battle_Jump", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Fly", "Battle_Fly", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Impale", "Battle_Impale", 0.3f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Dead", "Battle_Dead", 0.1f, -1, -1, true);
+		//MainSpriteRenderer->CreateAnimation("Battle_Rope", "Battle_Rope", 0.1f, -1, -1, true);
 
 
 		MainSpriteRenderer->CreateAnimation("Normal_Stand", "Stand", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Walk", "Walk", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Alert", "Alert", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Prone", "Prone", 0.1f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.3f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_Attack", "Attack", 0.25f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_ProneAttack", "ProneAttack", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Jump", "Jump", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Fly", "Fly", 0.1f, -1, -1, true);
@@ -61,27 +65,29 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Normal_Dead", "Dead", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Rope", "Rope", 0.1f, -1, -1, true);
 
+		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
+		PlayerScale = Sprite->GetSpriteData(0).GetScale();
+		Sprite = nullptr;
+
 		/*SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
 		SkillRenderer->CreateAnimation("Divide1Hit_", "Divide1_Hit", 0.05f);
 		SkillRenderer->ChangeAnimation("Divide1Hit_");
 		SkillRenderer->Off();*/
 
+		State = PlayerState::Stand;
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
 		MainSpriteRenderer->AutoSpriteSizeOn();
 		MainSpriteRenderer->SetPivotType(PivotType::Center);
 
-		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
-		PlayerScale = Sprite->GetSpriteData(0).GetScale();
-		Sprite = nullptr;
 
 		// 색 검은색으로 만들기.
 		//MainSpriteRenderer->RenderBaseInfoValue.BaseColorOnly = 1;
 	}
 
-	PlayerPos = Transform.GetWorldPosition();
+	//PlayerPos = Transform.GetWorldPosition();
 	Dir = ActorDir::Right;
 	Clothes = PlayerClothes::Normal;
-	ChangeState(PlayerState::Stand);
+	//ChangeState(PlayerState::Stand);
 
 	{
 		PlayerCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Player);
@@ -95,17 +101,17 @@ void Player::Start()
 		PlayerDropCol->Transform.SetLocalScale({ 500.0f, 500.0f });
 	}
 
-	//std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Normal_Stand");
-	//_Animation->Inter[0];
+	//std::shared_ptr<GameEngineFrameAnimation> _Animation = MainSpriteRenderer->FindAnimation("Divide");
+	//_Animation->Inter[0] = 0.05f;
+	//_Animation->Inter[1] = 0.05f;
 
-	//{
-	//	SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	//	SkillRenderer->AutoSpriteSizeOn();
-	//	SkillRenderer->CreateAnimation("DobleJump", "JumpNormal", 0.1f, -1, -1, true);
-	//	SkillRenderer->ChangeAnimation("DobleJump");
-	//	SkillRenderer->Off();
-
-	//}
+	/*{
+		SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+		SkillRenderer->AutoSpriteSizeOn();
+		SkillRenderer->CreateAnimation("DobleJump", "JumpNormal", 0.1f, -1, -1, true);
+		SkillRenderer->ChangeAnimation("DobleJump");
+		SkillRenderer->Off();
+	}*/
 
 	//MainSpriteRenderer->SetSprite("HoHoYee_AttackABC2");
 	//MainSpriteRenderer->SetImageScale({ 91.0f, 80.0f });
@@ -132,25 +138,17 @@ void Player::Start()
 	//Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 	//float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
-	Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
+	//Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
 	GameEngineInput::AddInputObject(this);
-
-	//GetLevel()->GetMainCamera()->CameraTargetSetting(Transform, float4::BACKWARD * 500.0f);
-
-	//LevelUp = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-
-	//LevelUp->CreateAnimation("LevelUp", "LevelUp", 0.1f, false);
-	//LevelUp->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 150.0f });
-	//LevelUp->AutoSpriteSizeOn();
-	//LevelUp->ChangeAnimation("LevelUp");
-	//LevelUp->Off();
 }
 
 void Player::Update(float _Delta)
 {
+	//GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 	PlayerPos = Transform.GetWorldPosition();
 
 	PlayerActor::Update(_Delta);
+	InsideLockMap();
 
 	if (Bind == true)
 	{
@@ -164,130 +162,86 @@ void Player::Update(float _Delta)
 		KnockBackUpdate(_Delta);
 		return;
 	}
-
-	GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
-
 	GetItem();
+
+	//FlyCheckUpdate();
+
 	DirCheck();
+	RopeCheck();
 	StateUpdate(_Delta);
 
-	InsideLockMap();
-
-	//float Speed = 500.0f;
-	//if (GameEngineInput::IsPress('A', this))
-	//{
-	//	MainSpriteRenderer->LeftFlip();
-	//	Transform.AddLocalPosition(float4::FORWARD * _Delta * Speed);
-	//}
-
-	//if (GameEngineInput::IsPress('D', this))
-	//{
-	//	MainSpriteRenderer->RightFlip();
-	//	Transform.AddLocalPosition(float4::BACKWARD * _Delta * Speed);
-	//}
-
-	// 줌인 줌아웃
-	//if (GameEngineInput::IsPress('I', this))
-	//{
-	//	GetLevel()->GetMainCamera()->AddZoomValue(-_Delta);
-	//}
-	//if (GameEngineInput::IsPress('O', this))
-	//{
-	//	GetLevel()->GetMainCamera()->AddZoomValue(_Delta);
-	//}
-
-	//if (GameEngineInput::IsDown('P', this))
-	//{
-	//	MainSpriteRenderer->AnimationPauseSwitch();
-	//}
-
-	if (GameEngineInput::IsDown('Y', this))
+	if ((PlayerState::Prone == State || PlayerState::Alert == State || PlayerState::Stand == State || PlayerState::Walk == State) && false == IsGround)
 	{
-		std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
-
-		Shard->SetSkillActor("Shard");
+		ChangeState(PlayerState::Jump);
 	}
 
-	if (GameEngineInput::IsDown('R', this))
+	if (true == IsGround && (PlayerState::Jump != State && PlayerState::Walk != State))
 	{
-		std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
-
-		//Maestro->SetSkillActor("Maestro");
+		MoveVectorForceReset();
+		GravityReset();
 	}
 
-	//////////////////// 데미지 렌더 테스트중//////////////////////
-	if (GameEngineInput::IsDown('3', this))
+
+	//if (GameEngineInput::IsDown('Y', this))
+	//{
+	//	std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
+
+	//	Shard->SetSkillActor("Shard");
+	//}
+
+	//if (GameEngineInput::IsDown('R', this))
+	//{
+	//	std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
+
+	//	//Maestro->SetSkillActor("Maestro");
+	//}
+
+	////////////////////// 데미지 렌더 테스트중//////////////////////
+	//if (GameEngineInput::IsDown('3', this))
+	//{
+	//	std::shared_ptr<AdeleSkill> Ruin = GetLevel()->CreateActor<AdeleSkill>();
+	//	Ruin->SetSkillActor("Ruin");
+	//	/*std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
+	//	NewDR->PushDamage(480);*/
+	//}
+
+	//if (GameEngineInput::IsDown('Z', this))
+	//{
+	//	std::shared_ptr<AdeleSkill> Impale = GetLevel()->CreateActor<AdeleSkill>();
+
+	//	Impale->SetSkillActor("Impale", this);
+	//}
+
+	//if (GameEngineInput::IsDown('C', this))
+	//{
+	//	std::shared_ptr<AdeleSkill> Lesonens = GetLevel()->CreateActor<AdeleSkill>();
+
+	//	Lesonens->SetSkillActor("Lesonens");
+	//}
+
+	if (GameEngineInput::IsDown('5', this))
 	{
-		std::shared_ptr<AdeleSkill> Ruin = GetLevel()->CreateActor<AdeleSkill>();
-		Ruin->SetSkillActor("Ruin");
-		/*std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
-		NewDR->PushDamage(480);*/
+		//ChangeState(PlayerState::Fly);
+		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
+	}
+}
+
+void Player::ChangeToStand()
+{
+	if (true == IsGround)
+	{
+		GroundJump = false;
+		DoubleJump = false;
 	}
 
-	if (GameEngineInput::IsDown('Z', this))
+	if (0.0f < AlertTime)
 	{
-		std::shared_ptr<AdeleSkill> Impale = GetLevel()->CreateActor<AdeleSkill>();
-
-		Impale->SetSkillActor("Impale", this);
+		ChangeState(PlayerState::Alert);
 	}
-
-	if (GameEngineInput::IsDown('C', this))
+	else
 	{
-		std::shared_ptr<AdeleSkill> Lesonens = GetLevel()->CreateActor<AdeleSkill>();
-
-		Lesonens->SetSkillActor("Lesonens");
+		ChangeState(PlayerState::Stand);
 	}
-
-	if (GameEngineInput::IsDown('1', this))
-	{
-		Clothes = PlayerClothes::Battle;
-	}
-
-	//if (GameEngineInput::IsDown('2', this))
-	//{
-	//	Clothes = PlayerClothes::Normal;
-	//}
-	//if (GameEngineInput::IsDown('-', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_Fly");
-	//}
-	//if (GameEngineInput::IsDown('4', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_Impale");
-	//}
-	//if (GameEngineInput::IsDown('6', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_Prone");
-	//}
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_ProneAttack");
-	//}
-	//if (GameEngineInput::IsDown('8', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_Rope");
-	//}
-	//if (GameEngineInput::IsDown('9', this))
-	//{
-	//	MainSpriteRenderer->ChangeAnimation("Normal_Stand");
-	//}
-	//if (GameEngineInput::IsDown('0'))
-	//{
-	//	SkillRenderer->On();
-	//	SkillRenderer->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
-	//}
-
-
-	// 출력
-	//float4 WorldMousePos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
-	//OutputDebugStringA(WorldMousePos.ToString("\n").c_str());
-	//float MonsterHp = Monster::Monsters->GetMonsterHp();
-	//std::string CurMonsterHp = "MonsterHp : ";
-	//CurMonsterHp += std::to_string(static_cast<int>(MonsterHp));
-	//CurMonsterHp += "\n";
-	//OutputDebugStringA(CurMonsterHp.c_str());
-	//BackGroundMap::MainMap->GetLevel()->GetName();
-
 }
 
 void Player::ChangeState(PlayerState _State)
@@ -305,10 +259,24 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Jump:
 			JumpEnd();
 			break;
+		case PlayerState::Fly:
+			FlyEnd();
+			break;
+		case PlayerState::Rope:
+			RopeEnd();
+			break;
 		case PlayerState::Attack:
 			AttackEnd();
 			break;
+		case PlayerState::Alert:
+			AlertEnd();
+			break;
+		case PlayerState::Prone:
+			ProneEnd();
+			break;
+		case PlayerState::Max:
 		default:
+			MsgBoxAssert("존재하지 않는 상태값을 끝내려 했습니다.");
 			break;
 		}
 
@@ -335,8 +303,8 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Jump:
 			JumpStart();
 			break;
-		case PlayerState::DoubleJump:
-			DoubleJumpStart();
+		case PlayerState::Rope:
+			RopeStart();
 			break;
 		case PlayerState::Fly:
 			FlyStart();
@@ -344,7 +312,9 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Dead:
 			DeadStart();
 			break;
+		case PlayerState::Max:
 		default:
+			MsgBoxAssert("존재하지 않는 상태값을 시작하려 했습니다.");
 			break;
 		}
 	}
@@ -370,52 +340,54 @@ void Player::StateUpdate(float _Delta)
 		return ProneAttackUpdate(_Delta);
 	case PlayerState::Jump:
 		return JumpUpdate(_Delta);
-	case PlayerState::DoubleJump:
-		return DoubleJumpUpdate(_Delta);
+	case PlayerState::Rope:
+		return RopeUpdate(_Delta);
 	case PlayerState::Fly:
 		return FlyUpdate(_Delta);
 	case PlayerState::Dead:
 		return DeadUpdate(_Delta);
+	case PlayerState::Max:
 	default:
+		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌리려 했습니다.");
 		break;
 	}
 }
 
 void Player::DirCheck()
 {
-	ActorDir CheckDir = ActorDir::Max;
-
 	if (IsAttack == true)
 	{
 		return;
 	}
 
+	ActorDir CheckDir = ActorDir::Max;
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this) && true == GameEngineInput::IsFree(VK_RIGHT, this))
 	{
 		CheckDir = ActorDir::Left;
 		MainSpriteRenderer->LeftFlip();
-		if (IsGround == true && false == GameEngineInput::IsPress('X', this))
+		/*if (IsGround == true && false == GameEngineInput::IsPress('X', this) && IsRope == false)
 		{
 			ChangeAnimationState("Walk");
-		}
+		}*/
 	}
 	else if (true == GameEngineInput::IsPress(VK_RIGHT, this) && true == GameEngineInput::IsFree(VK_LEFT, this))
 	{
 		CheckDir = ActorDir::Right;
 		MainSpriteRenderer->RightFlip();
-		if (IsGround == true && false == GameEngineInput::IsPress('X', this))
+		/*if (IsGround == true && false == GameEngineInput::IsPress('X', this) && IsRope == false)
 		{
 			ChangeAnimationState("Walk");
-		}
+		}*/
 	}
 	else if(true == GameEngineInput::IsPress(VK_RIGHT, this) && true == GameEngineInput::IsDown(VK_LEFT, this)
 		|| true == GameEngineInput::IsDown(VK_RIGHT, this) && true == GameEngineInput::IsPress(VK_LEFT, this))
 	{
 		Dir = CheckDir;
-		if (IsGround == true)
+		/*if (IsGround == true && IsRope == false && AlertTime != 0.0f)
 		{
 			ChangeAnimationState("Stand");
-		}
+		}*/
 		return;
 	}
 
@@ -592,6 +564,77 @@ void Player::Level_Up()
 	LevelUpCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 }
 
+void Player::RopeCheck()
+{
+	float YPivot = 0.0f;
+	if (GameEngineInput::IsPress(VK_UP, this))
+	{
+		YPivot = Rope_Y_PIVOT;
+	}
+	else if (GameEngineInput::IsPress(VK_DOWN, this))
+	{
+		//YPivot = -Rope_Y_PIVOT;
+		YPivot = -3.0f;
+	}
+
+	IsRope = false;
+	for (float i = -3.0f; i <= 3.0f; i += 1.0f)
+	{
+		GameEngineColor CheckColor = CheckGroundColor(float4(i, YPivot - 35.0f));
+		if (Laader_Color == CheckColor)
+		{
+			IsRope = true;
+			RopePivot = i;
+			return;
+		}
+	}
+}
+
+void Player::FlyCheckUpdate()
+{
+	//if (State == PlayerState::Jump)
+	{
+		TimeCounting();
+		if (UpDoubleClick == true)
+		{
+			UpDoubleClick = false;
+		}
+		if (true == GameEngineInput::IsDown(VK_UP, this))
+		{
+			if (UpClick == true)
+			{
+				UpDoubleClick = true;
+				UpClick = false;
+				UpClickCount = 0.0f;
+			}
+			else
+			{
+				UpClick = true;
+				UpClickCount = 0.0f;
+			}
+		}
+		if (UpClick == true)
+		{
+			UpClickCount += TimeCount;
+			if (UpClickCount > 0.2f)
+			{
+				UpClick = false;
+			}
+		}
+
+		if (UpDoubleClick == true && State == PlayerState::Jump)
+		{
+			ChangeState(PlayerState::Fly);
+			return;
+		}
+
+		if (UpDoubleClick == true && State == PlayerState::Fly)
+		{
+			ChangeState(PlayerState::Stand);
+			return;
+		}
+	}
+}
 
 void Player::LevelStart(GameEngineLevel* _PrevLevel)
 {

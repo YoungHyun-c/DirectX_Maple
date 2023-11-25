@@ -18,7 +18,7 @@ public:
 	BackGroundMap& operator = (const BackGroundMap& _Other) = delete;
 	BackGroundMap& operator = (BackGroundMap&& _Other) noexcept = delete;
 
-	GameEngineColor GetColor(float4 _Pos, GameEngineColor _DefaultColor = DefaultGroundColor, std::string_view _DebugMapName ="");
+	GameEngineColor GetColor(float4 _Pos = float4{0.0f, 35.0f, 1.0f}, GameEngineColor _DefaultColor = DefaultGroundColor, std::string_view _DebugMapName = "");
 
 	inline float4 GetMapScale()
 	{

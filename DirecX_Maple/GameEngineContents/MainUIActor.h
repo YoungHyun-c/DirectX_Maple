@@ -67,5 +67,10 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> PlayerMpNumberRender4; // %
 
 	float4 FontImageScale = { 11.0f, 11.0f };
+
+
+///// QuickSlot
+	std::shared_ptr<GameEngineUIRenderer> QuickSlotback;
+	std::shared_ptr<GameEngineUIRenderer> QuickSlotCover;
 };
 

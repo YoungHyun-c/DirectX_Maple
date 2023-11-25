@@ -9,17 +9,8 @@
     <ClCompile Include="BackGroundMap.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalValue.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerActor.cpp">
-      <Filter>Object\Player</Filter>
     </ClCompile>
     <ClCompile Include="MainUIActor.cpp">
       <Filter>Global</Filter>
@@ -189,6 +180,15 @@
     <ClCompile Include="HandAttack.cpp">
       <Filter>Object\Boss\BossSKill</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerActor.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -202,14 +202,8 @@
     <ClInclude Include="BackGroundMap.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalValue.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerActor.h">
-      <Filter>Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="MainUIActor.h">
       <Filter>Global</Filter>
@@ -375,6 +369,12 @@
     </ClInclude>
     <ClInclude Include="HandAttack.h">
       <Filter>Object\Boss\BossSKill</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerActor.h">
+      <Filter>Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

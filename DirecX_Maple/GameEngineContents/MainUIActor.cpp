@@ -66,6 +66,9 @@ void MainUIActor::Start()
 		GameEngineSprite::CreateSingle("Lv_8.Png");
 		GameEngineSprite::CreateSingle("Lv_9.Png");
 		GameEngineSprite::CreateSingle("Lv.Png");
+
+		GameEngineSprite::CreateSingle("QuickSlotbackgrnd.Png");
+		GameEngineSprite::CreateSingle("QuickSlotlayercover.Png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("LevelUpMsgback"))
@@ -235,8 +238,22 @@ void MainUIActor::Start()
 		PlayerMpNumberRender4->Transform.SetLocalPosition({ 20.0f, -GlobalValue::WinScale.hY() + 34.0f });
 	}
 
-	GameEngineInput::AddInputObject(this);
 
+	// ½ºÅ³ Äü½½·Ô
+	{
+		QuickSlotback = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		QuickSlotback->SetSprite("QuickSlotbackgrnd.Png");
+		QuickSlotback->AutoSpriteSizeOn();
+		QuickSlotback->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
+
+		QuickSlotCover = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		QuickSlotCover->SetSprite("QuickSlotlayercover.Png");
+		QuickSlotCover->AutoSpriteSizeOn();
+		QuickSlotCover->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
+	}
+
+
+	GameEngineInput::AddInputObject(this);
 }
 
 void MainUIActor::Update(float _Delta)

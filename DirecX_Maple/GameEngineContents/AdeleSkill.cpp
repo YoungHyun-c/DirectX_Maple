@@ -71,111 +71,111 @@ void AdeleSkill::Start()
 
 
 	// 크리에이션
-	{
-		Creation1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Creation1->AutoSpriteSizeOn();
-		Creation1->CreateAnimation("Creation1", "Creation1_Special", 0.05f, -1, -1, false);
-		Creation1->ChangeAnimation("Creation1");
-		Creation1->Off();
+	//{
+	//	Creation1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+	//	Creation1->AutoSpriteSizeOn();
+	//	Creation1->CreateAnimation("Creation1", "Creation1_Special", 0.05f, -1, -1, false);
+	//	Creation1->ChangeAnimation("Creation1");
+	//	Creation1->Off();
 
-		Creation2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Creation2->AutoSpriteSizeOn();
-		Creation2->CreateAnimation("Creation2", "Creation2_Special", 0.05f, -1, -1, false);
-		Creation2->ChangeAnimation("Creation2");
-		Creation2->Off();
+	//	Creation2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+	//	Creation2->AutoSpriteSizeOn();
+	//	Creation2->CreateAnimation("Creation2", "Creation2_Special", 0.05f, -1, -1, false);
+	//	Creation2->ChangeAnimation("Creation2");
+	//	Creation2->Off();
 
-		Creation3 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Creation3->AutoSpriteSizeOn();
-		Creation3->CreateAnimation("Creation3", "Creation3_Special", 0.05f, -1, -1, false);
-		Creation3->ChangeAnimation("Creation3");
-		Creation3->Off();
-	}
+	//	Creation3 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+	//	Creation3->AutoSpriteSizeOn();
+	//	Creation3->CreateAnimation("Creation3", "Creation3_Special", 0.05f, -1, -1, false);
+	//	Creation3->ChangeAnimation("Creation3");
+	//	Creation3->Off();
+	//}
 
-	// 샤드
-	{
-		ShardEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		ShardEffect->AutoSpriteSizeOn();
-		ShardEffect->CreateAnimation("ShardEffect", "Shard_Effect", 0.05f, -1, -1, false);
-		ShardEffect->ChangeAnimation("ShardEffect");
-		ShardEffect->Off();
+	//// 샤드
+	//{
+	//	ShardEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	ShardEffect->AutoSpriteSizeOn();
+	//	ShardEffect->CreateAnimation("ShardEffect", "Shard_Effect", 0.05f, -1, -1, false);
+	//	ShardEffect->ChangeAnimation("ShardEffect");
+	//	ShardEffect->Off();
 
-		// new 라서 릭 남음 없애야됨
-		//std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* ShardVect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
-		//ShardVect->reserve(5);
-		//std::vector<std::shared_ptr<GameEngineCollision>>* ShardC = new std::vector<std::shared_ptr<GameEngineCollision>>();
-		//ShardC->reserve(5);
-		//for (int i = 0; i <5; i++)
-		//{
-		//	ShardImage = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		//	ShardImage->Transform.SetLocalRotation({ 0, 0, -90.0f });
-		//	ShardImage->AutoSpriteSizeOn();
-		//	ShardImage->CreateAnimation("Shard", "Shard_Start", 0.05f, -1, -1, false);
-		//	ShardImage->ChangeAnimation("Shard");
-		//	ShardImage->Off();
-		//	ShardVect->push_back(ShardImage);
-		//	
-		//	ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-		//	ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-		//	ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
-		//	ShardCol->SetCollisionType(ColType::AABBBOX2D);
-		//	ShardCol->Off();
-		//	ShardC->push_back(ShardCol);
-		//}
-		//Shard.push_back(ShardVect);
-		//ShardCollist.push_back(ShardC);
+	//	// new 라서 릭 남음 없애야됨
+	//	//std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* ShardVect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
+	//	//ShardVect->reserve(5);
+	//	//std::vector<std::shared_ptr<GameEngineCollision>>* ShardC = new std::vector<std::shared_ptr<GameEngineCollision>>();
+	//	//ShardC->reserve(5);
+	//	//for (int i = 0; i <5; i++)
+	//	//{
+	//	//	ShardImage = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	//	ShardImage->Transform.SetLocalRotation({ 0, 0, -90.0f });
+	//	//	ShardImage->AutoSpriteSizeOn();
+	//	//	ShardImage->CreateAnimation("Shard", "Shard_Start", 0.05f, -1, -1, false);
+	//	//	ShardImage->ChangeAnimation("Shard");
+	//	//	ShardImage->Off();
+	//	//	ShardVect->push_back(ShardImage);
+	//	//	
+	//	//	ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+	//	//	ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+	//	//	ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
+	//	//	ShardCol->SetCollisionType(ColType::AABBBOX2D);
+	//	//	ShardCol->Off();
+	//	//	ShardC->push_back(ShardCol);
+	//	//}
+	//	//Shard.push_back(ShardVect);
+	//	//ShardCollist.push_back(ShardC);
 
-		//ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-		//ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
-		//ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
-		//ShardCol->Off();
-	}
+	//	//ShardCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
+	//	//ShardCol->Transform.SetLocalPosition({ 0.0f, 0.0f, 1.0f });
+	//	//ShardCol->Transform.SetLocalScale({ 75.0f, 75.0f });
+	//	//ShardCol->Off();
+	//}
 
-	// 임페일
-	{
-		ImpaleA = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		ImpaleA->AutoSpriteSizeOn();
-		ImpaleA->CreateAnimation("ImpaleA", "Impale_LayerA", 0.02f, -1, -1, false);
-		ImpaleA->ChangeAnimation("ImpaleA");
-		ImpaleA->Off();
+	//// 임페일
+	//{
+	//	ImpaleA = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	ImpaleA->AutoSpriteSizeOn();
+	//	ImpaleA->CreateAnimation("ImpaleA", "Impale_LayerA", 0.02f, -1, -1, false);
+	//	ImpaleA->ChangeAnimation("ImpaleA");
+	//	ImpaleA->Off();
 
-		ImpaleB = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		ImpaleB->AutoSpriteSizeOn();
-		ImpaleB->CreateAnimation("ImpaleB", "Impale_LayerB", 0.05f, -1, -1, false);
-		ImpaleB->ChangeAnimation("ImpaleB");
-		ImpaleB->Off();
+	//	ImpaleB = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	ImpaleB->AutoSpriteSizeOn();
+	//	ImpaleB->CreateAnimation("ImpaleB", "Impale_LayerB", 0.05f, -1, -1, false);
+	//	ImpaleB->ChangeAnimation("ImpaleB");
+	//	ImpaleB->Off();
 
-		ImpaleE = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		ImpaleE->AutoSpriteSizeOn();
-		ImpaleE->CreateAnimation("ImpaleE", "Impale_LayerE", 0.05f, -1, -1, false);
-		ImpaleE->ChangeAnimation("ImpaleE");
-		ImpaleE->Off();
-	}
+	//	ImpaleE = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	ImpaleE->AutoSpriteSizeOn();
+	//	ImpaleE->CreateAnimation("ImpaleE", "Impale_LayerE", 0.05f, -1, -1, false);
+	//	ImpaleE->ChangeAnimation("ImpaleE");
+	//	ImpaleE->Off();
+	//}
 
-	// 레조넌스
-	{
-		LesonensPrePare = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		LesonensPrePare->AutoSpriteSizeOn();
-		LesonensPrePare->CreateAnimation("LesonensPrePare", "Lesonens_PrePare", 0.03f, -1, -1, false);
-		LesonensPrePare->ChangeAnimation("LesonensPrePare");
-		LesonensPrePare->Off();
+	//// 레조넌스
+	//{
+	//	LesonensPrePare = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	LesonensPrePare->AutoSpriteSizeOn();
+	//	LesonensPrePare->CreateAnimation("LesonensPrePare", "Lesonens_PrePare", 0.03f, -1, -1, false);
+	//	LesonensPrePare->ChangeAnimation("LesonensPrePare");
+	//	LesonensPrePare->Off();
 
-		LessonensBack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		LessonensBack->AutoSpriteSizeOn();
-		LessonensBack->CreateAnimation("LessonensBack", "Lesonens_Back", 0.1f, -1, -1, false);
-		LessonensBack->ChangeAnimation("LessonensBack");
-		LessonensBack->Off();
-		//LesonensEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		//LessonensEnd = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-	}
+	//	LessonensBack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	LessonensBack->AutoSpriteSizeOn();
+	//	LessonensBack->CreateAnimation("LessonensBack", "Lesonens_Back", 0.1f, -1, -1, false);
+	//	LessonensBack->ChangeAnimation("LessonensBack");
+	//	LessonensBack->Off();
+	//	//LesonensEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	//LessonensEnd = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//}
 
-	// 루인
-	{
-		Ruin = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
-		Ruin->AutoSpriteSizeOn();
-		Ruin->CreateAnimation("Ruin", "10_Ruin", 0.1f, -1, -1, false);
-		Ruin->ChangeAnimation("Ruin");
-		Ruin->Off();
-	}
+	//// 루인
+	//{
+	//	Ruin = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
+	//	Ruin->AutoSpriteSizeOn();
+	//	Ruin->CreateAnimation("Ruin", "10_Ruin", 0.1f, -1, -1, false);
+	//	Ruin->ChangeAnimation("Ruin");
+	//	Ruin->Off();
+	//}
 
 	// 6차 마에스트로
 	//{

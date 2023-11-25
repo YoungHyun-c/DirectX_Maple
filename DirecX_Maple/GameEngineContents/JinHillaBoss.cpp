@@ -207,7 +207,7 @@ void JinHillaBoss::KnockBackCollisionEvent(std::vector<GameEngineCollision*>& _C
 	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition().X - Transform.GetWorldPosition().X;
 	Dir.Y = Player::GetMainPlayer()->Transform.GetWorldPosition().Y - Transform.GetWorldPosition().Y + 500.0f;
 	Dir.Normalize();
-	Player::GetMainPlayer()->KnockBack(Dir, 600.0f, 1200.0f, 1.5f);
+	Player::GetMainPlayer()->KnockBack(Dir, 600.0f, 900.0f, 1.5f);
 }
 
 

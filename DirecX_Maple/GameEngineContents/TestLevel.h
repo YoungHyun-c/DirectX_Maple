@@ -31,7 +31,5 @@ private:
 
 	std::shared_ptr<class MainUIActor> UIObject = nullptr;
 	std::shared_ptr<class Mouse> MouseObject = nullptr;
-
-
 };
 

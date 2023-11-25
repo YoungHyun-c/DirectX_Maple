@@ -2,6 +2,7 @@
 
 #define DefaultGroundColor GameEngineColor(255, 0, 0, 255)
 #define DefaultWallColor GameEngineColor(0, 0, 128, 255)
+#define DefaultRopeColor GameEngineColor(0, 255, 0, 255)
 
 #include "CraneMonster.h"
 #include "DropItem.h"

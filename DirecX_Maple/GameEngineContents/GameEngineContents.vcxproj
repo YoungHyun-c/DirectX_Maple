@@ -177,14 +177,8 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PlayerActor.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerActor.cpp" />
     <ClCompile Include="PlayerDeathCountUI.cpp">
       <SubType>
       </SubType>
@@ -428,14 +422,8 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PlayerActor.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerActor.h" />
     <ClInclude Include="PlayerDeathCountUI.h">
       <SubType>
       </SubType>
