@@ -13,6 +13,12 @@ MainUIActor::~MainUIActor()
 
 MainUIActor* MainUIActor::PlayerUiActor = nullptr;
 
+void MainUIActor::LevelStart(GameEngineLevel* _PrevLevel)
+{
+	MainLv = PlayerValue::GetValue()->GetLevel();
+	PlayerLvUiRenderer();
+}
+
 void MainUIActor::Start()
 {
 	PlayerUiActor = this;
@@ -170,7 +176,7 @@ void MainUIActor::Start()
 
 	////// Lv
 	{
-		MainLv = PlayerValue::GetValue()->GetLevel();
+		//MainLv = PlayerValue::GetValue()->GetLevel();
 		MainLvRender = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		MainLvRender->SetSprite("Lv.Png");
 		MainLvRender->SetImageScale(FontImageScale);

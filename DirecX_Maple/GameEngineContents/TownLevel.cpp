@@ -154,28 +154,28 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("UITexture");
+	//if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("UITexture");
 
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
-		}
-		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-		GameEngineSprite::CreateSingle("ExpBar.Png");
-		GameEngineSprite::CreateSingle("ExpMax.Png");
-		GameEngineSprite::CreateSingle("ErdaGauge.Png");
-		GameEngineSprite::CreateSingle("SolErdagauge.Png");
-		GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
-	}
+	//	std::vector<GameEngineFile> Files = Dir.GetAllFile();
+	//	for (size_t i = 0; i < Files.size(); i++)
+	//	{
+	//		GameEngineFile& File = Files[i];
+	//		GameEngineTexture::Load(File.GetStringPath());
+	//	}
+	//	GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+	//	GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+	//	GameEngineSprite::CreateSingle("ExpBar.Png");
+	//	GameEngineSprite::CreateSingle("ExpMax.Png");
+	//	GameEngineSprite::CreateSingle("ErdaGauge.Png");
+	//	GameEngineSprite::CreateSingle("SolErdagauge.Png");
+	//	GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
+	//}
 	if (nullptr == GameEngineSprite::Find("Npc"))
 	{
 		GameEngineDirectory Dir;

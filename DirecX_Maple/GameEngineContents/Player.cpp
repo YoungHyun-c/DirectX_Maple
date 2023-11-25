@@ -147,8 +147,8 @@ void Player::Update(float _Delta)
 	//GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 	PlayerPos = Transform.GetWorldPosition();
 
-	PlayerActor::Update(_Delta);
 	InsideLockMap();
+	PlayerActor::Update(_Delta);
 
 	if (Bind == true)
 	{
@@ -218,12 +218,6 @@ void Player::Update(float _Delta)
 
 	//	Lesonens->SetSkillActor("Lesonens");
 	//}
-
-	if (GameEngineInput::IsDown('5', this))
-	{
-		//ChangeState(PlayerState::Fly);
-		MainSpriteRenderer->ChangeAnimation("Normal_Fly");
-	}
 }
 
 void Player::ChangeToStand()

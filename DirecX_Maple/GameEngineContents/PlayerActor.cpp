@@ -27,8 +27,12 @@ void PlayerActor::Update(float _Delta)
 {
 	IsWall = false;
 	Gravity(_Delta);
-	CalCulateMove(_Delta);
 	IsGround = CheckGround(float4(0.0f, -35.0f));
+	if (Player::GetMainPlayer()->GetBindValue() == true)
+	{
+		return;
+	}
+	CalCulateMove(_Delta);
 	
 	// 프리카메라 사용 설정
 	IsCameraFocus = GetLevel()->GetMainCamera();

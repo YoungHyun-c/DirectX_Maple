@@ -22,6 +22,8 @@ protected:
 	void Start() override;
 	void Update(float _Delta)override;
 
+	void LevelStart(GameEngineLevel* _PrevLevel) override;
+
 private:
 	float4 WindowHalfPos = float4::ZERO;
 	std::shared_ptr<GameEngineUIRenderer> AtereGaugeBack;
