@@ -189,6 +189,9 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>Object\Player</Filter>
     </ClCompile>
+    <ClCompile Include="SkillValue.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -375,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="PlayerActor.h">
       <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillValue.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

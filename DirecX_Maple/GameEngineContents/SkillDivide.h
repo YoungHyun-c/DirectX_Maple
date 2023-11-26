@@ -38,9 +38,11 @@ private:
 
 	size_t DivideHitCount;
 
+	std::string SkillName = "";
+	std::string SkillHitName = "";
+	GameEngineRandom RandomSKillNum;
+	int SkillNum;
 	std::shared_ptr<class GameEngineSpriteRenderer> Divide1;
-	//std::shared_ptr<class GameEngineSpriteRenderer> Divide2;
-	//std::shared_ptr<class GameEngineSpriteRenderer> Divide3;
 	std::shared_ptr<GameEngineCollision> AttackCol = nullptr;
 	void AttackEvent();
 

@@ -22,3 +22,4 @@
 #include "ContentsEnum.h"
 #include "GlobalValue.h"
 #include "PlayerValue.h"
+#include "SkillValue.h"

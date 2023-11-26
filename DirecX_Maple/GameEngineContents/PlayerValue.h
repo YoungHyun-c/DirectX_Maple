@@ -281,6 +281,16 @@ public:
 		return RedDeathCount;
 	}
 
+	bool GetDivide6Use()
+	{
+		return Divide6Use;
+	}
+
+	void SetDivideUse(bool _Value)
+	{
+		Divide6Use = _Value;
+	}
+
 protected:
 
 private:
@@ -303,7 +313,7 @@ private:
 // 플레이어 정보
 private:
 	////// 플레이어 스텟
-	int Str = 50000;
+	int Str = 40182;
 	int Dex = 4354;
 	int DamagePer = 74;
 	int BossDamagePer = 100;
@@ -312,6 +322,8 @@ private:
 	int AllAttack = 5772;
 	int AttackPer = 102;
 	int ProPertyIgnorePer = 5;
+
+	bool Divide6Use = false;
 
 
 // 보스전

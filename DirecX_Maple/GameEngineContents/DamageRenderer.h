@@ -32,18 +32,19 @@ private:
 	//int Str = 40182;
 	//int Dex = 4354;
 	//int AllAttack = 4772;
+	//float SkillFinalDamage = 2.2f;
+	//float CriticalConstant = 2.05f;
+	//float CriticalDam = 70.0f;
+	//float OffensePower = 2.12f;
+
 	float WeaponConstant = 1.34f;
 	float AdeleCorrection = 0.01f;
 
-	//float SkillFinalDamage = 2.2f;
-	//float CriticalConstant = 2.05f;
 
 	float SkillPercentDam = 0.0f;
 	float SkillFinalDamage = 1.0f;
 	float Critical = 1.0f;
 	float CriticalRandomDam = 0.0f;
-	//float CriticalDam = 70.0f;
-	//float OffensePower = 2.12f;
 	float DamagePower = 1.74f;
 	float DefenseCorrection = 0.98f;
 	float LevelCorrection = 1.5f;
@@ -61,7 +62,7 @@ private:
 	float OffensePower = 1.0f;
 	float AllDamagePer = 1.0f;
 	float DefenseCal = 1.0f;
-	float SkillOption = 99.0f;
+	float SkillOption = 20.0f;
 	int MonsterDefense = 10;
 	int MugongDefense = 10;
 	int BossDefense = 300;

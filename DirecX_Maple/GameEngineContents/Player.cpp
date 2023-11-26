@@ -144,7 +144,6 @@ void Player::Start()
 
 void Player::Update(float _Delta)
 {
-	//GameEngineDebug::DrawBox2D(MainSpriteRenderer->GetImageTransform(), float4::BLUE);
 	PlayerPos = Transform.GetWorldPosition();
 
 	InsideLockMap();
@@ -218,6 +217,25 @@ void Player::Update(float _Delta)
 
 	//	Lesonens->SetSkillActor("Lesonens");
 	//}
+
+	if (GameEngineInput::IsDown('5', this))
+	{
+		PlayerValue::GetValue()->SetGrade(5);
+	}
+	if (GameEngineInput::IsDown('6', this))
+	{
+		PlayerValue::GetValue()->SetGrade(6);
+	}
+
+	if (PlayerValue::GetValue()->GetDivide6Use() == true)
+	{
+		DivideTime += _Delta;
+		if (DivideTime >= DivideCool)
+		{
+			PlayerValue::GetValue()->SetDivideUse(false);
+			DivideTime = 0.0f;
+		}
+	}
 }
 
 void Player::ChangeToStand()

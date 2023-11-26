@@ -1,7 +1,8 @@
 #pragma once
+#include "BasicFunction.h"
 
 // Ό³Έν 
-class SkillFunction : public GameEngineActor
+class SkillFunction : public BasicFunction
 {
 	friend class SkillManager;
 public:
