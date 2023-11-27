@@ -42,12 +42,35 @@ public:
 		return DivideFinalDam;
 	}
 
+	void SetRuinSkillDam(int _Value)
+	{
+		RuinSkillDam = _Value;
+	}
+
+	void SetRuinFinalDam(int _Value)
+	{
+		RuinSkillFinalDam = _Value;
+	}
+
+	int GetRuinSkillDam()
+	{
+		return RuinSkillDam;
+	}
+
+	int GetRuinFinalDam()
+	{
+		return RuinSkillFinalDam;
+	}
+
 
 protected:
 
 private:
 	int DivideSKillDam = 402;
 	int DivideFinalDam = 220;
+
+	int RuinSkillDam = 550;
+	int RuinSkillFinalDam = 60;
 
 };
 

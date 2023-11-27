@@ -43,32 +43,6 @@ void AdeleSkill::Start()
 		UpJumpRenderer->Off();
 	}
 
-	// 디바이드
-	{
-		/*Divide1 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Divide1->AutoSpriteSizeOn();
-		Divide1->CreateAnimation("Divide1", "Divide_1", 0.05f, -1, -1, false);
-		Divide1->ChangeAnimation("Divide1");
-		Divide1->Off();
-
-		Divide2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Divide2->AutoSpriteSizeOn();
-		Divide2->CreateAnimation("Divide2", "Divide_2", 0.05f, -1, -1, false);
-		Divide2->ChangeAnimation("Divide2");
-		Divide2->Off();
-
-		Divide3 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Divide3->AutoSpriteSizeOn();
-		Divide3->CreateAnimation("Divide3", "Divide_3", 0.05f, -1, -1, false);
-		Divide3->ChangeAnimation("Divide3");
-		Divide3->Off();
-
-		AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
-		AttackCol->SetCollisionType(ColType::AABBBOX2D);
-		AttackCol->Transform.SetLocalScale({ 485.0f, 335.0f });
-		AttackCol->Off();*/
-	}
-
 
 	// 크리에이션
 	//{

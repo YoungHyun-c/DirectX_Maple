@@ -192,6 +192,12 @@
     <ClCompile Include="SkillValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="SkillRuin.cpp">
+      <Filter>Object\Player\SKill</Filter>
+    </ClCompile>
+    <ClCompile Include="InvinCibilityEffect.cpp">
+      <Filter>Object\Player\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -381,6 +387,12 @@
     </ClInclude>
     <ClInclude Include="SkillValue.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillRuin.h">
+      <Filter>Object\Player\SKill</Filter>
+    </ClInclude>
+    <ClInclude Include="InvinCibilityEffect.h">
+      <Filter>Object\Player\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

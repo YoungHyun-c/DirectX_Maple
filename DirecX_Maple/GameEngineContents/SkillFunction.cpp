@@ -24,7 +24,7 @@ void SkillFunction::Start()
 	// �齺ų
 	if (nullptr == SkillRender2)
 	{
-		SkillRender2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+		SkillRender2 = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
 		SkillRender2->AutoSpriteSizeOn();
 		SkillRender2->Off();
 	}

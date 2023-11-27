@@ -8,6 +8,7 @@
 #include "BossSkillEffect.h"
 
 #include "DropItem.h"
+#include "InvinCibilityEffect.h"
 
 Player* Player::MainPlayer = nullptr;
 
@@ -131,14 +132,19 @@ void Player::Start()
 
 	//std::shared_ptr<GameEngineRenderer> Renderer = CreateComponent<GameEngineRenderer>(0);
 	/*Renderer->Transform.SetLocalPosition({ 0, 150, 0 });
-	Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/
-		
+	Renderer->Transform.SetLocalScale({ 50, 50, 100 });*/	
 
 	//float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
 	//Transform.SetLocalPosition({ HalfWindowScale.X, -HalfWindowScale.Y, -500.0f });
 	//float4 Pos = MainSpriteRenderer->Transform.GetWorldPosition();
 
 	//Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
+
+	{
+		Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
+		Invicible->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
+		Invicible->Off();
+	}
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -227,6 +233,8 @@ void Player::Update(float _Delta)
 		PlayerValue::GetValue()->SetGrade(6);
 	}
 
+	InvicibleCheck();
+
 	if (PlayerValue::GetValue()->GetDivide6Use() == true)
 	{
 		DivideTime += _Delta;
@@ -235,6 +243,23 @@ void Player::Update(float _Delta)
 			PlayerValue::GetValue()->SetDivideUse(false);
 			DivideTime = 0.0f;
 		}
+	}
+}
+void Player::InvicibleCheck()
+{
+	Invicible->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 50.0f });
+	if (GameEngineInput::IsDown('E', this) && Invicibility == false)
+	{
+		Invicibility = true;
+		PlayerCol->Off();
+		Invicible->GetStartInvincible();
+		Invicible->On();
+	}
+	else if (GameEngineInput::IsDown('E', this) && Invicibility == true)
+	{
+		Invicibility = false;
+		PlayerCol->On();
+		Invicible->GetEndInvincible();
 	}
 }
 

@@ -178,10 +178,10 @@ void SkillDivide::UseSkill()
 	ActorDir Dir = Player::GetMainPlayer()->GetDir();
 	if (Dir == ActorDir::Right)
 	{
-		SkillRender1->Transform.SetWorldPosition({ 207.5f, 0.0f});
+		SkillRender1->Transform.SetWorldPosition({ 207.5f, -25.0f});
 		SkillRender1->LeftFlip();
-		SkillCollision->Transform.SetWorldPosition({ 207.5f, 0.0f });
-		AttackCol->Transform.SetWorldPosition({ +207.5f, 0.0f });
+		SkillCollision->Transform.SetWorldPosition({ 207.5f, -25.0f });
+		AttackCol->Transform.SetWorldPosition({ +207.5f, -25.0f });
 	}
 	else if (Dir == ActorDir::Left)
 	{
@@ -201,13 +201,11 @@ void SkillDivide::EndSkill()
 	SkillFunction::EndSkill();
 	Off();
 	SkillRender1->Off();
-
 }
 
 void SkillDivide::Update(float _Delta)
 {
 	//SkillFunction::Update(_Delta);
-	TimeCounting();
 
 	Transform.SetLocalPosition(PlayerPos);
 	if (true == UseFirst)

@@ -35,7 +35,6 @@ private:
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 	std::shared_ptr<class DamageRenderer> NewDR = nullptr;
 
-
 	size_t DivideHitCount;
 
 	std::string SkillName = "";

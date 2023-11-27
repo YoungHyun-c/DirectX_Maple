@@ -228,6 +228,10 @@ private:
 	float DivideTime = 0.0f;
 	float DivideCool = 6.0f;
 
+	bool Invicibility = false;
+	std::shared_ptr<class InvinCibilityEffect> Invicible = nullptr;
+	void InvicibleCheck();
+
 	void Level_Up();
 	std::shared_ptr<GameEngineSpriteRenderer> LevelUp = nullptr;
 	std::shared_ptr<GameEngineCollision> LevelUpCol = nullptr;

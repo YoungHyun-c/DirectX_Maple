@@ -72,7 +72,9 @@ void ContentsCore::Start()
 {
 	// 만드는쉐이더
 	//UserRes();
-
+	
+	//GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
+	
 	//GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
 	GameEngineFont::Load("메이플스토리");
 	GameEngineGUI::CreateGUIWindow<ContentsControlWindow>("ContentsControlWindow");

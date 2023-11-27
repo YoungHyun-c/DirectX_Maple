@@ -5,6 +5,8 @@
 //#include "AdeleSkill.h"
 #include "SkillFunction.h"
 #include "SkillDivide.h"
+#include "SkillRuin.h"
+
 #include "DamageRenderer.h"
 
 SkillManager* SkillManager::PlayerSkillManager = nullptr;
@@ -37,6 +39,7 @@ void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 void SkillManager::Start()
 {
 	CreateSkill<SkillDivide>("Divide1");
+	CreateSkill<SkillRuin>("Ruin");
 }
 
 void SkillManager::Update(float _Delta)

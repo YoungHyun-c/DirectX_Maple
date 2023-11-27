@@ -36,6 +36,13 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown('3', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Ruin");
+		ChangeState(PlayerState::Alert);
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -89,6 +96,13 @@ void Player::WalkUpdate(float _Delta)
 	if (GameEngineInput::IsDown(VK_SHIFT, this))
 	{
 		ChangeState(PlayerState::Attack);
+		return;
+	}
+
+	if (GameEngineInput::IsDown('3', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Ruin");
+		ChangeState(PlayerState::Alert);
 		return;
 	}
 
