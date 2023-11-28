@@ -75,9 +75,6 @@
     <ClCompile Include="MapEditorLevel.cpp">
       <Filter>Level\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="BossLevelUi.cpp">
-      <Filter>Object\Boss\UI</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
@@ -168,15 +165,6 @@
     <ClCompile Include="JinHillaSickleCut.cpp">
       <Filter>Object\Boss\BossAnime</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerDeathCountUI.cpp">
-      <Filter>Object\Boss\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CandleUi.cpp">
-      <Filter>Object\Boss\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="AltarUi.cpp">
-      <Filter>Object\Boss\UI</Filter>
-    </ClCompile>
     <ClCompile Include="HandAttack.cpp">
       <Filter>Object\Boss\BossSKill</Filter>
     </ClCompile>
@@ -197,6 +185,24 @@
     </ClCompile>
     <ClCompile Include="InvinCibilityEffect.cpp">
       <Filter>Object\Player\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="AltarUi.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossChat.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="BossLevelUi.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CandleUi.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDeathCountUI.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClCompile>
+    <ClCompile Include="AchieveUI.cpp">
+      <Filter>Object\Boss\BossUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,9 +279,6 @@
     </ClInclude>
     <ClInclude Include="MapEditorLevel.h">
       <Filter>Level\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="BossLevelUi.h">
-      <Filter>Object\Boss\UI</Filter>
     </ClInclude>
     <ClInclude Include="PlayerValue.h">
       <Filter>Global</Filter>
@@ -367,15 +370,6 @@
     <ClInclude Include="JinHillaSickleCut.h">
       <Filter>Object\Boss\BossAnime</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerDeathCountUI.h">
-      <Filter>Object\Boss\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CandleUi.h">
-      <Filter>Object\Boss\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="AltarUi.h">
-      <Filter>Object\Boss\UI</Filter>
-    </ClInclude>
     <ClInclude Include="HandAttack.h">
       <Filter>Object\Boss\BossSKill</Filter>
     </ClInclude>
@@ -393,6 +387,24 @@
     </ClInclude>
     <ClInclude Include="InvinCibilityEffect.h">
       <Filter>Object\Player\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="AltarUi.h">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossChat.h">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="BossLevelUi.h">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CandleUi.h">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeathCountUI.h">
+      <Filter>Object\Boss\BossUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AchieveUI.h">
+      <Filter>Object\Boss\BossUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,6 +506,9 @@
     </Filter>
     <Filter Include="Level\0">
       <UniqueIdentifier>{720b0d5a-10d1-4d29-8d9f-437c43f24d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\BossUI">
+      <UniqueIdentifier>{2fd6e8fb-3d50-48c6-b608-d00273fbb27e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

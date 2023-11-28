@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AchieveUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="AdeleSkill.cpp">
       <SubType>
       </SubType>
@@ -32,6 +36,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="BossBoxReward.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BossChat.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -276,6 +284,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AchieveUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="AdeleSkill.h">
       <SubType>
       </SubType>
@@ -289,6 +301,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="BossBoxReward.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossChat.h">
       <SubType>
       </SubType>
     </ClInclude>

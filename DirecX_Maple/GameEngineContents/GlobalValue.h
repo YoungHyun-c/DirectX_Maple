@@ -123,6 +123,16 @@ public:
 		SickleCut = _Time;
 	}
 
+	void SetBossDeath(bool _Value)
+	{
+		BossDeath = _Value;
+	}
+
+	bool GetBossDeath()
+	{
+		return BossDeath;
+	}
+
 protected:
 
 private:
@@ -140,5 +150,7 @@ private:
 	bool Altar = false;
 
 	float SickleCut = 0.0f;
+
+	bool BossDeath = false;
 };
 

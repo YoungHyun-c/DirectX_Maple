@@ -9,6 +9,8 @@
 #include "BossSkillEffect.h"
 #include "BossSkillManager.h"
 #include "GlobalValue.h"
+#include "AchieveUI.h"
+#include "BossChat.h"
 
 JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
@@ -146,26 +148,25 @@ void JinHillaBoss::Update(float _Delta)
 	//JinDirCheck();
 	StateUpdate(_Delta);
 
-	//BossSkillManager::BossSkillEffectManager->Update(_Delta);
 
-	// 垮噶狼 清脚 家券
-	/*CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 50.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
-	CravingMob1->CallRegen();*/
-
-	/*if (CravingMob1->GetState() == (MonsterState::Death))
+	if (DarkRenderer->GetColorData().MulColor.A >= 1)
 	{
-		DeathTime += _Delta;
-		if (DeathTime > DeathLimitTime)
-		{
-			DeathTime = 0.0f;
-			ChangeState(MonsterState::Skill3);
-		}
-	}*/
-
+		GameEngineCore::ChangeLevel("9.BossRewardLevel");
+		return;
+	}
 
 	if (JinHillaCurHp <= 0)
 	{
+		GlobalValue::GetNeedGlobalValue()->SetBossDeath(true);
 		ChangeState(MonsterState::Death);
+
+		ChangeTime += _Delta;
+		if (ChangeTime >= ChangeLevelTime)
+		{
+			DarkRenderer->Transform.SetWorldPosition(0);
+			DarkRenderer->GetColorData().MulColor.A += _Delta * 0.5f;
+			DarkRenderer->On();
+		}
 		return;
 	}
 
@@ -229,10 +230,36 @@ void JinHillaBoss::LevelStart(GameEngineLevel* _PrevLevel)
 	//JinHillaCurHp = 133000000000000; // 2其
 	//JinHillaCurHp = 89000000000000;  // 3其	
 	//JinHillaCurHp = 45000000000000;  // 4其
+
+	if (DarkRenderer == nullptr)
+	{
+		DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
+		DarkRenderer->SetSprite("Dark.Png");
+		DarkRenderer->GetColorData().MulColor.A = 0;
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->Off();
+	}
+
+	if (Chat == nullptr)
+	{
+		Chat = GetLevel()->CreateActor<BossChat>(ContentsObjectType::UI);
+	}
+	if (Achieve == nullptr)
+	{
+		Achieve = GetLevel()->CreateActor<AchieveUI>(ContentsObjectType::UI);
+	}
 }
 
 void JinHillaBoss::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	if (nullptr != DarkRenderer)
+	{
+		DarkRenderer->Death();
+		DarkRenderer = nullptr;
+	}
+
+	DarkRenderer->GetColorData().MulColor.A = 0;
+	ChangeTime = 0.0f;
 	Death();
 }
 
@@ -314,6 +341,14 @@ void JinHillaBoss::SkillAnimation()
 		MonsterRenderer->SetFrameEvent("Attack7", 17, [&](GameEngineSpriteRenderer*)
 			{
 				JinHillChoppingSkillCol->Off();
+			}
+		);
+	}
+
+	{
+		MonsterRenderer->SetEndEvent("Death", [&](GameEngineSpriteRenderer*)
+			{
+				MonsterRenderer->Off();
 			}
 		);
 	}

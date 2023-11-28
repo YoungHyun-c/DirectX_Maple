@@ -196,6 +196,13 @@ void HandAttack::Start()
 
 void HandAttack::Update(float _Delta)
 {
+
+	if (GlobalValue::GetNeedGlobalValue()->GetBossDeath() == true)
+	{
+		Off();
+		return;
+	}
+
 	HandAttackTime += _Delta;
 	if (HandAttackTime >= HandCoolTime)
 	{

@@ -19,6 +19,8 @@
 #include "CandleUi.h"
 #include "AltarUi.h"
 #include "HandAttack.h"
+#include "BossChat.h"
+#include "AchieveUI.h"
 
 
 TestLevel::TestLevel()
@@ -107,21 +109,21 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
-	//if (nullptr == GameEngineSprite::Find("UITexture"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("UITexture");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	if (nullptr == GameEngineSprite::Find("UITexture"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
 
 	if (Map == nullptr)
 	{
@@ -145,11 +147,14 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Skill = CreateActor<SkillManager>();
 	}
-	//if (nullptr == UIObject)
-	//{
-	//	UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
-	//}
+	if (nullptr == UIObject)
+	{
+		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
+	}
 
+
+	//std::shared_ptr<BossChat> ChatTest = CreateActor<BossChat>(ContentsObjectType::UI);
+	//std::shared_ptr<AchieveUI> AchieveTest = CreateActor<AchieveUI>(ContentsObjectType::UI);
 
 	if (nullptr == GameEngineSprite::Find("Potal"))
 	{

@@ -127,5 +127,12 @@ private:
 	void BindCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 	void KnockBackCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 	void SkillAnimation();
+
+	std::shared_ptr<class BossChat> Chat = nullptr;
+	std::shared_ptr<class AchieveUI> Achieve = nullptr;
+
+	float ChangeTime = 0.0f;
+	float ChangeLevelTime = 6.0f;
+	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
 };
 

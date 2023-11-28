@@ -101,7 +101,7 @@ void ContentsCore::Start()
 
 	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
 	 
-	GameEngineCore::ChangeLevel("1.TitleLevel");
+	//GameEngineCore::ChangeLevel("1.TitleLevel");
 	//GameEngineCore::ChangeLevel("2.TownLevel");
 	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
 	//GameEngineCore::ChangeLevel("4.FormerLevel");
@@ -109,7 +109,7 @@ void ContentsCore::Start()
 
 	//GameEngineCore::ChangeLevel("6.BossEntranceLevel");
 
-	//GameEngineCore::ChangeLevel("0.TestLevel");
+	GameEngineCore::ChangeLevel("0.TestLevel");
 
 	// 맵 에디터 테스트
 	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");

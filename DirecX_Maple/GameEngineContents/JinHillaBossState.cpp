@@ -394,8 +394,8 @@ void JinHillaBoss::DeathStart()
 }
 void JinHillaBoss::DeathUpdate(float _Delta)
 {
-	if (true == MonsterRenderer->IsCurAnimationEnd())
+	/*if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		GameEngineCore::ChangeLevel("9.BossRewardLevel");
-	}
+	}*/
 }
