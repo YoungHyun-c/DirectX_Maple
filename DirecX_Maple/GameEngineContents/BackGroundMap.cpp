@@ -33,7 +33,7 @@ void BackGroundMap::Update(float _DeltaTime)
 
 	// Fade in Fade Out 테스트
 	{
-		//DarkRenderer->GetColorData().MulColor.A -= _DeltaTime * 0.5f;
+		DarkRenderer->GetColorData().MulColor.A -= _DeltaTime * 0.7f;
 	}
 }
 
@@ -63,8 +63,8 @@ void BackGroundMap::Start()
 	Renderer->On();
 	DebugRenderer->Off();
 
-	//DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsRenderType::Fade);
-	//DarkRenderer->SetSprite("Dark.Png");
+	DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
+	DarkRenderer->SetSprite("Dark.Png");
 }
 
 void BackGroundMap::Init(const std::string& _FileName, const std::string& _DebugFileName)
@@ -116,9 +116,9 @@ void BackGroundMap::LevelStart(GameEngineLevel* _PrevLevel)
 	
 	//Fade in Fade Out 테스트
 	{
-		//DarkRenderer->GetColorData().MulColor.A = 1;
-		//DarkRenderer->Transform.SetWorldPosition(0);
-		//DarkRenderer->On();
+		DarkRenderer->GetColorData().MulColor.A = 1;
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->On();
 	}
 
 	if (FileName == "TownMap.png")

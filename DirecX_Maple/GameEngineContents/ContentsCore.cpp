@@ -101,11 +101,11 @@ void ContentsCore::Start()
 
 	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
 	 
-	//GameEngineCore::ChangeLevel("1.TitleLevel");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
 	//GameEngineCore::ChangeLevel("2.TownLevel");
 	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
 	//GameEngineCore::ChangeLevel("4.FormerLevel");
-	GameEngineCore::ChangeLevel("5.PracticeLevel");
+	//GameEngineCore::ChangeLevel("5.PracticeLevel");
 
 	//GameEngineCore::ChangeLevel("6.BossEntranceLevel");
 

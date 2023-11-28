@@ -23,6 +23,17 @@ void RingPotalManager::Start()
 	RingPotalCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Potal);
 	RingPotalCol->Transform.SetLocalScale({ 80.0f, 100.0f });
 	RingPotalCol->SetCollisionType(ColType::AABBBOX2D);
+
+	DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
+	DarkRenderer->SetSprite("Dark.Png");
+	DarkRenderer->GetColorData().MulColor.A = 0;
+	DarkRenderer->Transform.SetWorldPosition(0);
+	DarkRenderer->Off();
+}
+
+void RingPotalManager::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	DarkRenderer->GetColorData().MulColor.A = 0;
 }
 
 void RingPotalManager::Update(float _Delta)
@@ -40,10 +51,23 @@ void RingPotalManager::Update(float _Delta)
 			{
 				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
-					GameEngineCore::ChangeLevel(LinkedMap);
+					//GameEngineCore::ChangeLevel(LinkedMap);
+					ChangeLevel = true;
 				}
 			};
 		RingPotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
+	}
+
+	if (ChangeLevel == true)
+	{
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->GetColorData().MulColor.A += _Delta * 0.5f;
+		DarkRenderer->On();
+	}
+	if (DarkRenderer->GetColorData().MulColor.A >= 1)
+	{
+		GameEngineCore::ChangeLevel(LinkedMap);
+		ChangeLevel = false;
 	}
 }
 

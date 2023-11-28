@@ -26,8 +26,11 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 private:
 	std::shared_ptr<GameEngineUIRenderer> JinHillaEnterAni;
 	bool AniEnd = false;
+
+	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
 };
 

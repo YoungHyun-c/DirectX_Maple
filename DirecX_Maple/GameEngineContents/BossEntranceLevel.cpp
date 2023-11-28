@@ -30,11 +30,6 @@ void BossEntranceLevel::Update(float _Delta)
 	{
 		Map->SwitchRenderer();
 	}
-
-	if (GameEngineInput::IsDown('3', this))
-	{
-		//GameEngineCore::ChangeLevel("BossLevel");
-	}
 }
 
 void BossEntranceLevel::LevelStart(GameEngineLevel* _PrevLevel)

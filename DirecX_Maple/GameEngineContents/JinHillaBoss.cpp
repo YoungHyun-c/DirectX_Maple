@@ -169,26 +169,10 @@ void JinHillaBoss::Update(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('5', this))
-	{
-		//ChangeState(MonsterState::Stand);
-		/*MonsterRenderer->ChangeAnimation("Move");
-		MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
-		MonsterRenderer->On();
-		MonsterCollision->On();*/
-	}
-	//if (GameEngineInput::IsDown('6', this))
-	//{
-	//	ChangeState(MonsterState::Skill1);
-	//}
-	//if (GameEngineInput::IsDown('7', this))
-	//{
-	//	ChangeState(MonsterState::Skill1After);
-	//}
 
 	if (GameEngineInput::IsDown('-', this))
 	{
-		//JinHillaCurHp -= 10000000000000;
+		JinHillaCurHp -= 10000000000000;
 	}
 
 	InsideLockMap();

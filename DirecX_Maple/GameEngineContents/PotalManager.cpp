@@ -26,9 +26,20 @@ void PotalManager::Start()
 	PotalCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Potal);
 	PotalCol->Transform.SetLocalScale({ 80.0f, 100.0f });
 	PotalCol->SetCollisionType(ColType::AABBBOX2D);
+
+	DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
+	DarkRenderer->SetSprite("Dark.Png");
+	DarkRenderer->GetColorData().MulColor.A = 0;
+	DarkRenderer->Transform.SetWorldPosition(0);
+	DarkRenderer->Off();
 }
 
-void PotalManager::Update(float _Detla)
+void PotalManager::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	DarkRenderer->GetColorData().MulColor.A = 0;
+}
+
+void PotalManager::Update(float _Delta)
 {
 	if (LinkedMap == GetLinkedMap())
 	{
@@ -37,10 +48,22 @@ void PotalManager::Update(float _Detla)
 			{
 				if (GameEngineInput::IsDown(VK_UP, Player::GetMainPlayer()))
 				{
-					GameEngineCore::ChangeLevel(LinkedMap);
+					ChangeLevel = true;
 				}
 			};
 		PotalCol->CollisionEvent(ContentsCollisionType::Player, PotalEvent);
+	}
+
+	if (ChangeLevel == true)
+	{
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->GetColorData().MulColor.A += _Delta * 0.5f;
+		DarkRenderer->On();
+	}
+	if (DarkRenderer->GetColorData().MulColor.A >= 1)
+	{
+		GameEngineCore::ChangeLevel(LinkedMap);
+		ChangeLevel = false;
 	}
 
 	//if (LinkedMap == "3.CrossLoadLevel")

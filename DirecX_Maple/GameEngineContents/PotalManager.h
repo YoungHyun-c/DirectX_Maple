@@ -29,9 +29,14 @@ protected:
 	void Start() override;
 	void Update(float _Delta) override;
 
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
+
 private:
 	std::string LinkedMap = "";
 	std::shared_ptr<class GameEngineSpriteRenderer> PotalSprite;
 	std::shared_ptr<GameEngineCollision> PotalCol;
+
+	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
+	bool ChangeLevel = false;
 };
 
