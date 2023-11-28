@@ -85,7 +85,6 @@ private:
 
 
 	//std::shared_ptr<GameEngineSpriteRenderer> CravingMob;
-	
-	std::string CurState = "";
+
 };
 

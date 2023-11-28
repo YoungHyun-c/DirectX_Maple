@@ -141,7 +141,7 @@ protected:
 	int MonsterName = 0;
 	ActorDir Dir = ActorDir::Left;
 	MonsterState State = MonsterState::Max;
-	std::string CurState = "Max";
+	MonsterState CurState = MonsterState::Max;
 	std::string AnimationName = "";
 
 	bool IsGround = false;

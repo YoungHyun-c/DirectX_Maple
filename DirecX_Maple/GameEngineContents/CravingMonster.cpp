@@ -123,6 +123,7 @@ void CravingMonster::StandStart()
 
 void CravingMonster::DieStart()
 {
+	DeathCount -= 1;
 	ChangeAnimationState("DIe");
 	CravingAttackRangeCol->Off();
 	MonsterCollision->Off();
@@ -153,13 +154,6 @@ void CravingMonster::DeathUpdate(float _Delta)
 		MonsterRenderer->Off();
 		CravingAttackRangeCol->Off();
 	}
-
-	//DeathTime += _Delta;
-	//if (DeathTime > RegenCool)
-	//{
-	//	ChangeState(MonsterState::Regen);
-	//	DeathTime = 0.0f;
-	//}
 }
 
 void CravingMonster::AttackUpdate(float _Delta)
@@ -221,21 +215,23 @@ void CravingMonster::Hit(long long _Damage, bool _Attack)
 		Hp -= _Damage;
 	}
 
-	if (Hp <= 0)
+	if (DeathCount <= 0)
 	{
-		DeathCount -= 1;
+		CravingSkillCol->Off();
+		ChangeState(MonsterState::Death);
+		return;
+	}
+
+	if (Hp <= 0 && CurState != MonsterState::Die)
+	{
 		ChangeState(MonsterState::Die);
-		if (DeathCount <= 0)
-		{
-			CravingSkillCol->Off();
-			ChangeState(MonsterState::Death);
-			DeathCount = 3;
-		}
+		return;
 	}
 }
 
 void CravingMonster::CallRegen()
 {
+	DeathCount = 3;
 	ChangeState(MonsterState::Regen);
 }
 

@@ -353,8 +353,8 @@ void MonsterFunction::ChangeState(MonsterState _State)
 			break;
 		}
 	}
-
 	State = _State;
+	CurState = State;
 }
 
 void MonsterFunction::StateUpdate(float _Delta)

@@ -20,6 +20,8 @@ void GhostDamien::Start()
 {
 	TimeCounting();
 
+
+
 	MonsterRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
 	MonsterRenderer->CreateAnimation("Regen", "GhostDamien_Regen", 0.1f, -1, -1, false);
 	MonsterRenderer->CreateAnimation("Stand", "GhostDamien_Stand", 0.1f, -1, -1, true);
@@ -114,7 +116,6 @@ void GhostDamien::Start()
 
 void GhostDamien::Update(float _Delta)
 {
-	GameEngineDebug::DrawBox2D(MonsterRenderer->GetImageTransform(), float4::GREEN);
 	MonsterFunction::Update(_Delta);
 	TimeCounting();
 
@@ -132,36 +133,6 @@ void GhostDamien::Update(float _Delta)
 		//ChangeState(MonsterState::Regen);
 	}
 
-	//if (GameEngineInput::IsDown('6', this))
-	//{
-	//	ChangeState(MonsterState::Stand);
-	//}
-
-	//if (GameEngineInput::IsDown('9', this))
-	//{
-	//	ChangeState(MonsterState::Skill2);
-	//}
-
-	//if (GameEngineInput::IsDown('0', this))
-	//{
-	//	HitEffect->ChangeAnimation("Skill2Hit");
-	//	MonsterRenderer->ChangeAnimation("Skill2After");
-	//	DirCheck();
-	//	MonsterRenderer->Transform.SetLocalPosition({ 400.0f, -10.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 440.0f, 150.0f });
-	//}
-
-	//if (GameEngineInput::IsDown('-', this))
-	//{
-	//	//ChangeState(MonsterState::Death);
-	//	MonsterRenderer->ChangeAnimation("Death");
-	//	DirCheck();
-	//	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 0.0f });
-	//	MonsterCollision->Transform.SetLocalPosition({ 50.0f, 150.0f });
-	//}
-
-	//DirCheck();
-	//InsideLockMap();
 	SlideAttackCol->Collision(ContentsCollisionType::Player, std::bind(&GhostDamien::CollisionEvent, this, std::placeholders::_1));
 }
 
@@ -419,6 +390,8 @@ void GhostDamien::LevelStart(GameEngineLevel* _PrevLevel)
 
 void GhostDamien::CallRegen()
 {
+	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 0.0f });
+	Hp = 18688692000;
 	ChangeState(MonsterState::Regen);
 }
 

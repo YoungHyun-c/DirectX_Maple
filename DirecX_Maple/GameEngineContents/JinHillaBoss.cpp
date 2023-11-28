@@ -2,9 +2,10 @@
 #include "JinHillaBoss.h"
 #include "Player.h"
 
-#include "CravingMonster.h"
-//#include "GhostDamien.h"
 #include "MonsterFunction.h"
+
+#include "CravingMonster.h"
+#include "GhostDamien.h"
 
 #include "BossSkillEffect.h"
 #include "BossSkillManager.h"
@@ -121,23 +122,23 @@ void JinHillaBoss::Start()
 	if (nullptr == CravingMob1)
 	{
 		CravingMob1 = GetLevel()->CreateActor<CravingMonster>();
-		CravingMob1->Transform.SetWorldPosition({ 700.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+		CravingMob1->Transform.SetWorldPosition({ 700.0f, -760.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob1->SetDebugMap("BossDebugMap.Png");
 	}
 	if (nullptr == CravingMob2)
 	{
 		CravingMob2 = GetLevel()->CreateActor<CravingMonster>();
-		CravingMob2->Transform.SetWorldPosition({ 1200.0f, -770.0f, static_cast<float>(DeepBufferType::Monster) });
+		CravingMob2->Transform.SetWorldPosition({ 1200.0f, -760.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob2->SetDebugMap("BossDebugMap.Png");
 	}
 
 
-	//if (nullptr == DamienMob)
-	//{
-	//	DamienMob = GetLevel()->CreateActor<GhostDamien>();
-	//	DamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
-	//	DamienMob->SetDebugMap("BossDebugMap.Png");
-	//}
+	if (nullptr == DamienMob)
+	{
+		DamienMob = GetLevel()->CreateActor<GhostDamien>();
+		DamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
+		DamienMob->SetDebugMap("BossDebugMap.Png");
+	}
 }
 
 void JinHillaBoss::Update(float _Delta)

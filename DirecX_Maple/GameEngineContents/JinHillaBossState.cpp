@@ -1,8 +1,9 @@
 #include "PreCompile.h"
-#include "JinHillaBoss.h"
 #include "Player.h"
+
+#include "JinHillaBoss.h"
 #include "CravingMonster.h"
-//#include "GhostDamien.h"
+#include "GhostDamien.h"
 
 #define TelePortX 50.0f
 
@@ -30,19 +31,27 @@ void JinHillaBoss::StandUpdate(float _Delta)
 {
 	JinDirCheck();
 
-	if (CravingMob1->GetState() == (MonsterState::Death))
-	{
-		DeathTime += _Delta;
-		if (DeathTime > DeathLimitTime && IsAttack == false)
-		{
-			DeathTime = 0.0f;
-			ChangeState(MonsterState::Skill3);
-			return;
-		}
-	}
+	// 家券 各 何福扁
+	CallMobDeathCheck(_Delta);
 
 	if (CravingMob1->GetState() == (MonsterState::Max))
 	{
+		CallCraving1 = true;
+		ChangeState(MonsterState::Skill3);
+
+		return;
+	}
+
+	if (CravingMob2->GetState() == (MonsterState::Max))
+	{
+		CallCraving2 = true;
+		ChangeState(MonsterState::Skill3);
+		return;
+	}
+
+	if (DamienMob->GetState() == (MonsterState::Max))
+	{
+		CallDamien = true;
 		ChangeState(MonsterState::Skill3);
 		return;
 	}
@@ -93,16 +102,8 @@ void JinHillaBoss::MoveUpdate(float _Delta)
 		return;
 	}
 
-	if (CravingMob1->GetState() == (MonsterState::Death))
-	{
-		DeathTime += _Delta;
-		if (DeathTime > DeathLimitTime && IsAttack == false)
-		{
-			DeathTime = 0.0f;
-			ChangeState(MonsterState::Skill3);
-			return;
-		}
-	}
+	// 家券 各 何福扁
+	CallMobDeathCheck(_Delta);
 
 	JinDirCheck();
 	float4 MovePos = float4::ZERO;
@@ -362,28 +363,78 @@ void JinHillaBoss::Skill_3Start()
 
 void JinHillaBoss::Skill_3Update(float _Delta)
 {
-	if (true == MonsterRenderer->IsCurAnimationEnd())
+	if (true == MonsterRenderer->IsCurAnimationEnd() && CallCraving1 == true)
 	{
-		CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 20.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CravingMob1->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X + 20.0f, -760.0f });
 		CravingMob1->CallRegen();
+		CallCraving1 = false;
 
-		CravingMob2->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 20.0f, MonsterRenderer->Transform.GetWorldPosition().Y - 190.0f });
+		CallMob = false;
+		ChangeState(MonsterState::Stand);
+		return;
+	}
+	if (true == MonsterRenderer->IsCurAnimationEnd() && CallCraving2 == true)
+	{
+		CravingMob2->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 20.0f, -760.0f });
 		CravingMob2->CallRegen();
+
+		CallCraving2 = false;
 
 		CallMob = false;
 		ChangeState(MonsterState::Stand);
 		return;
 	}
 
-	//if (true == MonsterRenderer->IsCurAnimationEnd())
-	//{
-	//	DamienMob->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, MonsterRenderer->Transform.GetWorldPosition().Y  });
-	//	DamienMob->CallRegen();
+	if (true == MonsterRenderer->IsCurAnimationEnd() && CallDamien == true)
+	{
+		//DamienMob->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, -650.0f });
+		DamienMob->CallRegen();
 
-	//	CallMob = false;
-	//	ChangeState(MonsterState::Stand);
-	//	return;
-	//}
+		CallDamien = false;
+
+		CallMob = false;
+		ChangeState(MonsterState::Stand);
+		return;
+	}
+}
+
+void JinHillaBoss::CallMobDeathCheck(float _Delta)
+{
+	if (CravingMob1->GetState() == (MonsterState::Death))
+	{
+		Craving1DeathTime += _Delta;
+		if (Craving1DeathTime > DeathLimitTime && IsAttack == false)
+		{
+			Craving1DeathTime = 0.0f;
+			CallCraving1 = true;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
+
+	if (CravingMob2->GetState() == (MonsterState::Death))
+	{
+		Craving2DeathTime += _Delta;
+		if (Craving2DeathTime > DeathLimitTime && IsAttack == false)
+		{
+			Craving2DeathTime = 0.0f;
+			CallCraving2 = true;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
+
+	if (DamienMob->GetState() == (MonsterState::Death))
+	{
+		DamienDeathTime += _Delta;
+		if (DamienDeathTime > DeathLimitTime && IsAttack == false)
+		{
+			DamienDeathTime = 0.0f;
+			CallDamien = true;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
 }
 
 void JinHillaBoss::DeathStart()
