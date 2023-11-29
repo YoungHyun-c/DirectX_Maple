@@ -454,6 +454,22 @@ void Player::AttackStart()
 
 void Player::AttackUpdate(float _Delta)
 {
+	if (Flying == true)
+	{
+		FlyTime += _Delta;
+		Transform.SetLocalPosition(PlayerPos);
+		SetMoveVectorXForce(0.0f);
+		SetMoveVectorYForce(0.0f);
+		GravityReset();
+		if (FlyTime >= FlyLimitTime)
+		{
+			FlyTime = 0.0f;
+			Flying = false;
+			ChangeToStand();
+			return;
+		}
+	}
+
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
 		if (true == IsGround)
@@ -520,40 +536,39 @@ void Player::FlyStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Normal_Fly");
 	Transform.SetLocalPosition(PlayerPos);
+	FlyTime = 0.0f;
 }
 void Player::FlyUpdate(float _Delta)
 {
 	if (GameEngineInput::IsDown(VK_SHIFT, this))
 	{
 		SetMoveVectorXForce(0.0f);
+		SetMoveVectorYForce(0.0f);
 		ChangeState(PlayerState::Attack);
+		return;
 	}
+
+	if (GameEngineInput::IsDown('X', this))
+	{
+		int a = 0;
+	}
+
 	FlyTime += _Delta;
 	Transform.SetLocalPosition(PlayerPos);
 	SetMoveVectorXForce(0.0f);
+	SetMoveVectorYForce(0.0f);
 	GravityReset();
-	if (FlyTime > FlyLimitTime)
+	if (FlyTime >= FlyLimitTime)
 	{
-		SetMoveVectorXForce(0.0f);
+		FlyTime = 0.0f;
+		Flying = false;
 		ChangeToStand();
 		return;
 	}
-	/*if (true == MainSpriteRenderer->IsCurAnimationEnd())
-	{
-		if (true == IsGround)
-		{
-			ChangeToStand();
-		}
-		else
-		{
-			ChangeState(PlayerState::Jump);
-			return;
-		}
-	}*/
 }
 void Player::FlyEnd()
 {
-	FlyTime = 0.0f;
+	GravityReset();
 }
 void Player::ProneStart()
 {

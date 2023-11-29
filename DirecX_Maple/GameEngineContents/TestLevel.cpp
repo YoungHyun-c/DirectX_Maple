@@ -128,35 +128,35 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		PlayerSkill = CreateActor<AdeleSkill>();
 	}
-	/*if (nullptr == Skill)
+	if (nullptr == Skill)
 	{
 		Skill = CreateActor<SkillManager>();
-	}*/
+	}
 	if (nullptr == UIObject)
 	{
 		UIObject = CreateActor<MainUIActor>(ContentsObjectType::UI);
 	}
 
 
-	if (nullptr == GameEngineSprite::Find("Crane"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Monster");
-		Dir.MoveChild("Crane");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	//if (nullptr == GameEngineSprite::Find("Crane"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Monster");
+	//	Dir.MoveChild("Crane");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
-	std::shared_ptr<CraneMonster> CraneTest = CreateActor<CraneMonster>(ContentsObjectType::Monster);
-	CraneTest->Transform.SetWorldPosition({ 900.0f, -550.0f });
-	CraneTest->SetDebugMap("HuntDebugMap.Png");
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
+	//std::shared_ptr<CraneMonster> CraneTest = CreateActor<CraneMonster>(ContentsObjectType::Monster);
+	//CraneTest->Transform.SetWorldPosition({ 900.0f, -550.0f });
+	//CraneTest->SetDebugMap("HuntDebugMap.Png");
 
 	//std::shared_ptr<BossChat> ChatTest = CreateActor<BossChat>(ContentsObjectType::UI);
 	//std::shared_ptr<AchieveUI> AchieveTest = CreateActor<AchieveUI>(ContentsObjectType::UI);

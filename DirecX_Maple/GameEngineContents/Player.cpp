@@ -182,6 +182,11 @@ void Player::Update(float _Delta)
 		GravityReset();
 	}
 
+	if (true == IsGround && PlayerState::Alert == State || PlayerState::Stand == State || PlayerState::Walk == State)
+	{
+		Flying = false;
+	}
+
 
 	//if (GameEngineInput::IsDown('Y', this))
 	//{
@@ -190,14 +195,6 @@ void Player::Update(float _Delta)
 	//	Shard->SetSkillActor("Shard");
 	//}
 
-	////////////////////// 데미지 렌더 테스트중//////////////////////
-	//if (GameEngineInput::IsDown('3', this))
-	//{
-	//	std::shared_ptr<AdeleSkill> Ruin = GetLevel()->CreateActor<AdeleSkill>();
-	//	Ruin->SetSkillActor("Ruin");
-	//	/*std::shared_ptr<DamageRenderer> NewDR = GetLevel()->CreateActor<DamageRenderer>();
-	//	NewDR->PushDamage(480);*/
-	//}
 
 	//if (GameEngineInput::IsDown('Z', this))
 	//{
@@ -252,7 +249,7 @@ void Player::Update(float _Delta)
 		}
 	}
 
-	//FlyCheckUpdate();
+	FlyCheckUpdate();
 }
 void Player::InvicibleCheck()
 {
@@ -313,6 +310,8 @@ void Player::ChangeToStand()
 	{
 		GroundJump = false;
 		DoubleJump = false;
+
+		UpClick = false;
 	}
 
 	if (0.0f < AlertTime)
@@ -724,14 +723,14 @@ void Player::RopeCheck()
 
 void Player::FlyCheckUpdate()
 {
-	//if (State == PlayerState::Jump)
+	if (GroundJump == true && Flying == false)
 	{
 		TimeCounting();
 		if (UpDoubleClick == true)
 		{
 			UpDoubleClick = false;
 		}
-		if (true == GameEngineInput::IsDown(VK_UP, this))
+		if (GameEngineInput::IsDown(VK_UP, this) == true)
 		{
 			if (UpClick == true)
 			{
@@ -748,7 +747,7 @@ void Player::FlyCheckUpdate()
 		if (UpClick == true)
 		{
 			UpClickCount += TimeCount;
-			if (UpClickCount > 0.2f)
+			if (UpClickCount > 0.01f)
 			{
 				UpClick = false;
 			}
@@ -756,13 +755,47 @@ void Player::FlyCheckUpdate()
 
 		if (UpDoubleClick == true && State == PlayerState::Jump)
 		{
+			Flying = true;
 			ChangeState(PlayerState::Fly);
 			return;
+		}
+	}
+	if (GroundJump == true && Flying == true)
+	{
+		TimeCounting();
+		if (UpDoubleClick == true)
+		{
+			UpDoubleClick = false;
+		}
+		if (GameEngineInput::IsDown(VK_UP, this) == true)
+		{
+			if (UpClick == true)
+			{
+				UpDoubleClick = true;
+				UpClick = false;
+				UpClickCount = 0.0f;
+			}
+			else
+			{
+				UpClick = true;
+				UpClickCount = 0.0f;
+			}
+		}
+		if (UpClick == true)
+		{
+			UpClickCount += TimeCount;
+			if (UpClickCount > 0.01f)
+			{
+				UpClick = false;
+			}
 		}
 
 		if (UpDoubleClick == true && State == PlayerState::Fly)
 		{
-			ChangeState(PlayerState::Stand);
+			FlyTime = 0.0f;
+			Flying = false;
+			GravityReset();
+			ChangeToStand();
 			return;
 		}
 	}

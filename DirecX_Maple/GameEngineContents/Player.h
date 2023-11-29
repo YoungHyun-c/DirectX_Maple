@@ -234,7 +234,8 @@ private:
 	float AlertTime = 0.0f;
 	float RopePivot = 0.0f;
 	float FlyTime = 0.0f;
-	float FlyLimitTime = 3.5f;
+	float FlyLimitTime = 3.0f;
+	bool Flying = false;
 	bool UpClick = false;
 	bool UpDoubleClick = false;
 	float UpClickCount = 0.0f;
