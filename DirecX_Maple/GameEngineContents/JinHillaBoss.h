@@ -48,6 +48,19 @@ public:
 		return JinHillaHp;
 	}
 
+	bool GetBindValue()
+	{
+		return SkillBind;
+	}
+
+	bool GetFomerBindValue()
+	{
+		return FormerBind;
+	}
+
+	void BossBind();
+	void BossFormerBind();
+
 protected:
 	void LevelStart(GameEngineLevel* _PreveLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
@@ -142,5 +155,19 @@ private:
 	float ChangeTime = 0.0f;
 	float ChangeLevelTime = 6.0f;
 	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
+
+
+
+
+
+	// πŸ¿ŒµÂ
+	bool SkillBind = false;
+	float SkillBinding = 0.0f;
+	float SkillBindTime = 10.0f;
+
+	bool FormerBind = false;
+	float FormerBinding = 0.0f;
+	float FormerBindTime = 10.0f;
+	std::shared_ptr<class BossBindEffect> SkillBindEffect = nullptr;
 };
 

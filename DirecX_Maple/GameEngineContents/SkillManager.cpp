@@ -6,6 +6,7 @@
 #include "SkillFunction.h"
 #include "SkillDivide.h"
 #include "SkillRuin.h"
+#include "SkillBInd.h"
 
 #include "DamageRenderer.h"
 
@@ -40,6 +41,7 @@ void SkillManager::Start()
 {
 	CreateSkill<SkillDivide>("Divide1");
 	CreateSkill<SkillRuin>("Ruin");
+	CreateSkill<SkillBInd>("Scoll");
 }
 
 void SkillManager::Update(float _Delta)

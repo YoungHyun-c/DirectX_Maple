@@ -78,21 +78,6 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	//if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Adele_Battle_Character");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;
@@ -172,6 +157,16 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSound::FindSound("TheothersideofShangriLa.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("TheothersideofShangriLa.mp3"));
+	}
+	MapBgm = GameEngineSound::SoundPlay("TheothersideofShangriLa.mp3", 1);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("HuntDebugMap.png");
@@ -187,6 +182,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void TestLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	if (GameEngineSound::FindSound("TheothersideofShangriLa.mp3"))
+	{
+		MapBgm.Stop();
+	}
 	if (nullptr != GameEngineSprite::Find("HuntMap.png"))
 	{
 		GameEngineSprite::Release("HuntMap.png");

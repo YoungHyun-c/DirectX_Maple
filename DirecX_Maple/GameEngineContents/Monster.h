@@ -60,5 +60,11 @@ private:
 	std::shared_ptr<GameEngineSpriteRenderer> Renderer = nullptr;	
 
 	bool RenderOn = false;
+
+	std::shared_ptr<class BossBindEffect> SkillBindEffect = nullptr;
+
+	bool Bind = false;
+	float Binding = 0.0f;
+	float BindTIme = 10.0f;
 };
 

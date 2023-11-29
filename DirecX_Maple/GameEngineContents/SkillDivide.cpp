@@ -39,7 +39,7 @@ void SkillDivide::Start()
 		SkillRender1->SetFrameEvent("Divide2", 1, std::bind(&SkillDivide::RenderEvent, this, std::placeholders::_1));
 		SkillRender1->SetEndEvent("Divide2", [&](GameEngineRenderer* _Renderer)
 			{
-				SkillRender2->Off();
+				SkillRender1->Off();
 				EndSkill();
 			}
 		);

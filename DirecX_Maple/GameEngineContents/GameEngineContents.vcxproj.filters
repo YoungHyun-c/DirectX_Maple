@@ -204,6 +204,12 @@
     <ClCompile Include="AchieveUI.cpp">
       <Filter>Object\Boss\BossUI</Filter>
     </ClCompile>
+    <ClCompile Include="BossBindEffect.cpp">
+      <Filter>Object\Boss\BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillBInd.cpp">
+      <Filter>Object\Player\SKill\Bind</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -406,6 +412,12 @@
     <ClInclude Include="AchieveUI.h">
       <Filter>Object\Boss\BossUI</Filter>
     </ClInclude>
+    <ClInclude Include="BossBindEffect.h">
+      <Filter>Object\Boss\BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillBInd.h">
+      <Filter>Object\Player\SKill\Bind</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -509,6 +521,12 @@
     </Filter>
     <Filter Include="Object\Boss\BossUI">
       <UniqueIdentifier>{2fd6e8fb-3d50-48c6-b608-d00273fbb27e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Boss\BossEffect">
+      <UniqueIdentifier>{2ea132ff-860f-42fa-adeb-132886d8d523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\Bind">
+      <UniqueIdentifier>{c9dcb7d2-1f1a-4816-b125-49825ac184b2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

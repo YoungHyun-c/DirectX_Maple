@@ -3,6 +3,9 @@
 #include "Player.h"
 #include "Monster.h"
 
+#include "BossBindEffect.h"
+#include "MonsterFunction.h"
+
 Monster* Monster::Monsters = nullptr;
 
 Monster::Monster()
@@ -39,32 +42,33 @@ void Monster::Start()
 		}
 
 	}
+
+	SkillBindEffect = GetLevel()->CreateActor<BossBindEffect>(ContentsObjectType::FrontSkill);
+	SkillBindEffect->Off();
+	GameEngineInput::AddInputObject(this);
 }
 
 void Monster::Update(float _Delta)
 {
-	//GameEngineDebug::DrawBox2D(Renderer->GetImageTransform(), float4::BLUE);
+	
+	if (Binding >= BindTIme)
+	{
+		SkillBindEffect->GetEndBindEffect();
+		Binding = 0.0f;
+		Bind = false;
+	}
 
-	//float4 Dir = Player::MainPlayer->Transform.GetWorldPosition() - Renderer->Transform.GetWorldPosition();
-	//Dir.Normalize();
-	//Renderer->Transform.AddLocalPosition(Dir * _Delta * 100.0f);
-
-	// 일단 띄워놓기 용 테스트에 용이
-	//float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
-	////if (RenderOn == true && MonsterAppear == false)
-	//{
-	//	//Renderer->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 100.0f});
-	//	Renderer->On();
-	//	//Col->Transform.SetLocalPosition({PlayerPos.X, PlayerPos.Y + 100.0f});
-	//	Col->On();
-	//	MonsterAppear = true;
-	//}
-	////else if (RenderOn == false && MonsterAppear == true)
-	////{
-	////	Renderer->Off();
-	////	Col->Off();
-	////	MonsterAppear = false;
-	////}
+	if (Bind == true)
+	{
+		Binding += _Delta;
+	}
+	if (GameEngineInput::IsDown(VK_HOME, this))
+	{
+		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition()-30.0f);
+		SkillBindEffect->GetStartBindEffect();
+		SkillBindEffect->On();
+		Bind = true;
+	}
 
 	if (RenderOn == true && MonsterAppear == false)
 	{

@@ -13,6 +13,8 @@
 #include "AchieveUI.h"
 #include "BossChat.h"
 
+#include "BossBindEffect.h"
+
 JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
 JinHillaBoss::JinHillaBoss()
@@ -132,21 +134,44 @@ void JinHillaBoss::Start()
 		CravingMob2->SetDebugMap("BossDebugMap.Png");
 	}
 
-
+	// µ¥¹Ì¾È ¸÷
 	if (nullptr == DamienMob)
 	{
 		DamienMob = GetLevel()->CreateActor<GhostDamien>();
 		DamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
 		DamienMob->SetDebugMap("BossDebugMap.Png");
 	}
+
+	// ¹ÙÀÎµå ÀÌÆåÆ®
+	{
+		SkillBindEffect = GetLevel()->CreateActor<BossBindEffect>(ContentsObjectType::FrontSkill);
+		SkillBindEffect->Off();
+	}
 }
 
 void JinHillaBoss::Update(float _Delta)
 {
-	GameEngineDebug::DrawBox2D(MonsterRenderer->GetImageTransform(), float4::GREEN);
-	MonsterFunction::Update(_Delta);
 
-	//JinDirCheck();
+	if (SkillBind == true)
+	{
+		SkillBinding += _Delta;
+		SkillBindEffect->Transform.SetLocalPosition(MonsterRenderer->Transform.GetWorldPosition());
+		SkillBindEffect->GetStartBindEffect();
+		SkillBindEffect->On();
+		ChangeState(MonsterState::Stand);
+		BossBind();
+		return;
+	}
+
+	if (FormerBind == true)
+	{
+		FormerBinding += _Delta;
+		ChangeState(MonsterState::Stand);
+		BossFormerBind();
+		return;
+	}
+
+	MonsterFunction::Update(_Delta);
 	StateUpdate(_Delta);
 
 
@@ -183,6 +208,29 @@ void JinHillaBoss::Update(float _Delta)
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::KnockBackCollisionEvent, this, std::placeholders::_1));
 }
 
+void JinHillaBoss::BossBind()
+{
+	SkillBind = true;
+	if (SkillBinding >= SkillBindTime)
+	{
+		SkillBindEffect->GetEndBindEffect();
+		SkillBind = false;
+		SkillBinding = 0.0f;
+		return;
+	}
+}
+
+void JinHillaBoss::BossFormerBind()
+{
+	FormerBind = true;
+	if (FormerBinding >= FormerBindTime)
+	{
+		FormerBind = false;
+		FormerBinding = 0.0f;
+		return;
+	}
+}
+
 void JinHillaBoss::BindCollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
 	Player::GetMainPlayer()->PlayerBind(2.0f);
@@ -203,8 +251,6 @@ void JinHillaBoss::JinDirCheck()
 	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
 	if (PlayerDirX >= MonsterDirX)
 	{
-		/*Dir = ActorDir::Right;
-		MonsterRenderer->LeftFlip();*/
 		Dir = ActorDir::Right;
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + RightColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });
@@ -213,8 +259,6 @@ void JinHillaBoss::JinDirCheck()
 	}
 	if (PlayerDirX < MonsterDirX)
 	{
-		/*Dir = ActorDir::Left;
-		MonsterRenderer->RightFlip();*/
 		Dir = ActorDir::Left;
 		MonsterCollision->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetLocalPosition().X + LeftColPos,
 			MonsterRenderer->Transform.GetLocalPosition().Y + YColPos });

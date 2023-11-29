@@ -35,6 +35,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossBindEffect.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BossBoxReward.cpp">
       <SubType>
       </SubType>
@@ -234,6 +238,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillBInd.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillDivide.cpp">
       <SubType>
       </SubType>
@@ -297,6 +305,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="BasicFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossBindEffect.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -490,6 +502,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="RingPotalManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillBInd.h">
       <SubType>
       </SubType>
     </ClInclude>

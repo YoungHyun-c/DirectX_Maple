@@ -133,6 +133,26 @@ public:
 		return BossDeath;
 	}
 
+	//void SetBossBind(bool _Value)
+	//{
+	//	BossBind = _Value;
+	//}
+
+	//void SetBossFormerBind(bool _Value)
+	//{
+	//	BossFormerBind = _Value;
+	//}
+
+	//bool GetBossBind()
+	//{
+	//	return BossBind;
+	//}
+
+	//bool GetBossFormerBind()
+	//{
+	//	return BossFormerBind;
+	//}
+
 protected:
 
 private:
@@ -152,5 +172,7 @@ private:
 	float SickleCut = 0.0f;
 
 	bool BossDeath = false;
+	//bool BossBind = false;
+	//bool BossFormerBind = false;
 };
 

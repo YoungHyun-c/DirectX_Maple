@@ -268,6 +268,12 @@ void JinHillaBoss::AttackStart()
 
 void JinHillaBoss::AttackUpdate(float _Delta)
 {
+	//if (SkillBind == true || FormerBind == true)
+	//{
+	//	ChangeState(MonsterState::Stand);
+	//	return;
+	//}
+
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Move);

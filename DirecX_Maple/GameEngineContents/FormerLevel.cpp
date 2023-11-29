@@ -83,21 +83,6 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Adele_Battle_Character");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;

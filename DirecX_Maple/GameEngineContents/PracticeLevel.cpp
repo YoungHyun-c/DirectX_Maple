@@ -122,21 +122,6 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("Adele_Battle_Character"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Adele_Battle_Character");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;
@@ -224,6 +209,16 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 	}
 
+	if (nullptr == GameEngineSound::FindSound("MureungSchool1.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MureungSchool1.mp3"));
+	}
+	MapBgm = GameEngineSound::SoundPlay("MureungSchool1.mp3", 3);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
@@ -238,6 +233,11 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	if (GameEngineSound::FindSound("MureungSchool1.mp3"))
+	{
+		MapBgm.Stop();
+	}
+
 	if (nullptr != GameEngineSprite::Find("PracticeMap.png"))
 	{
 		GameEngineSprite::Release("PracticeMap.png");
@@ -255,7 +255,6 @@ void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 	//if (nullptr != GameEngineSprite::Find("Adele_Character"))
 	//{
 	//	GameEngineSprite::Release("Adele_Character");
-	//	GameEngineSprite::Release("Adele_Battle_Character");
 	//	GameEngineSprite::Release("UITexture");
 	//	GameEngineSprite::Release("Skill");
 	//}
