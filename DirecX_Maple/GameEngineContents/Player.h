@@ -15,6 +15,8 @@ enum class PlayerState
 	Alert,
 	Prone,
 	Attack,
+	SwingB,
+	SwingY,
 	ProneAttack,
 	Jump,
 	Rope,
@@ -157,6 +159,10 @@ protected:
 
 	// SkillUpdate();
 
+	void SwingBStart();
+	void SwingBUpdate(float _Delta);
+	void SwingBEnd();
+
 	// 스킬관련
 	//void BoltJump();
 	bool IsAttack = false;
@@ -181,7 +187,6 @@ private:
 	void Update(float _Delta) override;
 
 	std::shared_ptr<GameEngineSpriteRenderer> MainSpriteRenderer = nullptr;
-	std::shared_ptr<GameEngineSpriteRenderer> SkillRenderer = nullptr;
 
 	std::shared_ptr<GameEngineCollision> PlayerCol;
 	std::shared_ptr<GameEngineCollision> PlayerDropCol;

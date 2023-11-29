@@ -71,6 +71,7 @@ void SkillBInd::EndSkill()
 
 void SkillBInd::Update(float _Delta)
 {
+	SkillFunction::Update(_Delta);
 	SkillRender1->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y + 250.0f });
 	SkillCollision->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y });
 	AttackCol->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y });

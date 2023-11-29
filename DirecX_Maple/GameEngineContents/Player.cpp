@@ -65,15 +65,12 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Normal_Impale", "Impale", 0.3f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Dead", "Dead", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Rope", "Rope", 0.1f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_SwingB", "SwingB", 0.33f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_SwingY", "SwingY", 0.33f, -1, -1, true);
 
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
 		Sprite = nullptr;
-
-		/*SkillRenderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		SkillRenderer->CreateAnimation("Divide1Hit_", "Divide1_Hit", 0.05f);
-		SkillRenderer->ChangeAnimation("Divide1Hit_");
-		SkillRenderer->Off();*/
 
 		State = PlayerState::Stand;
 		MainSpriteRenderer->ChangeAnimation("Normal_Stand");
@@ -224,10 +221,15 @@ void Player::Update(float _Delta)
 	//	Lesonens->SetSkillActor("Lesonens");
 	//}
 
+	if (GameEngineInput::IsDown('4', this))
+	{
+		MainSpriteRenderer->ChangeAnimation("Normal_SwingP");
+	}
 	if (GameEngineInput::IsDown('5', this))
 	{
-		PlayerValue::GetValue()->SetGrade(5);
+		MainSpriteRenderer->ChangeAnimation("Normal_SwingT");
 	}
+
 	if (GameEngineInput::IsDown('6', this))
 	{
 		PlayerValue::GetValue()->SetGrade(6);
@@ -311,6 +313,12 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Prone:
 			ProneEnd();
 			break;
+		case PlayerState::Dead:
+			DeadEnd();
+			break;
+		case PlayerState::SwingB:
+			SwingBEnd();
+			break;
 		case PlayerState::Max:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려 했습니다.");
@@ -334,9 +342,6 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::Attack:
 			AttackStart();
 			break;
-		case PlayerState::ProneAttack:
-			ProneAttackStart();
-			break;
 		case PlayerState::Jump:
 			JumpStart();
 			break;
@@ -348,6 +353,9 @@ void Player::ChangeState(PlayerState _State)
 			break;
 		case PlayerState::Dead:
 			DeadStart();
+			break;
+		case PlayerState::SwingB:
+			SwingBStart();
 			break;
 		case PlayerState::Max:
 		default:
@@ -383,6 +391,8 @@ void Player::StateUpdate(float _Delta)
 		return FlyUpdate(_Delta);
 	case PlayerState::Dead:
 		return DeadUpdate(_Delta);
+	case PlayerState::SwingB:
+		return SwingBUpdate(_Delta);
 	case PlayerState::Max:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌리려 했습니다.");

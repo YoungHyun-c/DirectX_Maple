@@ -45,8 +45,7 @@ void Player::StandUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_HOME, this))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("Scoll");
-		ChangeState(PlayerState::Alert);
+		ChangeState(PlayerState::SwingB);
 		return;
 	}
 
@@ -115,8 +114,7 @@ void Player::WalkUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_HOME, this))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("Scoll");
-		ChangeState(PlayerState::Alert);
+		ChangeState(PlayerState::SwingB);
 		return;
 	}
 
@@ -208,8 +206,7 @@ void Player::JumpUpdate(float _Delta)
 
 	if (GameEngineInput::IsDown(VK_HOME, this))
 	{
-		SkillManager::PlayerSkillManager->UseSkill("Scoll");
-		ChangeState(PlayerState::Alert);
+		ChangeState(PlayerState::SwingB);
 		return;
 	}
 
@@ -548,16 +545,31 @@ void Player::ProneEnd()
 {
 
 }
-
 void Player::ProneAttackStart()
 {
-
 }
 void Player::ProneAttackUpdate(float _Delta)
 {
-
 }
 void Player::ProneAttackEnd()
 {
+}
 
+void Player::SwingBStart()
+{
+	IsAttack = true;
+	AlertTime = Alert_Time;
+	MainSpriteRenderer->ChangeAnimation("Normal_SwingB");
+	SkillManager::PlayerSkillManager->UseSkill("Scoll");
+}
+void Player::SwingBUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToStand();
+	}
+}
+void Player::SwingBEnd()
+{
+	IsAttack = false;
 }
