@@ -279,19 +279,19 @@ void MainUIActor::Update(float _Delta)
 		PlayerValue::GetValue()->AddHp(10);
 		PlayerValue::GetValue()->AddMp(10);
 	}
-	/*if (GameEngineInput::IsDown('-', this))
+	if (GameEngineInput::IsDown('-', this))
 	{
-		PlayerValue::GetValue()->AddExp(10);
-		GlobalValue::GetNeedGlobalValue()->AddDropItemCount(10);
+		//PlayerValue::GetValue()->AddExp(10);
+		//GlobalValue::GetNeedGlobalValue()->AddDropItemCount(10);
 		PlayerValue::GetValue()->SubHp(10);
 		PlayerValue::GetValue()->SubMp(10);
-	}*/
-	if (GameEngineInput::IsDown('0', this))
-	{
-		PlayerValue::GetValue()->AddExp(1);
-		PlayerValue::GetValue()->SubHp(1);
-		PlayerValue::GetValue()->SubMp(1);
 	}
+	//if (GameEngineInput::IsDown('0', this))
+	//{
+	//	PlayerValue::GetValue()->AddExp(1);
+	//	PlayerValue::GetValue()->SubHp(1);
+	//	PlayerValue::GetValue()->SubMp(1);
+	//}
 
 
 	/// Lv Ui

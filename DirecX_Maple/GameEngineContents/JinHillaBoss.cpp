@@ -58,8 +58,8 @@ void JinHillaBoss::Start()
 	// 공격스킬 충돌 콜리전
 	{
 		JinHillBindSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterAttackRange);
-		JinHillBindSkillCol->Transform.SetLocalPosition({ 0.0f, 100.0f });
-		JinHillBindSkillCol->Transform.SetLocalScale({ 600.0f, 400.0f });
+		JinHillBindSkillCol->Transform.SetLocalPosition({ 0.0f, 90.0f });
+		JinHillBindSkillCol->Transform.SetLocalScale({ 600.0f, 380.0f });
 		JinHillBindSkillCol->SetCollisionType(ColType::AABBBOX2D);
 		JinHillBindSkillCol->Off();
 
@@ -207,8 +207,46 @@ void JinHillaBoss::Update(float _Delta)
 
 	InsideLockMap();
 	AttackEvent(_Delta);
+
 	JinHillBindSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::BindCollisionEvent, this, std::placeholders::_1));
+	JinHillBindSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 10.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
 	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, std::bind(&JinHillaBoss::KnockBackCollisionEvent, this, std::placeholders::_1));
+	JinHillKnockSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 10.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
+	// 낫 찍기
+	JinHillChoppingSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 20.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
+	// 앞 방향 휘두르기
+	JinHillFrontSlapSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 10.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
+	// 양 방향 휘두르기
+	JinHillSideSlapSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 30.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
 }
 
 void JinHillaBoss::BossBind()

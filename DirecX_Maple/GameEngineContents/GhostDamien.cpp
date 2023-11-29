@@ -97,6 +97,12 @@ void GhostDamien::Start()
 		SlideAttackCol->Transform.SetLocalScale({ 100.0f, 200.0f });
 		SlideAttackCol->SetCollisionType(ColType::AABBBOX2D);
 		SlideAttackCol->Off();
+
+		ChopAttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
+		ChopAttackCol->Transform.SetLocalPosition({ 0.0f, 0.0f });
+		ChopAttackCol->Transform.SetLocalScale({ 400.0f, 400.0f });
+		ChopAttackCol->SetCollisionType(ColType::AABBBOX2D);
+		ChopAttackCol->Off();
 	}
 	HitEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::MonsterSkill);
 	HitEffect->CreateAnimation("BackEffect", "GhostDamien_Attack1_BackEffect", 0.1f, -1, -1, false); // 
@@ -128,17 +134,23 @@ void GhostDamien::Update(float _Delta)
 	AttackEvent(_Delta);
 	StateUpdate(_Delta);
 
-	if (GameEngineInput::IsDown('5', this))
-	{
-		//ChangeState(MonsterState::Regen);
-	}
-
 	SlideAttackCol->Collision(ContentsCollisionType::Player, std::bind(&GhostDamien::CollisionEvent, this, std::placeholders::_1));
+	SlideAttackCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 2.2f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+	ChopAttackCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 10.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
 }
 
 void GhostDamien::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup)
 {
-	//Player::GetMainPlayer()->PlayerBind(1.5f);
 	float4 Dir = Player::GetMainPlayer()->Transform.GetWorldPosition().X - Transform.GetWorldPosition().X;
 	Dir.Normalize();
 	Player::GetMainPlayer()->KnockBack(Dir, 500.0f, 800.0f, 1.0f);
@@ -268,20 +280,24 @@ void GhostDamien::Skill_2After()
 	if (Dir == ActorDir::Right)
 	{
 		MonsterRenderer->Transform.SetLocalPosition({ 400.0f, 200.0f });
+		ChopAttackCol->Transform.SetLocalPosition({ 400.0f, -50.0f });
 	}
 	if (Dir == ActorDir::Left)
 	{
 		MonsterRenderer->Transform.SetLocalPosition({ -400.0f, 200.0f });
+		ChopAttackCol->Transform.SetLocalPosition({ -400.0f, -50.0f });
 	}
 }
 void GhostDamien::Skill_2AfterUpdate(float _Delta)
 {
 	InsideLockMap();
+	ChopAttackCol->On();
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 0.0f });
 		MonsterCollision->Transform.SetLocalPosition({ 0.0f, 0.0f });
 		AttackNum = 1;
+		ChopAttackCol->Off();
 		ChangeState(MonsterState::Stand);
 		return;
 	}

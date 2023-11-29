@@ -83,13 +83,4 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> LessonensEnd;
 	std::shared_ptr<class GameEngineSpriteRenderer> LessonensBack;
 	void LesonensSkill();
-
-	//·çÀÎ
-	std::shared_ptr<class GameEngineSpriteRenderer> Ruin;
-	void RuinSkill();
-
-
-	//6Â÷
-	std::shared_ptr<class GameEngineSpriteRenderer> Maestro;
-	void MaestroSkill();
 };

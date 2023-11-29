@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "CravingMonster.h"
 
+#include "Player.h"
+
 std::list<CravingMonster*> CravingMonster::CravingMonsters;
 
 CravingMonster::CravingMonster()
@@ -100,10 +102,19 @@ void CravingMonster::Update(float _Delta)
 {
 	//MonsterFunction::Update(_Delta);
 
-	//if (GameEngineInput::IsDown('5', this))
-	//{
-	//	ChangeState(MonsterState::Regen);
-	//}
+	CravingSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 20.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
+	CravingDieCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 10.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
 
 	AttackEvent(_Delta);
 	TimeCounting();

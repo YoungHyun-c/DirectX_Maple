@@ -167,12 +167,6 @@ void BossLevelUi::BossHpPerUiRenderer()
 	PercentBackHp = static_cast<int>(fmod(percentBackHpCal, 100));
 	//PercentBackHp /= 10;
 
-	int MainBossHp = PercentFrontHp;
-	std::string CurMainBossHp = "MainBossHp : ";
-	CurMainBossHp += std::to_string(MainBossHp) + "." + std::to_string(PercentBackHp);
-	CurMainBossHp += "\n";
-	OutputDebugStringA(CurMainBossHp.c_str());
-
 	int NumArr[5] = { 0, };
 	NumArr[0] = PercentFrontHp / 10;
 	NumArr[1] = PercentFrontHp % 10;

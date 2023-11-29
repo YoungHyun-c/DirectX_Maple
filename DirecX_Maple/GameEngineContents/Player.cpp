@@ -217,9 +217,6 @@ void Player::Update(float _Delta)
 	{
 		PlayerValue::GetValue()->SetGrade(6);
 	}
-
-	InvicibleCheck();
-
 	if (PlayerValue::GetValue()->GetDivide6Use() == true)
 	{
 		DivideTime += _Delta;
@@ -229,18 +226,30 @@ void Player::Update(float _Delta)
 			DivideTime = 0.0f;
 		}
 	}
-
 	if (MaestroUse == true)
 	{
 		MaestroTime += _Delta;
 	}
-
 	// 6차 스킬 쓴 이후
 	if (MaestroTime >= MaestroEndTime)
 	{
 		PlayerCol->On();
 		MaestroTime = 0.0f;
 		MaestroUse = false;
+	}
+
+	PotionCheck(_Delta);
+
+	InvicibleCheck();
+	// 맞았을때
+	if (IsDamaged == true)
+	{
+		HitDamaged += _Delta;
+		if (HitDamaged >= HitDamCool)
+		{
+			HitDamaged = 0.0f;
+			IsDamaged = false;
+		}
 	}
 
 	//FlyCheckUpdate();
@@ -251,15 +260,50 @@ void Player::InvicibleCheck()
 	if (GameEngineInput::IsDown('E', this) && Invicibility == false)
 	{
 		Invicibility = true;
-		PlayerCol->Off();
+		//PlayerCol->Off();
 		Invicible->GetStartInvincible();
 		Invicible->On();
 	}
 	else if (GameEngineInput::IsDown('E', this) && Invicibility == true)
 	{
 		Invicibility = false;
-		PlayerCol->On();
+		//PlayerCol->On();
 		Invicible->GetEndInvincible();
+	}
+}
+
+void Player::PotionCheck(float _Delta)
+{
+	if (GameEngineInput::IsDown(VK_DELETE, this) && GetLevel()->GetName() != "8.BossLevel")
+	{
+		PlayerValue::GetValue()->AddHp(PlayerValue::GetValue()->GetMaxHp());
+		PlayerValue::GetValue()->AddMp(PlayerValue::GetValue()->GetMaxMp());
+	}
+
+	if (GetLevel()->GetName() == "8.BossLevel")
+	{
+		if (GlobalValue::GetNeedGlobalValue()->GetAltarValue() == true)
+		{
+			AltarSuccess = true;
+		}
+
+		if (AltarSuccess == true)
+		{
+			PotionLimitTime -= _Delta;
+			if (PotionLimitTime >= 0.0f)
+			{
+				if (GameEngineInput::IsDown(VK_DELETE, this))
+				{
+					PlayerValue::GetValue()->AddHp(PlayerValue::GetValue()->GetMaxHp());
+					PlayerValue::GetValue()->AddMp(PlayerValue::GetValue()->GetMaxMp());
+				}
+			}
+			else
+			{
+				PotionLimitTime = 5.0f;
+				AltarSuccess = false;
+			}
+		}
 	}
 }
 
@@ -516,6 +560,11 @@ void Player::PlayerBind(float _Time)
 
 void Player::KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime)
 {
+	if (Invicibility == true)
+	{
+		return;
+	}
+
 	if (isKnockBack == false)
 	{
 		isKnockBack = true;
@@ -554,6 +603,28 @@ void Player::KnockBackUpdate(float _Delta)
 	{
 		isKnockBack = false;
 		MyKnockBackInfo = nullptr;
+	}
+}
+
+void Player::PlayerHit(float _Damage, bool _Attack)
+{
+	if (Invicibility == true)
+	{
+		return;
+	}
+
+	if (_Attack == true && IsDamaged == false)
+	{
+		IsDamaged = true;
+		PlayerValue::GetValue()->SubHp(static_cast<int>(_Damage));
+		AlertTime = 5.0f;
+		ChangeState(PlayerState::Alert);
+	}
+
+	if (PlayerValue::GetValue()->GetHp() <= 0)
+	{
+		return;
+		ChangeState(PlayerState::Dead);
 	}
 }
 

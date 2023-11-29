@@ -114,6 +114,9 @@ public:
 		return Bind;
 	}
 
+	void PlayerHit(float _Damage, bool _Attack);
+
+
 	// 스킬을 맞았을때의 기능
 	void PlayerBind(float _Time = 1.0f);
 	void KnockBack(float4 _Dir, float _Distance, float _Speed, float _MinTime);
@@ -255,6 +258,15 @@ private:
 	float MaestroTime = 0.0f;
 	float MaestroEndTime = 9.0f;
 	bool MaestroUse = false;
+
+	float HitDamaged = 0.0f;
+	float HitDamCool = 1.3f;
+	bool IsDamaged = false;
+
+	void PotionCheck(float _Delta);
+	bool AltarSuccess = false;
+	float PotionLimitTime = 5.0f;
+
 
 	bool Invicibility = false;
 	std::shared_ptr<class InvinCibilityEffect> Invicible = nullptr;

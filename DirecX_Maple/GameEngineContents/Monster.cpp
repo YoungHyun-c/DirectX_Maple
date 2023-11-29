@@ -105,6 +105,13 @@ void Monster::Update(float _Delta)
 			Renderer->Off();
 		}
 	}
+
+	/*MonsterCollision->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+			{
+				Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 30.0f /
+					static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+			}
+		);*/
 }
 
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)

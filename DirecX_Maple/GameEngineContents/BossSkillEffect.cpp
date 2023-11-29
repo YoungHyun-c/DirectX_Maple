@@ -119,6 +119,14 @@ void BossSkillEffect::Update(float _Delta)
 {
 	// Collision->Collision();
 
+	// 초앞 보뒤
+	SkillEffectCollision->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit((static_cast<float>(PlayerValue::GetValue()->GetMaxHp()) * 50.0f /
+				static_cast<float>(PlayerValue::GetValue()->GetMaxHp())), true);
+		}
+	);
+
 	if (true == SkillEffect->IsCurAnimationEnd())
 	{
 		Death();

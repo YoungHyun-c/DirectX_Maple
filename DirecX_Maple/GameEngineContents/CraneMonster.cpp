@@ -68,9 +68,9 @@ void CraneMonster::Start()
 
 		CraneSkillCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
 		CraneSkillCol->Transform.SetLocalScale({ 350.0f, 250.0f });
-		//CraneSkillCol->Transform.SetLocalPosition({ 200.0f, 100.0f });
+		CraneSkillCol->Transform.SetLocalPosition({ -200.0f, 100.0f });
 		CraneSkillCol->SetCollisionType(ColType::AABBBOX2D);
-		CraneSkillCol->Off();
+		CraneSkillCol->On();
 	}
 
 	Hp = 10663732800;
@@ -125,6 +125,12 @@ void CraneMonster::Update(float _Delta)
 	}
 
 	AttackEvent(_Delta);
+
+	CraneSkillCol->Collision(ContentsCollisionType::Player, [&](std::vector<GameEngineCollision*> _CollisionGroup)
+		{
+			Player::GetMainPlayer()->PlayerHit(1, true);
+		}
+	);
 }
 
 void CraneMonster::Spawn(float _Delta)

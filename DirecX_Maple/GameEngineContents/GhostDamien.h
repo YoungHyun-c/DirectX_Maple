@@ -64,6 +64,7 @@ private:
 
 	std::shared_ptr<GameEngineCollision> DamienAttackRangeCol;
 	std::shared_ptr<GameEngineCollision> SlideAttackCol;
+	std::shared_ptr<GameEngineCollision> ChopAttackCol;
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 	std::shared_ptr<GameEngineCollision> HewAttackCol;
 

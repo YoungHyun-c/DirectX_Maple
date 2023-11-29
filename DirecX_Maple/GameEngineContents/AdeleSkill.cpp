@@ -148,15 +148,6 @@ void AdeleSkill::Start()
 	//	Ruin->ChangeAnimation("Ruin");
 	//	Ruin->Off();
 	//}
-
-	// 6차 마에스트로
-	{
-		Maestro = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-		Maestro->AutoSpriteSizeOn();
-		Maestro->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, false);
-		Maestro->ChangeAnimation("Maestro");
-		Maestro->Off();
-	}
 }
 
 void AdeleSkill::LevelStart(GameEngineLevel* _PreveLevel)
@@ -407,16 +398,6 @@ void AdeleSkill::SetSkillAnimation()
 			break;
 		}
 	}
-	else if (SkillName == "Ruin")
-	{
-		Ruin->Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y + 275.0f });
-		Ruin->On();
-	}
-	else if (SkillName == "Maestro")
-	{
-		Maestro->Transform.SetWorldPosition( GetLevel()->GetMainCamera()->Transform.GetLocalPosition() );
-		Maestro->On();
-	}
 }
 
 void AdeleSkill::SetUpdateFunc()
@@ -440,14 +421,6 @@ void AdeleSkill::SetUpdateFunc()
 	else if (SkillName == "Lesonens")
 	{
 		UpdateFunc = &AdeleSkill::LesonensSkill;
-	}
-	else if (SkillName == "Ruin")
-	{
-		UpdateFunc = &AdeleSkill::RuinSkill;
-	}
-	else if (SkillName == "Maestro")
-	{
-		UpdateFunc = &AdeleSkill::MaestroSkill;
 	}
 }
 
@@ -513,22 +486,6 @@ void AdeleSkill::LesonensSkill()
 	{
 		LesonensPrePare->Off();
 		LessonensBack->Off();
-	}
-}
-
-void AdeleSkill::RuinSkill()
-{
-	if (Ruin->IsCurAnimationEnd())
-	{
-		Ruin->Off();
-	}
-}
-
-void AdeleSkill::MaestroSkill()
-{
-	if (Maestro->IsCurAnimationEnd())
-	{
-		Maestro->Off();
 	}
 }
 
