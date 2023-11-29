@@ -51,23 +51,41 @@ void Monster::Start()
 void Monster::Update(float _Delta)
 {
 	
-	if (Binding >= BindTIme)
+	if (SkillBinding >= SkillBindTIme)
 	{
 		SkillBindEffect->GetEndBindEffect();
-		Binding = 0.0f;
-		Bind = false;
+		SkillBinding = 0.0f;
+		SkillBind = false;
 	}
-
-	if (Bind == true)
+	if (SkillBind == true)
 	{
-		Binding += _Delta;
+		SkillBinding += _Delta;
 	}
 	if (GameEngineInput::IsDown(VK_HOME, this))
 	{
 		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition()-30.0f);
 		SkillBindEffect->GetStartBindEffect();
 		SkillBindEffect->On();
-		Bind = true;
+		SkillBind = true;
+	}
+
+	if (FormerBinding >= FormerBindTIme)
+	{
+		SkillBindEffect->GetEndFormerBindEffect();
+		FormerBinding = 0.0f;
+		FormerBind = false;
+	}
+
+	if (FormerBind == true)
+	{
+		FormerBinding += _Delta;
+	}
+	if (GameEngineInput::IsDown('R', this))
+	{
+		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition() - 30.0f);
+		SkillBindEffect->GetStartFormerBindEffect();
+		SkillBindEffect->On();
+		FormerBind = true;
 	}
 
 	if (RenderOn == true && MonsterAppear == false)
@@ -87,8 +105,6 @@ void Monster::Update(float _Delta)
 			Renderer->Off();
 		}
 	}
-	
-	//MonsterCollision->CollisionEvent(ContentsCollisionType::Skill, MonsterEvent);
 }
 
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)

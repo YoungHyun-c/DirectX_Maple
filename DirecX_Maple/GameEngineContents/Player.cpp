@@ -66,7 +66,7 @@ void Player::Start()
 		MainSpriteRenderer->CreateAnimation("Normal_Dead", "Dead", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_Rope", "Rope", 0.1f, -1, -1, true);
 		MainSpriteRenderer->CreateAnimation("Normal_SwingB", "SwingB", 0.33f, -1, -1, true);
-		MainSpriteRenderer->CreateAnimation("Normal_SwingY", "SwingY", 0.33f, -1, -1, true);
+		MainSpriteRenderer->CreateAnimation("Normal_SwingY", "SwingY", 0.25f, -1, -1, true);
 
 		std::shared_ptr<GameEngineSprite> Sprite = GameEngineSprite::Find("Stand");
 		PlayerScale = Sprite->GetSpriteData(0).GetScale();
@@ -166,7 +166,6 @@ void Player::Update(float _Delta)
 	}
 	GetItem();
 
-	//FlyCheckUpdate();
 
 	DirCheck();
 	RopeCheck();
@@ -189,13 +188,6 @@ void Player::Update(float _Delta)
 	//	std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
 
 	//	Shard->SetSkillActor("Shard");
-	//}
-
-	//if (GameEngineInput::IsDown('R', this))
-	//{
-	//	std::shared_ptr<AdeleSkill> Maestro = GetLevel()->CreateActor<AdeleSkill>();
-
-	//	//Maestro->SetSkillActor("Maestro");
 	//}
 
 	////////////////////// 데미지 렌더 테스트중//////////////////////
@@ -221,15 +213,6 @@ void Player::Update(float _Delta)
 	//	Lesonens->SetSkillActor("Lesonens");
 	//}
 
-	if (GameEngineInput::IsDown('4', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_SwingP");
-	}
-	if (GameEngineInput::IsDown('5', this))
-	{
-		MainSpriteRenderer->ChangeAnimation("Normal_SwingT");
-	}
-
 	if (GameEngineInput::IsDown('6', this))
 	{
 		PlayerValue::GetValue()->SetGrade(6);
@@ -246,6 +229,21 @@ void Player::Update(float _Delta)
 			DivideTime = 0.0f;
 		}
 	}
+
+	if (MaestroUse == true)
+	{
+		MaestroTime += _Delta;
+	}
+
+	// 6차 스킬 쓴 이후
+	if (MaestroTime >= MaestroEndTime)
+	{
+		PlayerCol->On();
+		MaestroTime = 0.0f;
+		MaestroUse = false;
+	}
+
+	//FlyCheckUpdate();
 }
 void Player::InvicibleCheck()
 {
@@ -319,6 +317,12 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::SwingB:
 			SwingBEnd();
 			break;
+		case PlayerState::SwingY:
+			SwingYEnd();
+			break;
+		case PlayerState::Maestro:
+			MaestroEnd();
+			break;
 		case PlayerState::Max:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 끝내려 했습니다.");
@@ -357,6 +361,12 @@ void Player::ChangeState(PlayerState _State)
 		case PlayerState::SwingB:
 			SwingBStart();
 			break;
+		case PlayerState::SwingY:
+			SwingYStart();
+			break;
+		case PlayerState::Maestro:
+			MaestroStart();
+			break;
 		case PlayerState::Max:
 		default:
 			MsgBoxAssert("존재하지 않는 상태값을 시작하려 했습니다.");
@@ -393,6 +403,10 @@ void Player::StateUpdate(float _Delta)
 		return DeadUpdate(_Delta);
 	case PlayerState::SwingB:
 		return SwingBUpdate(_Delta);
+	case PlayerState::SwingY:
+		return SwingYUpdate(_Delta);
+	case PlayerState::Maestro:
+		return MaestroUpdate(_Delta);
 	case PlayerState::Max:
 	default:
 		MsgBoxAssert("존재하지 않는 상태값으로 Update를 돌리려 했습니다.");

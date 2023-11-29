@@ -62,6 +62,26 @@ public:
 		return RuinSkillFinalDam;
 	}
 
+	void SetMaestroSkillDam(int _Value)
+	{
+		MaestroSkillDam = _Value;
+	}
+
+	void SetMaestroFinalDam(int _Value)
+	{
+		MaestroSkillFinalDam = _Value;
+	}
+
+	int GetMaestrokillDam()
+	{
+		return MaestroSkillDam;
+	}
+
+	int GetMaestroFinalDam()
+	{
+		return MaestroSkillFinalDam;
+	}
+
 
 protected:
 
@@ -70,7 +90,9 @@ private:
 	int DivideFinalDam = 220;
 
 	int RuinSkillDam = 550;
-	int RuinSkillFinalDam = 60;
+	int RuinSkillFinalDam = 160;
 
+	int MaestroSkillDam = 6600;
+	int MaestroSkillFinalDam = 100;
 };
 

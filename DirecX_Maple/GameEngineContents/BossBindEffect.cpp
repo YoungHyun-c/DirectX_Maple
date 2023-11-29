@@ -53,14 +53,29 @@ void BossBindEffect::Start()
 	BindEffect = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
 	BindEffect->CreateAnimation("SkillBind", "ScollMobEffect", 0.1f, -1, -1, true);
 	BindEffect->CreateAnimation("SkillBindLoop", "ScollMobEffect", 0.1f, 21, 27, true);
-	BindEffect->ChangeAnimation("SkillBind");
-	BindEffect->AutoSpriteSizeOn();
 	BindEffect->SetEndEvent("SkillBind", [&](GameEngineSpriteRenderer*)
 		{
 			BindEffect->ChangeAnimation("SkillBindLoop");
 		});
-	BindEffect->On();
 
+
+	BindEffect->CreateAnimation("FormerBindStart", "FormerBindStart", 0.1f, -1, -1, true);
+	BindEffect->CreateAnimation("FormerBindLoop", "FormerBindLoop", 0.1f, -1, -1, true);
+	BindEffect->CreateAnimation("FormerBindEnd", "FormerBindEnd", 0.1f, -1, -1, true);
+	BindEffect->SetEndEvent("FormerBindStart", [&](GameEngineSpriteRenderer*)
+		{
+			BindEffect->ChangeAnimation("FormerBindLoop");
+		});
+
+	BindEffect->SetEndEvent("FormerBindEnd", [&](GameEngineSpriteRenderer*)
+		{
+			BindEffect->Off();
+		});
+
+
+	BindEffect->ChangeAnimation("SkillBind");
+	BindEffect->AutoSpriteSizeOn();
+	BindEffect->Off();
 }
 
 void BossBindEffect::Update(float _Delta)

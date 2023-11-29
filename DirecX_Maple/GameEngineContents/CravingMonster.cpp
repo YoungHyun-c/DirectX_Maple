@@ -145,6 +145,7 @@ void CravingMonster::DeathStart()
 	ChangeAnimationState("Death");
 	CravingSkillCol->Off();
 	CravingAttackRangeCol->Off();
+	MonsterCollision->Off();
 }
 
 void CravingMonster::DeathUpdate(float _Delta)

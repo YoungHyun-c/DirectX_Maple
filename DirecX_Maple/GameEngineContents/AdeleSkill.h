@@ -47,14 +47,14 @@ private:
 	void DoubleJump();
 	void BoltJump();
 
-	// 디바이드
-	std::shared_ptr<class GameEngineSpriteRenderer> Divide1;
-	std::shared_ptr<class GameEngineSpriteRenderer> Divide2;
-	std::shared_ptr<class GameEngineSpriteRenderer> Divide3;
-	void DivideSkill();
-	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
-	std::shared_ptr<GameEngineCollision> AttackCol;
-	void AttackEvent();
+	//// 디바이드
+	//std::shared_ptr<class GameEngineSpriteRenderer> Divide1;
+	//std::shared_ptr<class GameEngineSpriteRenderer> Divide2;
+	//std::shared_ptr<class GameEngineSpriteRenderer> Divide3;
+	//void DivideSkill();
+	//std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
+	//std::shared_ptr<GameEngineCollision> AttackCol;
+	//void AttackEvent();
 
 	// 크리에이션
 	std::shared_ptr<class GameEngineSpriteRenderer> Creation1;

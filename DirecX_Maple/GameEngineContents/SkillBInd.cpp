@@ -101,7 +101,6 @@ void SkillBInd::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGrou
 			JinHillaBoss::GetMainBoss()->BossBind();
 		}
 	}
-
 }
 
 void SkillBInd::AttackEvent()

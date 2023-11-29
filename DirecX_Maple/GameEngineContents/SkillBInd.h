@@ -21,10 +21,10 @@ protected:
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
-private:
 	void Start() override;
 	void Update(float _Delta) override;
 	void Release() override;
+private:
 
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);

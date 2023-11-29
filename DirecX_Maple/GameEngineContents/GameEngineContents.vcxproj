@@ -250,11 +250,19 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillMaestro.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillManager.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="SkillRuin.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillShard.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -517,11 +525,19 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SkillMaestro.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SkillManager.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="SkillRuin.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillShard.h">
       <SubType>
       </SubType>
     </ClInclude>

@@ -4,9 +4,11 @@
 #include "SkillManager.h"
 //#include "AdeleSkill.h"
 #include "SkillFunction.h"
+
 #include "SkillDivide.h"
 #include "SkillRuin.h"
 #include "SkillBInd.h"
+#include "SkillMaestro.h"
 
 #include "DamageRenderer.h"
 
@@ -39,9 +41,22 @@ void SkillManager::LevelEnd(class GameEngineLevel* _NextLevel)
 
 void SkillManager::Start()
 {
+	{
+		if (nullptr == GameEngineSound::FindSound("Hit.mp3"))
+		{
+			GameEnginePath FilePath;
+			FilePath.SetCurrentPath();
+			FilePath.MoveParentToExistsChild("ContentsResources");
+			FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+			GameEngineSound::SoundLoad(FilePath.PlusFilePath("Hit.mp3"));
+		}
+	}
+
 	CreateSkill<SkillDivide>("Divide1");
 	CreateSkill<SkillRuin>("Ruin");
 	CreateSkill<SkillBInd>("Scoll");
+	CreateSkill<SkillMaestro>("Maestro");
 }
 
 void SkillManager::Update(float _Delta)
@@ -175,6 +190,7 @@ void SkillManager::HitPrintUpdate(float _Delta)
 		CurData->DelayTime -= _Delta;
 		if (0.0f >= CurData->DelayTime)
 		{
+			TestPlay = GameEngineSound::SoundPlay("Hit.mp3");
 			CurData->HitAnimations[CurData->CurIndex]->On();
 			CurData->CurIndex += 1;
 			CurData->DelayTime = Hit_Delay;

@@ -210,6 +210,12 @@
     <ClCompile Include="SkillBInd.cpp">
       <Filter>Object\Player\SKill\Bind</Filter>
     </ClCompile>
+    <ClCompile Include="SkillShard.cpp">
+      <Filter>Object\Player\SKill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillMaestro.cpp">
+      <Filter>Object\Player\SKill\Bind</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -416,6 +422,12 @@
       <Filter>Object\Boss\BossEffect</Filter>
     </ClInclude>
     <ClInclude Include="SkillBInd.h">
+      <Filter>Object\Player\SKill\Bind</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillShard.h">
+      <Filter>Object\Player\SKill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillMaestro.h">
       <Filter>Object\Player\SKill\Bind</Filter>
     </ClInclude>
   </ItemGroup>

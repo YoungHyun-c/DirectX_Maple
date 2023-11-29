@@ -166,6 +166,9 @@ void JinHillaBoss::Update(float _Delta)
 	if (FormerBind == true)
 	{
 		FormerBinding += _Delta;
+		SkillBindEffect->Transform.SetLocalPosition(MonsterRenderer->Transform.GetWorldPosition());
+		SkillBindEffect->GetStartFormerBindEffect();
+		SkillBindEffect->On();
 		ChangeState(MonsterState::Stand);
 		BossFormerBind();
 		return;
@@ -225,6 +228,7 @@ void JinHillaBoss::BossFormerBind()
 	FormerBind = true;
 	if (FormerBinding >= FormerBindTime)
 	{
+		SkillBindEffect->GetEndFormerBindEffect();
 		FormerBind = false;
 		FormerBinding = 0.0f;
 		return;

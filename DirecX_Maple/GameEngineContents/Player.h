@@ -17,6 +17,7 @@ enum class PlayerState
 	Attack,
 	SwingB,
 	SwingY,
+	Maestro,
 	ProneAttack,
 	Jump,
 	Rope,
@@ -98,6 +99,16 @@ public:
 		Bind = false;
 	}
 
+	void PlayerCollisionOff()
+	{
+		PlayerCol->Off();
+	}
+
+	void PlayerCollisionOn()
+	{
+		PlayerCol->On();
+	}
+
 	bool GetBindValue()
 	{
 		return Bind;
@@ -162,6 +173,14 @@ protected:
 	void SwingBStart();
 	void SwingBUpdate(float _Delta);
 	void SwingBEnd();
+
+	void SwingYStart();
+	void SwingYUpdate(float _Delta);
+	void SwingYEnd();
+	
+	void MaestroStart();
+	void MaestroUpdate(float _Delta);
+	void MaestroEnd();
 
 	// 스킬관련
 	//void BoltJump();
@@ -232,6 +251,10 @@ private:
 
 	float DivideTime = 0.0f;
 	float DivideCool = 6.0f;
+
+	float MaestroTime = 0.0f;
+	float MaestroEndTime = 9.0f;
+	bool MaestroUse = false;
 
 	bool Invicibility = false;
 	std::shared_ptr<class InvinCibilityEffect> Invicible = nullptr;

@@ -10,8 +10,6 @@
 #include "AdeleSkill.h"
 #include "SkillManager.h"
 #include "SkillFunction.h"
-#include "SkillDivide.h"
-
 
 AdeleSkill::AdeleSkill()
 {
@@ -152,13 +150,13 @@ void AdeleSkill::Start()
 	//}
 
 	// 6차 마에스트로
-	//{
-	//	Maestro = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-	//	Maestro->AutoSpriteSizeOn();
-	//	Maestro->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, false);
-	//	Maestro->ChangeAnimation("Maestro");
-	//	Maestro->Off();
-	//}
+	{
+		Maestro = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
+		Maestro->AutoSpriteSizeOn();
+		Maestro->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, false);
+		Maestro->ChangeAnimation("Maestro");
+		Maestro->Off();
+	}
 }
 
 void AdeleSkill::LevelStart(GameEngineLevel* _PreveLevel)
@@ -318,87 +316,6 @@ void AdeleSkill::SetSkillAnimation()
 			break;
 		}
 	}
-	//else if (SkillName == "Divide1")
-	//{
-	//	ActorDir Dir = Player::GetMainPlayer()->GetDir();
-	//	switch (Dir)
-	//	{
-	//	case ActorDir::Left:
-	//		Divide1->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y - 25.0f, FrontSkillPosZ });
-	//		Divide1->RightFlip();
-	//		Divide1->On();
-	//		Creation1->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y - 25.0f, FrontSkillPosZ });
-	//		Creation1->RightFlip();
-	//		Creation1->On();
-	//		AttackCol->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y - 25.0f, FrontSkillPosZ });
-	//		AttackCol->On();
-	//		AttackEvent();
-	//		break;
-	//	case ActorDir::Right:
-	//		Divide1->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Divide1->LeftFlip();
-	//		Divide1->On();
-	//		Creation1->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Creation1->LeftFlip();
-	//		Creation1->On();
-	//		AttackCol->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		AttackCol->On();
-	//		AttackEvent();
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
-	//else if (SkillName == "Divide2")
-	//{
-	//	ActorDir Dir = Player::GetMainPlayer()->GetDir();
-	//	switch (Dir)
-	//	{
-	//	case ActorDir::Left:
-	//		Divide2->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Divide2->RightFlip();
-	//		Divide2->On();
-	//		Creation2->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Creation2->RightFlip();
-	//		Creation2->On();
-	//		break;
-	//	case ActorDir::Right:
-	//		Divide2->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Divide2->LeftFlip();
-	//		Divide2->On();
-	//		Creation2->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Creation2->LeftFlip();
-	//		Creation2->On();
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
-	//else if (SkillName == "Divide3")
-	//{
-	//	ActorDir Dir = Player::GetMainPlayer()->GetDir();
-	//	switch (Dir)
-	//	{
-	//	case ActorDir::Left:
-	//		Divide3->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Divide3->RightFlip();
-	//		Divide3->On();
-	//		Creation3->Transform.SetWorldPosition({ PlayerPos.X - 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Creation3->RightFlip();
-	//		Creation3->On();
-	//		break;
-	//	case ActorDir::Right:
-	//		Divide3->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Divide3->LeftFlip();
-	//		Divide3->On();
-	//		Creation3->Transform.SetWorldPosition({ PlayerPos.X + 207.5f, PlayerPos.Y, FrontSkillPosZ });
-	//		Creation3->LeftFlip();
-	//		Creation3->On();
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//}
 	else if (SkillName == "Shard")
 	{
 		std::list<std::vector<std::shared_ptr<GameEngineSpriteRenderer>>*>::iterator Start = Shard.begin();
@@ -512,18 +429,6 @@ void AdeleSkill::SetUpdateFunc()
 	{
 		UpdateFunc = &AdeleSkill::DoubleJump;
 	}
-	/*else if (SkillName == "Divide1")
-	{
-		UpdateFunc = &AdeleSkill::DivideSkill;
-	}
-	else if (SkillName == "Divide2")
-	{
-		UpdateFunc = &AdeleSkill::DivideSkill;
-	}
-	else if (SkillName == "Divide3")
-	{
-		UpdateFunc = &AdeleSkill::DivideSkill;
-	}*/
 	else if (SkillName == "Shard")
 	{
 		UpdateFunc = &AdeleSkill::ShardSkill;
@@ -560,28 +465,6 @@ void AdeleSkill::BoltJump()
 	{
 		UpJumpRenderer->Off();
 	}
-}
-
-void AdeleSkill::DivideSkill()
-{
-	//if (Divide1->IsCurAnimationEnd())
-	//{
-	//	Divide1->Off();
-	//	Creation1->Off();
-	//	AttackCol->Off();
-	//}
-
-	//if (Divide2->IsCurAnimationEnd())
-	//{
-	//	Divide2->Off();
-	//	Creation2->Off();
-	//}
-
-	//if (Divide3->IsCurAnimationEnd())
-	//{
-	//	Divide3->Off();
-	//	Creation3->Off();
-	//}
 }
 
 void AdeleSkill::ShardSkill()
@@ -648,6 +531,7 @@ void AdeleSkill::MaestroSkill()
 		Maestro->Off();
 	}
 }
+
 //
 //void AdeleSkill::AttackEvent()
 //{

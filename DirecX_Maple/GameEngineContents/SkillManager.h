@@ -68,5 +68,8 @@ private:
 	bool IsSet = false;
 
 	bool IsAttack = false;
+	
+	// 사운드 변경할꺼
+	GameEngineSoundPlayer TestPlay;
 };
 

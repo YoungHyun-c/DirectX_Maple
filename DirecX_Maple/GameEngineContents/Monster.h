@@ -63,8 +63,12 @@ private:
 
 	std::shared_ptr<class BossBindEffect> SkillBindEffect = nullptr;
 
-	bool Bind = false;
-	float Binding = 0.0f;
-	float BindTIme = 10.0f;
+	bool SkillBind = false;
+	float SkillBinding = 0.0f;
+	float SkillBindTIme = 10.0f;
+
+	bool FormerBind = false;
+	float FormerBinding = 0.0f;
+	float FormerBindTIme = 10.0f;
 };
 

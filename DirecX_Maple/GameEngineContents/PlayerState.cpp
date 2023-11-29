@@ -49,6 +49,15 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
+	if (PlayerValue::GetValue()->GetClass() == "Maestro")
+	{
+		if (GameEngineInput::IsDown('R', this))
+		{
+			ChangeState(PlayerState::Maestro);
+			return;
+		}
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -116,6 +125,15 @@ void Player::WalkUpdate(float _Delta)
 	{
 		ChangeState(PlayerState::SwingB);
 		return;
+	}
+
+	if (PlayerValue::GetValue()->GetClass() == "Maestro")
+	{
+		if (GameEngineInput::IsDown('R', this))
+		{
+			ChangeState(PlayerState::Maestro);
+			return;
+		}
 	}
 
 	float MovePos = 0.0f;
@@ -208,6 +226,15 @@ void Player::JumpUpdate(float _Delta)
 	{
 		ChangeState(PlayerState::SwingB);
 		return;
+	}
+
+	if (PlayerValue::GetValue()->GetClass() == "Maestro")
+	{
+		if (GameEngineInput::IsDown('R', this))
+		{
+			ChangeState(PlayerState::Maestro);
+			return;
+		}
 	}
 
 	//TimeCounting();
@@ -572,4 +599,52 @@ void Player::SwingBUpdate(float _Delta)
 void Player::SwingBEnd()
 {
 	IsAttack = false;
+}
+
+void Player::SwingYStart()
+{
+	IsAttack = true;
+	AlertTime = Alert_Time;
+	MainSpriteRenderer->ChangeAnimation("Normal_SwingY");
+	//SkillManager::PlayerSkillManager->UseSkill("Scoll");
+}
+void Player::SwingYUpdate(float _Delta)
+{
+	if (true == MainSpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeToStand();
+	}
+}
+void Player::SwingYEnd()
+{
+	IsAttack = false;
+}
+
+void Player::MaestroStart()
+{
+	PlayerCol->Off();
+	IsAttack = true;
+	SkillManager::PlayerSkillManager->UseSkill("Maestro");
+	MaestroUse = true;
+}
+void Player::MaestroUpdate(float _Delta)
+{
+	Transform.SetLocalPosition(PlayerPos);
+	if (MaestroTime >= 8.0f)
+	{
+		if (true == IsGround)
+		{
+			ChangeToStand();
+		}
+		else
+		{
+			ChangeState(PlayerState::Jump);
+			return;
+		}
+	}
+}
+void Player::MaestroEnd()
+{
+	IsAttack = false;
+	GravityReset();
 }

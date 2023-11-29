@@ -26,6 +26,17 @@ public:
 		BindEffect->Off();
 	}
 
+	void GetStartFormerBindEffect()
+	{
+		BindEffect->On();
+		BindEffect->ChangeAnimation("FormerBindStart");
+	}
+
+	void GetEndFormerBindEffect()
+	{
+		BindEffect->ChangeAnimation("FormerBindEnd");
+	}
+
 protected:
 	void Start() override;
 	void Update(float _Delta) override;

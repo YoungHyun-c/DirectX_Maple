@@ -1,6 +1,5 @@
 #include "PreCompile.h"
 #include "SkillRuin.h"
-#include "Player.h"
 #include "SkillManager.h"
 
 SkillRuin::SkillRuin()
