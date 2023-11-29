@@ -49,11 +49,6 @@ void BossRewardLevel::Update(float _Delta)
 	{
 		Map->SwitchRenderer();
 	}
-
-	if (GameEngineInput::IsDown('7', this))
-	{
-		GameEngineCore::ChangeLevel("7.TestLevel");
-	}
 }
 
 void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
@@ -182,6 +177,17 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
 	}
+	if (nullptr == GameEngineSound::FindSound("SecretLabyrinth.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("SecretLabyrinth.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("SecretLabyrinth.mp3", 2);
 
 	if (BossBox == nullptr)
 	{

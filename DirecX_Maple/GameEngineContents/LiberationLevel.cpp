@@ -112,6 +112,17 @@ void LiberationLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
 	}
+	if (nullptr == GameEngineSound::FindSound("Pain And Sorrow.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Pain And Sorrow.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("Pain And Sorrow.mp3", 2);
 
 
 	if (Map == nullptr)

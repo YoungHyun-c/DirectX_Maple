@@ -218,7 +218,9 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MureungSchool1.mp3"));
 	}
-	MapBgm = GameEngineSound::SoundPlay("MureungSchool1.mp3", 3);
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3");
+	//MapBgm = GameEngineSound::SoundPlay("MureungSchool1.mp3", 3);
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
@@ -233,11 +235,6 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 void PracticeLevel::LevelEnd(GameEngineLevel* _NextLevel)
 {
-	if (GameEngineSound::FindSound("MureungSchool1.mp3"))
-	{
-		MapBgm.Stop();
-	}
-
 	if (nullptr != GameEngineSprite::Find("PracticeMap.png"))
 	{
 		GameEngineSprite::Release("PracticeMap.png");

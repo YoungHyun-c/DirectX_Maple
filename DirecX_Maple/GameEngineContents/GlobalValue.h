@@ -133,25 +133,15 @@ public:
 		return BossDeath;
 	}
 
-	//void SetBossBind(bool _Value)
-	//{
-	//	BossBind = _Value;
-	//}
+	void SetBgm(const std::string& _Name, int _LoopValue = 1)
+	{
+		MapBgm = GameEngineSound::SoundPlay(_Name, _LoopValue);
+	}
 
-	//void SetBossFormerBind(bool _Value)
-	//{
-	//	BossFormerBind = _Value;
-	//}
-
-	//bool GetBossBind()
-	//{
-	//	return BossBind;
-	//}
-
-	//bool GetBossFormerBind()
-	//{
-	//	return BossFormerBind;
-	//}
+	void CurBgmStop()
+	{
+		MapBgm.Stop();
+	}
 
 protected:
 
@@ -172,7 +162,9 @@ private:
 	float SickleCut = 0.0f;
 
 	bool BossDeath = false;
-	//bool BossBind = false;
-	//bool BossFormerBind = false;
+
+
+// BGM
+	GameEngineSoundPlayer MapBgm;
 };
 

@@ -387,6 +387,17 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
 	}
+	if (nullptr == GameEngineSound::FindSound("DepthOfPain.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DepthOfPain.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 25);
 
 	if (nullptr == UIObject)
 	{

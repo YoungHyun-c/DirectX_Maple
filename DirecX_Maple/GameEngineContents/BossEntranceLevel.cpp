@@ -128,6 +128,17 @@ void BossEntranceLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
 	}
+	if (nullptr == GameEngineSound::FindSound("HeartofSuffering.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("HeartofSuffering.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("HeartofSuffering.mp3");
 
 	if (nullptr == Map)
 	{

@@ -200,7 +200,7 @@ void HuntLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("BossBoxDie"))
+	if (nullptr == GameEngineSprite::Find("SolEldaPieceIcon.Png"))
 	{
 		GameEngineDirectory Dir;
 		Dir.MoveParentToExistsChild("ContentsResources");
@@ -218,6 +218,18 @@ void HuntLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("SolEldaPieceIcon.png");
 		GameEngineSprite::CreateSingle("SolEldaIcon.png");
 	}
+
+	if (nullptr == GameEngineSound::FindSound("TheothersideofShangriLa.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("TheothersideofShangriLa.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("TheothersideofShangriLa.mp3", 3);
 	
 	if (Zone1 == nullptr)
 	{

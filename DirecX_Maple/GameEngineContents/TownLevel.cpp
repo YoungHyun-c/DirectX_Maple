@@ -202,6 +202,18 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("FormerNpc3.Png");
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Thelandofpeachblossoms.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Thelandofpeachblossoms.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("Thelandofpeachblossoms.mp3", 2);
+
 
 	if (Map == nullptr)
 	{
