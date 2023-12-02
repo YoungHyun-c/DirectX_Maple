@@ -10,6 +10,8 @@
 #include "DropItem.h"
 #include "InvinCibilityEffect.h"
 
+#include <GameEngineCore/GameEngineCore.h>
+
 Player* Player::MainPlayer = nullptr;
 
 #define Rope_Y_PIVOT 15.0f
@@ -138,9 +140,9 @@ void Player::Start()
 	//Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
 
 	{
-		Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
+		/*Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
 		Invicible->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
-		Invicible->Off();
+		Invicible->Off();*/
 	}
 	GameEngineInput::AddInputObject(this);
 }
@@ -184,7 +186,7 @@ void Player::Update(float _Delta)
 
 	if (true == IsGround && PlayerState::Alert == State || PlayerState::Stand == State || PlayerState::Walk == State)
 	{
-		Flying = false;
+		//Flying = false;
 	}
 
 
@@ -237,7 +239,7 @@ void Player::Update(float _Delta)
 
 	PotionCheck(_Delta);
 
-	InvicibleCheck();
+	//InvicibleCheck();
 	// 맞았을때
 	if (IsDamaged == true)
 	{
@@ -310,7 +312,7 @@ void Player::ChangeToStand()
 	{
 		GroundJump = false;
 		DoubleJump = false;
-
+		Flying = false;
 		UpClick = false;
 	}
 
@@ -591,7 +593,7 @@ void Player::KnockBackUpdate(float _Delta)
 	}
 
 	CurTime = static_cast<float>(clock());
-	TimeCount = (CurTime - PrevTime) / 1000.0f;
+	//KnockTimeCount = (CurTime - PrevTime) / 1000.0f;
 	PrevTime = CurTime;
 
 	float4 CurPos = Transform.GetLocalPosition();
@@ -723,7 +725,7 @@ void Player::RopeCheck()
 
 void Player::FlyCheckUpdate()
 {
-	if (GroundJump == true && Flying == false)
+	if (Flying == false)
 	{
 		TimeCounting();
 		if (UpDoubleClick == true)
@@ -747,7 +749,7 @@ void Player::FlyCheckUpdate()
 		if (UpClick == true)
 		{
 			UpClickCount += TimeCount;
-			if (UpClickCount > 0.01f)
+			if (UpClickCount > 0.2f)
 			{
 				UpClick = false;
 			}
@@ -755,7 +757,7 @@ void Player::FlyCheckUpdate()
 
 		if (UpDoubleClick == true && State == PlayerState::Jump)
 		{
-			Flying = true;
+			//Flying = true;
 			ChangeState(PlayerState::Fly);
 			return;
 		}
@@ -784,7 +786,7 @@ void Player::FlyCheckUpdate()
 		if (UpClick == true)
 		{
 			UpClickCount += TimeCount;
-			if (UpClickCount > 0.01f)
+			if (UpClickCount > 0.2f)
 			{
 				UpClick = false;
 			}
@@ -793,7 +795,6 @@ void Player::FlyCheckUpdate()
 		if (UpDoubleClick == true && State == PlayerState::Fly)
 		{
 			FlyTime = 0.0f;
-			Flying = false;
 			GravityReset();
 			ChangeToStand();
 			return;

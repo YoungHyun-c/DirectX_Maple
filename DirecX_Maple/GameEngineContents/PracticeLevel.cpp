@@ -219,7 +219,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MureungSchool1.mp3"));
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
-	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3");
+	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3", 10);
 	//MapBgm = GameEngineSound::SoundPlay("MureungSchool1.mp3", 3);
 
 

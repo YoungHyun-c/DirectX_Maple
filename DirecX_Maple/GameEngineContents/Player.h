@@ -233,13 +233,18 @@ private:
 	float AirSpeed = 200.0f;
 	float AlertTime = 0.0f;
 	float RopePivot = 0.0f;
+
+	//// 레비테이션 공중체공 확인
 	float FlyTime = 0.0f;
 	float FlyLimitTime = 3.0f;
 	bool Flying = false;
+
 	bool UpClick = false;
 	bool UpDoubleClick = false;
 	float UpClickCount = 0.0f;
 	float UpDoubleClickCount = 0.0f;
+	///////////////////////////////
+
 
 	bool Bind = false;
 	float BindTime = 0.0f;
@@ -251,7 +256,7 @@ private:
 	bool isKnockBack = false;
 
 	float PrevTime = 0.0f;
-	float TimeCount = 0.0f;
+	//float KnockTimeCount = 0.0f;
 
 	float DivideTime = 0.0f;
 	float DivideCool = 6.0f;

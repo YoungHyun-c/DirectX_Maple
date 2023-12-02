@@ -74,7 +74,7 @@ void SkillMaestro::UseSkill()
 
 	SkillRender1->On();
 
-	SkillRender1->ChangeAnimation("Maestro", true, 0);
+	SkillRender1->ChangeAnimation("Maestro");
 
 	AttackEvent();
 }

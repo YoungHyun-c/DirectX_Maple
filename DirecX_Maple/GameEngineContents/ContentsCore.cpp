@@ -101,9 +101,9 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
 
 	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
-	//GameEngineCore::ChangeLevel("0.TestLevel");
+	GameEngineCore::ChangeLevel("0.TestLevel");
 	 
-	GameEngineCore::ChangeLevel("1.TitleLevel");
+	//GameEngineCore::ChangeLevel("1.TitleLevel");
 	//GameEngineCore::ChangeLevel("2.TownLevel");
 	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
 	//GameEngineCore::ChangeLevel("4.FormerLevel");

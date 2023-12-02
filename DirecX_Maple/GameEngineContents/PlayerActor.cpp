@@ -83,6 +83,7 @@ void PlayerActor::Gravity(float _Delta)
 
 			if (true == CheckGround(float4(0, -35.0f + Count)))
 			{
+				IsGround = true;
 				break;
 			}
 		}
@@ -91,10 +92,12 @@ void PlayerActor::Gravity(float _Delta)
 			MoveVectorForceDelta = -1.0f * Count;
 		}*/
 		Transform.AddLocalPosition(float4(0, Count));
+		IsGround = false;
 	}
 	else
 	{
 		Transform.AddLocalPosition(float4(0,MoveVectorForceDelta));
+		IsGround = false;
 	}
 }
 

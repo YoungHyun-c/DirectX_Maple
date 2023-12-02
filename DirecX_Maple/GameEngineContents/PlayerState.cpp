@@ -11,10 +11,11 @@
 #define DoubleJumpDistance 250.0f
 
 #define DoubleJumpHeight 100.0f
+#define FlyingDoubleJumpUp 900.0f
 #define DoubleJumpUP 500.0f
-#define NoKeyDoubleJumpDistance 450.0f
+#define NoKeyDoubleJumpDistance 700.0f
 
-#define Rope_Jump_Height 200.0f
+#define RopeJumpHeight 200.0f
 
 #define Alert_Time 5.0f
 
@@ -206,11 +207,11 @@ void Player::JumpStart()
 	{
 		if (GameEngineInput::IsPress(VK_LEFT, this))
 		{
-			AddMoveVectorForce(float4(-Rope_Jump_Height, Rope_Jump_Height));
+			AddMoveVectorForce(float4(-RopeJumpHeight, RopeJumpHeight));
 		}
 		else if (GameEngineInput::IsPress(VK_RIGHT, this))
 		{
-			AddMoveVectorForce(float4(Rope_Jump_Height, Rope_Jump_Height));
+			AddMoveVectorForce(float4(RopeJumpHeight, RopeJumpHeight));
 		}
 	}
 }
@@ -237,38 +238,6 @@ void Player::JumpUpdate(float _Delta)
 		}
 	}
 
-	//TimeCounting();
-	//if (UpDoubleClick == true)
-	//{
-	//	UpDoubleClick = false;
-	//}
-	//if (true == GameEngineInput::IsDown(VK_UP, this))
-	//{
-	//	if (UpClick == true)
-	//	{
-	//		UpDoubleClick = true;
-	//		UpClick = false;
-	//		UpClickCount = 0.0f;
-	//	}
-	//	else
-	//	{
-	//		UpClick = true;
-	//		UpClickCount = 0.0f;
-	//	}
-	//}
-	//if (UpClick == true)
-	//{
-	//	UpClickCount += TimeCount;
-	//	if (UpClickCount > 0.5f)
-	//	{
-	//		UpClick = false;
-	//	}
-	//}
-	//if (UpDoubleClick == true)
-	//{
-	//	ChangeState(PlayerState::Fly);
-	//	return;
-	//}
 
 	if (true == IsGround && 0 >= GetMoveVectorForce().Y)
 	{
@@ -285,36 +254,6 @@ void Player::JumpUpdate(float _Delta)
 		DoubleJump = false;
 		return;
 	}
-
-
-	//if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
-	//{
-	//	float4 MoveDir = float4::ZERO;
-
-	//	switch (Dir)
-	//	{
-	//	case ActorDir::Right:
-	//		MoveDir = float4::RIGHT;
-	//		break;
-	//	case ActorDir::Left:
-	//		MoveDir = float4::LEFT;
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	
-	//	switch (GroundJump)
-	//	{
-	//	case true:
-	//		//Transform.AddLocalPosition(MoveDir * _Delta * JumpAirSpeed);
-	//		MoveVectorForce += MoveDir * _Delta * JumpAirSpeed;
-	//		break;
-	//	case false:
-	//		//Transform.AddLocalPosition(MoveDir * _Delta * AirSpeed);
-	//		MoveVectorForce += MoveDir * _Delta * AirSpeed;
-	//		break;
-	//	}
-	//}
 
 	if (GameEngineInput::IsPress(VK_LEFT, this) || GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -356,7 +295,12 @@ void Player::JumpUpdate(float _Delta)
 		std::shared_ptr<AdeleSkill> BoltJumpActor = GetLevel()->CreateActor<AdeleSkill>();
 		std::shared_ptr<AdeleSkill> DoubleJumpActor = GetLevel()->CreateActor<AdeleSkill>();
 		DoubleJump = true;
-		if (GameEngineInput::IsPress(VK_UP, this))
+		if (Flying == true && GameEngineInput::IsPress(VK_UP, this))
+		{
+			BoltJumpActor->SetSkillActor("BoltJump");
+			AddMoveVectorForce(float4(0, FlyingDoubleJumpUp));
+		}
+		else if (GameEngineInput::IsPress(VK_UP, this))
 		{
 			BoltJumpActor->SetSkillActor("BoltJump");
 			AddMoveVectorForce(float4(0, DoubleJumpUP));
@@ -454,22 +398,6 @@ void Player::AttackStart()
 
 void Player::AttackUpdate(float _Delta)
 {
-	if (Flying == true)
-	{
-		FlyTime += _Delta;
-		Transform.SetLocalPosition(PlayerPos);
-		SetMoveVectorXForce(0.0f);
-		SetMoveVectorYForce(0.0f);
-		GravityReset();
-		if (FlyTime >= FlyLimitTime)
-		{
-			FlyTime = 0.0f;
-			Flying = false;
-			ChangeToStand();
-			return;
-		}
-	}
-
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
 		if (true == IsGround)
@@ -536,33 +464,52 @@ void Player::FlyStart()
 {
 	MainSpriteRenderer->ChangeAnimation("Normal_Fly");
 	Transform.SetLocalPosition(PlayerPos);
-	FlyTime = 0.0f;
+	//FlyTime = 0.0f;
+	Flying = true;
 }
 void Player::FlyUpdate(float _Delta)
 {
-	if (GameEngineInput::IsDown(VK_SHIFT, this))
+	/// Flying
+	{
+		FlyTime += _Delta;
+		Transform.SetLocalPosition(PlayerPos);
+		SetMoveVectorXForce(0.0f);
+		SetMoveVectorYForce(0.0f);
+		GravityReset();
+		if (FlyTime >= FlyLimitTime)
+		{
+			FlyTime = 0.0f;
+			IsAttack = false;
+			ChangeToStand();
+			return;
+		}
+	}
+
+	// Fling중 공격
+	if (MainSpriteRenderer->IsCurAnimation("Normal_Attack"))
+	{
+		if (true == MainSpriteRenderer->IsCurAnimationEnd())
+		{
+			MainSpriteRenderer->ChangeAnimation("Normal_Fly");
+			IsAttack = false;
+		}
+	}
+	if (GameEngineInput::IsDown(VK_SHIFT, this) && IsAttack == false)
 	{
 		SetMoveVectorXForce(0.0f);
 		SetMoveVectorYForce(0.0f);
-		ChangeState(PlayerState::Attack);
+		IsAttack = true;
+		MainSpriteRenderer->ChangeAnimation("Normal_Attack");
+		SkillManager::PlayerSkillManager->UseSkill("Divide1");
+		AlertTime = Alert_Time;
 		return;
 	}
 
+
+	// 더블 점프 상황
 	if (GameEngineInput::IsDown('X', this))
 	{
-		int a = 0;
-	}
-
-	FlyTime += _Delta;
-	Transform.SetLocalPosition(PlayerPos);
-	SetMoveVectorXForce(0.0f);
-	SetMoveVectorYForce(0.0f);
-	GravityReset();
-	if (FlyTime >= FlyLimitTime)
-	{
-		FlyTime = 0.0f;
-		Flying = false;
-		ChangeToStand();
+		ChangeState(PlayerState::Jump);
 		return;
 	}
 }
