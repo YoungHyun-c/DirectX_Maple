@@ -59,6 +59,8 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> PlayerHpNumberRender2;
 	std::shared_ptr<GameEngineUIRenderer> PlayerHpNumberRender3;
 	std::shared_ptr<GameEngineUIRenderer> PlayerHpNumberRender4; // %
+	float CurHpScale = 0.0f;
+	void HpUpdate(float _Delta);
 
 	int MainMpCal = 0;
 	int CurMpCal = 0;
@@ -67,6 +69,9 @@ private:
 	std::shared_ptr<GameEngineUIRenderer> PlayerMpNumberRender2;
 	std::shared_ptr<GameEngineUIRenderer> PlayerMpNumberRender3;
 	std::shared_ptr<GameEngineUIRenderer> PlayerMpNumberRender4; // %
+	void MpUpdate(float _Delta);
+	float CurMpScale = 0.0f;
+	float ScaleSpeed = 100.0f;
 
 	float4 FontImageScale = { 11.0f, 11.0f };
 

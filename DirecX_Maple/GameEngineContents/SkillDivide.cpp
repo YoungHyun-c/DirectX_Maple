@@ -20,8 +20,6 @@ void SkillDivide::Start()
 	SkillFunction::Start();
 	{
 
-
-
 		SkillRender1->CreateAnimation("Divide1", "Divide_1", 0.05f);
 		SkillRender1->CreateAnimation("Divide1Hit", "Divide1_Hit", 0.05f);
 
@@ -246,6 +244,12 @@ void SkillDivide::AttackEvent()
 		{
 			NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(_Other, DivideHitCount, SkillValue::GetValue()->GetDivideSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
+			
+			if (PlayerValue::GetValue()->GetWonderUse() == false)
+			{
+				SkillManager::PlayerSkillManager->UseSkill("Wonder");
+				PlayerValue::GetValue()->SetWonderUse(true);
+			}
 		};
 	HitEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{

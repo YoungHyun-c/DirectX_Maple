@@ -61,7 +61,7 @@ void Monster::Update(float _Delta)
 	{
 		SkillBinding += _Delta;
 	}
-	if (GameEngineInput::IsDown(VK_HOME, this))
+	if (GameEngineInput::IsDown(VK_HOME, this) && MonsterAppear == true)
 	{
 		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition()-30.0f);
 		SkillBindEffect->GetStartBindEffect();
@@ -80,7 +80,7 @@ void Monster::Update(float _Delta)
 	{
 		FormerBinding += _Delta;
 	}
-	if (GameEngineInput::IsDown('R', this))
+	if (GameEngineInput::IsDown('R', this) && MonsterAppear == true)
 	{
 		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition() - 30.0f);
 		SkillBindEffect->GetStartFormerBindEffect();

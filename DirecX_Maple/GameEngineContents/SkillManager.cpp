@@ -9,6 +9,8 @@
 #include "SkillRuin.h"
 #include "SkillBInd.h"
 #include "SkillMaestro.h"
+#include "SkillShard.h"
+#include "SkillWonder.h"
 
 #include "DamageRenderer.h"
 
@@ -57,6 +59,9 @@ void SkillManager::Start()
 	//CreateSkill<SkillRuin>("Ruin");
 	//CreateSkill<SkillBInd>("Scoll");
 	//CreateSkill<SkillMaestro>("Maestro");
+
+	CreateSkill<SkillShard>("Shard");
+	CreateSkill<SkillWonder>("Wonder");
 }
 
 void SkillManager::Update(float _Delta)

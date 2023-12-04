@@ -128,12 +128,12 @@ void SkillMaestro::AttackEvent()
 	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			NewDR = GetLevel()->CreateActor<DamageRenderer>();
-			NewDR->PushDamage(_Other, MaestroHitCount, SkillValue::GetValue()->GetMaestrokillDam(), SkillValue::GetValue()->GetMaestroFinalDam());
+			NewDR->PushDamage(_Other, MaestroHitCount, SkillValue::GetValue()->GetMaestroSkillDam(), SkillValue::GetValue()->GetMaestroFinalDam());
 		};
 	HitEvent.Stay = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
 			NewDR = GetLevel()->CreateActor<DamageRenderer>();
-			NewDR->PushDamage(_Other, MaestroHitCount, SkillValue::GetValue()->GetMaestrokillDam(), SkillValue::GetValue()->GetMaestroFinalDam());
+			NewDR->PushDamage(_Other, MaestroHitCount, SkillValue::GetValue()->GetMaestroSkillDam(), SkillValue::GetValue()->GetMaestroFinalDam());
 		};
 	AttackCol->CollisionEvent(ContentsCollisionType::Monster, HitEvent);
 	AttackCol->CollisionEvent(ContentsCollisionType::Craving, HitEvent);

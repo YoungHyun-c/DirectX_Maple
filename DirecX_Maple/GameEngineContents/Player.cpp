@@ -212,10 +212,56 @@ void Player::Update(float _Delta)
 	//	Lesonens->SetSkillActor("Lesonens");
 	//}
 
+	//if (GameEngineInput::IsDown(VK_CONTROL, this))
+	//{
+	//	if (Dir == ActorDir::Right)
+	//	{
+	//		GravityReset();
+	//		MoveVectorForceReset();
+	//		Transform.SetLocalPosition(float4(PlayerPos.X -200.0f, PlayerPos.Y + 200.0f));
+	//	}
+	//	if (Dir == ActorDir::Left)
+	//	{
+	//		GravityReset();
+	//		MoveVectorForceReset();
+	//		Transform.SetLocalPosition(float4(PlayerPos.X + 200.0f, PlayerPos.Y + 200.0f));
+	//	}
+	//}
+
 	if (GameEngineInput::IsDown('6', this))
 	{
 		PlayerValue::GetValue()->SetGrade(6);
 	}
+
+	SkillUseCheck(_Delta);
+	PotionCheck(_Delta);
+
+	//InvicibleCheck();
+	// 맞았을때
+	if (IsDamaged == true)
+	{
+		HitDamaged += _Delta;
+		if (HitDamaged >= HitDamCool)
+		{
+			HitDamaged = 0.0f;
+			IsDamaged = false;
+		}
+	}
+
+	FlyCheckUpdate();
+}
+void Player::SkillUseCheck(float _Delta)
+{
+	if (PlayerValue::GetValue()->GetWonderUse() == true)
+	{
+		WonderTime += _Delta;
+		if (WonderTime >= WonderCool)
+		{
+			PlayerValue::GetValue()->SetWonderUse(false);
+			WonderTime = 0.0f;
+		}
+	}
+
 	if (PlayerValue::GetValue()->GetDivide6Use() == true)
 	{
 		DivideTime += _Delta;
@@ -236,23 +282,8 @@ void Player::Update(float _Delta)
 		MaestroTime = 0.0f;
 		MaestroUse = false;
 	}
-
-	PotionCheck(_Delta);
-
-	//InvicibleCheck();
-	// 맞았을때
-	if (IsDamaged == true)
-	{
-		HitDamaged += _Delta;
-		if (HitDamaged >= HitDamCool)
-		{
-			HitDamaged = 0.0f;
-			IsDamaged = false;
-		}
-	}
-
-	FlyCheckUpdate();
 }
+
 void Player::InvicibleCheck()
 {
 	Invicible->Transform.SetLocalPosition({ PlayerPos.X, PlayerPos.Y + 50.0f });
@@ -762,7 +793,7 @@ void Player::FlyCheckUpdate()
 			return;
 		}
 	}
-	if (GroundJump == true && Flying == true)
+	if (GroundJump == true && Flying == true )//&& IsAttack == false)
 	{
 		TimeCounting();
 		if (UpDoubleClick == true)
@@ -794,6 +825,7 @@ void Player::FlyCheckUpdate()
 
 		if (UpDoubleClick == true && State == PlayerState::Fly)
 		{
+			IsAttack = false;
 			FlyTime = 0.0f;
 			GravityReset();
 			ChangeToStand();

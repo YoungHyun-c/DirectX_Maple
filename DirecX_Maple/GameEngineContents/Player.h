@@ -245,7 +245,6 @@ private:
 	float UpDoubleClickCount = 0.0f;
 	///////////////////////////////
 
-
 	bool Bind = false;
 	float BindTime = 0.0f;
 	float BindLimitTime = 1.5f;
@@ -258,12 +257,6 @@ private:
 	float PrevTime = 0.0f;
 	//float KnockTimeCount = 0.0f;
 
-	float DivideTime = 0.0f;
-	float DivideCool = 6.0f;
-
-	float MaestroTime = 0.0f;
-	float MaestroEndTime = 9.0f;
-	bool MaestroUse = false;
 
 	float HitDamaged = 0.0f;
 	float HitDamCool = 1.3f;
@@ -281,4 +274,17 @@ private:
 	void Level_Up();
 	std::shared_ptr<GameEngineSpriteRenderer> LevelUp = nullptr;
 	std::shared_ptr<GameEngineCollision> LevelUpCol = nullptr;
+
+
+	// 스킬 관련
+	void SkillUseCheck(float Delta);
+	float DivideTime = 0.0f;
+	float DivideCool = 6.0f;
+
+	float WonderTime = 0.0f;
+	float WonderCool = 6.0f;
+
+	float MaestroTime = 0.0f;
+	float MaestroEndTime = 9.0f;
+	bool MaestroUse = false;
 };

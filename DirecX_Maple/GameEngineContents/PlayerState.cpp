@@ -59,6 +59,12 @@ void Player::StandUpdate(float _Delta)
 		}
 	}
 
+	if (GameEngineInput::IsDown('Y', this))
+	{
+		ChangeState(PlayerState::SwingY);
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -135,6 +141,12 @@ void Player::WalkUpdate(float _Delta)
 			ChangeState(PlayerState::Maestro);
 			return;
 		}
+	}
+
+	if (GameEngineInput::IsDown('Y', this))
+	{
+		ChangeState(PlayerState::SwingY);
+		return;
 	}
 
 	float MovePos = 0.0f;
@@ -568,7 +580,7 @@ void Player::SwingYStart()
 	IsAttack = true;
 	AlertTime = Alert_Time;
 	MainSpriteRenderer->ChangeAnimation("Normal_SwingY");
-	//SkillManager::PlayerSkillManager->UseSkill("Scoll");
+	SkillManager::PlayerSkillManager->UseSkill("Shard");
 }
 void Player::SwingYUpdate(float _Delta)
 {

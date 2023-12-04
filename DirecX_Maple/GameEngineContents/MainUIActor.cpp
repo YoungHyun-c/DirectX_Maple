@@ -17,6 +17,9 @@ void MainUIActor::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	MainLv = PlayerValue::GetValue()->GetLevel();
 	PlayerLvUiRenderer();
+
+	MainHpBar->SetImageScale({ (CurHpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxHp())) * 172.0f, 12.0f });
+	MainMpBar->SetImageScale({ (CurMpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxMp())) * 172.0f, 12.0f });
 }
 
 void MainUIActor::Start()
@@ -164,13 +167,16 @@ void MainUIActor::Start()
 		MainHpBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		MainHpBar->SetSprite("HpBar.png");
 		MainHpBar->SetPivotType(PivotType::Left);
-		MainHpBar->SetImageScale({ 172.0f,12.0f });
+		//MainHpBar->SetImageScale({ 172.0f,12.0f });
+		CurHpScale = static_cast<float>(PlayerValue::GetValue()->GetHp());
+		MainHpBar->SetImageScale({ (PlayerValue::GetValue()->GetHp() / (PlayerValue::GetValue()->GetMaxHp())) * 172.0f * (CurHpScale * 0.01f), 12.0f });
 		MainHpBar->Transform.SetLocalPosition({ -77.0f, -GlobalValue::WinScale.hY() + 50.0f });
 
 		MainMpBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		MainMpBar->SetSprite("MpBar.png");
 		MainMpBar->SetPivotType(PivotType::Left);
-		MainMpBar->SetImageScale({ 172.0f,12.0f });
+		CurMpScale = static_cast<float>(PlayerValue::GetValue()->GetMp());
+		MainMpBar->SetImageScale({ (PlayerValue::GetValue()->GetMp() / (PlayerValue::GetValue()->GetMaxMp())) * 172.0f * (CurMpScale * 0.01f), 12.0f });
 		MainMpBar->Transform.SetLocalPosition({ -77.0f, -GlobalValue::WinScale.hY() + 34.0f });
 	}
 
@@ -258,7 +264,8 @@ void MainUIActor::Start()
 		QuickSlotCover->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
 	}
 
-
+	CurHpScale = static_cast<float>(PlayerValue::GetValue()->GetHp());
+	CurMpScale = static_cast<float>(PlayerValue::GetValue()->GetMp());
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -267,11 +274,6 @@ void MainUIActor::Update(float _Delta)
 	float ExpRatio = (1366.0f / static_cast<float>(PlayerValue::GetValue()->GetMaxExp()));
 	ExpBarMin->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetExp()) * ExpRatio , 7.0f});
 
-	float HpRatio = (172.0f / static_cast<float>(PlayerValue::GetValue()->GetMaxHp()));
-	MainHpBar->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetHp()) * HpRatio, 12.0f });
-
-	float MpRatio = (172.0f / static_cast<float>(PlayerValue::GetValue()->GetMaxMp()));
-	MainMpBar->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetMp()) * MpRatio, 12.0f });
 
 	if (GameEngineInput::IsDown('=', this))
 	{
@@ -281,17 +283,12 @@ void MainUIActor::Update(float _Delta)
 	}
 	if (GameEngineInput::IsDown('-', this))
 	{
-		//PlayerValue::GetValue()->AddExp(10);
-		//GlobalValue::GetNeedGlobalValue()->AddDropItemCount(10);
 		PlayerValue::GetValue()->SubHp(10);
 		PlayerValue::GetValue()->SubMp(10);
 	}
-	//if (GameEngineInput::IsDown('0', this))
-	//{
-	//	PlayerValue::GetValue()->AddExp(1);
-	//	PlayerValue::GetValue()->SubHp(1);
-	//	PlayerValue::GetValue()->SubMp(1);
-	//}
+
+	HpUpdate(_Delta);
+	MpUpdate(_Delta);
 
 
 	/// Lv Ui
@@ -314,6 +311,64 @@ void MainUIActor::Update(float _Delta)
 	{
 		PlayerMpPerUiRenderer();
 	}
+}
+
+void MainUIActor::HpUpdate(float _Delta)
+{
+	float PlayerHp = static_cast<float>(PlayerValue::GetValue()->GetHp());
+	if (PlayerHp == CurHpScale)
+	{
+		return;
+	}
+
+	if (PlayerHp < CurHpScale)
+	{
+		CurHpScale -= ScaleSpeed * _Delta;
+		if (PlayerHp > CurHpScale)
+		{
+			CurHpScale = PlayerHp;
+		}
+	}
+	else if (PlayerHp > CurHpScale)
+	{
+		CurHpScale += ScaleSpeed * _Delta;
+
+		if (PlayerHp < CurHpScale)
+		{
+			CurHpScale = PlayerHp;
+		}
+	}
+
+	MainHpBar->SetImageScale({ (CurHpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxHp())) * 172.0f, 12.0f });
+}
+
+void MainUIActor::MpUpdate(float _Delta)
+{
+	float PlayerMp = static_cast<float>(PlayerValue::GetValue()->GetMp());
+	if (PlayerMp == CurMpScale)
+	{
+		return;
+	}
+
+	if (PlayerMp < CurMpScale)
+	{
+		CurMpScale -= ScaleSpeed * _Delta;
+		if (PlayerMp > CurMpScale)
+		{
+			CurMpScale = PlayerMp;
+		}
+	}
+	else if (PlayerMp > CurMpScale)
+	{
+		CurMpScale += ScaleSpeed * _Delta;
+
+		if (PlayerMp < CurMpScale)
+		{
+			CurMpScale = PlayerMp;
+		}
+	}
+
+	MainMpBar->SetImageScale({ (CurMpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxMp())) * 172.0f, 12.0f });
 }
 
 void MainUIActor::PlayerLvUiRenderer()

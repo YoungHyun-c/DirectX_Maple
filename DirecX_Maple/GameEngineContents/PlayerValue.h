@@ -271,6 +271,15 @@ public:
 		RedDeathCount = 0;
 	}
 
+	void SetGreenDeathValue(int _Value)
+	{
+		GreenDeathCount = _Value;
+	}
+	void SetRedDeathValue(int _Value)
+	{
+		RedDeathCount = _Value;
+	}
+
 	int GetGreenDeathValue()
 	{
 		return GreenDeathCount;
@@ -289,6 +298,16 @@ public:
 	void SetDivideUse(bool _Value)
 	{
 		Divide6Use = _Value;
+	}
+
+	bool GetWonderUse()
+	{
+		return WonderUse;
+	}
+
+	void SetWonderUse(bool _Value)
+	{
+		WonderUse = _Value;
 	}
 
 protected:
@@ -324,6 +343,7 @@ private:
 	int ProPertyIgnorePer = 5;
 
 	bool Divide6Use = false;
+	bool WonderUse = false;
 
 
 // º¸½ºÀü

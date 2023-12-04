@@ -72,7 +72,7 @@ public:
 		MaestroSkillFinalDam = _Value;
 	}
 
-	int GetMaestrokillDam()
+	int GetMaestroSkillDam()
 	{
 		return MaestroSkillDam;
 	}
@@ -80,6 +80,26 @@ public:
 	int GetMaestroFinalDam()
 	{
 		return MaestroSkillFinalDam;
+	}
+
+	void SetShardSkillDam(int _Value)
+	{
+		ShardSkillDam = _Value;
+	}
+
+	void SetShardFinalDam(int _Value)
+	{
+		ShardSkillFinalDam = _Value;
+	}
+
+	int GetShardSkillDam()
+	{
+		return ShardSkillDam;
+	}
+
+	int GetShardFinalDam()
+	{
+		return ShardSkillFinalDam;
 	}
 
 
@@ -92,7 +112,10 @@ private:
 	int RuinSkillDam = 550;
 	int RuinSkillFinalDam = 160;
 
-	int MaestroSkillDam = 6600;
+	int MaestroSkillDam = 6600; // 마스터
 	int MaestroSkillFinalDam = 100;
+
+	int ShardSkillDam = 720; // 마스터
+	int ShardSkillFinalDam = 220;
 };
 

@@ -35,12 +35,12 @@ private:
 	std::shared_ptr<GameEngineCollision> SkillCollision = nullptr;
 	std::shared_ptr<class DamageRenderer> NewDR = nullptr;
 
-	size_t DivideHitCount;
+	size_t DivideHitCount = 0;
 
 	std::string SkillName = "";
 	std::string SkillHitName = "";
 	GameEngineRandom RandomSKillNum;
-	int SkillNum;
+	int SkillNum = 0;
 	std::shared_ptr<class GameEngineSpriteRenderer> Divide1;
 	std::shared_ptr<GameEngineCollision> AttackCol = nullptr;
 	void AttackEvent();

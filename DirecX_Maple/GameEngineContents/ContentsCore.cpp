@@ -73,7 +73,8 @@ void ContentsCore::Start()
 	// 만드는쉐이더
 	//UserRes();
 	
-	GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
+
+	//GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
 	
 	//GameEngineGUI::CreateGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow"); //렌더타겟 이용 테스트
 	GameEngineFont::Load("메이플스토리");
@@ -100,14 +101,14 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossRewardLevel>("9.BossRewardLevel");
 	GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
 
-	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
-	GameEngineCore::ChangeLevel("0.TestLevel");
+	//GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
+	//GameEngineCore::ChangeLevel("0.TestLevel");
 	 
 	//GameEngineCore::ChangeLevel("1.TitleLevel");
 	//GameEngineCore::ChangeLevel("2.TownLevel");
 	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
 	//GameEngineCore::ChangeLevel("4.FormerLevel");
-	//GameEngineCore::ChangeLevel("5.PracticeLevel");
+	GameEngineCore::ChangeLevel("5.PracticeLevel");
 
 	//GameEngineCore::ChangeLevel("6.BossEntranceLevel");
 

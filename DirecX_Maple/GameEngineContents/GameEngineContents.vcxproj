@@ -270,6 +270,18 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillWonder.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="BaseSummonActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillWonderActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SolErdaGauge.cpp">
       <SubType>
       </SubType>
@@ -542,6 +554,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SkillValue.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillWonder.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BaseSummonActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillWonderActor.h">
       <SubType>
       </SubType>
     </ClInclude>

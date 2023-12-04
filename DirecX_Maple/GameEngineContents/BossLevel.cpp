@@ -251,6 +251,8 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		PlayerObject->SetDebugMap("BossDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
 	}
+	PlayerValue::GetValue()->SetGreenDeathValue(5);
+	PlayerValue::GetValue()->SetRedDeathValue(0);
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;

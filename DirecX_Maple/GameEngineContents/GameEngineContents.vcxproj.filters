@@ -210,11 +210,20 @@
     <ClCompile Include="SkillBInd.cpp">
       <Filter>Object\Player\SKill\Bind</Filter>
     </ClCompile>
-    <ClCompile Include="SkillShard.cpp">
-      <Filter>Object\Player\SKill</Filter>
-    </ClCompile>
     <ClCompile Include="SkillMaestro.cpp">
       <Filter>Object\Player\SKill\Bind</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillShard.cpp">
+      <Filter>Object\Player\SKill\Summon\Shard</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillWonder.cpp">
+      <Filter>Object\Player\SKill\Summon\Wonder</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseSummonActor.cpp">
+      <Filter>Object\Player\SKill\Summon</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillWonderActor.cpp">
+      <Filter>Object\Player\SKill\Summon\Wonder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,11 +433,20 @@
     <ClInclude Include="SkillBInd.h">
       <Filter>Object\Player\SKill\Bind</Filter>
     </ClInclude>
-    <ClInclude Include="SkillShard.h">
-      <Filter>Object\Player\SKill</Filter>
-    </ClInclude>
     <ClInclude Include="SkillMaestro.h">
       <Filter>Object\Player\SKill\Bind</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillShard.h">
+      <Filter>Object\Player\SKill\Summon\Shard</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillWonder.h">
+      <Filter>Object\Player\SKill\Summon\Wonder</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseSummonActor.h">
+      <Filter>Object\Player\SKill\Summon</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillWonderActor.h">
+      <Filter>Object\Player\SKill\Summon\Wonder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -539,6 +557,18 @@
     </Filter>
     <Filter Include="Object\Player\SKill\Bind">
       <UniqueIdentifier>{c9dcb7d2-1f1a-4816-b125-49825ac184b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\Summon">
+      <UniqueIdentifier>{7eb61f33-6e93-4ff9-bb73-36ab56771802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\Summon\Wonder">
+      <UniqueIdentifier>{82e27e43-ad62-4765-98c5-7dafe9fc3b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\Summon\Order">
+      <UniqueIdentifier>{7b653131-cc45-473d-8c64-0e66bb31f8bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\Summon\Shard">
+      <UniqueIdentifier>{aa5c4bad-a7fe-4e1e-8c68-05b6fe7bb331}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

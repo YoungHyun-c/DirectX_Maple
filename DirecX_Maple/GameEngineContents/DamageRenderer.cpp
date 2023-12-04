@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "PlayerValue.h"
 #include "GlobalValue.h"
+#include <time.h>
 
 #define MaxDamage 700000000000
 
@@ -102,8 +103,6 @@ void DamageRenderer::PlayerDamageCal()
 
 }
 
-//GameEngineRandom CriticalRan;
-
 void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage)
 {
 	float LastNumYPos = 0.0f;
@@ -114,9 +113,16 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		SkillFinalDamage = (_SkillFinalDamage / 100.0f);
 
 		PlayerDamageCal();
-		
-		//CriticalRan.SetSeed(time(nullptr)+j);
-		CriticalRandomDam = CriticalRan.RandomFloat(120, 150);
+
+		CriticalRan.SetSeed(time(nullptr));
+		float a = CriticalRandomDam;
+		again:;
+		int b = rand() % 30 + 1;
+		CriticalRandomDam = static_cast<float>(CriticalRan.RandomInt(b + 100, b + 120));
+		if (CriticalRandomDam == a)
+		{
+			goto again;
+		}
 		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
 		
 		
