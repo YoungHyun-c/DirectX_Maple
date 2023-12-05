@@ -14,11 +14,31 @@ void GameEngineParticleRenderer::Start()
 {
 	GameEngineRenderer::Start();
 
+	UpdateUnit.GroupX = 128;
+
+	std::vector<ParticleInfoData> Data;
+
+	Data.resize(ParticleUpdateInfoValue.ParticleMaxCount);
+
+	for (size_t i = 0; i < ParticleUpdateInfoValue.ParticleMaxCount; i++)
+	{
+		Data[i].CurTime = 0.0f;
+		Data[i].MaxTime = ParticleUpdateInfoValue.MaxLife;
+		Data[i].Dir = float4::ZERO;
+		Data[i].RelativePos = float4::ZERO;
+		Data[i].Speed = 100.0f;
+		// 다 죽어있는 상태
+		Data[i].iActive = 0;
+	}
+
 	UpdateUnit.SetComputeShader("ParticleUpdate_CS");
 
-	// UpdateUnit.ShaderResHelper.SetConstantBufferLink()
+	// UpdateUnit.ShaderResHelper.SetConstantBufferLink("ParticleUpdateInfo", ParticleUpdateInfoValue);
 
-	// UpdateUnit.ShaderResHelper.SetStructedBufferLink()
+	// 윈도우에 있는 함수입니다.
+	// InterlockedAnd
+	UpdateUnit.ShaderResHelper.SetStructedNew("ParticleinfoBuffer", StructuredBufferType::UAV_INC, Data);
+	UpdateUnit.ShaderResHelper.SetStructedNew("ParticleShareBuffer", StructuredBufferType::UAV_INC, nullptr, sizeof(ParticleShareData), 1);
 
 	// 랜더 유니트가 알아서 랜더링을 하는겁니다
 	// GameEngineRenderer::SetMesh("Rect");

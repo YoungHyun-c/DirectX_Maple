@@ -38,7 +38,7 @@ public:
 		return StructuredBufferRes[_Byte];
 	}
 
-	static std::shared_ptr<GameEngineStructuredBuffer> CreateAndFind(int _Byte, std::string_view _Name, D3D11_SHADER_BUFFER_DESC _BufferDesc, void* _StartData = nullptr)
+	static std::shared_ptr<GameEngineStructuredBuffer> CreateAndFind(int _Byte, void* _StartData = nullptr)
 	{
 		std::shared_ptr<GameEngineStructuredBuffer> FindBuffer = Find(_Byte);
 
@@ -50,6 +50,31 @@ public:
 		std::shared_ptr<GameEngineStructuredBuffer> NewBuffer = CreateRes();
 		NewBuffer->DataSize = _Byte;
 		return NewBuffer;
+	}
+
+
+	static std::shared_ptr<GameEngineStructuredBuffer> CreateAndFind(int _Byte, std::string_view _Name, void* _StartData = nullptr)
+	{
+		std::shared_ptr<GameEngineStructuredBuffer> FindBuffer = Find(_Byte);
+
+		if (nullptr != FindBuffer)
+		{
+			return FindBuffer;
+		}
+
+		std::shared_ptr<GameEngineStructuredBuffer> NewBuffer = CreateRes(_Name);
+		NewBuffer->DataSize = _Byte;
+		return NewBuffer;
+	}
+
+	int GetDataSize()
+	{
+		return DataSize;
+	}
+
+	inline StructuredBufferType GetStructuredBufferType()
+	{
+		return Type;
 	}
 
 	void CreateResize(int _Byte, int _Count, StructuredBufferType _Type, const void* _StartData = nullptr);

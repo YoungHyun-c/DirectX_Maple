@@ -2,6 +2,42 @@
 #include "GameEngineRenderer.h"
 #include "GameEngineComputeUnit.h"
 
+struct ParticleUpdateInfo
+{
+	// 파티클이 최대 몇개까지 눈에 보일거냐?
+	int ParticleMaxCount = 100;
+	// 파티클이 월드 기준으로 스폰되냐
+	// 1이면 자기 위치를 가지는걸로 봅니다
+	int IsWorldSpawn = 1;
+	// 원형만 지원
+	// 파티클이 만들어지는 범위
+	float SpawnRange;
+	float MinSpeed = 100.0f;
+	float MaxSpeed = 100.0f;
+	float MaxLife = 100.0f;
+	float Temp;
+	float4 ObjectWorldPos; // 액터나 랜더러의 월드 포지션
+};
+
+struct ParticleShareData
+{
+	unsigned int iAliveCount;
+	unsigned int iPadding0;
+	unsigned int iPadding1;
+	unsigned int iPadding2;
+};
+
+struct ParticleInfoData
+{
+	float4 RelativePos;
+	float4 Dir;
+	float MaxTime;
+	float CurTime;
+	float Speed;
+	unsigned int iActive;
+};
+
+
 // 설명 :
 class GameEngineParticleRenderer : public GameEngineRenderer
 {
@@ -22,6 +58,7 @@ protected:
 	void Render(GameEngineCamera* _Camera, float _Delta) override;
 
 private:
+	ParticleUpdateInfo ParticleUpdateInfoValue;
 	GameEngineComputeUnit UpdateUnit;
 };
 

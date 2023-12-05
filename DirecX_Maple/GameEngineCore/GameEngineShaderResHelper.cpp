@@ -104,14 +104,17 @@ void GameEngineSamplerSetter::Setting()
 
 void GameEngineStructedBufferSetter::Setting()
 {
-	if (nullptr == CPUDataPtr)
-	{
-		MsgBoxAssert(Name + "구조화 버퍼를 세팅해주지 않았습니다.");
-	}
-
 	ShaderType Type = ParentShader->GetShaderType();
 
-	Res->ChangeData(CPUDataPtr, DataSize * DataCount);
+	if (Res->GetStructuredBufferType() == StructuredBufferType::SRV_ONLY)
+	{
+		if (nullptr == CPUDataPtr)
+		{
+			MsgBoxAssert(Name + "구조화 버퍼를 세팅해주지 않았습니다.");
+		}
+
+		Res->ChangeData(CPUDataPtr, DataSize * DataCount);
+	}
 
 	switch (Type)
 	{
@@ -311,7 +314,7 @@ void GameEngineShaderResHelper::ShaderResCheck(std::string _FunctionName, GameEn
 
 			// 당연히 상수버퍼를 만들어야 합니다.
 			std::shared_ptr<GameEngineStructuredBuffer> SBuffer
-				= GameEngineStructuredBuffer::CreateAndFind(BufferDesc.Size, UpperName, BufferDesc);
+				= GameEngineStructuredBuffer::CreateAndFind(BufferDesc.Size, UpperName);
 
 			_FunctionName;
 			GameEngineStructedBufferSetter NewSetter;
@@ -581,6 +584,44 @@ void GameEngineShaderResHelper::SetSampler(std::string_view _Name, std::shared_p
 		GameEngineSamplerSetter& Setter = NameStariter->second;
 
 		Setter.Res = _TextureSampler;
+	}
+}
+
+void GameEngineShaderResHelper::SetStructedNew(std::string_view _Name, StructuredBufferType _Type, const void* _Data, int _Size, int _Count)
+{
+	if (false == IsStructedBuffer(_Name))
+	{
+		MsgBoxAssert(std::string(_Name) + "존재하지 않는 스트럭처드 버퍼에 링크를 걸려고 했습니다.");
+		return;
+	}
+
+	if (0 == _Count)
+	{
+		MsgBoxAssert(std::string(_Name) + "개수가 0개인 데이터를 스트럭처드 버퍼에 세팅하려고 했습니다.");
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	// 중복되는 이름의 시작 이터레이터와 끝 이터레이터를 찾는법
+	std::multimap<std::string, GameEngineStructedBufferSetter>::iterator NameStariter
+		= StructedBufferSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineStructedBufferSetter>::iterator NameEnditer
+		= StructedBufferSetters.upper_bound(UpperString);
+
+	for (; NameStariter != NameEnditer; ++NameStariter)
+	{
+		GameEngineStructedBufferSetter& Setter = NameStariter->second;
+		if (Setter.DataSize != _Size)
+		{
+			MsgBoxAssert(NameStariter->first + "구조화 버퍼에 크기가 다른 데이터를 세팅하려고 했습니다.");
+		}
+
+		// 새로운 스트럭처드 버퍼를 만든다.
+		// 완전히 새로운 스트럭처드 버퍼를 새롭게 만든다.
+		Setter.Res = GameEngineStructuredBuffer::CreateAndFind(Setter.Res->GetDataSize(), nullptr);
+		Setter.DataCount = _Count;
+		Setter.Res->CreateResize(_Size, _Count, _Type, _Data);
+		// 이제서야 만들어진다.
 	}
 }
 

@@ -133,6 +133,21 @@ public:
 
 	void ResClear();
 
+	// 자신만의 메모리를 만들기 위한 녀석
+	template<typename DataType>
+	void SetStructedNew(std::string_view _Name, StructuredBufferType _Type, const std::vector<DataType>& _ArrData)
+	{
+		if (true == _ArrData.empty())
+		{
+			MsgBoxAssert(std::string(_Name) + "개수가 0개인 데이터를 스트럭처드 버퍼에 세팅하려고 했습니다.");
+		}
+
+		SetStructedNew(_Name, _Type, &_ArrData[0], sizeof(DataType), static_cast<int>(_ArrData.size()));
+
+	}
+
+	void SetStructedNew(std::string_view _Name, StructuredBufferType _Type, const void* _Data, int _Size, int _Count);
+
 	template<typename DataType>
 	void SetStructedBufferLink(std::string_view _Name, const std::vector<DataType>& _ArrData)
 	{
