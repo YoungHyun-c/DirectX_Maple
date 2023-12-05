@@ -64,9 +64,6 @@ void GameEngineGeometryShader::ShaderLoad(
 		return;
 	}
 
-
-	int Test = BinaryCode->GetBufferSize();
-
 	Result = GameEngineCore::GetDevice()->CreateGeometryShader(
 		BinaryCode->GetBufferPointer(),
 		BinaryCode->GetBufferSize(),

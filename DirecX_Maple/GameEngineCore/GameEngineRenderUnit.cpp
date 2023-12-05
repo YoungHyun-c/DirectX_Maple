@@ -117,7 +117,7 @@ void GameEngineRenderUnit::Draw()
 
 		GameEngineActor* Parent = ParentRenderer->GetParent<GameEngineActor>();
 
-		if (nullptr != Parent && Parent->GetLevel()->GetMainCamera()->GetProjectionType() == EPROJECTIONTYPE::Orthographic)
+		if (nullptr != Parent && ParentRenderer->GetCamera()->GetProjectionType() == EPROJECTIONTYPE::Orthographic)
 		{
 			float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
 
@@ -129,7 +129,7 @@ void GameEngineRenderUnit::Draw()
 
 			GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
 		}
-		else if (nullptr != Parent && Parent->GetLevel()->GetMainCamera()->GetProjectionType() == EPROJECTIONTYPE::Perspective)
+		else if (nullptr != Parent && ParentRenderer->GetCamera()->GetProjectionType() == EPROJECTIONTYPE::Perspective)
 		{
 			float4 ScreenPos = ParentRenderer->Transform.GetWorldPosition();
 

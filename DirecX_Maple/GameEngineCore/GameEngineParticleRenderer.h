@@ -24,6 +24,7 @@ struct ParticleUpdateInfo
 
 struct ParticleShareData
 {
+	// 현재 몇개나 살아있냐?
 	unsigned int iAliveCount;
 	unsigned int iPadding0;
 	unsigned int iPadding1;

@@ -24,6 +24,11 @@ void GameEngineStructuredBuffer::PSSetting(UINT _Slot)
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
 }
 
+void GameEngineStructuredBuffer::GSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->GSSetShaderResources(_Slot, 1, &SRV);
+}
+
 void GameEngineStructuredBuffer::CSSetting(UINT _Slot)
 {
 
@@ -57,8 +62,13 @@ void GameEngineStructuredBuffer::VSReset(UINT _Slot)
 void GameEngineStructuredBuffer::PSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* NullSRV = nullptr;
-
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &NullSRV);
+}
+
+void GameEngineStructuredBuffer::GSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* NullSRV = nullptr;
+	GameEngineCore::GetContext()->GSSetShaderResources(_Slot, 1, &NullSRV);
 }
 
 void GameEngineStructuredBuffer::CSReset(UINT _Slot)

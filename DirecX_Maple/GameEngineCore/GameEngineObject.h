@@ -36,6 +36,11 @@ public:
 		IsUpdateValue = false;
 	}
 
+	virtual void OnOffSwitch()
+	{
+		IsUpdateValue = !IsUpdateValue;
+	}
+
 	void Death()
 	{
 		this->IsDeathValue = true;
@@ -142,6 +147,7 @@ public:
 		Parent = _Parent.get();
 		Transform.SetParent(_Parent->Transform);
 	}
+
 
 	GameEngineObject* GetParentObject()
 	{
