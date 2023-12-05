@@ -603,6 +603,14 @@ void GameEngineDevice::ResourcesInit()
 		Mat->SetRasterizer("EngineRasterizer");
 	}
 
+	{
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("ParticleRender");
+		Mat->SetVertexShader("ParticleRender_VS");
+		Mat->SetGeometryShader("ParticleRender_GS");
+		Mat->SetPixelShader("ParticleRender_PS");
+	}
+
+
 
 	GameEngineRenderTarget::MergeRenderUnitInit();
 }

@@ -85,3 +85,8 @@ void GameEngineGeometryShader::Setting()
 {
 	GameEngineCore::GetContext()->GSSetShader(ShaderPtr, nullptr, 0);
 }
+
+void GameEngineGeometryShader::Reset()
+{
+	GameEngineCore::GetContext()->GSSetShader(nullptr, nullptr, 0);
+}

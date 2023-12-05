@@ -14,7 +14,7 @@ struct GameEngineParticleVSOut
 {
     // 픽셀쉐이더에 보내느 ㄴ역
     float4 POSITION : POSITION;
-    uint iInstance : SV_InstanceID;
+    uint iInstance : SV_InstanceID; // 인스턴싱으로 랜더링 해야만 제대로 값이 채워진다.
 };
 
 GameEngineParticleVSOut ParticleRender_VS(GameEngineParticleVSIn _Input)
@@ -44,15 +44,20 @@ struct GameEngineParticleGSOut
 [maxvertexcount(6)]
 void ParticleRender_GS(point GameEngineParticleVSOut _In[1], inout TriangleStream<GameEngineParticleGSOut> _OutStream)
 {
+    if (0 == ParticleInfoRenderBuffer[_In[0].iInstance].iActive)
+    {
+        return;
+    }
+    
     GameEngineParticleGSOut outPut[4] = { (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f };
 
-    float4 WorldPos = ParticleInfoBuffer[_In[0].iInstance].RelativePos;
+    float4 WorldPos = ParticleInfoRenderBuffer[_In[0].iInstance].RelativePos;
     WorldPos.w = 1.0f;
 
     float4 ViewPos = mul(WorldPos, ViewMatrix);
     
     // 지금 현재 나의 위치와 크기를 구하기 위한 비율을 만들고
-    float Ratio = ParticleInfoBuffer[_In[0].iInstance].CurTime / ParticleInfoBuffer[_In[0].iInstance].MaxTime;
+    float Ratio = ParticleInfoRenderBuffer[_In[0].iInstance].CurTime / ParticleInfoRenderBuffer[_In[0].iInstance].MaxTime;
     float4 Scale = lerp(StartScale, EndScale, Ratio);
     Scale.w = 0.0f;
     
@@ -95,12 +100,12 @@ struct PixelOut
 {
     float4 Color0 : SV_Target0;
     float4 Color1 : SV_Target1;
-    float4 Color2 : SV_Target1;
-    float4 Color3 : SV_Target1;
-    float4 Color4 : SV_Target1;
-    float4 Color5 : SV_Target1;
-    float4 Color6 : SV_Target1;
-    float4 Color7 : SV_Target1;
+    float4 Color2 : SV_Target2;
+    float4 Color3 : SV_Target3;
+    float4 Color4 : SV_Target4;
+    float4 Color5 : SV_Target5;
+    float4 Color6 : SV_Target6;
+    float4 Color7 : SV_Target7;
 };
 
 // SV_Target0

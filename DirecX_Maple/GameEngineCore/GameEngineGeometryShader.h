@@ -31,6 +31,7 @@ public:
 	}
 
 	void Setting();
+	void Reset();
 
 protected:
 

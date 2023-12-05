@@ -42,8 +42,14 @@ void GameEngineParticleRenderer::Start()
 	UpdateUnit.ShaderResHelper.SetStructedNew("ParticleShareBuffer", StructuredBufferType::UAV_INC, nullptr, sizeof(ParticleShareData), 1);
 
 	// 랜더 유니트가 알아서 랜더링을 하는겁니다
-	// GameEngineRenderer::SetMesh("Rect");
-	// GameEngineRenderer::SetMaterial("2DTexture");
+	GameEngineRenderer::SetMesh("PointMesh");
+	GameEngineRenderer::SetMaterial("ParticleRender");
+
+	std::shared_ptr<GameEngineRenderUnit> Unit = CreateAndFindRenderUnit(0);
+
+	Unit->SetRenderMode(RenderMode::Instancing);
+	Unit->SetInstancingCount(ParticleUpdateInfoValue.ParticleMaxCount);
+
 }
 
 void GameEngineParticleRenderer::Update(float _DeltaTime)

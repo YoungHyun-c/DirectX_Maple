@@ -49,16 +49,16 @@ cbuffer ParticleUpdateInfo : register(b7)
     float4 EndScale; // 액터나 랜더러의 월드 포지션
 };
 
+// UAV
 // 그러면
 RWStructuredBuffer<ParticleShareData> ParticleShareBuffer : register(u0);
-
 // 아래 메모리는 100개 의 쓰레드에서 100개의 배열중 자기껄 알아서 압겹치게 쓸것이기 때문에 문제가 
 // 문제가 없다.
 RWStructuredBuffer<ParticleInfoData> ParticleInfoBuffer : register(u1);
 
+// SRV
 // 그러면
 StructuredBuffer<ParticleShareData> ParticleShareRenderBuffer : register(t11);
-
 // 아래 메모리는 100개 의 쓰레드에서 100개의 배열중 자기껄 알아서 압겹치게 쓸것이기 때문에 문제가 
 // 문제가 없다.
 StructuredBuffer<ParticleInfoData> ParticleInfoRenderBuffer : register(t12);
