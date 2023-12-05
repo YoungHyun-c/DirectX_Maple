@@ -73,6 +73,9 @@ void GameEngineStructuredBuffer::GSReset(UINT _Slot)
 
 void GameEngineStructuredBuffer::CSReset(UINT _Slot)
 {
+	//ID3D11ShaderResourceView* NullSRV = nullptr;
+	//GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &NullSRV);
+
 	UINT i = -1;
 	ID3D11UnorderedAccessView* Nullptr = nullptr;
 	GameEngineCore::GetContext()->CSSetUnorderedAccessViews(_Slot, 1, &Nullptr, &i);
@@ -90,6 +93,18 @@ void GameEngineStructuredBuffer::Release()
 	{
 		SRV->Release();
 		SRV = nullptr;
+	}
+
+	if (nullptr != WriteBuffer)
+	{
+		WriteBuffer->Release();
+		WriteBuffer = nullptr;
+	}
+
+	if (nullptr != ReadBuffer)
+	{
+		ReadBuffer->Release();
+		ReadBuffer = nullptr;
 	}
 	BufferRelease();
 }
