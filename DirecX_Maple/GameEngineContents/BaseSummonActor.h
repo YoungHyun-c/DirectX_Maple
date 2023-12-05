@@ -25,7 +25,7 @@ public:
 	BaseSummonActor& operator = (const BaseSummonActor& _Other) = delete;
 	BaseSummonActor& operator = (BaseSummonActor&& _Other) noexcept = delete;
 
-	static void CreateWonder();
+	//static void CreateWonder();
 
 	void ChangeState(WonderState _State);
 	void StateUpdate(float _Delta);
@@ -36,7 +36,7 @@ protected:
 	void Release() override;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
-	void Init(std::string_view _WonderName);
+	//void Init(std::string_view _WonderName);
 
 	virtual void ReadyStart();
 	virtual void AttackStart();

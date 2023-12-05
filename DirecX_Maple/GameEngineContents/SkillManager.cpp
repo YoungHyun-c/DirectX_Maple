@@ -11,6 +11,7 @@
 #include "SkillMaestro.h"
 #include "SkillShard.h"
 #include "SkillWonder.h"
+#include "SKillOrder.h"
 
 #include "DamageRenderer.h"
 
@@ -62,6 +63,7 @@ void SkillManager::Start()
 
 	CreateSkill<SkillShard>("Shard");
 	CreateSkill<SkillWonder>("Wonder");
+	CreateSkill<SkillOrder>("Order");
 }
 
 void SkillManager::Update(float _Delta)

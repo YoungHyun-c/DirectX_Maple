@@ -258,6 +258,18 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillOrder.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillOrderActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillOrderSummonActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillRuin.cpp">
       <SubType>
       </SubType>
@@ -542,6 +554,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SkillManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillOrder.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillOrderActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillOrderSummonActor.h">
       <SubType>
       </SubType>
     </ClInclude>

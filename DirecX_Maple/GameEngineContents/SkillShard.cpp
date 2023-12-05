@@ -34,10 +34,12 @@ void SkillShard::Start()
 
 			AllShardActor.reserve(5);
 			for (int i = 0; i < 5; i++)
+			{
 				SkillRender1->SetFrameEvent("Shard6Effect", i, [&](GameEngineSpriteRenderer* _Renderer)
 					{
 						CreateShard();
 					});
+			}
 
 			SkillRender1->SetFrameEvent("Shard6Effect", 5, [&](GameEngineSpriteRenderer* _Renderer)
 				{
@@ -60,10 +62,12 @@ void SkillShard::Start()
 		}
 		AllShardActor.reserve(5);
 		for (int i = 0; i < 5; i++)
+		{
 			SkillRender1->SetFrameEvent("ShardEffect", i, [&](GameEngineSpriteRenderer* _Renderer)
 				{
 					CreateShard();
 				});
+		}
 
 		SkillRender1->SetFrameEvent("ShardEffect", 5, [&](GameEngineSpriteRenderer* _Renderer)
 			{
@@ -90,7 +94,15 @@ void SkillShard::UseSkill()
 	}
 
 	SkillRender1->On();
-	SkillRender1->ChangeAnimation("ShardEffect", true, 0);
+
+	if (PlayerValue::GetValue()->GetClass() == "Maestro")
+	{
+		SkillRender1->ChangeAnimation("Shard6Effect", true, 0);
+	}
+	else
+	{
+		SkillRender1->ChangeAnimation("ShardEffect", true, 0);
+	}
 
 
 	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();

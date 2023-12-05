@@ -225,6 +225,15 @@
     <ClCompile Include="SkillWonderActor.cpp">
       <Filter>Object\Player\SKill\Summon\Wonder</Filter>
     </ClCompile>
+    <ClCompile Include="SkillOrder.cpp">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillOrderActor.cpp">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillOrderSummonActor.cpp">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -447,6 +456,15 @@
     </ClInclude>
     <ClInclude Include="SkillWonderActor.h">
       <Filter>Object\Player\SKill\Summon\Wonder</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillOrder.h">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillOrderActor.h">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillOrderSummonActor.h">
+      <Filter>Object\Player\SKill\Summon\Order</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

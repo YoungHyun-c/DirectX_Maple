@@ -65,6 +65,13 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown('A', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -248,6 +255,13 @@ void Player::JumpUpdate(float _Delta)
 			ChangeState(PlayerState::Maestro);
 			return;
 		}
+	}
+
+	if (GameEngineInput::IsDown('A', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
 	}
 
 
@@ -513,6 +527,13 @@ void Player::FlyUpdate(float _Delta)
 		IsAttack = true;
 		MainSpriteRenderer->ChangeAnimation("Normal_Attack");
 		SkillManager::PlayerSkillManager->UseSkill("Divide1");
+		AlertTime = Alert_Time;
+		return;
+	}
+
+	if (GameEngineInput::IsDown('A', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Order");
 		AlertTime = Alert_Time;
 		return;
 	}

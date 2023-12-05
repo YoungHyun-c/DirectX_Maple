@@ -53,7 +53,7 @@ void SkillWonderActor::Start()
 	Wonder->LeftFlip();
 
 
-	Transform.SetLocalPosition(Player::GetMainPlayer()->Transform.GetWorldPosition());
+	//Transform.SetLocalPosition(Player::GetMainPlayer()->Transform.GetWorldPosition());
 
 	ReadyStart();
 
