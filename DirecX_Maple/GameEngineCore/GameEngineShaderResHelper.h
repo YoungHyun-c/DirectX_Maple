@@ -2,6 +2,7 @@
 #include "GameEngineConstantBuffer.h"
 #include "GameEngineTexture.h"
 #include "GameEngineSampler.h"
+#include "GameEngineShader.h"
 #include "GameEngineStructuredBuffer.h"
 
 class GameEngineShaderResources
@@ -162,6 +163,8 @@ public:
 	void SetStructedBufferLink(std::string_view _Name, const void* _Data, int _Size, int _Count);
 
 	void SetStructedBufferChange(std::string_view _Name, std::shared_ptr<GameEngineStructuredBuffer> _Buffer);
+
+	std::shared_ptr<GameEngineStructuredBuffer> GetStructedBuffer(std::string_view _Name, ShaderType Type);
 
 protected:
 

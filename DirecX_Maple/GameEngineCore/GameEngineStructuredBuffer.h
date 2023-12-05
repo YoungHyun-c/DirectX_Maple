@@ -77,6 +77,11 @@ public:
 		return Type;
 	}
 
+	inline void SetStructuredBufferType(StructuredBufferType _Type)
+	{
+		Type = _Type;
+	}
+
 	void CreateResize(int _Byte, int _Count, StructuredBufferType _Type, const void* _StartData = nullptr);
 
 	void Release();
@@ -93,6 +98,8 @@ public:
 
 	void ChangeData(const void* _Data, size_t _Size);
 
+	void SetData(void* _pSrc, size_t _Count);
+
 protected:
 
 
@@ -100,6 +107,10 @@ private:
 	ID3D11ShaderResourceView* SRV = nullptr; // 쉐이더에 세팅해줄수 있는 권한.
 	ID3D11UnorderedAccessView* UAV = nullptr; // 컴퓨트쉐이더에서 결과를 받아오는 용도의 권한.
 	D3D11_MAPPED_SUBRESOURCE SettingResources = {};
+
+	ID3D11Buffer* WriteBuffer = nullptr;
+	ID3D11Buffer* ReadBuffer = nullptr;
+
 	int DataSize = 0;
 	int DataCount = 0;
 	StructuredBufferType Type = StructuredBufferType::NONE;

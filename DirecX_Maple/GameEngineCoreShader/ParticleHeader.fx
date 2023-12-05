@@ -26,7 +26,7 @@ struct ParticleInfoData
     float Speed;
     
     // 나 죽었다 살았다.
-    uint iActive;
+    float iActive;
 };
 
 cbuffer ParticleUpdateInfo : register(b7)

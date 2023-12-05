@@ -707,6 +707,34 @@ void GameEngineShaderResHelper::SetStructedBufferChange(std::string_view _Name, 
 	}
 }
 
+std::shared_ptr<GameEngineStructuredBuffer> GameEngineShaderResHelper::GetStructedBuffer(std::string_view _Name, ShaderType Type)
+{
+	if (false == IsStructedBuffer(_Name))
+	{
+		return nullptr;
+	}
+
+	std::string UpperString = GameEngineString::ToUpperReturn(_Name);
+
+	// 중복되는 이름의 시작 이터레이터와 끝 이터레이터를 찾는법
+	std::multimap<std::string, GameEngineStructedBufferSetter>::iterator NameStariter
+		= StructedBufferSetters.lower_bound(UpperString);
+	std::multimap<std::string, GameEngineStructedBufferSetter>::iterator NameEnditer
+		= StructedBufferSetters.upper_bound(UpperString);
+
+	for (; NameStariter != NameEnditer; ++NameStariter)
+	{
+		GameEngineStructedBufferSetter& Setter = NameStariter->second;
+
+		if (Setter.ParentShader->GetShaderType() == Type)
+		{
+			return Setter.Res;
+		}
+	}
+
+	return nullptr;
+}
+
 void GameEngineShaderResHelper::ResClear()
 {
 	ConstantBufferSetters.clear();

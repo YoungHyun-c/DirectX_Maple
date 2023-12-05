@@ -51,27 +51,25 @@ void ParticleRender_GS(point GameEngineParticleVSOut _In[1], inout TriangleStrea
     
     GameEngineParticleGSOut outPut[4] = { (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f };
 
-    float4 WorldPos = ParticleInfoRenderBuffer[_In[0].iInstance].RelativePos;
-    WorldPos.w = 1.0f;
-
-    float4 ViewPos = mul(WorldPos, ViewMatrix);
+    float3 WorldPos = _In[0].POSITION.xyz + ParticleInfoRenderBuffer[_In[0].iInstance].RelativePos.xyz;
+    
+    float3 ViewPos = mul(float4(WorldPos, 1.0f), ViewMatrix).xyz;
     
     // 지금 현재 나의 위치와 크기를 구하기 위한 비율을 만들고
     float Ratio = ParticleInfoRenderBuffer[_In[0].iInstance].CurTime / ParticleInfoRenderBuffer[_In[0].iInstance].MaxTime;
-    float4 Scale = lerp(StartScale, EndScale, Ratio);
-    Scale.w = 0.0f;
+    float3 Scale = lerp(StartScale, EndScale, Ratio);
     
-    float4 NewPos[4] =
+    float3 NewPos[4] =
     {
-        ViewPos - float4(-0.5f, 0.5f, 0.0f, 1.0f) * Scale,
-        ViewPos - float4(0.5f, 0.5f, 0.0f, 1.0f) * Scale,
-        ViewPos - float4(0.5f, -0.5f, 0.0f, 1.0f) * Scale,
-        ViewPos - float4(-0.5f, -0.5f, 0.0f, 1.0f) * Scale
+        ViewPos - (float3(-0.5f, 0.5f, 0.0f) * Scale),
+        ViewPos - (float3(0.5f, 0.5f, 0.0f) * Scale),
+        ViewPos - (float3(0.5f, -0.5f, 0.0f) * Scale),
+        ViewPos - (float3(-0.5f, -0.5f, 0.0f) * Scale)
     };
 
     for (int i = 0; i < 4; ++i)
     {
-        outPut[i].POSITION = mul(NewPos[i], ProjectionMatrix);
+        outPut[i].POSITION = mul(float4(NewPos[i], 1.0f), ProjectionMatrix);
         outPut[i].iInstance = _In[0].iInstance;
     }
     
@@ -120,21 +118,19 @@ PixelOut ParticleRender_PS(GameEngineParticleGSOut _Input)
     
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.UV.xy);
     
-    if (0.0f >= Color.a)
-    {
-        clip(-1);
-    }
+    //if (0.0f >= Color.a)
+    //{
+    //    clip(-1);
+    //}
     
-    if (BaseColorOnly != 0)
-    {
-        Color = BaseColor;
-        Color.a = 1;
-    }
+    //if (BaseColorOnly != 0)
+    //{
+    //    Color = BaseColor;
+    //    Color.a = 1;
+    //}
     
-    if (0 < Target0)
-    {
-        Result.Color0 = Color;
-    }
+    Result.Color0 = Color;
+    
     if (0 < Target1)
     {
         Result.Color1 = Color;

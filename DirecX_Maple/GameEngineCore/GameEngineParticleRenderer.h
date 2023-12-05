@@ -11,7 +11,7 @@ struct ParticleUpdateInfo
 	int IsWorldSpawn = 1;
 	// 원형만 지원
 	// 파티클이 만들어지는 범위
-	float SpawnRange;
+	float SpawnRange = 100.0f;
 	float MinSpeed = 100.0f;
 	float MaxSpeed = 100.0f;
 	float MaxLife = 100.0f;
@@ -38,7 +38,7 @@ struct ParticleInfoData
 	float MaxTime;
 	float CurTime;
 	float Speed;
-	unsigned int iActive;
+	float iActive;
 };
 
 
@@ -64,5 +64,7 @@ protected:
 private:
 	ParticleUpdateInfo ParticleUpdateInfoValue;
 	GameEngineComputeUnit UpdateUnit;
+	std::shared_ptr<GameEngineStructuredBuffer> ParticleShareBuffer;
+	float Frequency = 5.0f;
 };
 
