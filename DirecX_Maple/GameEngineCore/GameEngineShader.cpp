@@ -13,6 +13,7 @@ void GameEngineShader::CreateVersion(ShaderType _Type, UINT _VersionHigh, UINT _
 {
 	ShaderTypeValue = _Type;
 
+
 	switch (_Type)
 	{
 	case ShaderType::None:
@@ -114,7 +115,6 @@ bool GameEngineShader::AutoCompile(GameEngineFile& _File)
 			std::string_view EntryName = ShaderCode.substr(FirstIndex + 1, EntryIndex - FirstIndex + 2);
 
 			GameEngineGeometryShader::Load(_File.GetStringPath(), EntryName);
-
 		}
 	}
 

@@ -265,6 +265,9 @@
     <ClInclude Include="GameEngineComputeUnit.h">
       <Filter>Rendering\Compute</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineGeometryShader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -432,6 +435,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineComputeUnit.cpp">
       <Filter>Rendering\Compute</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineGeometryShader.cpp">
+      <Filter>Resources\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

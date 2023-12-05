@@ -38,6 +38,9 @@
     <FxCompile Include="ParticleRender.fx">
       <Filter>Particle</Filter>
     </FxCompile>
+    <FxCompile Include="Random.fx">
+      <Filter>Header</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="쉐이더 규칙.txt" />

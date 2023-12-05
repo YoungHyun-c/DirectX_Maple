@@ -1,65 +1,10 @@
-#include "RenderBase.fx"
-#include "Function.fx"
-
-
-struct ParticleShareData
-{
-    uint iAliveCount;
-    uint iPadding0;
-    uint iPadding1;
-    uint iPadding2;
-};
-
-struct ParticleInfoData
-{
-    // 현재위치
-    float4 RelativePos;
-    
-    // 날아가는 방향
-    float4 Dir;
-    
-    // 죽는시간
-    float MaxTime;
-    
-    // 현재까지 경과한 시간
-    float CurTime;
-    
-    // 이동할때의 스피드
-    float Speed;
-    
-    // 나 죽었다 살았다.
-    uint iActive;
-};
-
-cbuffer ParticleUpdateInfo : register(b7)
-{
-	// 파티클이 최대 몇개까지 눈에 보일거냐?
-    int ParticleMaxCount;
-	// 파티클이 월드 기준으로 스폰되냐
-	// 1이면 자기 위치를 가지는걸로 봅니다
-    int IsWorldSpawn;
-	// 원형만 지원
-	// 파티클이 만들어지는 범위
-    float SpawnRange;
-    float MinSpeed;
-    float MaxSpeed;
-    float MaxLife;
-    float Temp;
-    float4 ObjectWorldPos; // 액터나 랜더러의 월드 포지션
-};
-
-// 그러면
-RWStructuredBuffer<ParticleShareData> ParticleShareBuffer : register(u0);
-
-// 아래 메모리는 100개 의 쓰레드에서 100개의 배열중 자기껄 알아서 압겹치게 쓸것이기 때문에 문제가 
-// 문제가 없다.
-RWStructuredBuffer<ParticleInfoData> ParticleInfoBuffer : register(u1);
+#include "ParticleHeader.fx"
 
 [numthreads(128, 1, 1)]
 void ParticleUpdate_CS(uint3 _id : SV_DispatchThreadID)
 {
     
-    if (ParticleMaxCount <= _id.x)
+    if ((uint) ParticleMaxCount <= _id.x)
     {
         return;
     }
@@ -88,22 +33,48 @@ void ParticleUpdate_CS(uint3 _id : SV_DispatchThreadID)
         // 이녀석은 활성화 됩니다.
         if (0 != ParticleInfoBuffer[_id.x].iActive)
         {
+            float4 RandomVector = RandomFloat4(_id.x, ParticleMaxCount);
+            // 랜덤한 벡터를 뽑아냅니다.
             
-        }
+            // 원형 범위로 스폰을 할것이기 때문에.
+            
+            // 랜덤한 거리
+            float Random = RandomVector.x * 3.141592f * 2.0f;
 
+            // 랜덤한 xy위치를 뽑고
+            ParticleInfoBuffer[_id.x].RelativePos.xy = float2(cos(Random), sin(Random)) * RandomVector.y * SpawnRange;
+            ParticleInfoBuffer[_id.x].RelativePos.z = 0.0f;
+            
+            ParticleInfoBuffer[_id.x].Dir.xy = -normalize(ParticleInfoBuffer[_id.x].RelativePos.xy);
+
+            if (0 != IsWorldSpawn)
+            {
+                ParticleInfoBuffer[_id.x].RelativePos += ObjectWorldPos;
+            }
+            
+            // 랜덤한 속력
+            ParticleInfoBuffer[_id.x].Speed = RandomVector.z * (MaxSpeed - MinSpeed) + MinSpeed;
+            
+            ParticleInfoBuffer[_id.x].CurTime = 0.0f;
+            ParticleInfoBuffer[_id.x].MaxTime = MaxLife;
+        }
     }
     // 움직이는 일해야합니다
     else
     {
-        
+        ParticleInfoBuffer[_id.x].CurTime += DeltaTime;
+
+        if (ParticleInfoBuffer[_id.x].MaxTime < ParticleInfoBuffer[_id.x].CurTime)
+        {
+            // 다시 죽는겁니다.
+            ParticleInfoBuffer[_id.x].iActive = 0;
+        }
+        else
+        {
+            ParticleInfoBuffer[_id.x].RelativePos += ParticleInfoBuffer[_id.x].Dir * ParticleInfoBuffer[_id.x].Speed * DeltaTime;
+        }
     }
-        
     
-    // 쓰레드를 제가 
-    // SV_DispatchThreadID
-    
-    
-    // 실제 여기서 파티클을 계산해야 겠죠.
-    
-    ParticleShareBuffer[0].iAliveCount = 1;
+    // 업데이트 완료
 }
+

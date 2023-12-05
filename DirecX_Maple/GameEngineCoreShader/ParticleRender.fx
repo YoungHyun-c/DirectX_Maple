@@ -1,4 +1,203 @@
-float4 main( float4 pos : POSITION ) : SV_POSITION
+#include "Transform.fx"
+#include "RenderBase.fx"
+
+struct ParticleShareData
 {
-	return pos;
+    uint iAliveCount;
+    uint iPadding0;
+    uint iPadding1;
+    uint iPadding2;
+};
+
+struct ParticleInfoData
+{
+    // 현재위치
+    float4 RelativePos;
+    
+    // 날아가는 방향
+    float4 Dir;
+    
+    // 죽는시간
+    float MaxTime;
+    
+    // 현재까지 경과한 시간
+    float CurTime;
+    
+    // 이동할때의 스피드
+    float Speed;
+    
+    // 나 죽었다 살았다.
+    uint iActive;
+};
+
+cbuffer ParticleUpdateInfo : register(b7)
+{
+	// 파티클이 최대 몇개까지 눈에 보일거냐?
+    int ParticleMaxCount;
+	// 파티클이 월드 기준으로 스폰되냐
+	// 1이면 자기 위치를 가지는걸로 봅니다
+    int IsWorldSpawn;
+	// 원형만 지원
+	// 파티클이 만들어지는 범위
+    float SpawnRange;
+    float MinSpeed;
+    float MaxSpeed;
+    float MaxLife;
+    float Temp0;
+    float Temp1;
+    float4 ObjectWorldPos; // 액터나 랜더러의 월드 포지션
+    float4 StartScale; // 액터나 랜더러의 월드 포지션
+    float4 EndScale; // 액터나 랜더러의 월드 포지션
+};
+
+// 그러면
+RWStructuredBuffer<ParticleShareData> ParticleShareBuffer : register(u0);
+
+// 아래 메모리는 100개 의 쓰레드에서 100개의 배열중 자기껄 알아서 압겹치게 쓸것이기 때문에 문제가 
+// 문제가 없다.
+RWStructuredBuffer<ParticleInfoData> ParticleInfoBuffer : register(u1);
+
+struct GameEngineParticleVSIn
+{
+    float4 POSITION : POSITION;
+    // 인스턴싱으로 그릴때 몇번재 순서인지 알려준다.
+    // 우리는 뭘 신경쓸필요가 없다.
+    uint iInstance : SV_InstanceID;
+};
+
+
+struct GameEngineParticleVSOut
+{
+    // 픽셀쉐이더에 보내느 ㄴ역
+    float4 POSITION : POSITION;
+    uint iInstance : SV_InstanceID;
+};
+
+GameEngineParticleVSOut ParticleRender_VS(GameEngineParticleVSIn _Input)
+{
+    GameEngineParticleVSOut Out = (GameEngineParticleVSOut) 0.0f;
+    Out.POSITION = _Input.POSITION;
+    Out.iInstance = _Input.iInstance;
+    return Out;
+}
+
+// inout은 (c++ int&) == (hlsl inout int)
+//void Test(inout int Value)
+//void Test(int& Value)
+//{
+//    Value = 200;
+//}
+
+struct GameEngineParticleGSOut
+{
+    // 픽셀쉐이더에 보내느 ㄴ역
+    float4 POSITION : SV_Position;
+    float4 UV : TEXCOORD;
+    uint iInstance : SV_InstanceID;
+};
+
+// 새롭게 만들어서 맽어낼 버텍스 개수를 명시해주는것으로 시작합니다.
+[maxvertexcount(6)]
+void ParticleRender_GS(point GameEngineParticleVSOut _In[1], inout TriangleStream<GameEngineParticleGSOut> _OutStream)
+{
+    GameEngineParticleGSOut outPut[4] = { (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f, (GameEngineParticleGSOut) 0.0f };
+
+    float4 WorldPos = ParticleInfoBuffer[_In[0].iInstance].RelativePos;
+    WorldPos.w = 1.0f;
+
+    float4 ViewPos = mul(WorldPos, ViewMatrix);
+    
+    // 지금 현재 나의 위치와 크기를 구하기 위한 비율을 만들고
+    float Ratio = ParticleInfoBuffer[_In[0].iInstance].CurTime / ParticleInfoBuffer[_In[0].iInstance].MaxTime;
+    float4 Scale = lerp(StartScale, EndScale, Ratio);
+    Scale.w = 0.0f;
+    
+    float4 NewPos[4] =
+    {
+        ViewPos - float4(-0.5f, 0.5f, 0.0f, 1.0f) * Scale,
+        ViewPos - float4(0.5f, 0.5f, 0.0f, 1.0f) * Scale,
+        ViewPos - float4(0.5f, -0.5f, 0.0f, 1.0f) * Scale,
+        ViewPos - float4(-0.5f, -0.5f, 0.0f, 1.0f) * Scale
+    };
+
+    for (int i = 0; i < 4; ++i)
+    {
+        outPut[i].POSITION = mul(NewPos[i], ProjectionMatrix);
+        outPut[i].iInstance = _In[0].iInstance;
+    }
+    
+    // WVP가 다 곱해진것.
+
+    outPut[0].UV.xy = float2(0.0f, 1.0f);
+    outPut[1].UV.xy = float2(1.0f, 1.0f);
+    outPut[2].UV.xy = float2(1.0f, 0.0f);
+    outPut[3].UV.xy = float2(0.0f, 0.0f);
+
+    _OutStream.Append(outPut[0]);
+    _OutStream.Append(outPut[1]);
+    _OutStream.Append(outPut[2]);
+    _OutStream.RestartStrip();
+    
+    _OutStream.Append(outPut[0]);
+    _OutStream.Append(outPut[2]);
+    _OutStream.Append(outPut[3]);
+    _OutStream.RestartStrip();
+}
+
+Texture2D DiffuseTex : register(t0);
+SamplerState DiffuseTexSampler : register(s0);
+
+struct PixelOut
+{
+    float4 Color0 : SV_Target0;
+    float4 Color1 : SV_Target1;
+    float4 Color2 : SV_Target1;
+    float4 Color3 : SV_Target1;
+    float4 Color4 : SV_Target1;
+    float4 Color5 : SV_Target1;
+    float4 Color6 : SV_Target1;
+    float4 Color7 : SV_Target1;
+};
+
+// SV_Target0
+// SV_Target1
+// SV_Target2
+// SV_Target3
+// SV_Target4
+
+PixelOut ParticleRender_PS(GameEngineParticleGSOut _Input)
+{
+    PixelOut Result = (PixelOut) 0.0f;
+    
+    float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.UV.xy);
+    
+    if (0.0f >= Color.a)
+    {
+        clip(-1);
+    }
+    
+    if (BaseColorOnly != 0)
+    {
+        Color = BaseColor;
+        Color.a = 1;
+    }
+    
+    if (0 < Target0)
+    {
+        Result.Color0 = Color;
+    }
+    if (0 < Target1)
+    {
+        Result.Color1 = Color;
+    }
+    if (0 < Target2)
+    {
+        Result.Color2 = Color;
+    }
+    if (0 < Target3)
+    {
+        Result.Color3 = Color;
+    }
+    
+    return Result;
 }

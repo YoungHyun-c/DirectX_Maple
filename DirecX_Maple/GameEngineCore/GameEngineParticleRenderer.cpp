@@ -33,7 +33,8 @@ void GameEngineParticleRenderer::Start()
 
 	UpdateUnit.SetComputeShader("ParticleUpdate_CS");
 
-	// UpdateUnit.ShaderResHelper.SetConstantBufferLink("ParticleUpdateInfo", ParticleUpdateInfoValue);
+	UpdateUnit.ShaderResHelper.SetConstantBufferLink("RenderBaseInfo", RenderBaseInfoValue);
+	UpdateUnit.ShaderResHelper.SetConstantBufferLink("ParticleUpdateInfo", ParticleUpdateInfoValue);
 
 	// 윈도우에 있는 함수입니다.
 	// InterlockedAnd
@@ -47,11 +48,12 @@ void GameEngineParticleRenderer::Start()
 
 void GameEngineParticleRenderer::Update(float _DeltaTime)
 {
+	GameEngineRenderer::Update(_DeltaTime);
 	// 수백의 파티클 데이터를 컴퓨트쉐이더로 계산하고
 	UpdateUnit.Excute();
 }
 
 void GameEngineParticleRenderer::Render(GameEngineCamera* _Camera, float _Delta)
 {
-
+	GameEngineRenderer::Render(_Camera, _Delta);
 }
