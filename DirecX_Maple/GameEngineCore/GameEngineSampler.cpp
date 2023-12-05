@@ -5,7 +5,6 @@ std::map<D3D11_FILTER, std::map<D3D11_TEXTURE_ADDRESS_MODE, std::shared_ptr<Game
 
 GameEngineSampler::GameEngineSampler()
 {
-
 }
 
 GameEngineSampler::~GameEngineSampler()
@@ -34,4 +33,9 @@ void GameEngineSampler::VSSetting(UINT _Slot)
 void GameEngineSampler::PSSetting(UINT _Slot)
 {
 	GameEngineCore::GetContext()->PSSetSamplers(_Slot, 1, &State);
+}
+
+void GameEngineSampler::CSSetting(UINT _Slot)
+{
+	GameEngineCore::GetContext()->CSSetSamplers(_Slot, 1, &State);
 }

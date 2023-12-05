@@ -24,6 +24,27 @@ void GameEngineStructuredBuffer::PSSetting(UINT _Slot)
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &SRV);
 }
 
+void GameEngineStructuredBuffer::CSSetting(UINT _Slot)
+{
+
+	// 컴퓨트 쉐이더 일때는 일단
+	// 계산용 RWStructuredBuffer로서 세팅한다고 생각하고 세팅을 만들겠다.
+
+	// 마지막 인자 기억이 안남 그냥 
+	// 형식: const UINT*
+	// 추가 및 사용 버퍼 오프셋의 배열입니다.값 - 1은 현재 오프셋을 유지함을 나타냅니다.
+	// /다른 모든 값은 숨겨진 카운터를 설정합니다 추가 및 소모성 UAV의 경우.
+	// pUAVInitialCounts는 D3D11_BUFFER_UAV_FLAG_APPEND 또는 D3D11_BUFFER_UAV_FLAG_COUNTER 
+	// 지정된 상태로 생성된 UAV에만 관련이 있습니다 UAV가 만들어졌을 때; 그렇지 않으면 인수가 무시됩니다.
+
+	static const UINT Offset = -1;
+	GameEngineCore::GetContext()->CSSetUnorderedAccessViews(_Slot, 1, &UAV, &Offset);
+
+	// 그래픽 리소스용 쉐이더 리소스세팅방식
+	// 	GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &SRV);
+}
+
+
 void GameEngineStructuredBuffer::VSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* NullSRV = nullptr;
@@ -32,11 +53,19 @@ void GameEngineStructuredBuffer::VSReset(UINT _Slot)
 	// 무슨 슬롯을 t슬롯을 차지하고 있었다.
 	GameEngineCore::GetContext()->VSSetShaderResources(_Slot, 1, &NullSRV);
 }
+
 void GameEngineStructuredBuffer::PSReset(UINT _Slot)
 {
 	ID3D11ShaderResourceView* NullSRV = nullptr;
 
 	GameEngineCore::GetContext()->PSSetShaderResources(_Slot, 1, &NullSRV);
+}
+
+void GameEngineStructuredBuffer::CSReset(UINT _Slot)
+{
+	ID3D11ShaderResourceView* NullSRV = nullptr;
+
+	GameEngineCore::GetContext()->CSSetShaderResources(_Slot, 1, &NullSRV);
 }
 
 void GameEngineStructuredBuffer::Release()

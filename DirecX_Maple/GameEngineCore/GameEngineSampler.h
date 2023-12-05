@@ -5,15 +5,15 @@
 class GameEngineSampler : public GameEngineResources<GameEngineSampler>
 {
 public:
-	// constructer destructer
+	// constrcuter destructer
 	GameEngineSampler();
 	~GameEngineSampler();
 
 	// delete Function
 	GameEngineSampler(const GameEngineSampler& _Other) = delete;
 	GameEngineSampler(GameEngineSampler&& _Other) noexcept = delete;
-	GameEngineSampler& operator = (const GameEngineSampler& _Other) = delete;
-	GameEngineSampler& operator = (GameEngineSampler&& _Other) noexcept = delete;
+	GameEngineSampler& operator=(const GameEngineSampler& _Other) = delete;
+	GameEngineSampler& operator=(GameEngineSampler&& _Other) noexcept = delete;
 
 	static std::shared_ptr<GameEngineSampler> Create(std::string_view _Name, const D3D11_SAMPLER_DESC& _Desc)
 	{
@@ -22,8 +22,8 @@ public:
 		return Res;
 	}
 
-	// D3D11_FILTER_Filter;
-	// D3D11_TEXTURE_ADDRESS_MODE AddressU;
+	//D3D11_FILTER Filter;
+	//D3D11_TEXTURE_ADDRESS_MODE AddressU;
 
 	static std::shared_ptr<GameEngineSampler> Create(D3D11_FILTER _Filter, D3D11_TEXTURE_ADDRESS_MODE _Address)
 	{
@@ -40,16 +40,6 @@ public:
 		}
 
 		D3D11_SAMPLER_DESC Desc = {};
-		//D3D11_FILTER Filter;
-		//D3D11_TEXTURE_ADDRESS_MODE AddressU;
-		//D3D11_TEXTURE_ADDRESS_MODE AddressV;
-		//D3D11_TEXTURE_ADDRESS_MODE AddressW;
-		//FLOAT MipLODBias;
-		//UINT MaxAnisotropy;
-		//D3D11_COMPARISON_FUNC ComparisonFunc;
-		//FLOAT BorderColor[4];
-		//FLOAT MinLOD;
-		//FLOAT MaxLOD;
 		Desc.Filter = _Filter;
 		Desc.AddressU = _Address;
 		Desc.AddressV = _Address;
@@ -66,9 +56,9 @@ public:
 		return NewSampler;
 	}
 
-
 	void VSSetting(UINT _Slot);
 	void PSSetting(UINT _Slot);
+	void CSSetting(UINT _Slot);
 
 protected:
 	void ResCreate(const D3D11_SAMPLER_DESC& _Desc);
@@ -78,5 +68,6 @@ private:
 
 	D3D11_SAMPLER_DESC Desc = {};
 	ID3D11SamplerState* State = nullptr;
+
 };
 
