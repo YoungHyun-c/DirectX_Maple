@@ -29,6 +29,11 @@ protected:
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	int OrderCount = 0;
 
+	int OrderCal = 2;
+	int OrderOffCount = 0;
+	int OrderCalCount = 0;
+	int OrderLimitCount = 6;
+
 	void OrderPosCal();
 
 	float4 CurOrderPos = float4::ZERO;

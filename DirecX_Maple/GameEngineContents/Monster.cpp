@@ -27,6 +27,8 @@ void Monster::Start()
 		Renderer->CreateAnimation("Mugong_Disappear", "Mugong_Disappear", 0.1f, -1, -1, false);
 		Renderer->CreateAnimation("Mugong_Idle", "Mugong_Idle");
 		Renderer->ChangeAnimation("Mugong_Idle");
+		Renderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
+		Renderer->SetPivotType(PivotType::Center);
 
 		Renderer->AutoSpriteSizeOn();
 		Renderer->Off();
@@ -34,7 +36,7 @@ void Monster::Start()
 
 		{
 			MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-			MonsterCollision->Transform.SetLocalPosition({ -30.0f, 0.0f });
+			MonsterCollision->Transform.SetLocalPosition({ -30.0f, 100.0f });
 			MonsterCollision->Transform.SetLocalScale({ 300.0f, 330.0f });
 			MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
 			MonsterCollision->SetName(std::string("Mugong"));

@@ -53,7 +53,7 @@ void PracticeLevel::Update(float _Delta)
 	
 	if (false == Monster::Monsters->MonsterAppearValue())
 	{
-		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, -700.0f, 100.0f });
+		MonsterObject->Transform.SetLocalPosition({ 500.0f, -800.0f });
 	}
 
 }
@@ -194,7 +194,7 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == MonsterObject)
 	{
 		MonsterObject = CreateActor<Monster>(ContentsObjectType::Monster);
-		MonsterObject->Transform.SetLocalPosition({ 500.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+		MonsterObject->Transform.SetLocalPosition({ 500.0f, -800.0f, static_cast<float>(DeepBufferType::Monster) });
 	}
 
 	if (nullptr == UIObject)

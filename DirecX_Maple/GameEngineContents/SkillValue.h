@@ -102,6 +102,41 @@ public:
 		return ShardSkillFinalDam;
 	}
 
+	void SetGedderingSkillDam(int _Value)
+	{
+		GedderingSkillDam = _Value;
+	}
+	void SetGedderingFinalDam(int _Value)
+	{
+		GedderingSkilFinallDam = _Value;
+	}
+	int GetGedderingSkillDam()
+	{
+		return GedderingSkillDam;
+	}
+	int GetGedderingFinalDam()
+	{
+		return GedderingSkilFinallDam;
+	}
+
+
+	void SetBlossomSkillDam(int _Value)
+	{
+		BlossomSkillDam = _Value;
+	}
+	void SetBlossomFinalDam(int _Value)
+	{
+		BlossomFSillFinalDam = _Value;
+	}
+	int GetBlossomSkillDam()
+	{
+		return BlossomSkillDam;
+	}
+	int GetBlossomFinalDam()
+	{
+		return BlossomFSillFinalDam;
+	}
+
 
 protected:
 
@@ -117,5 +152,13 @@ private:
 
 	int ShardSkillDam = 720; // ∏∂Ω∫≈Õ
 	int ShardSkillFinalDam = 220;
+
+	int GedderingSkillDam = 560;
+	int GedderingSkilFinallDam = 220;
+
+	int BlossomSkillDam = 650;
+	int BlossomFSillFinalDam = 220;
+
+
 };
 

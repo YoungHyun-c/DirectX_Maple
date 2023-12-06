@@ -156,6 +156,13 @@ void Player::WalkUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown('A', this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	float MovePos = 0.0f;
 	float MoveDir = 0.0f;
 

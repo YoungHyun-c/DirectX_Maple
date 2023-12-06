@@ -64,20 +64,42 @@ protected:
 	std::shared_ptr<class GameEngineSpriteRenderer> Order = nullptr;
 	std::shared_ptr<GameEngineCollision> DetectCollision;
 	std::shared_ptr<GameEngineCollision> HitCollision;
+	std::shared_ptr<GameEngineCollision> GedderingHitCollision;
+	std::shared_ptr<GameEngineCollision> BlossomHitCollision;
 
 	std::string OrderName = "";
-	float AppearTime = 0.0f;
+	//float AppearTime = 0.0f;
 	float AttackTime = 0.1f;
 	float HitTime = 0.0f;
-	float LiveTime = 10.0f;
+	float LiveTime = 40.0f;
 	float DirAngle = 0.0f;
 	float Speed = 1000.0f;
 	float RotationSpeed = 0.0f;
 	size_t OrderHitCount = 2;
+	size_t GedderingHitCount = 4;
+	size_t BlossomHitCount = 8;
 
 	OrderState State = OrderState::Start;
 	float4 MoveVector = float4::ZERO;
 	float4 CurPlayerPos = float4::ZERO;
+	float4 GedderingPos = float4::ZERO;
+
+	// 오더 텔레포트
+	float TelePortTime = 0.0f;
+	float TelePortLimitTime = 2.0f;
+	GameEngineRandom Random_XRange;
+	GameEngineRandom Random_YRange;
+	float TelePort_X = 0.0f;
+	float TelePort_Y = 0.0f;
+
+	// 오더 게더링
+	float4 GedderingDir = float4::ZERO;
+
+	// 게더링 블로섬 어택
+	void AttackEvent();
+	EventParameter GedderingHitEvent;
+	EventParameter BlossomHitEvent;
+	bool BlossomHit = false;
 
 private:
 	std::shared_ptr<class DamageRenderer> NewDR = nullptr;

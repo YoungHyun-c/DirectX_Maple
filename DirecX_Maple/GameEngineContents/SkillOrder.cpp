@@ -108,6 +108,20 @@ void SkillOrder::OrderPosCal()
 		AllOrderActor[i]->Transform.SetLocalRotation({ 0.0f, 0.0f,  -(30.0f) + ((i%2) * 60.0f) });
 		AllOrderActor[i]->On();
 		OrderCount++;
+
+		// 총 6개만 리스토어 이후엔 8개
+		OrderCalCount++;
+		if (OrderLimitCount < OrderCalCount)
+		{
+			for (int j = OrderOffCount; j < OrderCal; j++)
+			{
+				AllOrderActor[j]->Off();
+				OrderCalCount--;
+			}
+			OrderCal += 2;
+			OrderOffCount += 2;
+		}
+
 	}
 }
 
