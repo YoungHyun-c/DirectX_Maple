@@ -140,9 +140,9 @@ void Player::Start()
 	//Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
 
 	{
-		/*Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
+		Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
 		Invicible->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
-		Invicible->Off();*/
+		Invicible->Off();
 	}
 	GameEngineInput::AddInputObject(this);
 }
@@ -236,7 +236,7 @@ void Player::Update(float _Delta)
 	SkillUseCheck(_Delta);
 	PotionCheck(_Delta);
 
-	//InvicibleCheck();
+	InvicibleCheck();
 	// 맞았을때
 	if (IsDamaged == true)
 	{

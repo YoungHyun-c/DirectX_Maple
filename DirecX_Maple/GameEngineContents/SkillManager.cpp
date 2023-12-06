@@ -57,9 +57,9 @@ void SkillManager::Start()
 	}
 
 	CreateSkill<SkillDivide>("Divide1");
-	//CreateSkill<SkillRuin>("Ruin");
-	//CreateSkill<SkillBInd>("Scoll");
-	//CreateSkill<SkillMaestro>("Maestro");
+	CreateSkill<SkillRuin>("Ruin");
+	CreateSkill<SkillBInd>("Scoll");
+	CreateSkill<SkillMaestro>("Maestro");
 
 	CreateSkill<SkillShard>("Shard");
 	CreateSkill<SkillWonder>("Wonder");
