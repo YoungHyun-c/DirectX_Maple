@@ -234,6 +234,9 @@
     <ClCompile Include="SkillOrderSummonActor.cpp">
       <Filter>Object\Player\SKill\Summon\Order</Filter>
     </ClCompile>
+    <ClCompile Include="AtereSword.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -465,6 +468,9 @@
     </ClInclude>
     <ClInclude Include="SkillOrderSummonActor.h">
       <Filter>Object\Player\SKill\Summon\Order</Filter>
+    </ClInclude>
+    <ClInclude Include="AtereSword.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

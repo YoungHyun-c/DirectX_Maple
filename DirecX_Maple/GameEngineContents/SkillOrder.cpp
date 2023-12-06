@@ -76,6 +76,7 @@ void SkillOrder::UseSkill()
 
 
 	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	PlayerValue::GetValue()->SubAtere(100);
 }
 
 void SkillOrder::EndSkill()

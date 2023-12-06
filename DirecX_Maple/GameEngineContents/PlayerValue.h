@@ -339,7 +339,7 @@ public:
 	{
 		Atere = _Value;
 	}
-	void SetMaxAtere(int _Value)
+	void SetMaxAtere()
 	{
 		Atere = MaxAtere;
 		AtereMax = true;

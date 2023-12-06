@@ -207,6 +207,7 @@ void BaseSummonActor::AttackUpdate(float _Delta)
 
 			SkillManager::PlayerSkillManager->HitPrint(_Other->GetParentObject(), "Shard_Hit", WonderHitCount);
 
+			PlayerValue::GetValue()->AddAtere(10);
 		});
 	
 	AppearTime += _Delta;

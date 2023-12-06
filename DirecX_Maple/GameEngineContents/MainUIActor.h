@@ -37,7 +37,9 @@ private:
 	float Speed = 100.0f;
 ////////////// 에테르 모을시 검
 	//std::shared_ptr<GameEngineSpriteRenderer> ;
-
+	std::shared_ptr<class AtereSword> Sword1;
+	std::shared_ptr<class AtereSword> Sword2;
+	std::shared_ptr<class AtereSword> Sword3;
 
 	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
 	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;

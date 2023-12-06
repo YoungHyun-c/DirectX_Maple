@@ -244,7 +244,7 @@ void SkillDivide::AttackEvent()
 		{
 			NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(_Other, DivideHitCount, SkillValue::GetValue()->GetDivideSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
-			
+			PlayerValue::GetValue()->AddAtere(20);
 			if (PlayerValue::GetValue()->GetWonderUse() == false)
 			{
 				SkillManager::PlayerSkillManager->UseSkill("Wonder");

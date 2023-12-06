@@ -194,7 +194,6 @@ void SkillOrderSummonActor::AttackUpdate(float _Delta)
 			SkillManager::PlayerSkillManager->HitPrint(_Other->GetParentObject(), "Order_Hit", OrderHitCount);
 
 			TelePortTime = 0.0f;
-			//Order->Transform.AddLocalPosition(Speed * _Delta);
 		});
 
 	{

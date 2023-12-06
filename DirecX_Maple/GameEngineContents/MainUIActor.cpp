@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "MainUIActor.h"
 
+#include "AtereSword.h"
+
 MainUIActor::MainUIActor()
 {
 
@@ -130,6 +132,14 @@ void MainUIActor::Start()
 		AtereAnime->ChangeAnimation("AtereAnime_Back");
 		AtereAnime->AutoSpriteSizeOn();
 		AtereAnime->Transform.SetLocalPosition({ 602.0f, 141.0f });
+	
+		Sword1 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
+		Sword1->Transform.SetLocalPosition({ 560.0f, 155.0f });
+
+		Sword2 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
+		Sword2->Transform.SetLocalPosition({ 603.0f, 165.0f });
+		Sword3 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
+		Sword3->Transform.SetLocalPosition({ 645.0f, 155.0f });
 	}
 
 	{
@@ -289,16 +299,12 @@ void MainUIActor::Update(float _Delta)
 	float ExpRatio = (1366.0f / static_cast<float>(PlayerValue::GetValue()->GetMaxExp()));
 	ExpBarMin->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetExp()) * ExpRatio , 7.0f});
 
-
-	if (GameEngineInput::IsDown('U', this))
+	if (GameEngineInput::IsDown('P', this))
 	{
-		PlayerValue::GetValue()->SubAtere(10);
+		PlayerValue::GetValue()->SetMaxAtere();
 	}
 
-	if (GameEngineInput::IsDown('I', this))
-	{
-		PlayerValue::GetValue()->AddAtere(10);
-	}
+
 	AtereUpdate(_Delta);
 
 	if (GameEngineInput::IsDown('=', this))
@@ -346,11 +352,46 @@ void MainUIActor::AtereUpdate(float _Delta)
 	AtereBar->Transform.SetLocalPosition({ CameraPos.X + 552.0f, CameraPos.Y + 90.0f });
 	AtereGauge->Transform.SetLocalPosition({ CameraPos.X + 552.0f, CameraPos.Y + 90.0f });
 
+
 	float Atere = static_cast<float>(PlayerValue::GetValue()->GetAtere());
-	/*if (Atere >= 100.0f)
+	if (Atere >= 400.0f)
 	{
-		AtereBar->SetImageScale({ 0 / 100.0f * 97.0f  , 27.0f });
-	}*/
+		Sword1->ChangeState(AtereSwordActor::Appear);
+		Sword2->ChangeState(AtereSwordActor::Appear);
+		Sword3->ChangeState(AtereSwordActor::Appear);
+
+		AtereBar->SetImageScale({ 97.0f  , 27.0f });
+	}
+	if (Atere < 400.0f && Atere >= 300.0f)
+	{
+		Sword1->ChangeState(AtereSwordActor::Appear);
+		Sword2->ChangeState(AtereSwordActor::Appear);
+		Sword3->ChangeState(AtereSwordActor::Appear);
+		AtereBar->SetImageScale({ CurGauge - 300 / 100.0f * 97.0f  , 27.0f });
+	}
+	if (Atere < 300.0f && Atere >= 200.0f)
+	{
+		Sword1->ChangeState(AtereSwordActor::Appear);
+		Sword2->ChangeState(AtereSwordActor::Appear);
+		Sword3->ChangeState(AtereSwordActor::End);
+
+		AtereBar->SetImageScale({ CurGauge - 200/ 100.0f * 97.0f  , 27.0f });
+	}
+	if (Atere < 200.0f && Atere >= 100.0f)
+	{
+		Sword1->ChangeState(AtereSwordActor::Appear);
+		Sword2->ChangeState(AtereSwordActor::End);
+		Sword3->ChangeState(AtereSwordActor::End);
+
+		AtereBar->SetImageScale({ CurGauge - 100 / 100.0f * 97.0f  , 27.0f });
+	}
+	if (Atere < 100.0f)
+	{
+		Sword1->ChangeState(AtereSwordActor::End);
+		Sword2->ChangeState(AtereSwordActor::End);
+		Sword3->ChangeState(AtereSwordActor::End);
+		AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f  , 27.0f });
+	}
 	if (Atere == CurGauge)
 	{
 		return;
@@ -385,7 +426,7 @@ void MainUIActor::AtereUpdate(float _Delta)
 		AtereBar->SetImageScale({ CurGauge * 0.01f * 97.0f , 27.0f });
 	}*/
 
-	AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f  , 27.0f});
+	//AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f  , 27.0f});
 }
 
 void MainUIActor::HpUpdate(float _Delta)

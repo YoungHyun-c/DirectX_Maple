@@ -22,6 +22,7 @@
 #include "BossChat.h"
 #include "AchieveUI.h"
 
+#include "AtereEffect.h"
 
 TestLevel::TestLevel()
 {
@@ -37,6 +38,10 @@ TestLevel::~TestLevel()
 void TestLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void TestLevel::Update(float _Delta)

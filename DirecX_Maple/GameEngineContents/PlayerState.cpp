@@ -65,7 +65,7 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('A', this))
+	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
 		AlertTime = Alert_Time;
@@ -156,7 +156,7 @@ void Player::WalkUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('A', this))
+	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
 		AlertTime = Alert_Time;
@@ -264,7 +264,7 @@ void Player::JumpUpdate(float _Delta)
 		}
 	}
 
-	if (GameEngineInput::IsDown('A', this))
+	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
 		AlertTime = Alert_Time;
@@ -431,6 +431,13 @@ void Player::AttackStart()
 
 void Player::AttackUpdate(float _Delta)
 {
+	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	if (true == MainSpriteRenderer->IsCurAnimationEnd())
 	{
 		if (true == IsGround)
@@ -538,7 +545,7 @@ void Player::FlyUpdate(float _Delta)
 		return;
 	}
 
-	if (GameEngineInput::IsDown('A', this))
+	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
 		AlertTime = Alert_Time;
