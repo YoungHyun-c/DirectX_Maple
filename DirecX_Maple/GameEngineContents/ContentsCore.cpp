@@ -4,7 +4,8 @@
 #include <GameEngineCore/GameEngineSampler.h>
 #include <GameEngineCore/GameEngineBlend.h>
 #include <GameEngineCore/GameEngineSpriteRenderer.h>
-//#include <GameEngineCore/GameEngineCoreWindow.h>
+
+#include <GameEngineCore/GameEngineCoreWindow.h>
 
 
 #include "TitleLevel.h"
@@ -61,18 +62,19 @@ void ContentsCore::UserRes()
 	}
 
 	{
-		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("PlayerEffect");
-		Mat->SetVertexShader("PlayerEffect_VS");
-		Mat->SetPixelShader("PlayerEffect_PS");
+		std::shared_ptr<GameEngineMaterial> Mat = GameEngineMaterial::Create("AtereEffect");
+		Mat->SetVertexShader("AtereEffect_VS");
+		Mat->SetPixelShader("AtereEffect_PS");
 		Mat->SetDepthState("AlwaysDepth");
 	}
 }
 
 void ContentsCore::Start()
 {
+	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
+
 	// 만드는쉐이더
-	//UserRes();
-	
+	UserRes();
 
 	//GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
 	

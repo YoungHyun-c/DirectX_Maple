@@ -29,6 +29,8 @@
 #include "GhostDamien.h"
 #include "MonsterFunction.h"
 
+#include "AtereEffect.h"
+
 
 BossLevel::BossLevel()
 {
@@ -76,6 +78,10 @@ void BossLevel::Start()
 		GhostDamienMob->SetDebugMap("BossDebugMap.Png");*/
 
 	//}
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 
 	GameEngineInput::AddInputObject(this);
 }

@@ -310,6 +310,42 @@ public:
 		WonderUse = _Value;
 	}
 
+	void AddAtere(int _Atere)
+	{
+		Atere += _Atere;
+
+		if (Atere >= MaxAtere)
+		{
+			Atere = MaxAtere;
+		}
+	}
+	void SubAtere(int _Atere)
+	{
+		if (AtereMax == true)
+		{
+			return;
+		}
+		Atere -= _Atere;
+		if (Atere <= MinAtere)
+		{
+			Atere = MinAtere;
+		}
+	}
+	int GetAtere()
+	{
+		return Atere;
+	}
+	void SetAtere(int _Value)
+	{
+		Atere = _Value;
+	}
+	void SetMaxAtere(int _Value)
+	{
+		Atere = MaxAtere;
+		AtereMax = true;
+	}
+
+
 protected:
 
 private:
@@ -317,6 +353,11 @@ private:
 	int Grade = 5;
 	int Level = 259;
 	int MaxLevel = 300;
+
+	int MinAtere = 0;
+	int Atere = 0;
+	int MaxAtere = 400;
+	bool AtereMax = false;
 
 	int MinHp = 0;
 	int MainHp = 100;

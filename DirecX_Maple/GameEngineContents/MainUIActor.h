@@ -26,9 +26,18 @@ protected:
 
 private:
 	float4 WindowHalfPos = float4::ZERO;
-	std::shared_ptr<GameEngineUIRenderer> AtereGaugeBack;
-	std::shared_ptr<GameEngineUIRenderer> AtereGauge;
+
+/////////////// Atere Gauge
+	void AtereUpdate(float _Delta);
+	std::shared_ptr<GameEngineSpriteRenderer> AtereGaugeBack;
+	std::shared_ptr<GameEngineSpriteRenderer> AtereGauge;
+	std::shared_ptr<GameEngineSpriteRenderer> AtereBar;
 	std::shared_ptr<GameEngineUIRenderer> AtereAnime;
+	float CurGauge = 0.0f;
+	float Speed = 100.0f;
+////////////// 에테르 모을시 검
+	//std::shared_ptr<GameEngineSpriteRenderer> ;
+
 
 	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
 	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;

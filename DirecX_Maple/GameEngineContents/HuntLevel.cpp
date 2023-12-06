@@ -17,6 +17,8 @@
 #include "CraneMonster.h"
 #include "MonsterSpawnZone.h"
 
+#include "AtereEffect.h"
+
 HuntLevel::HuntLevel()
 {
 
@@ -42,6 +44,10 @@ void HuntLevel::Start()
 	//Zone2->SetZonePosAndScale({ 1700, -1100.0f }, 1000.0f);
 
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void HuntLevel::Update(float _Delta)

@@ -11,9 +11,9 @@
 #include "QuestIcon.h"
 #include "SolErdaGauge.h"
 
-//#include <GameEngineCore/GameEngineCoreWindow.h>
 //#include <GameEngineCore/FadePostEffect.h>
-//#include "PlayerEffect.h"
+//#include <GameEngineCore/GameEngineCoreWindow.h>
+#include "AtereEffect.h"
 
 TownLevel::TownLevel()
 {
@@ -29,7 +29,7 @@ void TownLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
 
-	// ·»´õÅ¸°Ù ÀÌ¿ë Å×½ºÆ®
+	//// ·»´õÅ¸°Ù ÀÌ¿ë Å×½ºÆ®
 	//std::shared_ptr<GameEngineCoreWindow> Window = GameEngineGUI::FindGUIWindow<GameEngineCoreWindow>("GameEngineCoreWindow");
 
 	//if (nullptr != Window)
@@ -37,18 +37,31 @@ void TownLevel::Start()
 	//	Window->AddDebugRenderTarget(0, "PlayLevelRenderTarget", GetMainCamera()->GetCameraAllRenderTarget());
 	//}
 
-	//{
-	//	std::shared_ptr<GameEngineActor> NewTest = CreateActor<GameEngineActor>(3, "Test");
-	//	float4 HalfWindowScale = GameEngineCore::MainWindow.GetScale().Half();
-	//	NewTest->Transform.SetLocalPosition({ HalfWindowScale.X, -900.0f, -100.0f });
-	//	std::shared_ptr<GameEngineRenderer> NewRender = NewTest->CreateComponent<GameEngineSpriteRenderer>(5);
-	//	NewRender->SetRenderOrder(5);
-	//	NewRender->RenderBaseInfoValue.Target2 = 1;
-	//}
+	{
+		if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
+		{
+			GameEngineDirectory Dir;
+			Dir.MoveParentToExistsChild("ContentsResources");
+			Dir.MoveChild("ContentsResources");
+			Dir.MoveChild("FolderTexture");
+			Dir.MoveChild("UITexture");
 
-	//{
-	//	GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<PlayerEffect>();
-	//}
+			std::vector<GameEngineFile> Files = Dir.GetAllFile();
+			for (size_t i = 0; i < Files.size(); i++)
+			{
+				GameEngineFile& File = Files[i];
+				GameEngineTexture::Load(File.GetStringPath());
+			}
+			GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
+			GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+			GameEngineSprite::CreateSingle("LWGaugeUI.gaugeMask.png");
+			GameEngineSprite::CreateSingle("LWGaugeBar.png");
+		}
+	}
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 void TownLevel::Update(float _Delta)
 {

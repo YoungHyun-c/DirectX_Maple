@@ -12,6 +12,8 @@
 #include "QuestIcon.h"
 #include "SolErdaGauge.h"
 
+#include "AtereEffect.h"
+
 CrossLoadLevel::CrossLoadLevel()
 {
 
@@ -25,6 +27,10 @@ CrossLoadLevel::~CrossLoadLevel()
 void CrossLoadLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void CrossLoadLevel::Update(float _Delta)

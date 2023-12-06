@@ -20,6 +20,7 @@ void MainUIActor::LevelStart(GameEngineLevel* _PrevLevel)
 
 	MainHpBar->SetImageScale({ (CurHpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxHp())) * 172.0f, 12.0f });
 	MainMpBar->SetImageScale({ (CurMpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxMp())) * 172.0f, 12.0f });
+	AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f, 27.0f });
 }
 
 void MainUIActor::Start()
@@ -132,18 +133,32 @@ void MainUIActor::Start()
 	}
 
 	{
-		AtereGaugeBack = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		AtereGaugeBack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
 		AtereGaugeBack->SetSprite("LWGaugeUI_background.png");
 		AtereGaugeBack->AutoSpriteSizeOn();
-		AtereGaugeBack->Transform.SetLocalPosition({ 600.0f, 75.0f });
+		//AtereGaugeBack->Transform.SetLocalPosition({ 600.0f, 75.0f });
 	}
 
 	{
-		AtereGauge = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		AtereGauge->SetSprite("LWGaugeUI.gauge.png");
-		AtereGauge->AutoSpriteSizeOn();
-		AtereGauge->Transform.SetLocalPosition({ 600.0f, 90.0f });
+		AtereBar = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
+		AtereBar->SetSprite("LWGaugeBar.Png");
+		AtereBar->SetImageScale({ 97.0f, 27.0f });
+		//AtereBar->Transform.SetLocalPosition({ 600.0f, -900.0f });
+		AtereBar->SetPivotType(PivotType::Left);
+		AtereBar->RenderBaseInfoValue.Target2 = 1;
+		AtereBar->GetColorData().MulColor.A = 0.01f;
 	}
+
+	{
+		AtereGauge = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::UI);
+		AtereGauge->SetSprite("LWGaugeUI.gauge.png");
+		AtereGauge->SetImageScale({ 97.0f, 27.0f });
+		//AtereGauge->AutoSpriteSizeOn();
+		//AtereGauge->Transform.SetLocalPosition({ 600.0f, -900.0f });
+		AtereGauge->SetPivotType(PivotType::Left);
+		AtereGauge->RenderBaseInfoValue.Target1 = 1;
+	}
+
 
 
 	{
@@ -275,6 +290,17 @@ void MainUIActor::Update(float _Delta)
 	ExpBarMin->SetImageScale({ static_cast<float>(PlayerValue::GetValue()->GetExp()) * ExpRatio , 7.0f});
 
 
+	if (GameEngineInput::IsDown('U', this))
+	{
+		PlayerValue::GetValue()->SubAtere(10);
+	}
+
+	if (GameEngineInput::IsDown('I', this))
+	{
+		PlayerValue::GetValue()->AddAtere(10);
+	}
+	AtereUpdate(_Delta);
+
 	if (GameEngineInput::IsDown('=', this))
 	{
 		PlayerValue::GetValue()->AddExp(50);
@@ -311,6 +337,55 @@ void MainUIActor::Update(float _Delta)
 	{
 		PlayerMpPerUiRenderer();
 	}
+}
+
+void MainUIActor::AtereUpdate(float _Delta)
+{
+	float4 CameraPos = GetLevel()->GetMainCamera()->Transform.GetLocalPosition();
+	AtereGaugeBack->Transform.SetLocalPosition({ CameraPos.X + 600.0f, CameraPos.Y + 75.0f });
+	AtereBar->Transform.SetLocalPosition({ CameraPos.X + 552.0f, CameraPos.Y + 90.0f });
+	AtereGauge->Transform.SetLocalPosition({ CameraPos.X + 552.0f, CameraPos.Y + 90.0f });
+
+	float Atere = static_cast<float>(PlayerValue::GetValue()->GetAtere());
+	/*if (Atere >= 100.0f)
+	{
+		AtereBar->SetImageScale({ 0 / 100.0f * 97.0f  , 27.0f });
+	}*/
+	if (Atere == CurGauge)
+	{
+		return;
+	}
+	if (Atere < CurGauge)
+	{
+		CurGauge -= ScaleSpeed * _Delta;
+		if (Atere > CurHpScale)
+		{
+			CurGauge = Atere;
+		}
+	}
+	else if (Atere > CurGauge)
+	{
+		CurGauge += ScaleSpeed * _Delta;
+
+		if (Atere < CurGauge)
+		{
+			CurGauge = Atere;
+		}
+	}
+
+	/*if (GameEngineInput::IsPress('J', this))
+	{
+		CurGauge -= Speed * _Delta;
+		AtereBar->SetImageScale({ CurGauge * 0.01f * 97.0f, 27.0f });
+	}
+
+	if (GameEngineInput::IsPress('K', this))
+	{
+		CurGauge += Speed * _Delta;
+		AtereBar->SetImageScale({ CurGauge * 0.01f * 97.0f , 27.0f });
+	}*/
+
+	AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f  , 27.0f});
 }
 
 void MainUIActor::HpUpdate(float _Delta)

@@ -19,7 +19,7 @@ GameEngineLevel::GameEngineLevel()
 	}
 
 	{
-		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(INT_MIN, ECAMERAORDER::UI);
+		std::shared_ptr<GameEngineCamera> NewCamera = CreateCamera(2, ECAMERAORDER::UI);
 	}
 
 	float4 WindowScale = GameEngineCore::MainWindow.GetScale();

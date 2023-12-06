@@ -199,7 +199,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayerEffect.cpp">
+    <ClCompile Include="AtereEffect.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -504,7 +504,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayerEffect.h">
+    <ClInclude Include="AtereEffect.h">
       <SubType>
       </SubType>
     </ClInclude>

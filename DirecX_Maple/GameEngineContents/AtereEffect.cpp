@@ -1,16 +1,16 @@
 #include "PreCompile.h"
-#include "PlayerEffect.h"
+#include "AtereEffect.h"
 #include <GameEngineCore/GAMEENGINECORE.H>
 
-PlayerEffect::PlayerEffect()
+AtereEffect::AtereEffect()
 {
 }
 
-PlayerEffect::~PlayerEffect()
+AtereEffect::~AtereEffect()
 {
 }
 
-void PlayerEffect::Start()
+void AtereEffect::Start()
 {
 	std::shared_ptr<GameEngineRenderTarget> Target = GameEngineCore::GetCurLevel()->GetMainCamera()->GetCameraAllRenderTarget();
 
@@ -20,7 +20,7 @@ void PlayerEffect::Start()
 	}
 
 	EffectUnit.SetMesh("fullrect");
-	EffectUnit.SetMaterial("PlayerEffect");
+	EffectUnit.SetMaterial("AtereEffect");
 
 	EffectUnit.ShaderResHelper.SetTexture("Tex0", Target->GetTexture(1));
 	EffectUnit.ShaderResHelper.SetTexture("Tex1", Target->GetTexture(2));
@@ -31,7 +31,7 @@ void PlayerEffect::Start()
 
 }
 
-void PlayerEffect::EffectProcess(float _DeltaTime)
+void AtereEffect::EffectProcess(float _DeltaTime)
 {
 	ResultTarget->Setting();
 	EffectUnit.Render();

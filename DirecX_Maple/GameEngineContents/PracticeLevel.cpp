@@ -12,6 +12,8 @@
 #include "Mouse.h"
 #include "SummonUi.h"
 
+#include "AtereEffect.h"
+
 
 PracticeLevel::PracticeLevel()
 {
@@ -25,8 +27,11 @@ PracticeLevel::~PracticeLevel()
 
 void PracticeLevel::Start()
 {
-	GameEngineCore::GetBackBufferRenderTarget()->SetClearColor({ 1, 1, 1, 1 });
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void PracticeLevel::Update(float _Delta)

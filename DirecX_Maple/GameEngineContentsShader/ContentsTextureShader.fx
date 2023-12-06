@@ -102,18 +102,18 @@ float4 ContentsTextureShader_PS(PixelOutPut _Input) : SV_Target0
     float4 Color = DiffuseTex.Sample(DiffuseTexSampler, _Input.TEXCOORD.xy);
     // 블랜드라는 작업을 해줘야 한다.
     
-    if (0.0f >= Color.a)
-    {
-        clip(-1);
-    }
+    //if (0.0f >= Color.a)
+    //{
+    //    clip(-1);
+    //}
     
-    Color += PlusColor;
-    Color *= MulColor;
+    //Color += PlusColor;
+    //Color *= MulColor;
     
-    if (0 >= Color.a)
-    {
-        Color.a = 0.0f;
-    }
+    //if (0 >= Color.a)
+    //{
+    //    Color.a = 0.0f;
+    //}
     
     //if (0 >= Color.a)
     //{

@@ -13,6 +13,8 @@
 
 #include "BossBoxReward.h"
 
+#include "AtereEffect.h"
+
 BossRewardLevel::BossRewardLevel()
 {
 
@@ -41,6 +43,10 @@ void BossRewardLevel::Start()
 	//}
 
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void BossRewardLevel::Update(float _Delta)

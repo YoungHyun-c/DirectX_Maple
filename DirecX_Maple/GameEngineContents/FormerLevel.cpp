@@ -12,6 +12,7 @@
 #include "Mouse.h"
 
 #include "GrandisGoddess.h"
+#include "AtereEffect.h"
 
 FormerLevel::FormerLevel()
 {
@@ -26,6 +27,10 @@ FormerLevel::~FormerLevel()
 void FormerLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void FormerLevel::Update(float _Delta)

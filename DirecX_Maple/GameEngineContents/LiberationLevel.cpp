@@ -9,6 +9,8 @@
 #include "MainUIActor.h"
 #include "Mouse.h"
 
+#include "AtereEffect.h"
+
 LiberationLevel::LiberationLevel()
 {
 
@@ -22,6 +24,10 @@ LiberationLevel::~LiberationLevel()
 void LiberationLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void LiberationLevel::Update(float _Delta)

@@ -9,6 +9,8 @@
 #include "MainUIActor.h"
 #include "Mouse.h"
 
+#include "AtereEffect.h"
+
 BossEntranceLevel::BossEntranceLevel()
 {
 
@@ -22,6 +24,10 @@ BossEntranceLevel::~BossEntranceLevel()
 void BossEntranceLevel::Start()
 {
 	GameEngineInput::AddInputObject(this);
+
+	{
+		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
+	}
 }
 
 void BossEntranceLevel::Update(float _Delta)

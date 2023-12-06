@@ -126,7 +126,7 @@
     <ClCompile Include="MonsterSpawnZone.cpp">
       <Filter>Object\Monster</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerEffect.cpp">
+    <ClCompile Include="AtereEffect.cpp">
       <Filter>Render\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="MonsterFunction.cpp">
@@ -361,7 +361,7 @@
     <ClInclude Include="MonsterSpawnZone.h">
       <Filter>Object\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerEffect.h">
+    <ClInclude Include="AtereEffect.h">
       <Filter>Render\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="MonsterFunction.h">
