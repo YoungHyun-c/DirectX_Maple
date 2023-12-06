@@ -3,8 +3,9 @@
 #include "Player.h"
 #include "Monster.h"
 
-#include "BossBindEffect.h"
 #include "MonsterFunction.h"
+#include "BossBindEffect.h"
+#include "BossFormerEffect.h"
 
 Monster* Monster::Monsters = nullptr;
 
@@ -47,6 +48,10 @@ void Monster::Start()
 
 	SkillBindEffect = GetLevel()->CreateActor<BossBindEffect>(ContentsObjectType::FrontSkill);
 	SkillBindEffect->Off();
+
+	FormBindEffect = GetLevel()->CreateActor<BossFormerEffect>(ContentsObjectType::FrontSkill);
+	FormBindEffect->Off();
+
 	GameEngineInput::AddInputObject(this);
 }
 
@@ -73,7 +78,7 @@ void Monster::Update(float _Delta)
 
 	if (FormerBinding >= FormerBindTIme)
 	{
-		SkillBindEffect->GetEndFormerBindEffect();
+		FormBindEffect->GetEndFormerBindEffect();
 		FormerBinding = 0.0f;
 		FormerBind = false;
 	}
@@ -84,9 +89,9 @@ void Monster::Update(float _Delta)
 	}
 	if (GameEngineInput::IsDown('R', this) && MonsterAppear == true)
 	{
-		SkillBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition() - 30.0f);
-		SkillBindEffect->GetStartFormerBindEffect();
-		SkillBindEffect->On();
+		FormBindEffect->Transform.SetLocalPosition(Renderer->Transform.GetWorldPosition() - 30.0f);
+		FormBindEffect->GetStartFormerBindEffect();
+		FormBindEffect->On();
 		FormerBind = true;
 	}
 

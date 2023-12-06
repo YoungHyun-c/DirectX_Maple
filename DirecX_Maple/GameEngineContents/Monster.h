@@ -62,6 +62,7 @@ private:
 	bool RenderOn = false;
 
 	std::shared_ptr<class BossBindEffect> SkillBindEffect = nullptr;
+	std::shared_ptr<class BossFormerEffect> FormBindEffect = nullptr;
 
 	bool SkillBind = false;
 	float SkillBinding = 0.0f;

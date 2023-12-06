@@ -48,5 +48,6 @@ private:
 	float CurTime = 0.0f;
 	float LimitTime = 0.12f;
 	EventParameter HitEvent;
+	bool Hit = false;
 };
 

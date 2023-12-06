@@ -206,10 +206,10 @@ void PlayerDeathCountUI::Update(float _Delta)
 		RedDeathUI = PlayerValue::GetValue()->GetRedDeathValue();
 	}
 
-	if (GameEngineInput::IsDown('0', this))
+	/*if (GameEngineInput::IsDown('0', this))
 	{
 		PlayerValue::GetValue()->AddRedDeathCount(1);
-	}
+	}*/
 }
 
 

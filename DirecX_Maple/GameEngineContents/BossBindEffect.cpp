@@ -31,22 +31,22 @@ void BossBindEffect::Start()
 			}
 		}
 
-		if (nullptr == GameEngineSprite::Find("FormerBindEffect"))
-		{
-			GameEngineDirectory Dir;
-			Dir.MoveParentToExistsChild("ContentsResources");
-			Dir.MoveChild("ContentsResources");
-			Dir.MoveChild("FolderTexture");
-			Dir.MoveChild("Monster");
-			Dir.MoveChild("FormerBindEffect");
-			std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+		//if (nullptr == GameEngineSprite::Find("FormerBindEffect"))
+		//{
+		//	GameEngineDirectory Dir;
+		//	Dir.MoveParentToExistsChild("ContentsResources");
+		//	Dir.MoveChild("ContentsResources");
+		//	Dir.MoveChild("FolderTexture");
+		//	Dir.MoveChild("Monster");
+		//	Dir.MoveChild("FormerBindEffect");
+		//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-			for (size_t i = 0; i < Directorys.size(); i++)
-			{
-				GameEngineDirectory& Dir = Directorys[i];
-				GameEngineSprite::CreateFolder(Dir.GetStringPath());
-			}
-		}
+		//	for (size_t i = 0; i < Directorys.size(); i++)
+		//	{
+		//		GameEngineDirectory& Dir = Directorys[i];
+		//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		//	}
+		//}
 
 	}
 
@@ -59,28 +59,23 @@ void BossBindEffect::Start()
 		});
 
 
-	BindEffect->CreateAnimation("FormerBindStart", "FormerBindStart", 0.1f, -1, -1, true);
-	BindEffect->CreateAnimation("FormerBindLoop", "FormerBindLoop", 0.1f, -1, -1, true);
-	BindEffect->CreateAnimation("FormerBindEnd", "FormerBindEnd", 0.1f, -1, -1, true);
-	BindEffect->SetEndEvent("FormerBindStart", [&](GameEngineSpriteRenderer*)
-		{
-			BindEffect->ChangeAnimation("FormerBindLoop");
-		});
+	//BindEffect->CreateAnimation("FormerBindStart", "FormerBindStart", 0.1f, -1, -1, true);
+	//BindEffect->CreateAnimation("FormerBindLoop", "FormerBindLoop", 0.1f, -1, -1, true);
+	//BindEffect->CreateAnimation("FormerBindEnd", "FormerBindEnd", 0.1f, -1, -1, true);
+	//BindEffect->SetEndEvent("FormerBindStart", [&](GameEngineSpriteRenderer*)
+	//	{
+	//		BindEffect->ChangeAnimation("FormerBindLoop");
+	//	});
 
-	BindEffect->SetEndEvent("FormerBindEnd", [&](GameEngineSpriteRenderer*)
-		{
-			BindEffect->Off();
-		});
+	//BindEffect->SetEndEvent("FormerBindEnd", [&](GameEngineSpriteRenderer*)
+	//	{
+	//		BindEffect->Off();
+	//	});
 
 
 	BindEffect->ChangeAnimation("SkillBind");
 	BindEffect->AutoSpriteSizeOn();
 	BindEffect->Off();
-}
-
-void BossBindEffect::Update(float _Delta)
-{
-
 }
 
 void BossBindEffect::LevelEnd(GameEngineLevel* _NextLevel)

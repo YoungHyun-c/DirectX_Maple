@@ -199,6 +199,7 @@ void SkillDivide::EndSkill()
 	SkillFunction::EndSkill();
 	Off();
 	SkillRender1->Off();
+	Hit = false;
 }
 
 void SkillDivide::Update(float _Delta)
@@ -235,6 +236,12 @@ void SkillDivide::CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGr
 		GameEngineCollision* _Other = _CollisionGroup[i];
 		SkillManager::PlayerSkillManager->HitPrint(_Other->GetParentObject(), SkillHitName, DivideHitCount);
 	}
+	
+	if (Hit == false)
+	{
+		PlayerValue::GetValue()->AddAtere(10);
+		Hit = true;
+	}
 }
 
 
@@ -244,7 +251,7 @@ void SkillDivide::AttackEvent()
 		{
 			NewDR = GetLevel()->CreateActor<DamageRenderer>();
 			NewDR->PushDamage(_Other, DivideHitCount, SkillValue::GetValue()->GetDivideSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
-			PlayerValue::GetValue()->AddAtere(20);
+			
 			if (PlayerValue::GetValue()->GetWonderUse() == false)
 			{
 				SkillManager::PlayerSkillManager->UseSkill("Wonder");

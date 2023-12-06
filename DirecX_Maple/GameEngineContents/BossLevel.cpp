@@ -129,7 +129,7 @@ void BossLevel::Update(float _Delta)
 	if (GlobalValue::GetNeedGlobalValue()->GetSickleCutValue() == true)
 	{
 		if (PlayerValue::GetValue()->GetGreenDeathValue() <= 4 && CandleCut1 == false
-			|| PlayerValue::GetValue()->GetGreenDeathValue() >= 3 && CandleCut1 == false)
+			|| PlayerValue::GetValue()->GetGreenDeathValue() == 3 && CandleCut1 == false)
 		{
 			Candle3->CandleChangeAni("CandleStickBreak");
 			Candle3->FrameChangeAni("CandleFireBreak");

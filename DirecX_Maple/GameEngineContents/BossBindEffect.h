@@ -26,20 +26,19 @@ public:
 		BindEffect->Off();
 	}
 
-	void GetStartFormerBindEffect()
-	{
-		BindEffect->On();
-		BindEffect->ChangeAnimation("FormerBindStart");
-	}
+	//void GetStartFormerBindEffect()
+	//{
+	//	BindEffect->On();
+	//	BindEffect->ChangeAnimation("FormerBindStart");
+	//}
 
-	void GetEndFormerBindEffect()
-	{
-		BindEffect->ChangeAnimation("FormerBindEnd");
-	}
+	//void GetEndFormerBindEffect()
+	//{
+	//	BindEffect->ChangeAnimation("FormerBindEnd");
+	//}
 
 protected:
 	void Start() override;
-	void Update(float _Delta) override;
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 private:

@@ -169,5 +169,6 @@ private:
 	float FormerBinding = 0.0f;
 	float FormerBindTime = 10.0f;
 	std::shared_ptr<class BossBindEffect> SkillBindEffect = nullptr;
+	std::shared_ptr<class BossFormerEffect> FormBindEffect = nullptr;
 };
 

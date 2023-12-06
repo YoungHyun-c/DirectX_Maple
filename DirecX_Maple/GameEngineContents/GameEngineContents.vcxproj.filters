@@ -237,6 +237,9 @@
     <ClCompile Include="AtereSword.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="BossFormerEffect.cpp">
+      <Filter>Object\Boss\BossEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -471,6 +474,9 @@
     </ClInclude>
     <ClInclude Include="AtereSword.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="BossFormerEffect.h">
+      <Filter>Object\Boss\BossEffect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

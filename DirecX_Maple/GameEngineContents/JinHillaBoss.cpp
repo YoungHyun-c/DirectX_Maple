@@ -14,6 +14,7 @@
 #include "BossChat.h"
 
 #include "BossBindEffect.h"
+#include "BossFormerEffect.h"
 
 JinHillaBoss* JinHillaBoss::MainBoss = nullptr;
 
@@ -147,6 +148,10 @@ void JinHillaBoss::Start()
 		SkillBindEffect = GetLevel()->CreateActor<BossBindEffect>(ContentsObjectType::FrontSkill);
 		SkillBindEffect->Off();
 	}
+	{
+		FormBindEffect = GetLevel()->CreateActor<BossFormerEffect>(ContentsObjectType::FrontSkill);
+		FormBindEffect->Off();
+	}
 }
 
 void JinHillaBoss::Update(float _Delta)
@@ -166,9 +171,9 @@ void JinHillaBoss::Update(float _Delta)
 	if (FormerBind == true)
 	{
 		FormerBinding += _Delta;
-		SkillBindEffect->Transform.SetLocalPosition(MonsterRenderer->Transform.GetWorldPosition());
-		SkillBindEffect->GetStartFormerBindEffect();
-		SkillBindEffect->On();
+		FormBindEffect->Transform.SetLocalPosition(MonsterRenderer->Transform.GetWorldPosition());
+		FormBindEffect->GetStartFormerBindEffect();
+		FormBindEffect->On();
 		ChangeState(MonsterState::Stand);
 		BossFormerBind();
 		return;
@@ -200,7 +205,7 @@ void JinHillaBoss::Update(float _Delta)
 	}
 
 
-	if (GameEngineInput::IsDown('-', this))
+	if (GameEngineInput::IsDown('9', this))
 	{
 		JinHillaCurHp -= 10000000000000;
 	}
@@ -266,7 +271,7 @@ void JinHillaBoss::BossFormerBind()
 	FormerBind = true;
 	if (FormerBinding >= FormerBindTime)
 	{
-		SkillBindEffect->GetEndFormerBindEffect();
+		FormBindEffect->GetEndFormerBindEffect();
 		FormerBind = false;
 		FormerBinding = 0.0f;
 		return;
