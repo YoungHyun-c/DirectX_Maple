@@ -243,6 +243,9 @@
     <ClCompile Include="SkillRestore.cpp">
       <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClCompile>
+    <ClCompile Include="SkillStorm.cpp">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -482,6 +485,9 @@
       <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClInclude>
     <ClInclude Include="SkillRestore.h">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillStorm.h">
       <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClInclude>
   </ItemGroup>

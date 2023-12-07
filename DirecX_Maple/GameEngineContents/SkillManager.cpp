@@ -13,6 +13,7 @@
 #include "SkillWonder.h"
 #include "SKillOrder.h"
 #include "SkillRestore.h"
+#include "SkillStorm.h"
 
 #include "DamageRenderer.h"
 
@@ -67,6 +68,7 @@ void SkillManager::Start()
 	CreateSkill<SkillOrder>("Order");
 
 	CreateSkill<SkillRestore>("Restore");
+	CreateSkill<SkillStorm>("Storm");
 }
 
 void SkillManager::Update(float _Delta)

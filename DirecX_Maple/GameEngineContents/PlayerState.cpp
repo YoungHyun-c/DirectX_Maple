@@ -79,6 +79,13 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown(VK_F3, this) && SkillValue::GetValue()->GetCurOrderCount() >= 2)
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Storm");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{
@@ -166,6 +173,20 @@ void Player::WalkUpdate(float _Delta)
 	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_F2, this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Restore");
+		AlertTime = Alert_Time;
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_F3, this) && SkillValue::GetValue()->GetCurOrderCount() >= 2)
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Storm");
 		AlertTime = Alert_Time;
 		return;
 	}
@@ -274,6 +295,20 @@ void Player::JumpUpdate(float _Delta)
 	if (GameEngineInput::IsDown('A', this) && PlayerValue::GetValue()->GetAtere() >= 100)
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Order");
+		AlertTime = Alert_Time;
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_F2, this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Restore");
+		AlertTime = Alert_Time;
+		return;
+	}
+
+	if (GameEngineInput::IsDown(VK_F3, this) && SkillValue::GetValue()->GetCurOrderCount() >= 2)
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Storm");
 		AlertTime = Alert_Time;
 		return;
 	}
