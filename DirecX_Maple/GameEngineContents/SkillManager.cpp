@@ -61,16 +61,16 @@ void SkillManager::Start()
 
 	CreateSkill<SkillDivide>("Divide1");
 	CreateSkill<SkillRuin>("Ruin");
-	//CreateSkill<SkillBInd>("Scoll");
-	//CreateSkill<SkillMaestro>("Maestro");
+	CreateSkill<SkillBInd>("Scoll");
+	CreateSkill<SkillMaestro>("Maestro");
 
 	CreateSkill<SkillShard>("Shard");
-	//CreateSkill<SkillWonder>("Wonder");
+	CreateSkill<SkillWonder>("Wonder");
 	CreateSkill<SkillOrder>("Order");
 
 	CreateSkill<SkillInfinite>("Infinite");
-	//CreateSkill<SkillRestore>("Restore");
-	//CreateSkill<SkillStorm>("Storm");
+	CreateSkill<SkillRestore>("Restore");
+	CreateSkill<SkillStorm>("Storm");
 }
 
 void SkillManager::Update(float _Delta)

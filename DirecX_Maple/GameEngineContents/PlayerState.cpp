@@ -184,6 +184,13 @@ void Player::WalkUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown(VK_F1, this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Infinite");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	if (GameEngineInput::IsDown(VK_F2, this))
 	{
 		SkillManager::PlayerSkillManager->UseSkill("Restore");

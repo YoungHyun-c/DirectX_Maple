@@ -139,18 +139,18 @@ void Player::Start()
 
 	//Transform.SetLocalPosition({ 0, 0, static_cast<float>(ContentsObjectType::Player) });
 
-	/*{
+	{
 		Invicible = GetLevel()->CreateActor<InvinCibilityEffect>(ContentsObjectType::BackSkill);
 		Invicible->Transform.SetLocalPosition(MainSpriteRenderer->Transform.GetLocalPosition());
 		Invicible->Off();
-	}*/
+	}
 	GameEngineInput::AddInputObject(this);
 }
 
 void Player::Update(float _Delta)
 {
 	PlayerPos = Transform.GetWorldPosition();
-	//InvicibleCheck();
+	InvicibleCheck();
 	InsideLockMap();
 	PlayerActor::Update(_Delta);
 
