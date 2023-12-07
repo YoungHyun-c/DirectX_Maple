@@ -291,6 +291,7 @@ void SkillOrderSummonActor::GedderingStart()
 
 	HitCollision->Off();
 	DetectCollision->Off();
+	BlossomHitCollision->Off();
 
 	GedderingHitCollision->On();
 

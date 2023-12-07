@@ -258,6 +258,18 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SkillInfinite.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillInfiniteActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="SkillInfiniteSummonActor.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SkillMaestro.cpp">
       <SubType>
       </SubType>
@@ -570,6 +582,18 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="SkillFunction.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillInfinite.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillInfiniteActor.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="SkillInfiniteSummonActor.h">
       <SubType>
       </SubType>
     </ClInclude>

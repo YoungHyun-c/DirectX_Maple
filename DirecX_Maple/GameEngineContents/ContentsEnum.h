@@ -11,6 +11,8 @@ enum class ContentsRenderType
 enum class ContentsObjectType
 {
 	BackGround,
+	Infi,
+	Ground,
 	Potal,
 	Monster,
 	MonsterSkill,

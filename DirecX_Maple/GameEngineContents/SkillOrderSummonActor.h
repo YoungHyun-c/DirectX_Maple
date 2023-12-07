@@ -43,14 +43,14 @@ protected:
 
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
-	virtual void ReadyStart();
-	virtual void AttackStart();
-	virtual void HitStart();
-	virtual void LoopStart();
-	virtual void TelePortStart();
-	virtual void GedderingStart();
-	virtual void BlossomStart();
-	virtual void DeathStart();
+	void ReadyStart();
+	void AttackStart();
+	void HitStart();
+	void LoopStart();
+	void TelePortStart();
+	void GedderingStart();
+	void BlossomStart();
+	void DeathStart();
 
 	void ReadyUpdate(float _Delta);
 	void AttackUpdate(float _Delta);
@@ -59,7 +59,7 @@ protected:
 	void TelePortUpdate(float _Delta);
 	void GedderingUpdate(float _Delta);
 	void BlossomUpdate(float _Delta);
-	virtual void DeathUpdate(float _Delta);
+	void DeathUpdate(float _Delta);
 
 	std::shared_ptr<class GameEngineSpriteRenderer> Order = nullptr;
 	std::shared_ptr<GameEngineCollision> DetectCollision;

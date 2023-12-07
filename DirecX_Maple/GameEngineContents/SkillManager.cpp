@@ -14,6 +14,7 @@
 #include "SKillOrder.h"
 #include "SkillRestore.h"
 #include "SkillStorm.h"
+#include "SkillInfinite.h"
 
 #include "DamageRenderer.h"
 
@@ -59,7 +60,7 @@ void SkillManager::Start()
 	}
 
 	CreateSkill<SkillDivide>("Divide1");
-	//CreateSkill<SkillRuin>("Ruin");
+	CreateSkill<SkillRuin>("Ruin");
 	//CreateSkill<SkillBInd>("Scoll");
 	//CreateSkill<SkillMaestro>("Maestro");
 
@@ -67,8 +68,9 @@ void SkillManager::Start()
 	//CreateSkill<SkillWonder>("Wonder");
 	CreateSkill<SkillOrder>("Order");
 
-	CreateSkill<SkillRestore>("Restore");
-	CreateSkill<SkillStorm>("Storm");
+	CreateSkill<SkillInfinite>("Infinite");
+	//CreateSkill<SkillRestore>("Restore");
+	//CreateSkill<SkillStorm>("Storm");
 }
 
 void SkillManager::Update(float _Delta)

@@ -246,6 +246,15 @@
     <ClCompile Include="SkillStorm.cpp">
       <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClCompile>
+    <ClCompile Include="SkillInfinite.cpp">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillInfiniteActor.cpp">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillInfiniteSummonActor.cpp">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -490,6 +499,15 @@
     <ClInclude Include="SkillStorm.h">
       <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClInclude>
+    <ClInclude Include="SkillInfiniteActor.h">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillInfinite.h">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillInfiniteSummonActor.h">
+      <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -614,6 +632,9 @@
     </Filter>
     <Filter Include="Object\Player\SKill\5thSkill">
       <UniqueIdentifier>{4cd74b1e-591f-4d36-84df-2e8e4c0a4914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\5thSkill\InfiOrder">
+      <UniqueIdentifier>{4dda645c-f43f-479d-a2e0-1bcfe0035d9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
