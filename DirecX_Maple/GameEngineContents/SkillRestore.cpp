@@ -76,6 +76,8 @@ void SkillRestore::UseSkill()
 
 	SkillValue::GetValue()->SetOrderLimitCount(8);
 	RestoreTime = 30.0f;
+
+	GameEngineSound::SoundPlay("Restore.mp3");
 }
 
 void SkillRestore::EndSkill()

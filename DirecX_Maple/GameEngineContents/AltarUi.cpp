@@ -46,11 +46,13 @@ void AltarUi::Start()
 		{
 			Altar->ChangeAnimation("AltarStand0");
 			AltarCol->On();
+			GameEngineSound::SoundPlay("AltarAppear.mp3");
 		});
 
 	Altar->SetStartEvent("AltarSuccess", [&](GameEngineSpriteRenderer*)
 		{
 			AltarCol->Off();
+			GameEngineSound::SoundPlay("AltarSucceess.mp3");
 		});
 
 	Altar->SetFrameEvent("AltarSuccess", 5, [&](GameEngineSpriteRenderer*)

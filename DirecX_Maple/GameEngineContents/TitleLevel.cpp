@@ -54,6 +54,17 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
 
+	if (nullptr == GameEngineSound::FindSound("HeartofSuffering.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("HeartofSuffering.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->SetBgm("HeartofSuffering.mp3");
+
 	{
 		JinHillaAniMation = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	}

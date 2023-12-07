@@ -77,6 +77,7 @@ void SkillOrder::UseSkill()
 
 	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	PlayerValue::GetValue()->SubAtere(100);
+	GameEngineSound::SoundPlay("OrderSound.mp3");
 }
 
 void SkillOrder::EndSkill()

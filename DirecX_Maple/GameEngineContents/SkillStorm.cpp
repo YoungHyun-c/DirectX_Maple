@@ -75,12 +75,14 @@ void SkillStorm::UseSkill()
 		SkillRender1->ChangeAnimation("Storm_Effect", true, 0);
 		SkillRender3->ChangeAnimation("Storm_Loop4", true, 0);
 		StormHitCount = 10;
+		GameEngineSound::SoundPlay("Storm4.mp3");
 	}
 	else
 	{
 		SkillRender1->ChangeAnimation("Storm_Effect", true, 0);
 		SkillRender3->ChangeAnimation("Storm_Loop3", true, 0);
 		StormHitCount = 8;
+		GameEngineSound::SoundPlay("Storm3.mp3");
 	}
 
 	StormTime = 0.0f;

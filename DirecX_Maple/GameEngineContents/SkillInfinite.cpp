@@ -95,6 +95,11 @@ void SkillInfinite::UseSkill()
 
 	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	InfiTime = 0.0f;
+
+	GameEngineSound::SoundPlay("Infinite.mp3");
+
+	GlobalValue::GetNeedGlobalValue()->CurBgmPause();
+	InfinitePlay = GameEngineSound::SoundPlay("5thAdelesOathInfinite.mp3");
 }
 
 void SkillInfinite::EndSkill()
@@ -103,10 +108,12 @@ void SkillInfinite::EndSkill()
 
 	InfiBack->ChangeAnimation("Infinite_End_Back");
 	InfiFront->ChangeAnimation("Infinite_End_Forward");
+	GlobalValue::GetNeedGlobalValue()->CurBgmResume();
 }
 
 void SkillInfinite::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	InfinitePlay.Stop();
 	Death();
 }
 

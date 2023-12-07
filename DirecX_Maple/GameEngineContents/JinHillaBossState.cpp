@@ -448,6 +448,7 @@ void JinHillaBoss::DeathStart()
 	ChangeAnimationState("Death");
 	MonsterRenderer->Transform.SetLocalPosition({ 0.0f, 250.0f });
 	MonsterCollision->Off();
+	GameEngineSound::SoundPlay("Die.mp3");
 }
 void JinHillaBoss::DeathUpdate(float _Delta)
 {

@@ -305,6 +305,7 @@ void Player::PotionCheck(float _Delta)
 {
 	if (GameEngineInput::IsDown(VK_DELETE, this) && GetLevel()->GetName() != "8.BossLevel")
 	{
+		GameEngineSound::SoundPlay("Use.mp3");
 		PlayerValue::GetValue()->AddHp(PlayerValue::GetValue()->GetMaxHp());
 		PlayerValue::GetValue()->AddMp(PlayerValue::GetValue()->GetMaxMp());
 	}
@@ -323,6 +324,7 @@ void Player::PotionCheck(float _Delta)
 			{
 				if (GameEngineInput::IsDown(VK_DELETE, this))
 				{
+					GameEngineSound::SoundPlay("Use.mp3");
 					PlayerValue::GetValue()->AddHp(PlayerValue::GetValue()->GetMaxHp());
 					PlayerValue::GetValue()->AddMp(PlayerValue::GetValue()->GetMaxMp());
 				}

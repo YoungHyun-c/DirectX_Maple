@@ -60,6 +60,8 @@ void SkillBInd::UseSkill()
 	SkillRender1->ChangeAnimation("Scoll_Effect", true, 0);
 
 	AttackEvent();
+
+	GameEngineSound::SoundPlay("Bind.mp3");
 }
 
 void SkillBInd::EndSkill()

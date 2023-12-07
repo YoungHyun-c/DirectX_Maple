@@ -403,6 +403,7 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DepthOfPain.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Die.mp3"));
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
 	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 25);

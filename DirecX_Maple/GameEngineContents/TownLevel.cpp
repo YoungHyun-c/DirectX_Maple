@@ -152,28 +152,6 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	//if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("UITexture");
-
-	//	std::vector<GameEngineFile> Files = Dir.GetAllFile();
-	//	for (size_t i = 0; i < Files.size(); i++)
-	//	{
-	//		GameEngineFile& File = Files[i];
-	//		GameEngineTexture::Load(File.GetStringPath());
-	//	}
-	//	GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-	//	GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	//	GameEngineSprite::CreateSingle("ExpBar.Png");
-	//	GameEngineSprite::CreateSingle("ExpMax.Png");
-	//	GameEngineSprite::CreateSingle("ErdaGauge.Png");
-	//	GameEngineSprite::CreateSingle("SolErdagauge.Png");
-	//	GameEngineSprite::CreateSingle("SolErdagaugeMax.Png");
-	//}
 	if (nullptr == GameEngineSprite::Find("Npc"))
 	{
 		GameEngineDirectory Dir;
@@ -227,6 +205,40 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
 	GlobalValue::GetNeedGlobalValue()->SetBgm("Thelandofpeachblossoms.mp3", 2);
 
+	if (nullptr == GameEngineSound::FindSound("AltarAppear.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Use.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("2.mp3"));
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("AltarAppear.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("AltarSucceess.mp3"));
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Bind.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("OrderSound.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Blossom.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide1.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide2.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide3.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide4.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide5.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Divide6Special.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Geddering.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Infinite.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MaestorEnd.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MaeStroStart.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("OrderSound.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Restore.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Ruin.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Storm3.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Storm4.mp3"));
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("5thAdelesOathInfinite.mp3"));
+	}
 
 	if (Map == nullptr)
 	{

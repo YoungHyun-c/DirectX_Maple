@@ -72,12 +72,16 @@ void SkillOrderSummonActor::Update(float _Delta)
 
 	if (GameEngineInput::IsDown('S', this) == true)
 	{
+		GedderingPlay = GameEngineSound::SoundPlay("Geddering.mp3");
+		GedderingPlay.SetVolume(0.3f);
 		ChangeState(OrderState::Geddering);
 		return;
 	}
 
 	if (GameEngineInput::IsDown(VK_END, this) == true)
 	{
+		BlossomPlay = GameEngineSound::SoundPlay("Blossom.mp3");
+		BlossomPlay.SetVolume(0.3f);
 		ChangeState(OrderState::Blossom);
 		return;
 	}

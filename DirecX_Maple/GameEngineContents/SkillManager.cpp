@@ -204,7 +204,8 @@ void SkillManager::HitPrintUpdate(float _Delta)
 		CurData->DelayTime -= _Delta;
 		if (0.0f >= CurData->DelayTime)
 		{
-			TestPlay = GameEngineSound::SoundPlay("Hit.mp3");
+			HitPlay = GameEngineSound::SoundPlay("Hit.mp3");
+			HitPlay.SetVolume(0.1f);
 			CurData->HitAnimations[CurData->CurIndex]->On();
 			CurData->CurIndex += 1;
 			CurData->DelayTime = Hit_Delay;

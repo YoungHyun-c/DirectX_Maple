@@ -562,6 +562,8 @@ void Player::FlyStart()
 	Transform.SetLocalPosition(PlayerPos);
 	//FlyTime = 0.0f;
 	Flying = true;
+
+	GameEngineSound::SoundPlay("2.mp3");
 }
 void Player::FlyUpdate(float _Delta)
 {

@@ -46,5 +46,7 @@ private:
 
 	std::shared_ptr<class GameEngineSpriteRenderer> InfiBack;
 	std::shared_ptr<class GameEngineSpriteRenderer> InfiFront;
+
+	GameEngineSoundPlayer InfinitePlay;
 };
 

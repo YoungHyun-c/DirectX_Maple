@@ -143,6 +143,16 @@ public:
 		MapBgm.Stop();
 	}
 
+	void CurBgmPause()
+	{
+		MapBgm.Pause();
+	}
+
+	void CurBgmResume()
+	{
+		MapBgm.Resume();
+	}
+
 protected:
 
 private:

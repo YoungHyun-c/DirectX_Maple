@@ -29,6 +29,7 @@ void SkillMaestro::Start()
 			{
 				MaestroHitCount = 10;
 				LimitTime = 0.372f;
+				GameEngineSound::SoundPlay("MaeStroStart.mp3");
 			}
 		);
 
@@ -42,6 +43,7 @@ void SkillMaestro::Start()
 			{
 				MaestroHitCount = 14;
 				LimitTime = 0.124f;
+				GameEngineSound::SoundPlay("MaestorEnd.mp3");
 			}
 		);
 

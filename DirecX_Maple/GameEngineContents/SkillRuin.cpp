@@ -78,6 +78,7 @@ void SkillRuin::UseSkill()
 	SkillRender2->ChangeAnimation("Ruin", true, 0);
 
 	AttackEvent();
+	GameEngineSound::SoundPlay("Ruin.mp3");
 }
 
 void SkillRuin::EndSkill()

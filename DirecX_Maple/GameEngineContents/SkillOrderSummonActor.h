@@ -103,5 +103,8 @@ protected:
 
 private:
 	std::shared_ptr<class DamageRenderer> NewDR = nullptr;
+
+	GameEngineSoundPlayer GedderingPlay;
+	GameEngineSoundPlayer BlossomPlay;
 };
 

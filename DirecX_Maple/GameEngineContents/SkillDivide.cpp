@@ -128,14 +128,17 @@ void SkillDivide::UseSkill()
 		case 1:
 			SkillName += std::to_string(1);
 			SkillHitName += std::to_string(1) + "_Hit";
+			GameEngineSound::SoundPlay("Divide3.mp3");
 			break;
 		case 2:
 			SkillName += std::to_string(2);
 			SkillHitName += std::to_string(2) + "_Hit";
+			GameEngineSound::SoundPlay("Divide4.mp3");
 			break;
 		case 3:
 			SkillName += std::to_string(3);
 			SkillHitName += std::to_string(3) + "_Hit";
+			GameEngineSound::SoundPlay("Divide5.mp3");
 			break;
 		}
 	}
@@ -149,6 +152,7 @@ void SkillDivide::UseSkill()
 			SkillNum = 7;
 			SkillName += std::to_string(7);
 			SkillHitName += std::to_string(7) + "_Hit";
+			GameEngineSound::SoundPlay("Divide6Special.mp3");
 		}
 		else
 		{
@@ -158,14 +162,17 @@ void SkillDivide::UseSkill()
 			case 4:
 				SkillName += std::to_string(4);
 				SkillHitName += std::to_string(4) + "_Hit";
+				GameEngineSound::SoundPlay("Divide5.mp3");
 				break;
 			case 5:
 				SkillName += std::to_string(5);
 				SkillHitName += std::to_string(5) + "_Hit";
+				GameEngineSound::SoundPlay("Divide1.mp3");
 				break;
 			case 6:
 				SkillName += std::to_string(6);
 				SkillHitName += std::to_string(6) + "_Hit";
+				GameEngineSound::SoundPlay("Divide2.mp3");
 				break;
 			}
 		}
