@@ -72,6 +72,13 @@ void Player::StandUpdate(float _Delta)
 		return;
 	}
 
+	if (GameEngineInput::IsDown(VK_F2, this))
+	{
+		SkillManager::PlayerSkillManager->UseSkill("Restore");
+		AlertTime = Alert_Time;
+		return;
+	}
+
 	if (true == GameEngineInput::IsPress(VK_LEFT, this)
 		|| true == GameEngineInput::IsPress(VK_RIGHT, this))
 	{

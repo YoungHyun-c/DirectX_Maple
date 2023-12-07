@@ -22,7 +22,7 @@ void SkillRuin::Start()
 		SkillRender2->SetFrameEvent("Ruin", 1, std::bind(&SkillRuin::RenderEvent, this, std::placeholders::_1));
 		SkillRender2->SetEndEvent("Ruin", [&](GameEngineRenderer* _Renderer)
 			{
-				SkillRender1->Off();
+				SkillRender2->Off();
 				EndSkill();
 			}
 		);

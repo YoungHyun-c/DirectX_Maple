@@ -180,9 +180,6 @@
     <ClCompile Include="SkillValue.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="SkillRuin.cpp">
-      <Filter>Object\Player\SKill</Filter>
-    </ClCompile>
     <ClCompile Include="InvinCibilityEffect.cpp">
       <Filter>Object\Player\Effect</Filter>
     </ClCompile>
@@ -239,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="BossFormerEffect.cpp">
       <Filter>Object\Boss\BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillRuin.cpp">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillRestore.cpp">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,9 +421,6 @@
     <ClInclude Include="SkillValue.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="SkillRuin.h">
-      <Filter>Object\Player\SKill</Filter>
-    </ClInclude>
     <ClInclude Include="InvinCibilityEffect.h">
       <Filter>Object\Player\Effect</Filter>
     </ClInclude>
@@ -477,6 +477,12 @@
     </ClInclude>
     <ClInclude Include="BossFormerEffect.h">
       <Filter>Object\Boss\BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillRuin.h">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillRestore.h">
+      <Filter>Object\Player\SKill\5thSkill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -599,6 +605,9 @@
     </Filter>
     <Filter Include="Object\Player\SKill\Summon\Shard">
       <UniqueIdentifier>{aa5c4bad-a7fe-4e1e-8c68-05b6fe7bb331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player\SKill\5thSkill">
+      <UniqueIdentifier>{4cd74b1e-591f-4d36-84df-2e8e4c0a4914}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
