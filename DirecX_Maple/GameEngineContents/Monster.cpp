@@ -26,8 +26,9 @@ void Monster::Start()
 		Renderer = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Monster);
 		Renderer->CreateAnimation("Mugong_Appear", "Mugong_Appear", 0.1f, -1, -1, false);
 		Renderer->CreateAnimation("Mugong_Disappear", "Mugong_Disappear", 0.1f, -1, -1, false);
-		Renderer->CreateAnimation("Mugong_Idle", "Mugong_Idle");
-		Renderer->ChangeAnimation("Mugong_Idle");
+
+
+		Renderer->ChangeAnimation("Mugong_Appear");
 		Renderer->Transform.SetLocalPosition({ 0.0f, 100.0f });
 		Renderer->SetPivotType(PivotType::Center);
 

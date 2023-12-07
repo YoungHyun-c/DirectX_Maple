@@ -48,17 +48,12 @@ void PracticeLevel::Update(float _Delta)
 		Map->SwitchRenderer();
 	}
 
-	if (GameEngineInput::IsDown('2', this))
-	{
-		GameEngineCore::ChangeLevel("BossEntranceLevel");
-	}
-
 
 	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	
 	if (false == Monster::Monsters->MonsterAppearValue())
 	{
-		MonsterObject->Transform.SetLocalPosition({ 500.0f, -800.0f });
+		MonsterObject->Transform.SetLocalPosition({ PlayerPos.X, -800.0f });
 	}
 
 }
@@ -127,54 +122,22 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == GameEngineSprite::Find("Skill"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("Skill");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	//if (nullptr == GameEngineSprite::Find("Skill"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("FolderTexture");
+	//	Dir.MoveChild("Skill");
+	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
+	//	for (size_t i = 0; i < Directorys.size(); i++)
+	//	{
+	//		GameEngineDirectory& Dir = Directorys[i];
+	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
+	//	}
+	//}
 
-	if (nullptr == GameEngineSprite::Find("UITexture"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("UITexture");
-		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-		for (size_t i = 0; i < Directorys.size(); i++)
-		{
-			GameEngineDirectory& Dir = Directorys[i];
-			GameEngineSprite::CreateFolder(Dir.GetStringPath());
-		}
-	}
-	if (nullptr == GameEngineSprite::Find("LWGaugeUI_background.Png"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("FolderTexture");
-		Dir.MoveChild("UITexture");
-
-		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-		for (size_t i = 0; i < Files.size(); i++)
-		{
-			GameEngineFile& File = Files[i];
-			GameEngineTexture::Load(File.GetStringPath());
-		}
-		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
-		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
-	}
 
 	if (Map == nullptr)
 	{

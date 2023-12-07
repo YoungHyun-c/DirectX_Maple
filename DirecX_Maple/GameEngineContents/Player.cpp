@@ -150,7 +150,7 @@ void Player::Start()
 void Player::Update(float _Delta)
 {
 	PlayerPos = Transform.GetWorldPosition();
-
+	InvicibleCheck();
 	InsideLockMap();
 	PlayerActor::Update(_Delta);
 
@@ -236,7 +236,6 @@ void Player::Update(float _Delta)
 	SkillUseCheck(_Delta);
 	PotionCheck(_Delta);
 
-	InvicibleCheck();
 	// 맞았을때
 	if (IsDamaged == true)
 	{

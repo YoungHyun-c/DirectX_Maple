@@ -157,6 +157,27 @@ void JinHillaBoss::Start()
 void JinHillaBoss::Update(float _Delta)
 {
 
+	if (DarkRenderer->GetColorData().MulColor.A >= 1)
+	{
+		GameEngineCore::ChangeLevel("9.BossRewardLevel");
+		return;
+	}
+
+	if (JinHillaCurHp <= 0)
+	{
+		GlobalValue::GetNeedGlobalValue()->SetBossDeath(true);
+		ChangeState(MonsterState::Death);
+
+		ChangeTime += _Delta;
+		if (ChangeTime >= ChangeLevelTime)
+		{
+			DarkRenderer->Transform.SetWorldPosition(0);
+			DarkRenderer->GetColorData().MulColor.A += _Delta * 0.5f;
+			DarkRenderer->On();
+		}
+		return;
+	}
+
 	if (SkillBind == true)
 	{
 		SkillBinding += _Delta;
@@ -182,27 +203,6 @@ void JinHillaBoss::Update(float _Delta)
 	MonsterFunction::Update(_Delta);
 	StateUpdate(_Delta);
 
-
-	if (DarkRenderer->GetColorData().MulColor.A >= 1)
-	{
-		GameEngineCore::ChangeLevel("9.BossRewardLevel");
-		return;
-	}
-
-	if (JinHillaCurHp <= 0)
-	{
-		GlobalValue::GetNeedGlobalValue()->SetBossDeath(true);
-		ChangeState(MonsterState::Death);
-
-		ChangeTime += _Delta;
-		if (ChangeTime >= ChangeLevelTime)
-		{
-			DarkRenderer->Transform.SetWorldPosition(0);
-			DarkRenderer->GetColorData().MulColor.A += _Delta * 0.5f;
-			DarkRenderer->On();
-		}
-		return;
-	}
 
 
 	if (GameEngineInput::IsDown('9', this))
