@@ -37,9 +37,9 @@ private:
 	float Speed = 100.0f;
 ////////////// 에테르 모을시 검
 	//std::shared_ptr<GameEngineSpriteRenderer> ;
-	std::shared_ptr<class AtereSword> Sword1;
-	std::shared_ptr<class AtereSword> Sword2;
-	std::shared_ptr<class AtereSword> Sword3;
+	std::shared_ptr<class AtereSword> Sword1 = nullptr;
+	std::shared_ptr<class AtereSword> Sword2 = nullptr;
+	std::shared_ptr<class AtereSword> Sword3 = nullptr;
 
 	std::shared_ptr<GameEngineUIRenderer> ExpBarUi;
 	std::shared_ptr<GameEngineUIRenderer> ExpBarMin;
@@ -90,5 +90,13 @@ private:
 ///// QuickSlot
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotback;
 	std::shared_ptr<GameEngineUIRenderer> QuickSlotCover;
+	void QuickSlotImage();
+	void QuickSlotUpdate();
+///// SkillIcon
+	std::shared_ptr<GameEngineUIRenderer> DivideIcon;
+	std::shared_ptr<GameEngineUIRenderer> MaestroIcon;
+	std::shared_ptr<GameEngineUIRenderer> OrderCountIcon;
+	int CurOrderCount = 0;
+	std::string OrderNum = "";
 };
 

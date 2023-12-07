@@ -29,6 +29,7 @@ public:
 protected:
 	void Start() override;
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
+	void LevelEnd(GameEngineLevel* _NextLevel) override;
 	void Update(float _Delta);
 
 	void AppearStart();

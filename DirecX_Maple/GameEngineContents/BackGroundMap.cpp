@@ -224,4 +224,6 @@ void BackGroundMap::LevelEnd(GameEngineLevel* _NextLevel)
 		RingPotal2->Death();
 		RingPotal2 = nullptr;
 	}
+
+	SkillValue::GetValue()->SetOrderCount(0);
 }

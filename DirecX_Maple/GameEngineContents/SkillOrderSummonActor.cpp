@@ -382,7 +382,7 @@ void SkillOrderSummonActor::DeathStart()
 	Order->ChangeAnimation("Death");
 	HitCollision->Off();
 	DetectCollision->Off();
-
+	SkillValue::GetValue()->SubOrderCount(1);
 }
 void SkillOrderSummonActor::DeathUpdate(float _Delta)
 {

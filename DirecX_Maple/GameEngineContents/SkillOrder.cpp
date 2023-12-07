@@ -111,13 +111,28 @@ void SkillOrder::OrderPosCal()
 		OrderCount++;
 
 		// 총 6개만 리스토어 이후엔 8개
+		//OrderCalCount++;
+		//if (OrderLimitCount < OrderCalCount)
+		//{
+		//	for (int j = OrderOffCount; j < OrderCal; j++)
+		//	{
+		//		AllOrderActor[j]->Off();
+		//		OrderCalCount--;
+		//	}
+		//	OrderCal += 2;
+		//	OrderOffCount += 2;
+		//}
+
+
 		OrderCalCount++;
-		if (OrderLimitCount < OrderCalCount)
+		SkillValue::GetValue()->AddOrderCount(1);
+		if (SkillValue::GetValue()->GetLimitOrderCount() < OrderCalCount)
 		{
 			for (int j = OrderOffCount; j < OrderCal; j++)
 			{
 				AllOrderActor[j]->Off();
 				OrderCalCount--;
+				//SkillValue::GetValue()->SubOrderCount(1);
 			}
 			OrderCal += 2;
 			OrderOffCount += 2;

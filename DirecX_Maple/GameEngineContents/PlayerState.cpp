@@ -638,6 +638,10 @@ void Player::MaestroStart()
 }
 void Player::MaestroUpdate(float _Delta)
 {
+	SetMoveVectorXForce(0.0f);
+	SetMoveVectorYForce(0.0f);
+	GravityReset();
+
 	Transform.SetLocalPosition(PlayerPos);
 	if (MaestroTime >= 8.0f)
 	{

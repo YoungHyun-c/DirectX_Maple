@@ -136,3 +136,7 @@ void AtereSword::LevelStart(GameEngineLevel* _PreveLevel)
 {
 
 }
+void AtereSword::LevelEnd(GameEngineLevel* _NextLevel)
+{
+	Death();
+}

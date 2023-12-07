@@ -138,6 +138,44 @@ public:
 	}
 
 
+	int GetCurOrderCount()
+	{
+		return OrderCount;
+	}
+
+	void AddOrderCount(int _Value)
+	{
+		OrderCount += _Value;
+
+		if (OrderLimitCount < OrderCount)
+		{
+			OrderCount = OrderLimitCount;
+		}
+	}
+	void SubOrderCount(int _Value)
+	{
+		OrderCount -= _Value;
+
+		if (0 > OrderCount)
+		{
+			OrderCount = 0;
+		}
+	}
+
+	void SetOrderCount(int _Value)
+	{
+		OrderCount = _Value;
+	}
+
+	int GetLimitOrderCount()
+	{
+		return OrderLimitCount;
+	}
+	void SetOrderLimitCount(int _Value)
+	{
+		OrderLimitCount = _Value;
+	}
+
 protected:
 
 private:
@@ -159,6 +197,9 @@ private:
 	int BlossomSkillDam = 650;
 	int BlossomFSillFinalDam = 220;
 
+
+	int OrderCount = 0;
+	int OrderLimitCount = 6;
 
 };
 

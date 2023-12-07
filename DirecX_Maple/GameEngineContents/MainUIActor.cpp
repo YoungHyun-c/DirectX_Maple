@@ -23,6 +23,7 @@ void MainUIActor::LevelStart(GameEngineLevel* _PrevLevel)
 	MainHpBar->SetImageScale({ (CurHpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxHp())) * 172.0f, 12.0f });
 	MainMpBar->SetImageScale({ (CurMpScale / static_cast<float>(PlayerValue::GetValue()->GetMaxMp())) * 172.0f, 12.0f });
 	AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f, 27.0f });
+	SkillValue::GetValue()->SetOrderCount(0);
 }
 
 void MainUIActor::Start()
@@ -79,8 +80,6 @@ void MainUIActor::Start()
 		GameEngineSprite::CreateSingle("Lv_9.Png");
 		GameEngineSprite::CreateSingle("Lv.Png");
 
-		GameEngineSprite::CreateSingle("QuickSlotbackgrnd.Png");
-		GameEngineSprite::CreateSingle("QuickSlotlayercover.Png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("LevelUpMsgback"))
@@ -132,10 +131,12 @@ void MainUIActor::Start()
 		AtereAnime->ChangeAnimation("AtereAnime_Back");
 		AtereAnime->AutoSpriteSizeOn();
 		AtereAnime->Transform.SetLocalPosition({ 602.0f, 141.0f });
-	
+	}
+
+	if (Sword1 == nullptr)
+	{
 		Sword1 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
 		Sword1->Transform.SetLocalPosition({ 560.0f, 155.0f });
-
 		Sword2 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
 		Sword2->Transform.SetLocalPosition({ 603.0f, 165.0f });
 		Sword3 = GetLevel()->CreateActor<AtereSword>(ContentsObjectType::UI);
@@ -276,22 +277,75 @@ void MainUIActor::Start()
 	}
 
 
-	// ½ºÅ³ Äü½½·Ô
+	// Äü½½·Ô + ½ºÅ³ ¾ÆÀÌÄÜ
+	if (nullptr == GameEngineSprite::Find("QuickSlotTest.Png"))
 	{
-		QuickSlotback = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		QuickSlotback->SetSprite("QuickSlotbackgrnd.Png");
-		QuickSlotback->AutoSpriteSizeOn();
-		QuickSlotback->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
 
-		QuickSlotCover = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
-		QuickSlotCover->SetSprite("QuickSlotlayercover.Png");
-		QuickSlotCover->AutoSpriteSizeOn();
-		QuickSlotCover->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+
+		GameEngineSprite::CreateSingle("QuickBack.Png");
+
+		GameEngineSprite::CreateSingle("Divide5SkillIcon.Png");
+		GameEngineSprite::CreateSingle("Divide6Skill.Png");
+		GameEngineSprite::CreateSingle("Divide6Special.Png");
+		GameEngineSprite::CreateSingle("MaestroIcon.Png");
+
+		GameEngineSprite::CreateSingle("OrderNum0.Png");
+		GameEngineSprite::CreateSingle("OrderNum1.Png");
+		GameEngineSprite::CreateSingle("OrderNum2.Png");
+		GameEngineSprite::CreateSingle("OrderNum3.Png");
+		GameEngineSprite::CreateSingle("OrderNum4.Png");
+		GameEngineSprite::CreateSingle("OrderNum5.Png");
+		GameEngineSprite::CreateSingle("OrderNum6.Png");
+		GameEngineSprite::CreateSingle("OrderNum7.Png");
+		GameEngineSprite::CreateSingle("OrderNum8.Png");
 	}
+
+	// ½ºÅ³ Äü½½·Ô
+	QuickSlotImage();
 
 	CurHpScale = static_cast<float>(PlayerValue::GetValue()->GetHp());
 	CurMpScale = static_cast<float>(PlayerValue::GetValue()->GetMp());
 	GameEngineInput::AddInputObject(this);
+}
+
+void MainUIActor::QuickSlotImage()
+{
+
+	{
+	
+		DivideIcon = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		DivideIcon->SetSprite("Divide5SkillIcon.Png");
+		DivideIcon->AutoSpriteSizeOn();
+		DivideIcon->Transform.SetLocalPosition({ 138.0f, -GlobalValue::WinScale.hY() + 66.0f });
+	
+		MaestroIcon = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		MaestroIcon->SetSprite("MaestroIcon.Png");
+		MaestroIcon->AutoSpriteSizeOn();
+		MaestroIcon->Transform.SetLocalPosition({ 418.0f, -GlobalValue::WinScale.hY() + 32.0f });
+		MaestroIcon->Off();
+
+
+		QuickSlotCover = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		QuickSlotCover->SetSprite("QuickBack.Png");
+		QuickSlotCover->AutoSpriteSizeOn();
+		QuickSlotCover->Transform.SetLocalPosition({ 400.0f, -GlobalValue::WinScale.hY() + 50.0f });
+
+		OrderCountIcon = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
+		OrderCountIcon->SetSprite("OrderNum0.Png");
+		OrderCountIcon->AutoSpriteSizeOn();
+		OrderCountIcon->Transform.SetLocalPosition({ 282.0f, -GlobalValue::WinScale.hY() + 27.0f });
+	}
 }
 
 void MainUIActor::Update(float _Delta)
@@ -306,6 +360,7 @@ void MainUIActor::Update(float _Delta)
 
 
 	AtereUpdate(_Delta);
+	QuickSlotUpdate();
 
 	if (GameEngineInput::IsDown('=', this))
 	{
@@ -342,6 +397,32 @@ void MainUIActor::Update(float _Delta)
 	if (CurMpCal != PlayerValue::GetValue()->GetMp())
 	{
 		PlayerMpPerUiRenderer();
+	}
+}
+
+void MainUIActor::QuickSlotUpdate()
+{
+	if (PlayerValue::GetValue()->GetClass() == "Maestro")
+	{
+		MaestroIcon->On();
+		DivideIcon->SetSprite("Divide6Skill.Png");
+
+		if (PlayerValue::GetValue()->GetDivide6Use() == false)
+		{
+			DivideIcon->SetSprite("Divide6Special.Png");
+		}
+	}
+
+	int OrderCount = SkillValue::GetValue()->GetCurOrderCount();
+	if (CurOrderCount != OrderCount)
+	{
+		if (CurOrderCount <= 0)
+		{
+			CurOrderCount = 0;
+		}
+		CurOrderCount = OrderCount;
+		OrderNum = std::to_string(CurOrderCount);
+		OrderCountIcon->SetSprite("OrderNum" + OrderNum + ".Png");
 	}
 }
 
@@ -399,7 +480,7 @@ void MainUIActor::AtereUpdate(float _Delta)
 	if (Atere < CurGauge)
 	{
 		CurGauge -= ScaleSpeed * _Delta;
-		if (Atere > CurHpScale)
+		if (Atere > CurGauge)
 		{
 			CurGauge = Atere;
 		}
@@ -413,20 +494,6 @@ void MainUIActor::AtereUpdate(float _Delta)
 			CurGauge = Atere;
 		}
 	}
-
-	/*if (GameEngineInput::IsPress('J', this))
-	{
-		CurGauge -= Speed * _Delta;
-		AtereBar->SetImageScale({ CurGauge * 0.01f * 97.0f, 27.0f });
-	}
-
-	if (GameEngineInput::IsPress('K', this))
-	{
-		CurGauge += Speed * _Delta;
-		AtereBar->SetImageScale({ CurGauge * 0.01f * 97.0f , 27.0f });
-	}*/
-
-	//AtereBar->SetImageScale({ CurGauge / 100.0f * 97.0f  , 27.0f});
 }
 
 void MainUIActor::HpUpdate(float _Delta)
