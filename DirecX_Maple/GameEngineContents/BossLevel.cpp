@@ -406,7 +406,7 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Die.mp3"));
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
-	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 25);
+	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 5);
 
 	if (nullptr == UIObject)
 	{

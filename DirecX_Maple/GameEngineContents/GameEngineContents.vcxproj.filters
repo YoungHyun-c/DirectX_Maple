@@ -133,10 +133,10 @@
       <Filter>Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="GrandisGoddess.cpp">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="ChatManager.cpp">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="SolErdaGauge.cpp">
       <Filter>Object\Player\Effect</Filter>
@@ -145,7 +145,7 @@
       <Filter>Object\Player\Effect</Filter>
     </ClCompile>
     <ClCompile Include="QuestIcon.cpp">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClCompile>
     <ClCompile Include="BossSkillEffect.cpp">
       <Filter>Object\Boss\BossSKill</Filter>
@@ -254,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="SkillInfiniteSummonActor.cpp">
       <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
+    </ClCompile>
+    <ClCompile Include="Hienz.cpp">
+      <Filter>Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,10 +392,10 @@
       <Filter>Object\Monster</Filter>
     </ClInclude>
     <ClInclude Include="GrandisGoddess.h">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClInclude>
     <ClInclude Include="ChatManager.h">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClInclude>
     <ClInclude Include="SolErdaGauge.h">
       <Filter>Object\Player\Effect</Filter>
@@ -401,7 +404,7 @@
       <Filter>Object\Player\Effect</Filter>
     </ClInclude>
     <ClInclude Include="QuestIcon.h">
-      <Filter>Object\Boss\UI\NPC</Filter>
+      <Filter>Object\NPC</Filter>
     </ClInclude>
     <ClInclude Include="BossSkillManager.h">
       <Filter>Object\Boss\BossSKill</Filter>
@@ -508,6 +511,9 @@
     <ClInclude Include="SkillInfiniteSummonActor.h">
       <Filter>Object\Player\SKill\5thSkill\InfiOrder</Filter>
     </ClInclude>
+    <ClInclude Include="Hienz.h">
+      <Filter>Object\NPC</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Level">
@@ -594,9 +600,6 @@
     <Filter Include="Render\PostEffect">
       <UniqueIdentifier>{47ae751f-602a-4fbf-a7c1-121ac3a5e64e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object\Boss\UI\NPC">
-      <UniqueIdentifier>{e414775d-1a1f-4b2b-a709-7d82dbc0df43}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Player\Effect">
       <UniqueIdentifier>{9a3b27ea-f115-4c05-8290-40f9c214b4e5}</UniqueIdentifier>
     </Filter>
@@ -635,6 +638,9 @@
     </Filter>
     <Filter Include="Object\Player\SKill\5thSkill\InfiOrder">
       <UniqueIdentifier>{4dda645c-f43f-479d-a2e0-1bcfe0035d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\NPC">
+      <UniqueIdentifier>{e414775d-1a1f-4b2b-a709-7d82dbc0df43}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

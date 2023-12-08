@@ -237,6 +237,10 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Storm3.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Storm4.mp3"));
 
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("LevelUp.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("SolErdaMax.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("SolErdaParticleCreate.mp3"));
+
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("5thAdelesOathInfinite.mp3"));
 	}
 

@@ -111,6 +111,7 @@ void DropItem::MoveDropItem(float _Delta)
 					{
 						_this->GetActor()->Death();
 						GlobalValue::GetNeedGlobalValue()->AddDropItemCount(0.5);
+						GameEngineSound::SoundPlay("SolErdaParticleCreate.mp3");
 					}
 				};
 			DropItemCollision->CollisionEvent(ContentsCollisionType::Player, Droptrue);

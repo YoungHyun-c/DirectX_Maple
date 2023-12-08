@@ -24,7 +24,7 @@ void SkillMaestro::Start()
 		SkillRender1->CreateAnimation("MaestroHit", "Job6_Hit", 0.023f);
 		SkillRender1->ChangeAnimation("Maestro");
 
-		SkillRender1->SetFrameEvent("Maestro", 1, std::bind(&SkillMaestro::RenderEvent, this, std::placeholders::_1));
+		SkillRender1->SetFrameEvent("Maestro", 0, std::bind(&SkillMaestro::RenderEvent, this, std::placeholders::_1));
 		SkillRender1->SetStartEvent("Maestro", [&](GameEngineRenderer* _Renderer)
 			{
 				MaestroHitCount = 10;

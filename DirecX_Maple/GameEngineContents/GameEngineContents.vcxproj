@@ -148,6 +148,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="Hienz.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HuntLevel.cpp">
       <SubType>
       </SubType>
@@ -479,6 +483,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="HandAttack.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Hienz.h">
       <SubType>
       </SubType>
     </ClInclude>

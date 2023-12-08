@@ -10,6 +10,7 @@
 #include "Mouse.h"
 
 #include "AtereEffect.h"
+#include "Hienz.h"
 
 LiberationLevel::LiberationLevel()
 {
@@ -54,6 +55,7 @@ void LiberationLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 		GameEngineSprite::CreateSingle("LiberationMap.png");
 		GameEngineSprite::CreateSingle("LiberationDebugMap.png");
+		GameEngineSprite::CreateSingle("stageClear.png");
 	}
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
 	{
@@ -126,6 +128,9 @@ void LiberationLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Pain And Sorrow.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("QueenOfElf.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("QuestClear.mp3"));
+
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
 	GlobalValue::GetNeedGlobalValue()->SetBgm("Pain And Sorrow.mp3", 2);
@@ -142,6 +147,7 @@ void LiberationLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		PlayerObject->SetDebugMap("LiberationDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 1080.0f, -820.0f, static_cast<float>(DeepBufferType::Player) });
 	}
+	
 	if (nullptr == PlayerSkill)
 	{
 		PlayerSkill = CreateActor<AdeleSkill>();
@@ -151,6 +157,11 @@ void LiberationLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Skill = CreateActor<SkillManager>();
 	}
 
+	if (nullptr == Npc)
+	{
+		Npc = CreateActor<Hienz>();
+		Npc->Transform.SetWorldPosition({ 1580.0f, -850.0f });
+	}
 
 	if (nullptr == UIObject)
 	{

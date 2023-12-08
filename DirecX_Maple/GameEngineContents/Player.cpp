@@ -699,6 +699,7 @@ void Player::Level_Up()
 		return;
 	}
 
+	GameEngineSound::SoundPlay("LevelUp.mp3");
 	LevelUp = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::BackSkill);
 	LevelUp->CreateAnimation("LevelUp", "LevelUp", 0.1f, false);
 	LevelUp->Transform.SetLocalPosition({0.0f, 150.0f });

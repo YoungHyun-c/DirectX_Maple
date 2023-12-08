@@ -20,7 +20,7 @@ void SkillInfinite::Start()
 	{
 		{
 			InfiFront = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::FrontSkill);
-			InfiFront->CreateAnimation("Infinite_Start_Forward", "Infinite_Start_Forward", 0.03f);
+			InfiFront->CreateAnimation("Infinite_Start_Forward", "Infinite_Start_Forward", 0.05f);
 			InfiFront->CreateAnimation("Infinite_Loop_Forward", "Infinite_Loop_Forward", 0.1f);
 			InfiFront->CreateAnimation("Infinite_End_Forward", "Infinite_End_Forward", 0.1f);
 
@@ -108,6 +108,7 @@ void SkillInfinite::EndSkill()
 
 	InfiBack->ChangeAnimation("Infinite_End_Back");
 	InfiFront->ChangeAnimation("Infinite_End_Forward");
+
 	GlobalValue::GetNeedGlobalValue()->CurBgmResume();
 }
 
