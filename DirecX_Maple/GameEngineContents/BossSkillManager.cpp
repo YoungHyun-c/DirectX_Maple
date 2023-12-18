@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "BossSkillManager.h"
 #include "BossSkillEffect.h"
+#include "BossSkillBall.h"
 #include "JInHillaBoss.h"
 
 BossSkillManager* BossSkillManager::BossSkillEffectManager = nullptr;
@@ -25,6 +26,7 @@ void BossSkillManager::Start()
 	{
 		SkillState['G'];
 		SkillState['P'];
+		SkillState['B'];
 	}
 
 	{
@@ -279,6 +281,72 @@ void BossSkillManager::Start()
 
 		SkillState['P'] = Skill2;
 	}
+
+
+	{
+		Skill Skill3;
+		Skill3.IsControll = false;
+
+		for (int i = 0; i < 1; i++)
+		{
+			Skill3.StateTest.CreateState(i, {
+				.Start =
+				[=](class GameEngineState* _Parent)
+				{
+					if (CurSkill->SkillUseDir == ActorDir::Right)
+					{
+						{
+							std::shared_ptr<BossSkillBall> Effect = this->GetLevel()->CreateActor<BossSkillBall>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f, 30.0f, 0.0f });
+							Effect->SetDir(ActorDir::Right);
+						}
+
+						{
+							std::shared_ptr<BossSkillBall> Effect = this->GetLevel()->CreateActor<BossSkillBall>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -200.0f , 30.0f, 0.0f});
+							Effect->SetDir(ActorDir::Left);
+						}
+					}
+
+
+					if (CurSkill->SkillUseDir == ActorDir::Left)
+					{
+						{
+							std::shared_ptr<BossSkillBall> Effect = this->GetLevel()->CreateActor<BossSkillBall>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ 200.0f , 30.0f, 0.0f });
+							Effect->SetDir(ActorDir::Right);
+						}
+
+						{
+							std::shared_ptr<BossSkillBall> Effect = this->GetLevel()->CreateActor<BossSkillBall>();
+							Effect->Transform.SetWorldPosition(CurSkill->SkillUsePos + float4{ -200.0f, 30.0f, 0.0f });
+							Effect->SetDir(ActorDir::Left);
+						}
+					}
+
+				},
+				.Stay =
+				[=](float DeltaTime, class GameEngineState* _Parent)
+				{
+					if (0.15f <= _Parent->GetStateTime())
+					{
+						_Parent->ChangeState(i + 1);
+					}
+				}
+				});
+		}
+
+		Skill3.StateTest.CreateState(1, {
+			.Start =
+			[=](class GameEngineState* _Parent)
+			{
+					CurSkill = nullptr;
+					BallAttack = false;
+			} });
+
+		SkillState['B'] = Skill3;
+	}
+
 }
 
 void BossSkillManager::Update(float _Delta)
@@ -309,9 +377,21 @@ bool BossSkillManager::SkillUseCheck()
 			return true;
 		}
 
-		if (PurpleAttack = true && pair.first == 'P')
+		if (PurpleAttack == true && pair.first == 'P')
 		{
 			Skill& UseSkill = pair.second;
+
+			CurSkill = &UseSkill;
+			CurSkill->SkillUsePos = JinHillaBoss::GetMainBoss()->Transform.GetWorldPosition();
+			CurSkill->SkillUseDir = JinHillaBoss::GetMainBoss()->GetDir();
+			UseSkill.StateTest.ChangeState(0);
+			return true;
+		}
+
+		if (BallAttack == true && pair.first == 'B')
+		{
+			Skill& UseSkill = pair.second;
+
 			CurSkill = &UseSkill;
 			CurSkill->SkillUsePos = JinHillaBoss::GetMainBoss()->Transform.GetWorldPosition();
 			CurSkill->SkillUseDir = JinHillaBoss::GetMainBoss()->GetDir();
@@ -336,6 +416,13 @@ void BossSkillManager::SkillUseKey(const char& _Value)
 	{
 		SkillState['P'];
 		PurpleAttack = true;
+		SkillUseCheck();
+	}
+
+	if (_Value == 'B')
+	{
+		SkillState['B'];
+		BallAttack = true;
 		SkillUseCheck();
 	}
 }

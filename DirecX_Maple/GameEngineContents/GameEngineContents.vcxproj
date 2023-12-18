@@ -72,6 +72,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="BossSkillBall.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="BossSkillEffect.cpp">
       <SubType>
       </SubType>
@@ -406,6 +410,10 @@
     </ClInclude>
     <ClInclude Include="BossLevelUi.h" />
     <ClInclude Include="BossRewardLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="BossSkillBall.h">
       <SubType>
       </SubType>
     </ClInclude>

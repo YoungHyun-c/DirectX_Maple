@@ -40,8 +40,6 @@ private:
 		int TargetCollisionOrder;
 		GameEngineState StateTest;
 
-		// void CoolUpdate();
-
 		void Update(float _Delta)
 		{
 			StateTest.Update(_Delta);
@@ -56,5 +54,7 @@ private:
 
 	bool GreenAttack = false;
 	bool PurpleAttack = false;
+	
+	bool BallAttack = false;
 };
 

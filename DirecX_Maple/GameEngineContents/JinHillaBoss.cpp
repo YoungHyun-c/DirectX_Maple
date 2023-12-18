@@ -411,13 +411,14 @@ void JinHillaBoss::SkillAnimation()
 		);
 
 		// Attack5
-		MonsterRenderer->SetFrameEvent("Attack5", 19, [&](GameEngineSpriteRenderer*)
+		MonsterRenderer->SetFrameEvent("Attack5", 18, [&](GameEngineSpriteRenderer*)
 			{
+				BossSkillManager::BossSkillEffectManager->SkillUseKey('B');
 				JinHillSideSlapSkillCol->On();
 			}
 		);
 
-		MonsterRenderer->SetFrameEvent("Attack5", 24, [&](GameEngineSpriteRenderer*)
+		MonsterRenderer->SetFrameEvent("Attack5", 23, [&](GameEngineSpriteRenderer*)
 			{
 				JinHillSideSlapSkillCol->Off();
 			}

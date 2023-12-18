@@ -258,6 +258,9 @@
     <ClCompile Include="Hienz.cpp">
       <Filter>Object\NPC</Filter>
     </ClCompile>
+    <ClCompile Include="BossSkillBall.cpp">
+      <Filter>Object\Boss\BossSKill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PreCompile.h" />
@@ -513,6 +516,9 @@
     </ClInclude>
     <ClInclude Include="Hienz.h">
       <Filter>Object\NPC</Filter>
+    </ClInclude>
+    <ClInclude Include="BossSkillBall.h">
+      <Filter>Object\Boss\BossSKill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
