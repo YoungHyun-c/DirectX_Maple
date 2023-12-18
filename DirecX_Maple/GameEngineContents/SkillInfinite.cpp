@@ -137,11 +137,17 @@ void SkillInfinite::InfinitePosCal()
 	{
 		InfiRandPos.SetSeed(time(nullptr));
 		float RandPos = InfiRand;
+		again:;
 		int Rand = rand() % 3 + 1;
-		InfiRand = static_cast<float>(InfiRandPos.RandomInt(30 , Rand + 50));
+		InfiRand = static_cast<float>(InfiRandPos.RandomInt(10 , Rand * 30));
+		InfiYRand = static_cast<float>(InfiRandPos.RandomInt(-10, Rand * 50));
+		if (InfiRand == RandPos)
+		{
+			goto again;
+		}
 
 		AllInfiniteActor[i]->Transform.SetWorldPosition({ CurPlayerPos.X -400.0f + ((i % 18) * InfiRand),
-			CurPlayerPos.Y + 5.0f * InfiRand });
+			CurPlayerPos.Y + 3.0f * InfiYRand });
 
 		AllInfiniteActor[i]->On();
 	}

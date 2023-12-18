@@ -20,18 +20,22 @@ void SkillMaestro::Start()
 {
 	SkillFunction::Start();
 	{
-		SkillRender1->CreateAnimation("Maestro", "Job6_Start", 0.062f, -1, -1, true);
+		SkillRender1->CreateAnimation("Maestro", "Job6_Start", 0.062f);
 		SkillRender1->CreateAnimation("MaestroHit", "Job6_Hit", 0.023f);
-		SkillRender1->ChangeAnimation("Maestro");
 
-		SkillRender1->SetFrameEvent("Maestro", 0, std::bind(&SkillMaestro::RenderEvent, this, std::placeholders::_1));
-		SkillRender1->SetStartEvent("Maestro", [&](GameEngineRenderer* _Renderer)
+		SkillRender1->SetFrameEvent("Maestro", 1, std::bind(&SkillMaestro::RenderEvent, this, std::placeholders::_1));
+		SkillRender1->SetEndEvent("Maestro", [&](GameEngineRenderer* _Renderer)
 			{
-				MaestroHitCount = 10;
-				LimitTime = 0.372f;
-				GameEngineSound::SoundPlay("MaeStroStart.mp3");
+				SkillRender1->Off();
+				EndSkill();
 			}
 		);
+		//SkillRender1->SetStartEvent("Maestro", [&](GameEngineRenderer* _Renderer)
+		//	{
+		//		MaestroHitCount = 10;
+		//		LimitTime = 0.372f;
+		//	}
+		//);
 
 		SkillRender1->SetFrameEvent("Maestro", 36, [&](GameEngineRenderer* _Renderer)
 			{
@@ -47,24 +51,18 @@ void SkillMaestro::Start()
 			}
 		);
 
-		SkillRender1->SetEndEvent("Maestro", [&](GameEngineRenderer* _Renderer)
-			{
-				SkillRender1->Off();
-				EndSkill();
-			}
-		);
 
 	}
 	
 	SkillCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 	SkillCollision->SetCollisionType(ColType::AABBBOX2D);
-	SkillCollision->Transform.SetLocalScale({ 1500.0f, 1500.0f });
+	SkillCollision->Transform.SetLocalScale({ 1600.0f, 1600.0f });
 
 
 	{
 		AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 		AttackCol->SetCollisionType(ColType::AABBBOX2D);
-		AttackCol->Transform.SetLocalScale({ 1500.0f, 1500.0f });
+		AttackCol->Transform.SetLocalScale({ 1600.0f, 1600.0f });
 	}
 }
 
@@ -72,30 +70,30 @@ void SkillMaestro::UseSkill()
 {
 	SkillFunction::UseSkill();
 	UseFirst = true;
-	//On();
-
-	SkillRender1->On();
 
 	SkillRender1->ChangeAnimation("Maestro");
+	SkillRender1->On();
+	AttackCol->On();
+	SkillCollision->On();
+
+	MaestroHitCount = 10;
+	LimitTime = 0.372f;
 
 	AttackEvent();
+	GameEngineSound::SoundPlay("MaeStroStart.mp3");
 }
 
 void SkillMaestro::EndSkill()
 {
 	SkillFunction::EndSkill();
-	Off();
 	SkillRender1->Off();
+	AttackCol->Off();
+	SkillCollision->Off();
 }
 
 void SkillMaestro::Update(float _Delta)
 {
 	Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
-	//Transform.SetLocalPosition(PlayerPos);
-	if (true == UseFirst)
-	{
-		//SkillCollision->Collision(ContentsCollisionType::Monster, std::bind(&SkillRuin::CollisionEvent, this, std::placeholders::_1));
-	}
 
 	// 시간에 따라 데미지
 	CurTime += _Delta;

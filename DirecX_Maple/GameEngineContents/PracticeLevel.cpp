@@ -188,8 +188,6 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
 	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3", 10);
-	//MapBgm = GameEngineSound::SoundPlay("MureungSchool1.mp3", 3);
-
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
 	GlobalValue::MapScale = Tex->GetScale();

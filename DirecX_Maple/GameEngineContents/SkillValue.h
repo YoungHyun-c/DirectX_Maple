@@ -176,17 +176,44 @@ public:
 		OrderLimitCount = _Value;
 	}
 
+	void SetDivideLevel(int _Value)
+	{
+		DivideLevel = _Value;
+
+		DivideSKillDam = 402 + (DivideLevel * 7);
+	}
+
+	int GetDivideLevel()
+	{
+		return DivideLevel;
+	}
+
+	void SetMaestroLevel(int _Value)
+	{
+		MaestroLevel = _Value;
+
+		MaestroSkillDam = 3300 + (MaestroLevel * 110);
+	}
+
+	int GetMaestroLevel()
+	{
+		return MaestroLevel;
+	}
+
 protected:
 
 private:
+	int DivideLevel = 1;
 	int DivideSKillDam = 402;
 	int DivideFinalDam = 220;
 
+	int MaestroLevel = 1;
+	int MaestroSkillDam = 3300; 
+	//int MaestroSkillDam = 6600; // 마스터
+	int MaestroSkillFinalDam = 100;
+
 	int RuinSkillDam = 550;
 	int RuinSkillFinalDam = 160;
-
-	int MaestroSkillDam = 6600; // 마스터
-	int MaestroSkillFinalDam = 100;
 
 	int ShardSkillDam = 720; // 마스터
 	int ShardSkillFinalDam = 220;

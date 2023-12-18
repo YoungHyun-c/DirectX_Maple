@@ -35,6 +35,11 @@ void BossFormerEffect::Start()
 	FormBindEffect->CreateAnimation("FormerBindStart", "FormerBindStart", 0.1f, -1, -1, true);
 	FormBindEffect->CreateAnimation("FormerBindLoop", "FormerBindLoop", 0.1f, -1, -1, true);
 	FormBindEffect->CreateAnimation("FormerBindEnd", "FormerBindEnd", 0.1f, -1, -1, true);
+	FormBindEffect->SetStartEvent("FormerBindStart", [&](GameEngineSpriteRenderer*)
+		{
+			FormBindEffect->On();
+		});
+
 	FormBindEffect->SetEndEvent("FormerBindStart", [&](GameEngineSpriteRenderer*)
 		{
 			FormBindEffect->ChangeAnimation("FormerBindLoop");

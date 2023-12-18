@@ -40,6 +40,7 @@ protected:
 	float4 CurInfiPos = float4::ZERO;
 	GameEngineRandom InfiRandPos;
 	float InfiRand = 0.0f;
+	float InfiYRand = 0.0f;
 
 private:
 	std::vector<std::shared_ptr<class SkillInfiniteActor>> AllInfiniteActor;

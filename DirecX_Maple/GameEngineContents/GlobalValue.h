@@ -153,6 +153,21 @@ public:
 		MapBgm.Resume();
 	}
 
+	unsigned long long GetSumDamage()
+	{
+		return AllSumDamage;
+	}
+
+	void AddSumDamage(unsigned long long _Value)
+	{
+		AllSumDamage += _Value;
+	}
+
+	void ClearDamage()
+	{
+		AllSumDamage = 0;
+	}
+
 protected:
 
 private:
@@ -173,6 +188,7 @@ private:
 
 	bool BossDeath = false;
 
+	unsigned long long AllSumDamage = 0;
 
 // BGM
 	GameEngineSoundPlayer MapBgm;

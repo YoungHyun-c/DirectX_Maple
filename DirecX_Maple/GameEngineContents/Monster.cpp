@@ -38,8 +38,8 @@ void Monster::Start()
 
 		{
 			MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
-			MonsterCollision->Transform.SetLocalPosition({ -30.0f, 100.0f });
-			MonsterCollision->Transform.SetLocalScale({ 300.0f, 330.0f });
+			MonsterCollision->Transform.SetLocalPosition({ -30.0f, 50.0f });
+			MonsterCollision->Transform.SetLocalScale({ 200.0f, 230.0f });
 			MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
 			MonsterCollision->SetName(std::string("Mugong"));
 			MonsterCollision->Off();
@@ -118,7 +118,7 @@ void Monster::Update(float _Delta)
 void Monster::LevelStart(GameEngineLevel* _PrevLevel)
 {
 	//Monsters = this;
-	MonsterHp = 100000000000;
+	//MonsterHp = 100000000000;
 }
 
 void Monster::LevelEnd(GameEngineLevel* _NextLevel)

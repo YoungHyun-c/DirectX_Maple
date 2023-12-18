@@ -141,6 +141,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 			DefenseCal = (((100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f)) * (1- (100 - SkillOption) / 100.0f))) / 100.0f);
 			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * AllDamagePer *
 				DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);
+			GlobalValue::GetNeedGlobalValue()->AddSumDamage(OneLineDamage);
 		}
 
 		if (OneLineDamage >= MaxDamage)
@@ -148,11 +149,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 			OneLineDamage = MaxDamage;
 		}
 
-		SumDamage += OneLineDamage;
-		/*std::string CurDamage = "OneLineDamage : ";
-		CurDamage += std::to_string(static_cast<unsigned long long>(OneLineDamage));
-		CurDamage += "\n";
-		OutputDebugStringA(CurDamage.c_str());*/
+		//SumDamage += OneLineDamage;
 
 		// 몬스터에게 데미지
 		if (_Object->GetName() == "CravingDiebody")

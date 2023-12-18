@@ -21,6 +21,8 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	AllAttack = PlayerStat->GetValue()->GetPlayerAllAttack();
 	AttackPer = PlayerStat->GetValue()->GetPlayerAttackPer();
 
+	DivideLevel = SkillValue::GetValue()->GetDivideLevel();
+	MaestroLevel = SkillValue::GetValue()->GetMaestroLevel();
 	MugongDefense = MugongStat->GetNeedGlobalValue()->GetMugongDefenseValue();
 
 	if (ImGui::InputInt("Str", &Str))
@@ -88,6 +90,31 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		PlayerStat->GetValue()->SetPlayerAttackPer(AttackPer);
 	}
 
+	if (ImGui::InputInt("6DivideSkillLevel", &DivideLevel))
+	{
+		if (0 >= DivideLevel)
+		{
+			DivideLevel = 1;
+		}
+		if (DivideLevel >= 30)
+		{
+			DivideLevel = 30;
+		}
+		SkillValue::GetValue()->SetDivideLevel(DivideLevel);
+	}
+	if (ImGui::InputInt("MaestroSkillLevel", &MaestroLevel))
+	{
+		if (0 >= MaestroLevel)
+		{
+			MaestroLevel = 1;
+		}
+		if (MaestroLevel >= 30)
+		{
+			MaestroLevel = 30;
+		}
+		SkillValue::GetValue()->SetMaestroLevel(MaestroLevel);
+	}
+
 	if (ImGui::InputInt("MugongDefense", &MugongDefense))
 	{
 		if (0 >= MugongDefense)
@@ -97,38 +124,45 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		MugongStat->GetNeedGlobalValue()->SetMugongDefenseValue(MugongDefense);
 	}
 
+	ImGui::Text("SumAllDamage : %llu", GlobalValue::GetNeedGlobalValue()->GetSumDamage());
+	
+	if (ImGui::Button("Damage Clear"))
+	{
+		GlobalValue::GetNeedGlobalValue()->ClearDamage();
+	}
+
 	if (ImGui::Button("Collision OnOff"))
 	{
 		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
 	}
 
-	if (ImGui::Button("Save"))
-	{
-		GameEngineDirectory Dir;
-		Dir.MoveParentToExistsChild("ContentsResources");
-		Dir.MoveChild("ContentsResources");
-		Dir.MoveChild("PlayerData");
+	//if (ImGui::Button("Save"))
+	//{
+	//	GameEngineDirectory Dir;
+	//	Dir.MoveParentToExistsChild("ContentsResources");
+	//	Dir.MoveChild("ContentsResources");
+	//	Dir.MoveChild("PlayerData");
 
-		OPENFILENAMEA OFN;
-		char filePathName[100] = "";
-		char lpstrFile[100] = "";
-		static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
+	//	OPENFILENAMEA OFN;
+	//	char filePathName[100] = "";
+	//	char lpstrFile[100] = "";
+	//	static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
 
-		std::string Path = Dir.GetStringPath();
+	//	std::string Path = Dir.GetStringPath();
 
-		memset(&OFN, 0, sizeof(OPENFILENAME));
-		OFN.lStructSize = sizeof(OPENFILENAME);
-		OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
-		OFN.lpstrFilter = filter;
-		OFN.lpstrFile = lpstrFile;
-		OFN.nMaxFile = 100;
-		OFN.lpstrDefExt = "GameData";
-		OFN.lpstrInitialDir = Path.c_str();
+	//	memset(&OFN, 0, sizeof(OPENFILENAME));
+	//	OFN.lStructSize = sizeof(OPENFILENAME);
+	//	OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
+	//	OFN.lpstrFilter = filter;
+	//	OFN.lpstrFile = lpstrFile;
+	//	OFN.nMaxFile = 100;
+	//	OFN.lpstrDefExt = "GameData";
+	//	OFN.lpstrInitialDir = Path.c_str();
 
-		if (GetSaveFileNameA(&OFN) != 0) {
-			SavePath = OFN.lpstrFile;
-		}
-	}
+	//	if (GetSaveFileNameA(&OFN) != 0) {
+	//		SavePath = OFN.lpstrFile;
+	//	}
+	//}
 
 	//if ("" != SavePath)
 	//{

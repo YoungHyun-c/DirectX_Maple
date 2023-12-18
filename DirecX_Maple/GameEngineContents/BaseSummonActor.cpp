@@ -19,75 +19,6 @@ BaseSummonActor::~BaseSummonActor()
 
 }
 
-
-//void BaseSummonActor::CreateWonder()
-//{
-//	std::shared_ptr<BaseSummonActor> _Wonder = BackGroundMap::MainMap->GetLevel()->CreateActor<BaseSummonActor>(ContentsObjectType::FrontSkill);
-//
-//	if (PlayerValue::GetValue()->GetClass() == "Maestro")
-//	{
-//		_Wonder->Init("Shard6");
-//	}
-//	else
-//	{
-//		_Wonder->Init("Shard");
-//		_Wonder->Wonder->AutoSpriteSizeOn();
-//		_Wonder->DirAngle = 90.0f;
-//	}
-//}
-
-//void BaseSummonActor::Init(std::string_view _WonderName)
-//{
-//	WonderName = _WonderName;
-//
-//	if (nullptr == GameEngineSprite::Find(WonderName + "_Start"))
-//	{
-//		GameEngineDirectory Dir;
-//		Dir.MoveParentToExistsChild("ContentsResources");
-//		Dir.MoveChild("ContentsResources");
-//		Dir.MoveChild("FolderTexture");
-//		Dir.MoveChild("Skill\\Adele\\3_Shard\\Atom\\" + WonderName);
-//		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-//
-//		for (size_t i = 0; i < Directorys.size(); i++)
-//		{
-//			GameEngineDirectory& Dir = Directorys[i];
-//			GameEngineSprite::CreateFolder(WonderName + "_" + Dir.GetFileName(), Dir.GetStringPath());
-//		}
-//	}
-//
-//	Wonder->CreateAnimation("Start", WonderName + "_Start", 0.1f);
-//	Wonder->CreateAnimation("Attack", WonderName + "_Atom", 0.1f);
-//	Wonder->CreateAnimation("Hit", WonderName + "_Hit", 0.1f);
-//	Wonder->CreateAnimation("Death", WonderName + "_Start", 0.1f, 6, 0, false);
-//
-//	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
-//	Transform.SetLocalPosition({ CurPlayerPos.X,CurPlayerPos.Y + 75.0f });
-//	ReadyStart();
-//
-//	Wonder->SetEndEvent("Start", [&](GameEngineSpriteRenderer*)
-//		{
-//			ChangeState(WonderState::Attack);
-//		});
-//
-//	Wonder->SetEndEvent("Hit", [&](GameEngineSpriteRenderer*)
-//		{
-//			Death();
-//		});
-//
-//	Wonder->SetEndEvent("Death", [&](GameEngineSpriteRenderer*)
-//		{
-//			Death();
-//		});
-//
-//	DetectCollision->Transform.SetLocalScale({ Detect_XRange, Detect_YRange });
-//	DetectCollision->SetCollisionType(ColType::AABBBOX2D);
-//	HitCollision->Transform.SetLocalScale({75, 75});
-//
-//	Wonder->LeftFlip();
-//	MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
-//}
-
 void BaseSummonActor::Start()
 {
 	if (nullptr == Wonder)
@@ -111,8 +42,7 @@ void BaseSummonActor::Start()
 
 void BaseSummonActor::Update(float _Delta)
 {
-	//Wonder->GetColorData().MulColor.A = GlobalValue::
-
+	
 	Wonder->GetColorData().MulColor.A = 1.0f;
 
 

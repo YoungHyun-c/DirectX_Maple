@@ -60,6 +60,9 @@ public:
 	int AttackPer = 0;
 	int MugongDefense = 0;
 
+	int DivideLevel = 1;
+	int MaestroLevel = 1;
+
 	char BackGroundName[256] = { 0, };
 
 	void Start();

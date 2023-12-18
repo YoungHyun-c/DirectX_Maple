@@ -108,6 +108,7 @@ void SkillOrder::OrderPosCal()
 		AllOrderActor[i]->Transform.SetWorldPosition({ CurPlayerPos.X - 50 + ((i%2) * 100.0f),
 			CurPlayerPos.Y - 30.0f });
 		AllOrderActor[i]->Transform.SetLocalRotation({ 0.0f, 0.0f,  -(30.0f) + ((i%2) * 60.0f) });
+		//AllOrderActor[i]->Transform.SetLocalRotation({ 0.0f, 0.0f,  +((i % 2) * 60.0f) });
 		AllOrderActor[i]->On();
 		OrderCount++;
 

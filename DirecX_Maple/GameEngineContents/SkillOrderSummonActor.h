@@ -73,7 +73,7 @@ protected:
 	float HitTime = 0.0f;
 	float LiveTime = 40.0f;
 	float DirAngle = 0.0f;
-	float Speed = 1000.0f;
+	float Speed = 800.0f;
 	float RotationSpeed = 0.0f;
 	size_t OrderHitCount = 2;
 	size_t GedderingHitCount = 4;
@@ -106,5 +106,10 @@ private:
 
 	GameEngineSoundPlayer GedderingPlay;
 	GameEngineSoundPlayer BlossomPlay;
+
+
+	float4 OtherPos = float4::ZERO;
+	float4 CloseTargetPos = float4::ZERO;
+	float4 CurPos = float4::ZERO;
 };
 

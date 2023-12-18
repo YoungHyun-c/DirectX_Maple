@@ -6,9 +6,6 @@
 #include "Player.h"
 #include "SkillManager.h"
 
-#define Detect_XRange 1200
-#define Detect_YRange 1000
-
 SkillOrderSummonActor::SkillOrderSummonActor()
 {
 }
@@ -226,6 +223,7 @@ void SkillOrderSummonActor::AttackUpdate(float _Delta)
 
 				float4 RotationDir = DirectX::XMVector2Cross(DirVector.DirectXVector, MoveVector.DirectXVector);
 
+
 				if (0.0f <= RotationDir.X)
 				{
 					DirAngle -= PlusAngle * RotationSpeed * _Delta;
@@ -291,7 +289,6 @@ void SkillOrderSummonActor::TelePortUpdate(float _Delta)
 void SkillOrderSummonActor::GedderingStart()
 {
 	Order->ChangeAnimation("Geddering");
-	DirAngle -= DirAngle;
 
 	HitCollision->Off();
 	DetectCollision->Off();
@@ -305,14 +302,7 @@ void SkillOrderSummonActor::GedderingUpdate(float _Delta)
 {
 	GedderingDir = GedderingPos - Transform.GetWorldPosition();
 	GedderingDir.Normalize();
-	if (GedderingDir.X < 0)
-	{
-		Order->RightFlip();
-	}
-	else
-	{
-		Order->LeftFlip();
-	}
+
 	Transform.AddLocalPosition(GedderingDir * 2500.0f * _Delta);
 	
 	if (Order->IsCurAnimationEnd() == true)
@@ -334,8 +324,8 @@ void SkillOrderSummonActor::BlossomUpdate(float _Delta)
 {
 	if (Order->IsCurAnimationEnd() == true)
 	{
+		//BlossomHitCollision->Off();
 		BlossomHit = false;
-		BlossomHitCollision->Off();
 		ChangeState(OrderState::Attack);
 		return;
 	}

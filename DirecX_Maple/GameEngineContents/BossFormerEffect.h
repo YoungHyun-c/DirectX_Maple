@@ -17,8 +17,8 @@ public:
 
 	void GetStartFormerBindEffect()
 	{
-		FormBindEffect->ChangeAnimation("FormerBindStart");
 		FormBindEffect->On();
+		FormBindEffect->ChangeAnimation("FormerBindStart");
 	}
 
 	void GetEndFormerBindEffect()
