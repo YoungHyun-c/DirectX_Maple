@@ -89,6 +89,7 @@ void DamageRenderer::PlayerDamageCal()
 	Str = (PlayerValue::GetValue()->GetPlayerStr());
 	Dex = PlayerValue::GetValue()->GetPlayerDex();
 	DamagePer = PlayerValue::GetValue()->GetPlayerDamPer();
+	FinalDamagePer = 1 + (PlayerValue::GetValue()->GetPlayerFinalDamPer() * 0.01f);
 	BossDamagerPer = PlayerValue::GetValue()->GetPlayerBossDamPer();
 	DefenseIgnore = PlayerValue::GetValue()->GetPlayerDefenseIgnore();
 	CriticalDam = PlayerValue::GetValue()->GetPlayerCriticalDam();
@@ -103,7 +104,7 @@ void DamageRenderer::PlayerDamageCal()
 
 }
 
-void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage)
+void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _SkillPercentDam, int _SkillFinalDamage)
 {
 	float LastNumYPos = 0.0f;
 	for (int j = 0; j < _HitCount; j++)
@@ -117,8 +118,8 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		CriticalRan.SetSeed(time(nullptr));
 		float a = CriticalRandomDam;
 		again:;
-		int b = rand() % 30 + 1;
-		CriticalRandomDam = static_cast<float>(CriticalRan.RandomInt(b + 100, b + 120));
+		int b = rand() % 5 + 1;
+		CriticalRandomDam = static_cast<float>(CriticalRan.RandomInt(119 + b, 150));
 		if (CriticalRandomDam == a)
 		{
 			goto again;
@@ -138,11 +139,31 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		if (_Object->GetName() == "Mugong")
 		{
 			MugongDefense = GlobalValue::GetNeedGlobalValue()->GetMugongDefenseValue();
-			DefenseCal = (((100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f)) * (1- (100 - SkillOption) / 100.0f))) / 100.0f);
-			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * AllDamagePer *
-				DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);
+			DefenseCal = (100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f))) / 100.0f;
+			if (DefenseCal <= 0)
+			{
+				DefenseCal = 0;
+				OneLineDamage = 1;
+			}
+			else
+			{
+				OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * (AllAttack * OffensePower + 14) * WeaponConstant * Critical *
+					DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage * FinalDamagePer * SkillPercentDam * AllDamagePer * AdeleCorrection);
+			}
+			if (OneLineDamage >= MaxDamage)
+			{
+				OneLineDamage = MaxDamage;
+			}
 			GlobalValue::GetNeedGlobalValue()->AddSumDamage(OneLineDamage);
 		}
+		//if (_Object->GetName() == "Mugong")
+		//{
+		//	MugongDefense = GlobalValue::GetNeedGlobalValue()->GetMugongDefenseValue();
+		//	DefenseCal = (((100 - (MugongDefense - MugongDefense * (DefenseIgnore / 100.0f)) * (1 - (100 - SkillOption) / 100.0f))) / 100.0f);
+		//	OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * AllDamagePer *
+		//		DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage);
+		//	GlobalValue::GetNeedGlobalValue()->AddSumDamage(OneLineDamage);
+		//}
 
 		if (OneLineDamage >= MaxDamage)
 		{
@@ -200,6 +221,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, size_t _HitCount, siz
 		DamageRenderList.push_back(Vect);
 	}
 	int a = 0;
+	GlobalValue::GetNeedGlobalValue()->AddHitCount(_HitCount);
 }
 
 

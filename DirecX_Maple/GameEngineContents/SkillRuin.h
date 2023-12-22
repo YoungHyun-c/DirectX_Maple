@@ -30,10 +30,10 @@ private:
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
 
-	size_t RuinHitCount;
+	int RuinHitCount = 6;
 
 	float CurTime = 0.0f;
-	float LimitTime = 0.9f;
+	float LimitTime = 2.0f;
 
 	EventParameter HitEvent;
 	bool UseFirst = false;

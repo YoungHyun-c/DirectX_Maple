@@ -25,5 +25,7 @@ private:
 	std::shared_ptr<class GameEngineUIRenderer> JinHillaAnimeRenderer;
 
 	bool JinAnimeEnd = false;
+
+	std::shared_ptr<class GameEngineUIRenderer> DarkRenderer;
 };
 

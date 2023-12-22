@@ -66,7 +66,7 @@ protected:
 	float Speed = 1000.0f;
 	float RotationSpeed = 0.0f;
 
-	size_t InfiOrderHitCount = 2;
+	int InfiOrderHitCount = 2;
 
 	InfiOrderState State = InfiOrderState::Start;
 	float4 MoveVector = float4::ZERO;

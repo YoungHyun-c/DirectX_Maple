@@ -37,6 +37,10 @@ public:
 	{
 		return DamagePer;
 	}
+	float GetPlayerFinalDamPer()
+	{
+		return FinalDamagePer;
+	}
 	int GetPlayerBossDamPer()
 	{
 		return BossDamagePer;
@@ -74,6 +78,10 @@ public:
 	void SetPlayerDamPer(int _Value)
 	{
 		DamagePer = _Value;
+	}
+	void SetPlayerFinalDamPer(float _Value)
+	{
+		FinalDamagePer = _Value;
 	}
 	void SetPlayerBossDamPer(int _Value)
 	{
@@ -373,7 +381,7 @@ private:
 // 플레이어 정보
 private:
 	////// 플레이어 스텟
-	int Str = 40182;
+	/*int Str = 40182;
 	int Dex = 4354;
 	int DamagePer = 74;
 	int BossDamagePer = 100;
@@ -381,6 +389,17 @@ private:
 	float CriticalDam = 70.0f;
 	int AllAttack = 5772;
 	int AttackPer = 102;
+	int ProPertyIgnorePer = 5;*/
+
+	int Str = 52821;
+	int Dex = 6415;
+	int DamagePer = 50;
+	float FinalDamagePer = 50.0f;
+	int BossDamagePer = 392;
+	float DefenseIgnore = 91.51f;
+	float CriticalDam = 67.05f;
+	int AllAttack = 2659;
+	int AttackPer = 112;
 	int ProPertyIgnorePer = 5;
 
 	bool Divide6Use = false;

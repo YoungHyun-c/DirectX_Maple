@@ -60,7 +60,7 @@ protected:
 	float DirAngle = 0.0f;
 	float Speed = 800.0f;
 	float RotationSpeed = 0.0f;
-	size_t WonderHitCount = 3;
+	int WonderHitCount = 3;
 
 
 	WonderState State = WonderState::Start;

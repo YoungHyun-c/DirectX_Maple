@@ -15,6 +15,7 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	Str = PlayerStat->GetValue()->GetPlayerStr();
 	Dex = PlayerStat->GetValue()->GetPlayerDex();
 	DamagePer = PlayerStat->GetValue()->GetPlayerDamPer();
+	FinalDamagePer = PlayerStat->GetValue()->GetPlayerFinalDamPer();
 	BossDamagePer = PlayerStat->GetValue()->GetPlayerBossDamPer();
 	DefenseIgnore = PlayerStat->GetValue()->GetPlayerDefenseIgnore();
 	CritialDam = PlayerStat->GetValue()->GetPlayerCriticalDam();
@@ -48,6 +49,14 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 			DamagePer = 1;
 		}
 		PlayerStat->GetValue()->SetPlayerDamPer(DamagePer);
+	}
+	if (ImGui::InputFloat("FinalDamagePer", &FinalDamagePer))
+	{
+		if (0 >= FinalDamagePer)
+		{
+			FinalDamagePer = 1;
+		}
+		PlayerStat->GetValue()->SetPlayerFinalDamPer(FinalDamagePer);
 	}
 	if (ImGui::InputInt("BossDamagePer", &BossDamagePer))
 	{
@@ -112,7 +121,7 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		{
 			MaestroLevel = 30;
 		}
-		SkillValue::GetValue()->SetMaestroLevel(MaestroLevel);
+		SkillValue::GetValue()->SetMaestroLevel(MaestroLevel, 110);
 	}
 
 	if (ImGui::InputInt("MugongDefense", &MugongDefense))
@@ -125,6 +134,7 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 	}
 
 	ImGui::Text("SumAllDamage : %llu", GlobalValue::GetNeedGlobalValue()->GetSumDamage());
+	ImGui::Text("HitCount : %d", GlobalValue::GetNeedGlobalValue()->GetHitCount());
 	
 	if (ImGui::Button("Damage Clear"))
 	{

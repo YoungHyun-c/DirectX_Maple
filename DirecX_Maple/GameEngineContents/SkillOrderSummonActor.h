@@ -75,9 +75,9 @@ protected:
 	float DirAngle = 0.0f;
 	float Speed = 800.0f;
 	float RotationSpeed = 0.0f;
-	size_t OrderHitCount = 2;
-	size_t GedderingHitCount = 4;
-	size_t BlossomHitCount = 8;
+	int OrderHitCount = 2;
+	int GedderingHitCount = 4;
+	int BlossomHitCount = 8;
 
 	OrderState State = OrderState::Start;
 	float4 MoveVector = float4::ZERO;

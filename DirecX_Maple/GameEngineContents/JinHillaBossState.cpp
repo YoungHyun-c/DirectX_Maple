@@ -49,7 +49,7 @@ void JinHillaBoss::StandUpdate(float _Delta)
 		return;
 	}
 
-	if (DamienMob->GetState() == (MonsterState::Max))
+	if (DamienMob->GetState() == (MonsterState::Max) && Pattern == 4)
 	{
 		CallDamien = true;
 		ChangeState(MonsterState::Skill3);
@@ -161,109 +161,7 @@ void JinHillaBoss::AttackStart()
 
 	JinDirCheck();
 
-	// TestPattern
-	switch (TestPattern)
-	{
-	case 1:
-		ChangeAnimationState("Attack");
-		AnimationName = "Attack";
-
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
-		}
-		TestPattern += 1;
-		break;
-	case 2:
-		ChangeAnimationState("Attack2");
-		AnimationName = "Attack2";
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
-		}
-		TestPattern += 1;
-		break;
-	case 3:
-		ChangeAnimationState("Attack3");
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-
-			JinHillBindSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
-			JinHillKnockSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 330.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
-
-			JinHillBindSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
-			JinHillKnockSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
-		}
-		TestPattern += 1;
-		break;
-	case 4:
-		ChangeAnimationState("Attack4");
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
-
-			JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ -250.0f, 50.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 260.0f, 100.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 100.0f });
-
-			JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ 250.0f, 50.0f });
-		}
-		TestPattern += 1;
-		break;
-	case 5:
-		ChangeAnimationState("Attack5");
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 50.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
-		}
-		TestPattern += 1;
-		break;
-	case 6:
-		ChangeAnimationState("Attack7");
-		if (Dir == ActorDir::Left)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ -200.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ -50.0f, 120.0f });
-		}
-		if (Dir == ActorDir::Right)
-		{
-			MonsterRenderer->Transform.SetLocalPosition({ 200.0f, 120.0f });
-			MonsterCollision->Transform.SetLocalPosition({ 50.0f, 120.0f });
-		}
-		TestPattern = 1;
-		break;
-	default:
-		break;
-	}
+	PatternCheckAttack();
 }
 
 void JinHillaBoss::AttackUpdate(float _Delta)
@@ -391,7 +289,7 @@ void JinHillaBoss::Skill_3Update(float _Delta)
 		return;
 	}
 
-	if (true == MonsterRenderer->IsCurAnimationEnd() && CallDamien == true)
+	if (true == MonsterRenderer->IsCurAnimationEnd() && CallDamien == true && Pattern == 4)
 	{
 		//DamienMob->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, -650.0f });
 		DamienMob->CallRegen();
@@ -452,8 +350,142 @@ void JinHillaBoss::DeathStart()
 }
 void JinHillaBoss::DeathUpdate(float _Delta)
 {
-	/*if (true == MonsterRenderer->IsCurAnimationEnd())
+
+}
+
+void JinHillaBoss::PatternCheckAttack()
+{
+	if (Pattern == 1)
 	{
-		GameEngineCore::ChangeLevel("9.BossRewardLevel");
-	}*/
+		switch (TestPattern)
+		{
+		case 1:
+			ChangeAnimationState("Attack3");
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+
+				JinHillBindSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
+				JinHillKnockSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 330.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+
+				JinHillBindSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
+				JinHillKnockSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
+			}
+			TestPattern += 1;
+			break;
+		case 2:
+			ChangeAnimationState("Attack4");
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -260.0f, 100.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 100.0f });
+
+				JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ -250.0f, 50.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 260.0f, 100.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 100.0f });
+
+				JinHillFrontSlapSkillCol->Transform.SetLocalPosition({ 250.0f, 50.0f });
+			}
+			TestPattern += 1;
+			break;
+		case 3:
+			ChangeAnimationState("Attack7");
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -200.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -50.0f, 120.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 200.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 50.0f, 120.0f });
+			}
+			TestPattern = 1;
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (TestPattern)
+		{
+		case 1:
+			ChangeAnimationState("Attack");
+			AnimationName = "Attack";
+
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+			}
+			TestPattern += 1;
+			break;
+		case 2:
+			ChangeAnimationState("Attack2");
+			AnimationName = "Attack2";
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -160.0f, 140.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 160.0f, 140.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+			}
+			TestPattern += 1;
+			break;
+		case 3:
+			ChangeAnimationState("Attack3");
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -330.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+
+				JinHillBindSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
+				JinHillKnockSkillCol->Transform.SetLocalPosition({ -350.0f, 100.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 330.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+
+				JinHillBindSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
+				JinHillKnockSkillCol->Transform.SetLocalPosition({ 350.0f, 100.0f });
+			}
+			TestPattern += 1;
+			break;
+		case 4:
+			ChangeAnimationState("Attack5");
+			if (Dir == ActorDir::Left)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ -50.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ -40.0f, 120.0f });
+			}
+			if (Dir == ActorDir::Right)
+			{
+				MonsterRenderer->Transform.SetLocalPosition({ 50.0f, 120.0f });
+				MonsterCollision->Transform.SetLocalPosition({ 40.0f, 120.0f });
+			}
+			TestPattern = 1;
+			break;
+		default:
+			break;
+		}
+	}
 }

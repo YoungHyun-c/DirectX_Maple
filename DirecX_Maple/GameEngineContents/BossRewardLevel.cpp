@@ -212,7 +212,7 @@ void BossRewardLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		BossLevel* Level = dynamic_cast<BossLevel*>(_PrevLevel);
+		//BossLevel* Level = dynamic_cast<BossLevel*>(_PrevLevel);
 		PlayerObject->SetDebugMap("RewardDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 250.0f, -600.0f });
 	}

@@ -45,8 +45,9 @@ void SkillMaestro::Start()
 
 		SkillRender1->SetFrameEvent("Maestro", 99, [&](GameEngineRenderer* _Renderer)
 			{
+				SkillValue::GetValue()->SetMaestroSkillDam(4030, 130);
 				MaestroHitCount = 14;
-				LimitTime = 0.124f;
+				LimitTime = 0.185f;
 				GameEngineSound::SoundPlay("MaestorEnd.mp3");
 			}
 		);
@@ -76,7 +77,9 @@ void SkillMaestro::UseSkill()
 	AttackCol->On();
 	SkillCollision->On();
 
+	SkillValue::GetValue()->SetMaestroSkillDam(3410, 110);
 	MaestroHitCount = 10;
+	CurTime = 0.0f;
 	LimitTime = 0.372f;
 
 	AttackEvent();

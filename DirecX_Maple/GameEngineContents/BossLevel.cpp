@@ -44,24 +44,6 @@ BossLevel::~BossLevel()
 
 void BossLevel::Start()
 {
-	// 진힐라 낫베기
-	//{
-	//	JinHillaAttackAni = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
-	//}
-
-
-	// 입장 컷신
-	/*{
-		EnterAni = CreateActor<JinHillaEnterAnime>(ContentsObjectType::UI);
-	}*/
-
-
-	//{
-	//	CravingMob = CreateActor<CravingMonster>(ContentsObjectType::Monster);
-	//	CravingMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
-	//	CravingMob->SetDebugMap("BOssDebugMap.Png");
-	//}
-
 	// 사령 스우, 스우 구체
 	{
 		//GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
@@ -71,13 +53,6 @@ void BossLevel::Start()
 
 	}
 
-	//// 사령 데미안, 이펙트
-	//{
-		/*GhostDamienMob = CreateActor<GhostDamien>(ContentsObjectType::Monster);
-		GhostDamienMob->Transform.SetWorldPosition({ 500.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
-		GhostDamienMob->SetDebugMap("BossDebugMap.Png");*/
-
-	//}
 
 	{
 		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
@@ -218,23 +193,14 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveChild("ContentsResources");
 		Dir.MoveChild("BackGround");
 		std::vector<GameEngineFile> Files = Dir.GetAllFile();
-
 		for (size_t i = 0; i < Files.size(); i++)
 		{
 			GameEngineFile& File = Files[i];
 			GameEngineTexture::Load(File.GetStringPath());
 		}
-
 		GameEngineSprite::CreateSingle("BossMap.png");
 		GameEngineSprite::CreateSingle("BossDebugMap.png");
 	}
-
-	if (nullptr == Map)
-	{
-		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
-		Map->Init("BossMap.png", "BossDebugMap.png");
-	}
-
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
 	{
 		GameEngineDirectory Dir;
@@ -250,15 +216,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == PlayerObject)
-	{
-		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
-		PlayerObject->SetDebugMap("BossDebugMap.png");
-		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
-	}
-	PlayerValue::GetValue()->SetGreenDeathValue(5);
-	PlayerValue::GetValue()->SetRedDeathValue(0);
 	if (nullptr == GameEngineSprite::Find("Skill"))
 	{
 		GameEngineDirectory Dir;
@@ -274,15 +231,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	if (nullptr == PlayerSkill)
-	{
-		PlayerSkill = CreateActor<AdeleSkill>();
-	}
-	if (nullptr == Skill)
-	{
-		Skill = CreateActor<SkillManager>();
-	}
-
 	if (nullptr == GameEngineSprite::Find("Craving"))
 	{
 		GameEngineDirectory Dir;
@@ -315,7 +263,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-
 	if (nullptr == GameEngineSprite::Find("BossJin"))
 	{
 		GameEngineDirectory Dir;
@@ -344,25 +291,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveChild("JinHillaUI");
 		GameEngineSprite::CreateFolder(Dir.GetFileName(), Dir.GetStringPath());
 	}
-	
-	// 보스
-	if (nullptr == BossJin)
-	{
-		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
-		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
-		BossJin->SetDebugMap("BossDebugMap.Png");
-		BossJin->CallRegen();
-	}
-	if (nullptr ==  BossJinSkill)
-	{
-		BossJinSkill = CreateActor<BossSkillManager>();
-	}
-	// 보스레벨 Ui
-	if (nullptr == BossUi)
-	{
-		BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
-	}
-
 	if (nullptr == GameEngineSprite::Find("UITexture"))
 	{
 		GameEngineDirectory Dir;
@@ -402,11 +330,55 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		FilePath.MoveParentToExistsChild("ContentsResources");
 		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
 
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DepthOfPain.mp3"));
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Die.mp3"));
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("DepthOfPain.mp3"));
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
-	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 5);
+	GlobalValue::GetNeedGlobalValue()->SetBgm("DepthOfPain.mp3", 9);
+
+
+	if (nullptr == Map)
+	{
+		Map = CreateActor<BackGroundMap>(static_cast<int>(ContentsObjectType::BackGround), "Map");
+		Map->Init("BossMap.png", "BossDebugMap.png");
+	}
+	if (nullptr == PlayerObject)
+	{
+		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
+		//BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
+		PlayerObject->SetDebugMap("BossDebugMap.png");
+		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f, static_cast<float>(DeepBufferType::Player) });
+
+		PlayerValue::GetValue()->SetGreenDeathValue(5);
+		PlayerValue::GetValue()->SetRedDeathValue(0);
+	}
+	if (nullptr == PlayerSkill)
+	{
+		PlayerSkill = CreateActor<AdeleSkill>();
+	}
+	if (nullptr == Skill)
+	{
+		Skill = CreateActor<SkillManager>();
+	}
+
+	
+	// 보스
+	if (nullptr == BossJin)
+	{
+		BossJin = CreateActor<JinHillaBoss>(ContentsObjectType::Monster);
+		BossJin->Transform.SetWorldPosition({ 900.0f, -700.0f, static_cast<float>(DeepBufferType::Monster) });
+		BossJin->SetDebugMap("BossDebugMap.Png");
+		BossJin->CallRegen();
+	}
+	if (nullptr ==  BossJinSkill)
+	{
+		BossJinSkill = CreateActor<BossSkillManager>();
+	}
+	// 보스레벨 Ui
+	if (nullptr == BossUi)
+	{
+		BossUi = CreateActor<BossLevelUi>(ContentsObjectType::UI);
+	}
 
 	if (nullptr == UIObject)
 	{
@@ -416,6 +388,7 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == MouseObject)
 	{
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
+		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 	}
 
 
@@ -437,7 +410,6 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	{
 		Altar = CreateActor<AltarUi>(ContentsObjectType::BackSkill);
 	}
-
 	if (Candle1 == nullptr)
 	{
 		Candle1 = CreateActor<CandleUi>(ContentsObjectType::MonsterSkill);
@@ -474,6 +446,7 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Hand7->Transform.SetLocalPosition({ 1750.0f, -200.0f });
 		Hand7->Off();
 	}
+
 
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossMap.png");

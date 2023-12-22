@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "AdeleSkill.h"
 #include "SkillManager.h"
+
 #include "MainUIActor.h"
 #include "Mouse.h"
 
@@ -155,7 +156,7 @@ void BossEntranceLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		PracticeLevel* Level = dynamic_cast<PracticeLevel*>(_PrevLevel);
+		//PracticeLevel* Level = dynamic_cast<PracticeLevel*>(_PrevLevel);
 		PlayerObject->SetDebugMap("EntranceDebugMap.png");
 		PlayerObject->Transform.SetWorldPosition({ 100.0f, -750.0f });
 	}

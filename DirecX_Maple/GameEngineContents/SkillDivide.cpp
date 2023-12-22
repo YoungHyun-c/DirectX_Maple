@@ -149,6 +149,7 @@ void SkillDivide::UseSkill()
 		if (PlayerValue::GetValue()->GetDivide6Use() == false)
 		{
 			PlayerValue::GetValue()->SetDivideUse(true);
+			SkillValue::GetValue()->SetDivideSpecialSkillDam(300);
 			SkillNum = 7;
 			SkillName += std::to_string(7);
 			SkillHitName += std::to_string(7) + "_Hit";
@@ -156,6 +157,8 @@ void SkillDivide::UseSkill()
 		}
 		else
 		{
+			DivideHitCount = 6;
+			SkillValue::GetValue()->SetDivideSkillDam(390);
 			SkillNum = RandomSKillNum.RandomInt(4, 6);
 			switch (SkillNum)
 			{
@@ -256,8 +259,16 @@ void SkillDivide::AttackEvent()
 {
 	HitEvent.Enter = [&](GameEngineCollision* _this, GameEngineCollision* _Other)
 		{
-			NewDR = GetLevel()->CreateActor<DamageRenderer>();
-			NewDR->PushDamage(_Other, DivideHitCount, SkillValue::GetValue()->GetDivideSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
+			if (DivideHitCount == 7)
+			{
+				NewDR = GetLevel()->CreateActor<DamageRenderer>();
+				NewDR->PushDamage(_Other, (DivideHitCount * 3), SkillValue::GetValue()->GetDivideSpecialSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
+			}
+			else
+			{
+				NewDR = GetLevel()->CreateActor<DamageRenderer>();
+				NewDR->PushDamage(_Other, DivideHitCount, SkillValue::GetValue()->GetDivideSkillDam(), SkillValue::GetValue()->GetDivideFinalDam());
+			}
 			
 			if (PlayerValue::GetValue()->GetWonderUse() == false)
 			{

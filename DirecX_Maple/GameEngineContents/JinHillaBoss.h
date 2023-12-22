@@ -131,6 +131,8 @@ private:
 	bool IsAttack = false;
 	bool PlayerBind = false;
 	int TestPattern = 1;
+	int Pattern = 1;
+	void PatternCheckAttack();
 
 	std::shared_ptr<class CravingMonster> CravingMob1 = nullptr;
 	std::shared_ptr<class CravingMonster> CravingMob2 = nullptr;

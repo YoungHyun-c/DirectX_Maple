@@ -163,6 +163,23 @@ void JinHillaBoss::Update(float _Delta)
 		return;
 	}
 
+	if ((JinHillaCurHp * 100 / JinHillaHp) >= 75)
+	{
+		Pattern = 1;
+	}
+	else if (74 >= (JinHillaCurHp * 100 / JinHillaHp) && (JinHillaCurHp * 100 / JinHillaHp) >= 50)
+	{
+		Pattern = 2;
+	}
+	else if (49 >= (JinHillaCurHp * 100 / JinHillaHp) && (JinHillaCurHp * 100 / JinHillaHp) >= 25 )
+	{
+		Pattern = 3;
+	}
+	else
+	{
+		Pattern = 4;
+	}
+
 	if (JinHillaCurHp <= 0)
 	{
 		GlobalValue::GetNeedGlobalValue()->SetBossDeath(true);

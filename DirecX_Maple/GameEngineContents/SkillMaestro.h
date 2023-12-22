@@ -30,7 +30,7 @@ private:
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
-	size_t MaestroHitCount;
+	int MaestroHitCount;
 
 	float CurTime = 0.0f;
 	float LimitTime = 0.558f;

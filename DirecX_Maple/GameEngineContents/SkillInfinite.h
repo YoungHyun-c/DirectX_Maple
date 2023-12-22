@@ -26,7 +26,6 @@ protected:
 	void Release() override;
 
 	bool UseFirst = false;
-	void RenderEvent(GameEngineRenderer* _Renderer);
 
 	void CreateInfinite();
 	int InfiniteCount = 0;
@@ -35,7 +34,7 @@ protected:
 	void InfinitePosCal();
 
 	float InfiTime = 0.0f;
-	float InfiLimitTime = 30.0f;
+	float InfiLimitTime = 31.0f;
 
 	float4 CurInfiPos = float4::ZERO;
 	GameEngineRandom InfiRandPos;
@@ -49,5 +48,6 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> InfiFront;
 
 	GameEngineSoundPlayer InfinitePlay;
+	std::string MapBgmName = "";
 };
 

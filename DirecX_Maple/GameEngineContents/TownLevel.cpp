@@ -203,7 +203,7 @@ void TownLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Thelandofpeachblossoms.mp3"));
 	}
 	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
-	GlobalValue::GetNeedGlobalValue()->SetBgm("Thelandofpeachblossoms.mp3", 2);
+	GlobalValue::GetNeedGlobalValue()->SetBgm("Thelandofpeachblossoms.mp3", 3);
 
 	if (nullptr == GameEngineSound::FindSound("AltarAppear.mp3"))
 	{

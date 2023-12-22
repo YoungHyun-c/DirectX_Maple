@@ -182,6 +182,18 @@ void FormerLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		GameEngineSprite::CreateSingle("FormerNpc3.Png");
 	}
 
+	if (nullptr == GameEngineSound::FindSound("Tangled Nebula.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("Tangled Nebula.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("Tangled Nebula.mp3", 3);
+
 
 	if (Map == nullptr)
 	{

@@ -58,14 +58,14 @@ void SkillOrderSummonActor::Update(float _Delta)
 	Order->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 	HitCollision->Transform.SetLocalRotation({ 0.0f, 0.0f, DirAngle });
 
-	StateUpdate(_Delta);
-
 	LiveTime -= _Delta;
 	if (0.0f >= LiveTime)
 	{
 		ChangeState(OrderState::Death);
 		return;
 	}
+	StateUpdate(_Delta);
+
 
 	if (GameEngineInput::IsDown('S', this) == true)
 	{

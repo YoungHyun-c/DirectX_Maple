@@ -53,6 +53,7 @@ public:
 	int Str = 0;
 	int Dex = 0;
 	int DamagePer = 0;
+	float FinalDamagePer = 0;
 	int BossDamagePer = 0;
 	float DefenseIgnore = 0;
 	float CritialDam = 0;

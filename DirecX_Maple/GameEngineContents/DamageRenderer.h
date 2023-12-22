@@ -15,7 +15,7 @@ public:
 	DamageRenderer& operator = (const DamageRenderer& _Other) = delete;
 	DamageRenderer& operator = (DamageRenderer&& _Other) noexcept = delete;
 
-	void PushDamage(GameEngineObject* _Object, size_t _HitCount, size_t _SkillPercentDam, size_t _SkillFinalDamage);
+	void PushDamage(GameEngineObject* _Object, int _HitCount, int _SkillPercentDam, int _SkillFinalDamage);
 	//void PushDamage(size_t _SkillPercentDam);
 	void DeleteDamage();
 
@@ -37,8 +37,10 @@ private:
 	//float CriticalDam = 70.0f;
 	//float OffensePower = 2.12f;
 
-	float WeaponConstant = 1.34f;
+	float WeaponConstant = 1.3f;
+	//float AdeleCorrection = 0.01f;
 	float AdeleCorrection = 0.01f;
+	//float AdeleCorrection = 0.008f;
 
 
 	float SkillPercentDam = 0.0f;
@@ -47,9 +49,9 @@ private:
 	float CriticalRandomDam = 0.0f;
 	float DamagePower = 1.74f;
 	float DefenseCorrection = 0.98f;
-	float LevelCorrection = 1.5f;
+	float LevelCorrection = 1.2f;
 	float ArcaneCorrection = 1.5f;
-	float Proficiency =  0.95f;
+	float Proficiency =  0.955f;
 
 	unsigned long long OneLineDamage = 0;
 	unsigned long long SumDamage = 0;
@@ -70,6 +72,7 @@ private:
 	unsigned long long Str = 1;
 	int Dex = 1;
 	int DamagePer = 1;
+	float FinalDamagePer = 1;
 	int BossDamagerPer = 1;
 	float DefenseIgnore = 1.0f;
 	float CriticalDam = 1.0f;

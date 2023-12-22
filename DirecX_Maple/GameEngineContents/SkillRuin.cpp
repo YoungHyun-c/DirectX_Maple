@@ -32,12 +32,11 @@ void SkillRuin::Start()
 				SkillValue::GetValue()->SetRuinSkillDam(550);
 				SkillCollision->On();
 				AttackCol->On();
-				RuinHitCount = 6;
 				LimitTime = 0.568f;
 			}
 		);
 
-		SkillRender2->SetFrameEvent("Ruin", 33, [&](GameEngineRenderer* _Renderer)
+		SkillRender2->SetFrameEvent("Ruin", 32, [&](GameEngineRenderer* _Renderer)
 			{
 				SkillValue::GetValue()->SetRuinSkillDam(990);
 				RuinHitCount = 9;
@@ -45,7 +44,7 @@ void SkillRuin::Start()
 			}
 		);
 
-		SkillRender2->SetFrameEvent("Ruin", 42, [&](GameEngineRenderer* _Renderer)
+		SkillRender2->SetFrameEvent("Ruin", 44, [&](GameEngineRenderer* _Renderer)
 			{
 				SkillCollision->Off();
 				AttackCol->Off();
@@ -57,12 +56,14 @@ void SkillRuin::Start()
 	SkillCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 	SkillCollision->SetCollisionType(ColType::AABBBOX2D);
 	SkillCollision->Transform.SetLocalScale({ 1200.0f, 1200.0f });
+	SkillCollision->Off();
 
 
 	{
 		AttackCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::Skill);
 		AttackCol->SetCollisionType(ColType::AABBBOX2D);
 		AttackCol->Transform.SetLocalScale({ 1200.0f, 1200.0f });
+		AttackCol->Off();
 	}
 }
 
@@ -70,10 +71,10 @@ void SkillRuin::UseSkill()
 {
 	SkillFunction::UseSkill();
 	UseFirst = true;
-	//On();
 
 	SkillRender2->On();
 
+	CurTime = 0.0f;
 	RuinHitCount = 6;
 	SkillRender2->ChangeAnimation("Ruin", true, 0);
 
@@ -84,18 +85,12 @@ void SkillRuin::UseSkill()
 void SkillRuin::EndSkill()
 {
 	SkillFunction::EndSkill();
-	//Off();
 	SkillRender2->Off();
 }
 
 void SkillRuin::Update(float _Delta)
 {
 	Transform.SetWorldPosition({ PlayerPos.X, PlayerPos.Y + 275.0f });
-	//Transform.SetLocalPosition(PlayerPos);
-	if (true == UseFirst)
-	{
-		//SkillCollision->Collision(ContentsCollisionType::Monster, std::bind(&SkillRuin::CollisionEvent, this, std::placeholders::_1));
-	}
 
 	// 시간에 따라 데미지
 	CurTime += _Delta;

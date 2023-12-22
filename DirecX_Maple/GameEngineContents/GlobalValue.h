@@ -136,11 +136,17 @@ public:
 	void SetBgm(const std::string& _Name, int _LoopValue = 1)
 	{
 		MapBgm = GameEngineSound::SoundPlay(_Name, _LoopValue);
+		MapBgmName = _Name;
 	}
 
 	void CurBgmStop()
 	{
 		MapBgm.Stop();
+	}
+
+	std::string GetCurBgmName()
+	{
+		return MapBgmName;
 	}
 
 	void CurBgmPause()
@@ -151,6 +157,7 @@ public:
 	void CurBgmResume()
 	{
 		MapBgm.Resume();
+		MapBgm.IsPlaying();
 	}
 
 	unsigned long long GetSumDamage()
@@ -166,6 +173,17 @@ public:
 	void ClearDamage()
 	{
 		AllSumDamage = 0;
+		HitCount = 0;
+	}
+
+	void AddHitCount(int _Value)
+	{
+		HitCount += _Value;
+	}
+	
+	int GetHitCount()
+	{
+		return HitCount;
 	}
 
 protected:
@@ -173,6 +191,9 @@ protected:
 private:
 	int MonsterDefense = 10;
 	int MugongDefense = 10;
+
+	int HitCount = 0;
+	unsigned long long AllSumDamage = 0;
 
 	unsigned int MonsterCount = 0;
 	float DropItemCount = 0;
@@ -188,9 +209,9 @@ private:
 
 	bool BossDeath = false;
 
-	unsigned long long AllSumDamage = 0;
 
 // BGM
 	GameEngineSoundPlayer MapBgm;
+	std::string MapBgmName = "";
 };
 

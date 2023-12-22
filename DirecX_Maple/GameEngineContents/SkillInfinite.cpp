@@ -38,13 +38,15 @@ void SkillInfinite::Start()
 					InfiFront->Off();
 				});
 
+			InfiFront->Off();
+
 		}
 
 		InfiBack = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::Infi);
 		InfiBack->CreateAnimation("Infinite_Start_Back", "Infinite_Start_Back", 0.1f);
 		InfiBack->CreateAnimation("Infinite_Loop_Back", "Infinite_Loop_Back", 0.1f);
 		InfiBack->CreateAnimation("Infinite_End_Back", "Infinite_End_Back", 0.1f);
-		InfiBack->SetFrameEvent("Infinite_Start_Back", 1, std::bind(&SkillInfinite::RenderEvent, this, std::placeholders::_1));
+
 		InfiBack->Transform.SetLocalPosition({ 0.0f, 0.0f });
 
 		InfiBack->AutoSpriteSizeOn();
@@ -75,6 +77,8 @@ void SkillInfinite::Start()
 			{
 				InfinitePosCal();
 			});
+
+		InfiBack->Off();
 	}
 
 }
@@ -84,8 +88,6 @@ void SkillInfinite::UseSkill()
 	SkillFunction::UseSkill();
 
 	UseFirst = true;
-	On();
-
 
 	InfiBack->ChangeAnimation("Infinite_Start_Back", true, 0);
 	InfiBack->On();
@@ -96,9 +98,10 @@ void SkillInfinite::UseSkill()
 	CurPlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 	InfiTime = 0.0f;
 
-	GameEngineSound::SoundPlay("Infinite.mp3");
+	MapBgmName = GlobalValue::GetNeedGlobalValue()->GetCurBgmName();
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
 
-	GlobalValue::GetNeedGlobalValue()->CurBgmPause();
+	GameEngineSound::SoundPlay("Infinite.mp3");
 	InfinitePlay = GameEngineSound::SoundPlay("5thAdelesOathInfinite.mp3");
 }
 
@@ -108,8 +111,9 @@ void SkillInfinite::EndSkill()
 
 	InfiBack->ChangeAnimation("Infinite_End_Back");
 	InfiFront->ChangeAnimation("Infinite_End_Forward");
+	UseFirst = false;
 
-	GlobalValue::GetNeedGlobalValue()->CurBgmResume();
+	GlobalValue::GetNeedGlobalValue()->SetBgm(MapBgmName, 10);
 }
 
 void SkillInfinite::LevelEnd(GameEngineLevel* _NextLevel)
@@ -123,9 +127,10 @@ void SkillInfinite::Update(float _Delta)
 	Transform.SetWorldPosition(GetLevel()->GetMainCamera()->Transform.GetLocalPosition());
 
 	InfiTime += _Delta;
-	if (InfiTime >= InfiLimitTime)
+	if (InfiTime >= InfiLimitTime && UseFirst == true)
 	{
 		InfiTime = 0.0f;
+		InfinitePlay.Stop();
 		EndSkill();
 	}
 
@@ -163,9 +168,4 @@ void SkillInfinite::CreateInfinite()
 void SkillInfinite::Release()
 {
 	SkillFunction::Release();
-}
-
-void SkillInfinite::RenderEvent(GameEngineRenderer* _Renderer)
-{
-	UseFirst = false;
 }

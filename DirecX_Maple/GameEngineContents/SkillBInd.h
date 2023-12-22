@@ -29,7 +29,7 @@ private:
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
-	size_t ScollHitCount;
+	int ScollHitCount;
 
 	EventParameter HitEvent;
 	bool UseFirst = false;

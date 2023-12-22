@@ -24,7 +24,12 @@ public:
 
 	void SetDivideSkillDam(int _Value)
 	{
-		DivideSKillDam = _Value;
+		if (DivideLevel == 1)
+		{
+			DivideSKillDam = 390;
+			return;
+		}
+		DivideSKillDam = _Value + (DivideLevel * 12);
 	}
 
 	void SetDivideFinalDam(int _Value)
@@ -40,6 +45,21 @@ public:
 	int GetDivideFinalDam()
 	{
 		return DivideFinalDam;
+	}
+
+	void SetDivideSpecialSkillDam(int _Value)
+	{
+		if (DivideLevel == 1)
+		{
+			DivideSpecialDam = 300;
+			return;
+		}
+		DivideSpecialDam = _Value + ((DivideLevel) * 9);
+	}
+
+	int GetDivideSpecialSkillDam()
+	{
+		return DivideSpecialDam;
 	}
 
 	void SetRuinSkillDam(int _Value)
@@ -62,9 +82,14 @@ public:
 		return RuinSkillFinalDam;
 	}
 
-	void SetMaestroSkillDam(int _Value)
+	void SetMaestroSkillDam(int _Value , int _MulValue)
 	{
-		MaestroSkillDam = _Value;
+		if (MaestroLevel == 1)
+		{
+			MaestroSkillDam = _Value;
+			return;
+		}
+		MaestroSkillDam = _Value + (MaestroLevel * _MulValue);
 	}
 
 	void SetMaestroFinalDam(int _Value)
@@ -180,7 +205,15 @@ public:
 	{
 		DivideLevel = _Value;
 
-		DivideSKillDam = 402 + (DivideLevel * 7);
+		if (DivideLevel == 1)
+		{
+			DivideSKillDam = 390;
+			DivideSpecialDam = 300;
+			return;
+		}
+
+		DivideSKillDam = 390 + ((DivideLevel) * 12);
+		DivideSpecialDam = 300 + ((DivideLevel) * 9);
 	}
 
 	int GetDivideLevel()
@@ -188,11 +221,17 @@ public:
 		return DivideLevel;
 	}
 
-	void SetMaestroLevel(int _Value)
+	void SetMaestroLevel(int _Value, int _MulValue)
 	{
 		MaestroLevel = _Value;
 
-		MaestroSkillDam = 3300 + (MaestroLevel * 110);
+		if (MaestroLevel == 1)
+		{
+			MaestroSkillDam = 3410;
+			return;
+		}
+
+		MaestroSkillDam = 3410 + ((MaestroLevel) * _MulValue);
 	}
 
 	int GetMaestroLevel()
@@ -204,25 +243,28 @@ protected:
 
 private:
 	int DivideLevel = 1;
-	int DivideSKillDam = 402;
+	int DivideSKillDam = 390;
+	//int DivideSKillDam = 410;
+	int DivideSpecialDam = 300;
 	int DivideFinalDam = 220;
 
 	int MaestroLevel = 1;
-	int MaestroSkillDam = 3300; 
+	int MaestroSkillDam = 3410;
 	//int MaestroSkillDam = 6600; // 마스터
+	//int MaestroSkillFinalDam = 65; // 마에스트로 스킬 뎀지 추가했음
 	int MaestroSkillFinalDam = 100;
 
 	int RuinSkillDam = 550;
 	int RuinSkillFinalDam = 160;
 
 	int ShardSkillDam = 720; // 마스터
-	int ShardSkillFinalDam = 220;
+	int ShardSkillFinalDam = 185;
 
 	int GedderingSkillDam = 560;
-	int GedderingSkilFinallDam = 220;
+	int GedderingSkilFinallDam = 185;
 
 	int BlossomSkillDam = 650;
-	int BlossomFSillFinalDam = 220;
+	int BlossomFSillFinalDam = 185;
 
 
 	int OrderCount = 0;

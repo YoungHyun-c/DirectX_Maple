@@ -65,6 +65,21 @@ void TitleLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 	GlobalValue::GetNeedGlobalValue()->SetBgm("HeartofSuffering.mp3");
 
+	if (nullptr == GameEngineSprite::Find("Dark.png"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("BackGround");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("Dark.png");
+	}
+
 	{
 		JinHillaAniMation = CreateActor<JinHillaAnime>(ContentsObjectType::BackGround);
 	}

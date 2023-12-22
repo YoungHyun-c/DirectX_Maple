@@ -29,7 +29,7 @@ private:
 	void RenderEvent(GameEngineRenderer* _Renderer);
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
 
-	size_t StormHitCount = 8;
+	int StormHitCount = 8;
 
 	float CurTime = 0.0f;
 	float LimitTime = 0.9f;

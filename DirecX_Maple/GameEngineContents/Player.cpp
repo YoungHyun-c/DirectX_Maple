@@ -184,20 +184,6 @@ void Player::Update(float _Delta)
 		GravityReset();
 	}
 
-	if (true == IsGround && PlayerState::Alert == State || PlayerState::Stand == State || PlayerState::Walk == State)
-	{
-		//Flying = false;
-	}
-
-
-	//if (GameEngineInput::IsDown('Y', this))
-	//{
-	//	std::shared_ptr<AdeleSkill> Shard = GetLevel()->CreateActor<AdeleSkill>();
-
-	//	Shard->SetSkillActor("Shard");
-	//}
-
-
 	//if (GameEngineInput::IsDown('Z', this))
 	//{
 	//	std::shared_ptr<AdeleSkill> Impale = GetLevel()->CreateActor<AdeleSkill>();

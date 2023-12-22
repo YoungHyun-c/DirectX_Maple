@@ -20,6 +20,12 @@ void JinHillaAnime::Start()
 
 		JinHillaAnimeRenderer->ChangeAnimation("JinHillaTitle");
 		JinHillaAnimeRenderer->SetImageScale({ 1366, 768 });
+
+		DarkRenderer = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
+		DarkRenderer->SetSprite("Dark.Png");
+		DarkRenderer->Transform.SetWorldPosition(0);
+		DarkRenderer->Off();
+		DarkRenderer->GetColorData().MulColor.A = 0.1f;
 	}
 	GameEngineInput::AddInputObject(this);
 }
@@ -28,10 +34,16 @@ void JinHillaAnime::Update(float _Delta)
 {
 	if (JinAnimeEnd == true)
 	{
-		if (JinHillaAnimeRenderer->IsCurAnimationEnd())
+		if (JinHillaAnimeRenderer->IsCurAnimationEnd() == true)
 		{
-			GameEngineCore::ChangeLevel("2.TownLevel");
+			DarkRenderer->On();
+			DarkRenderer->GetColorData().MulColor.A += 0.7f * _Delta;
 		}
+	}
+
+	if (DarkRenderer->GetColorData().MulColor.A >= 1.0f)
+	{
+			GameEngineCore::ChangeLevel("2.TownLevel");
 	}
 
 	if (GameEngineInput::IsDown(VK_RETURN, this))

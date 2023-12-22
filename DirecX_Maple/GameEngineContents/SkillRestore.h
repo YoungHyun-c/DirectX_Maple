@@ -38,7 +38,7 @@ private:
 
 	std::shared_ptr<class DamageRenderer> NewDR = nullptr;
 	std::shared_ptr<class GameEngineSpriteRenderer> Restore;
-	size_t RestoreHitCount = 3;
+	int RestoreHitCount = 3;
 	void AttackEvent();
 
 	float RestoreTime = 30.0f;

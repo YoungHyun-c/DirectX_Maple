@@ -8,6 +8,7 @@
 #include "SkillManager.h"
 
 #include "Monster.h"
+
 #include "MainUIActor.h"
 #include "Mouse.h"
 #include "SummonUi.h"
@@ -122,21 +123,33 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 			GameEngineSprite::CreateFolder(Dir.GetStringPath());
 		}
 	}
-	//if (nullptr == GameEngineSprite::Find("Skill"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Skill");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+	if (nullptr == GameEngineSprite::Find("Skill"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Skill");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+
+	if (nullptr == GameEngineSound::FindSound("MureungSchool1.mp3"))
+	{
+		GameEnginePath FilePath;
+		FilePath.SetCurrentPath();
+		FilePath.MoveParentToExistsChild("ContentsResources");
+		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
+
+		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MureungSchool1.mp3"));
+	}
+	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
+	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3", 9);
 
 
 	if (Map == nullptr)
@@ -147,9 +160,9 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
-		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
+		//BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 		PlayerObject->SetDebugMap("PracticeDebugMap.png");
-		PlayerObject->Transform.SetWorldPosition({ 500.0f, -500.0f, static_cast<float>(DeepBufferType::Player) });
+		PlayerObject->Transform.SetWorldPosition({ 180.0f, -850.0f, static_cast<float>(DeepBufferType::Player) });
 	}
 	if (nullptr == PlayerSkill)
 	{
@@ -176,18 +189,6 @@ void PracticeLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		MouseObject = CreateActor<Mouse>(ContentsObjectType::UI);
 		BossEntranceLevel* Level = dynamic_cast<BossEntranceLevel*>(_PrevLevel);
 	}
-
-	if (nullptr == GameEngineSound::FindSound("MureungSchool1.mp3"))
-	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources\\FolderTexture\\Sound\\");
-
-		GameEngineSound::SoundLoad(FilePath.PlusFilePath("MureungSchool1.mp3"));
-	}
-	GlobalValue::GetNeedGlobalValue()->CurBgmStop();
-	GlobalValue::GetNeedGlobalValue()->SetBgm("MureungSchool1.mp3", 10);
 
 	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("PracticeMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
