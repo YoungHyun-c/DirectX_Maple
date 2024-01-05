@@ -3,6 +3,7 @@
 
 #include "JinHillaBoss.h"
 #include "CravingMonster.h"
+#include "GhostSwoo.h"
 #include "GhostDamien.h"
 
 #define TelePortX 50.0f
@@ -45,6 +46,13 @@ void JinHillaBoss::StandUpdate(float _Delta)
 	if (CravingMob2->GetState() == (MonsterState::Max))
 	{
 		CallCraving2 = true;
+		ChangeState(MonsterState::Skill3);
+		return;
+	}
+
+	if (SwooMob->GetState() == (MonsterState::Max) && Pattern >= 3)
+	{
+		CallSwoo = true;
 		ChangeState(MonsterState::Skill3);
 		return;
 	}
@@ -166,12 +174,6 @@ void JinHillaBoss::AttackStart()
 
 void JinHillaBoss::AttackUpdate(float _Delta)
 {
-	//if (SkillBind == true || FormerBind == true)
-	//{
-	//	ChangeState(MonsterState::Stand);
-	//	return;
-	//}
-
 	if (true == MonsterRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(MonsterState::Move);
@@ -289,6 +291,17 @@ void JinHillaBoss::Skill_3Update(float _Delta)
 		return;
 	}
 
+	if (true == MonsterRenderer->IsCurAnimationEnd() && CallSwoo == true && Pattern >= 3)
+	{
+		SwooMob->CallRegen();
+
+		CallSwoo = false;
+
+		CallMob = false;
+		ChangeState(MonsterState::Stand);
+		return;
+	}
+
 	if (true == MonsterRenderer->IsCurAnimationEnd() && CallDamien == true && Pattern == 4)
 	{
 		//DamienMob->Transform.SetLocalPosition({ MonsterRenderer->Transform.GetWorldPosition().X - 150.0f, -650.0f });
@@ -323,6 +336,18 @@ void JinHillaBoss::CallMobDeathCheck(float _Delta)
 		{
 			Craving2DeathTime = 0.0f;
 			CallCraving2 = true;
+			ChangeState(MonsterState::Skill3);
+			return;
+		}
+	}
+
+	if (SwooMob->GetState() == (MonsterState::Death))
+	{
+		SwooDeathTime += _Delta;
+		if (SwooDeathTime > DeathLimitTime && IsAttack == false)
+		{
+			SwooDeathTime = 0.0f;
+			CallSwoo = true;
 			ChangeState(MonsterState::Skill3);
 			return;
 		}

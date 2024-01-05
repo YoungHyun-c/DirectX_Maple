@@ -620,6 +620,7 @@ void Player::KnockBackUpdate(float _Delta)
 	InsideLockMap();
 	if (MyKnockBackInfo->Time >= MyKnockBackInfo->MinTime)
 	{
+		GravityReset();
 		isKnockBack = false;
 		MyKnockBackInfo = nullptr;
 	}

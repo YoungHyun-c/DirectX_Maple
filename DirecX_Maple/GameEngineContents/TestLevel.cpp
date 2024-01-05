@@ -22,6 +22,8 @@
 #include "BossChat.h"
 #include "AchieveUI.h"
 
+#include "GhostSwoo.h"
+
 #include "AtereEffect.h"
 
 TestLevel::TestLevel()
@@ -54,18 +56,20 @@ void TestLevel::Update(float _Delta)
 
 void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 {
-	if (nullptr == GameEngineSprite::Find("HuntMap.png"))
+	if (nullptr == GameEngineSprite::Find("BossMap.png"))
 	{
-		GameEnginePath FilePath;
-		FilePath.SetCurrentPath();
-		FilePath.MoveParentToExistsChild("ContentsResources");
-		FilePath.MoveChild("ContentsResources");
-		FilePath.MoveChild("BackGround\\");
-		GameEngineTexture::Load(FilePath.GetStringPath() + "HuntMap.Png");
-		GameEngineTexture::Load(FilePath.GetStringPath() + "HuntDebugMap.Png");
-
-		GameEngineSprite::CreateSingle("HuntMap.png");
-		GameEngineSprite::CreateSingle("HuntDebugMap.png");
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("BackGround");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (size_t i = 0; i < Files.size(); i++)
+		{
+			GameEngineFile& File = Files[i];
+			GameEngineTexture::Load(File.GetStringPath());
+		}
+		GameEngineSprite::CreateSingle("BossMap.png");
+		GameEngineSprite::CreateSingle("BossDebugMap.png");
 	}
 
 	if (nullptr == GameEngineSprite::Find("Adele_Character"))
@@ -99,6 +103,23 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		}
 	}
 
+	if (nullptr == GameEngineSprite::Find("GhostSwooMob"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("GhostSwooMob");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+
 	if (nullptr == GameEngineSprite::Find("UITexture"))
 	{
 		GameEngineDirectory Dir;
@@ -118,15 +139,19 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	if (Map == nullptr)
 	{
 		Map = CreateActor<BackGroundMap>(ContentsObjectType::BackGround);
-		Map->Init("HuntMap.png", "HuntDebugMap.png");
+		Map->Init("BossMap.png", "BossDebugMap.png");
 	}
 
 	if (nullptr == PlayerObject)
 	{
 		PlayerObject = CreateActor<Player>(ContentsObjectType::Player);
 		PlayerObject->Transform.SetWorldPosition({ 900.0f, -500.0f });
-		PlayerObject->SetDebugMap("HuntDebugMap.png");
+		PlayerObject->SetDebugMap("BossDebugMap.png");
 	}
+
+	std::shared_ptr<GhostSwoo> TestSwoo = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
+	TestSwoo->Transform.SetWorldPosition({ 900.0f, -650.0f });
+	TestSwoo->SetDebugMap("BossDebugMap.Png");
 
 
 	if (nullptr == PlayerSkill)
@@ -143,28 +168,6 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 	}
 
 
-	//if (nullptr == GameEngineSprite::Find("Crane"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("FolderTexture");
-	//	Dir.MoveChild("Monster");
-	//	Dir.MoveChild("Crane");
-	//	std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
-
-	//	for (size_t i = 0; i < Directorys.size(); i++)
-	//	{
-	//		GameEngineDirectory& Dir = Directorys[i];
-	//		GameEngineSprite::CreateFolder(Dir.GetStringPath());
-	//	}
-	//}
-	//std::shared_ptr<CraneMonster> CraneTest = CreateActor<CraneMonster>(ContentsObjectType::Monster);
-	//CraneTest->Transform.SetWorldPosition({ 900.0f, -550.0f });
-	//CraneTest->SetDebugMap("HuntDebugMap.Png");
-
-	//std::shared_ptr<BossChat> ChatTest = CreateActor<BossChat>(ContentsObjectType::UI);
-	//std::shared_ptr<AchieveUI> AchieveTest = CreateActor<AchieveUI>(ContentsObjectType::UI);
 
 	if (nullptr == GameEngineSprite::Find("Potal"))
 	{
@@ -191,10 +194,10 @@ void TestLevel::LevelStart(GameEngineLevel* _PrevLevel)
 
 		GameEngineSound::SoundLoad(FilePath.PlusFilePath("TheothersideofShangriLa.mp3"));
 	}
-	MapBgm = GameEngineSound::SoundPlay("TheothersideofShangriLa.mp3", 1);
+	MapBgm = GameEngineSound::SoundPlay("TheothersideofShangriLa.mp3", 3);
 
 
-	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("HuntDebugMap.png");
+	std::shared_ptr<GameEngineTexture> Tex = GameEngineTexture::Find("BossDebugMap.png");
 	GlobalValue::MapScale = Tex->GetScale();
 	float4 HScale = Tex->GetScale().Half();
 	HScale.Y *= -1.0f;

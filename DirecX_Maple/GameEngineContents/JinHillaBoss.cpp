@@ -5,6 +5,7 @@
 #include "MonsterFunction.h"
 
 #include "CravingMonster.h"
+#include "GhostSwoo.h"
 #include "GhostDamien.h"
 
 #include "BossSkillEffect.h"
@@ -133,6 +134,14 @@ void JinHillaBoss::Start()
 		CravingMob2 = GetLevel()->CreateActor<CravingMonster>();
 		CravingMob2->Transform.SetWorldPosition({ 1200.0f, -760.0f, static_cast<float>(DeepBufferType::Monster) });
 		CravingMob2->SetDebugMap("BossDebugMap.Png");
+	}
+
+	// 胶快 各
+	if (nullptr == SwooMob)
+	{
+		SwooMob = GetLevel()->CreateActor<GhostSwoo>();
+		SwooMob->Transform.SetWorldPosition({ 1100.0f, -650.0f, static_cast<float>(DeepBufferType::Monster) });
+		SwooMob->SetDebugMap("BossDebugMap.Png");
 	}
 
 	// 单固救 各

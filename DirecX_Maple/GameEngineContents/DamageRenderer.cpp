@@ -132,9 +132,24 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 
 		if (_Object->GetName() == "Boss")
 		{
-			DefenseCal = (((100 - (BossDefense - BossDefense * (DefenseIgnore / 100.0f)) * (1 - (100 - SkillOption) / 100.0f))) / 100.0f);
+			/*DefenseCal = (((100 - (BossDefense - BossDefense * (DefenseIgnore / 100.0f)) * (1 - (100 - SkillOption) / 100.0f))) / 100.0f);
 			OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * AllDamagePer *
-				DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage);
+				DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage);*/
+			DefenseCal = (100 - (BossDefense - BossDefense * (DefenseIgnore / 100.0f))) / 100.0f;
+			if (DefenseCal <= 0)
+			{
+				DefenseCal = 0;
+				OneLineDamage = 1;
+			}
+			else
+			{
+				OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * (AllAttack * OffensePower) * WeaponConstant * Critical *
+					DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage * FinalDamagePer * SkillPercentDam * AllDamagePer * AdeleCorrection);
+			}
+			if (OneLineDamage >= MaxDamage)
+			{
+				OneLineDamage = MaxDamage;
+			}
 		}
 		if (_Object->GetName() == "Mugong")
 		{
@@ -147,7 +162,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 			}
 			else
 			{
-				OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * (AllAttack * OffensePower + 14) * WeaponConstant * Critical *
+				OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * (AllAttack * OffensePower) * WeaponConstant * Critical *
 					DefenseCal * LevelCorrection * MonsterProperty * ArcaneCorrection * Proficiency * SkillFinalDamage * FinalDamagePer * SkillPercentDam * AllDamagePer * AdeleCorrection);
 			}
 			if (OneLineDamage >= MaxDamage)

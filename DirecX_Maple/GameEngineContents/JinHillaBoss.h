@@ -136,14 +136,17 @@ private:
 
 	std::shared_ptr<class CravingMonster> CravingMob1 = nullptr;
 	std::shared_ptr<class CravingMonster> CravingMob2 = nullptr;
+	std::shared_ptr<class GhostSwoo> SwooMob = nullptr;
 	std::shared_ptr<class GhostDamien> DamienMob = nullptr;
 
 	bool CallCraving1 = false;
 	bool CallCraving2 = false;
+	bool CallSwoo = false;
 	bool CallDamien = false;
 	
 	float Craving1DeathTime = 0.0f;
 	float Craving2DeathTime = 0.0f;
+	float SwooDeathTime = 0.0f;
 	float DamienDeathTime = 0.0f;
 	float DeathLimitTime = 20.0f;
 

@@ -84,6 +84,7 @@ void GhostDamien::Start()
 		MonsterCollision = CreateComponent<GameEngineCollision>(ContentsCollisionType::Monster);
 		MonsterCollision->Transform.SetLocalScale({ 75.0f, 130.0f });
 		MonsterCollision->SetCollisionType(ColType::AABBBOX2D);
+		MonsterCollision->SetName(std::string("Boss"));
 		MonsterCollision->Off();
 
 		DamienAttackRangeCol = CreateComponent<GameEngineCollision>(ContentsCollisionType::MonsterSkill);
@@ -117,7 +118,6 @@ void GhostDamien::Start()
 	SetStandLimitTime(4.0f);
 
 	SetColPos(-50.0f, 50.0f, 0.0f);
-	GameEngineInput::AddInputObject(this);
 }
 
 void GhostDamien::Update(float _Delta)

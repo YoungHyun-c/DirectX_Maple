@@ -44,16 +44,6 @@ BossLevel::~BossLevel()
 
 void BossLevel::Start()
 {
-	// 사령 스우, 스우 구체
-	{
-		//GhostSwooMob = CreateActor<GhostSwoo>(ContentsObjectType::Monster);
-		//GhostSwooMob->Transform.SetWorldPosition({ 900.0f, -800.0f });
-		//GhostSwooMob->SetDebugMap("BossDebugMap.Png");
-
-
-	}
-
-
 	{
 		GetMainCamera()->GetCameraAllRenderTarget()->CreateEffect<AtereEffect>();
 	}
@@ -239,6 +229,22 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		Dir.MoveChild("FolderTexture");
 		Dir.MoveChild("Monster");
 		Dir.MoveChild("Craving");
+		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
+
+		for (size_t i = 0; i < Directorys.size(); i++)
+		{
+			GameEngineDirectory& Dir = Directorys[i];
+			GameEngineSprite::CreateFolder(Dir.GetStringPath());
+		}
+	}
+	if (nullptr == GameEngineSprite::Find("GhostSwooMob"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("Monster");
+		Dir.MoveChild("GhostSwooMob");
 		std::vector<GameEngineDirectory> Directorys = Dir.GetAllDirectory();
 
 		for (size_t i = 0; i < Directorys.size(); i++)

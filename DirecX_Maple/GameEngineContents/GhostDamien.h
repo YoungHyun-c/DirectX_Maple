@@ -50,7 +50,6 @@ protected:
 	void AttackEvent(float _Delta);
 
 private:
-	void DamienDirCheck();
 	void InsideLockMap();
 	float4 DamienBossScale = float4::ZERO;
 	float MoveSpeed = 70.0f;
@@ -66,7 +65,6 @@ private:
 	std::shared_ptr<GameEngineCollision> SlideAttackCol;
 	std::shared_ptr<GameEngineCollision> ChopAttackCol;
 	void CollisionEvent(std::vector<GameEngineCollision*>& _CollisionGroup);
-	std::shared_ptr<GameEngineCollision> HewAttackCol;
 
 	float AttackCool = 6.0f;
 	float StartAttack = 0.0f;
