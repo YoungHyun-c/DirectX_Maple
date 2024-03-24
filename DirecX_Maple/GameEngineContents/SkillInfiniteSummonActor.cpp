@@ -245,7 +245,7 @@ void SkillInfiniteSummonActor::DeathStart()
 	InfiOrder->ChangeAnimation("Death");
 	HitCollision->Off();
 	DetectCollision->Off();
-	SkillValue::GetValue()->SubOrderCount(1);
+	//SkillValue::GetValue()->SubOrderCount(1);
 }
 void SkillInfiniteSummonActor::DeathUpdate(float _Delta)
 {

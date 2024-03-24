@@ -181,7 +181,7 @@ public:
 	{
 		OrderCount -= _Value;
 
-		if (0 > OrderCount)
+		if (OrderCount <= 0)
 		{
 			OrderCount = 0;
 		}

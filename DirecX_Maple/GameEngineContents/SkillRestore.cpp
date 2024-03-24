@@ -87,9 +87,13 @@ void SkillRestore::EndSkill()
 	SkillValue::GetValue()->SetOrderLimitCount(6);
 	RestoreTime = 30.0f;
 
-	if (SkillValue::GetValue()->GetCurOrderCount() >= 7)
+	/*if (SkillValue::GetValue()->GetCurOrderCount() >= 8)
 	{
 		SkillValue::GetValue()->SetOrderCount(6);
+	}*/
+
+	{
+		SkillValue::GetValue()->SetOrderCount(SkillValue::GetValue()->GetCurOrderCount());
 	}
 
 	AttackCol->Off();
