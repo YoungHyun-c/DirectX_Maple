@@ -54,6 +54,8 @@ public:
 	{
 		return DebugMapName;
 	}
+	
+	virtual void Hit(long long _Damge, bool _Attack) = 0 {};
 
 	void SetMyZone(class MonsterSpawnZone* _Zone, std::function<void(MonsterSpawnZone&, int)> _StartFunc)
 	{
@@ -106,11 +108,11 @@ public:
 		return IsGround;
 	}
 
-	virtual void Hit(long long _Damge, bool _Attack) = 0;
 
 protected:
 	int MyName = 0;
 	virtual void Spawn(float _Delta);
+
 	MonsterSpawnZone* GetMyZone()
 	{
 		return MyZone;

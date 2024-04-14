@@ -66,6 +66,8 @@ protected:
 	void Start();
 	void Update(float _Delta) override;
 
+	void ItemCheckGround(float _Delta);
+
 private:
 	std::shared_ptr<GameEngineSpriteRenderer> DropItemRender;
 	std::shared_ptr<GameEngineCollision> DropItemCollision;

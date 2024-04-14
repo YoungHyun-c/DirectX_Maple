@@ -11,7 +11,7 @@ BossLevelUi::BossLevelUi()
 
 BossLevelUi::~BossLevelUi()
 {
-	if (nullptr != BossHpUiBar)
+	/*if (nullptr != BossHpUiBar)
 	{
 		for (int i = 0; i < BossHpUiBar->size(); i++)
 		{
@@ -19,7 +19,7 @@ BossLevelUi::~BossLevelUi()
 			(*BossHpUiBar)[i] = nullptr;
 		}
 		delete (BossHpUiBar);
-	}
+	}*/
 }
 
 void BossLevelUi::Start()
@@ -88,9 +88,11 @@ void BossLevelUi::Start()
 	BossHpBarRender->SetSprite("BossHpBar.Png");
 	BossHpBarRender->Transform.SetLocalPosition(HpBarPos);
 
-	BossHpUiBar = new std::vector<std::shared_ptr<GameEngineUIRenderer>>();
-	BossHpUiBar->reserve(4);
-	for (size_t i = BossHpUiBar->capacity(); i > 0; i--)
+	//BossHpUiBar = std::vector<std::shared_ptr<GameEngineUIRenderer>>();
+	//BossHpUiBar = 
+
+	BossHpUiBar.reserve(4);
+	for (size_t i = BossHpUiBar.capacity(); i > 0; i--)
 	{
 		BossHpBar = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::UI);
 		std::string HpBarName = "Boss" + std::to_string(i) + "Hp.Png";
@@ -99,7 +101,7 @@ void BossLevelUi::Start()
 		BossHpBar->Transform.SetLocalScale({ 750.0f, 1.0f });
 		BossHpBar->SetPivotType(PivotType::Left);
 		BossHpBar->On();
-		BossHpUiBar->insert(BossHpUiBar->begin(), BossHpBar);
+		BossHpUiBar.insert(BossHpUiBar.begin(), BossHpBar);
 	}
 }
 void BossLevelUi::Update(float _Delta)
@@ -128,7 +130,7 @@ void BossLevelUi::Update(float _Delta)
 	//OutputDebugStringA(CurMainBossHp.c_str());
 
 
-	// 보스 체력 Ui렌더러
+	// 보스 체력퍼센트 Ui렌더러
 	BossHpPerUiRenderer();
 
 	// 보스 체력 바 Ui렌더러
@@ -149,6 +151,7 @@ void BossLevelUi::LevelStart(GameEngineLevel* _PrevLevel)
 
 void BossLevelUi::LevelEnd(GameEngineLevel* _NextLevel)
 {
+	BossHpUiBar.clear();
 	Death();
 }
 
@@ -207,55 +210,41 @@ void BossLevelUi::BossHpBarUiRenderer()
 {
 	CurHpCal = static_cast<double>(JinHillaBoss::GetMainBoss()->GetCurBossHp());
 
-	//PercentFrontHp = static_cast<int>((CurHpCal * 100 / MainHpCal));
-
-	//percentBackHpCal = (CurHpCal / MainHpCal);
-	//percentBackHpCal *= 10000;
-
-	//PercentBackHp = static_cast<int>(fmod(percentBackHpCal, 100));
-
-	//int MainBossHp = PercentFrontHp;
-	//std::string CurMainBossHp = "MainBossHp : ";
-	//CurMainBossHp += std::to_string(MainBossHp) + "." + std::to_string(PercentBackHp);
-	//CurMainBossHp += "\n";
-	//OutputDebugStringA(CurMainBossHp.c_str());
-
-
 	// 임의로 체력을 낮췄을때 다른 줄의 체력도 끄기 위해 체력의 0, 1, 2 째줄도 끈다.
 	for (int i = 0; i <= PercentFrontHp / 25; i++)
 	{
 		if (CurHpCal <= 0)
 		{
-			(*BossHpUiBar)[3]->Off();
-			(*BossHpUiBar)[2]->Off();
-			(*BossHpUiBar)[1]->Off();
-			(*BossHpUiBar)[0]->Off();
+			(BossHpUiBar)[3]->Off();
+			(BossHpUiBar)[2]->Off();
+			(BossHpUiBar)[1]->Off();
+			(BossHpUiBar)[0]->Off();
 			return;
 		}
 		if (PercentFrontHp / 25 == 3)
 		{
-			(*BossHpUiBar)[0]->Transform.SetLocalScale({ static_cast<float>((PercentFrontHp % (25 * 3)) + PercentBackHp * 0.01f) * 30, 1.0f });
+			(BossHpUiBar)[0]->Transform.SetLocalScale({ static_cast<float>((PercentFrontHp % (25 * 3)) + PercentBackHp * 0.01f) * 30, 1.0f });
 			return;
 		}
 		if (PercentFrontHp / 25 == 2)
 		{
-			(*BossHpUiBar)[1]->Transform.SetLocalScale({ static_cast<float>((PercentFrontHp % (25 * 2)) + PercentBackHp * 0.01f) * 30, 1.0f });
-			(*BossHpUiBar)[0]->Off();
+			(BossHpUiBar)[1]->Transform.SetLocalScale({ static_cast<float>((PercentFrontHp % (25 * 2)) + PercentBackHp * 0.01f) * 30, 1.0f });
+			(BossHpUiBar)[0]->Off();
 			return;
 		}
 		if (PercentFrontHp / 25 == 1)
 		{
-			(*BossHpUiBar)[2]->Transform.SetLocalScale({ static_cast<float>(PercentFrontHp % (25) + PercentBackHp * 0.01f) * 30, 1.0f });
-			(*BossHpUiBar)[1]->Off();
-			(*BossHpUiBar)[0]->Off();
+			(BossHpUiBar)[2]->Transform.SetLocalScale({ static_cast<float>(PercentFrontHp % (25) + PercentBackHp * 0.01f) * 30, 1.0f });
+			(BossHpUiBar)[1]->Off();
+			(BossHpUiBar)[0]->Off();
 			return;
 		}
 		if (PercentFrontHp / 25 == 0)
 		{
-			(*BossHpUiBar)[3]->Transform.SetLocalScale({ static_cast<float>(PercentFrontHp % (25) + PercentBackHp * 0.01f) * 30, 1.0f });
-			(*BossHpUiBar)[2]->Off();
-			(*BossHpUiBar)[1]->Off();
-			(*BossHpUiBar)[0]->Off();
+			(BossHpUiBar)[3]->Transform.SetLocalScale({ static_cast<float>(PercentFrontHp % (25) + PercentBackHp * 0.01f) * 30, 1.0f });
+			(BossHpUiBar)[2]->Off();
+			(BossHpUiBar)[1]->Off();
+			(BossHpUiBar)[0]->Off();
 			return;
 		}
 	}

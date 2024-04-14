@@ -74,7 +74,7 @@ protected:
 	float LiveTime = 40.0f;
 	float DirAngle = 0.0f;
 	float Speed = 800.0f;
-	float RotationSpeed = 0.0f;
+	float RotationSpeed = 60.0f;
 	int OrderHitCount = 2;
 	int GedderingHitCount = 4;
 	int BlossomHitCount = 8;

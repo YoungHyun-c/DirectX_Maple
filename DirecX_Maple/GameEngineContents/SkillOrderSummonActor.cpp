@@ -233,8 +233,6 @@ void SkillOrderSummonActor::AttackUpdate(float _Delta)
 					DirAngle += PlusAngle * RotationSpeed * _Delta;
 				}
 
-				RotationSpeed = 60.0f;
-
 				MoveVector = float4::GetUnitVectorFromDeg(DirAngle);
 
 				Transform.AddLocalPosition(MoveVector * Speed * _Delta);

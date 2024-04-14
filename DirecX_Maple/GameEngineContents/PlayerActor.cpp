@@ -145,10 +145,11 @@ void PlayerActor::CameraFocus(float _Delta)
 	float4 PlayerPos = Transform.GetWorldPosition();
 	float4 CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
 	
-	float4 MovePos = (PlayerPos - CameraPos) * CameraSpeed * _Delta;
+	float4 Distance = PlayerPos - CameraPos;
+	float4 MovePos = float4::LerpClamp(float4::ZERO, Distance, CameraSpeed * _Delta);
 	GetLevel()->GetMainCamera()->Transform.AddLocalPosition(MovePos);
 	CameraPos = GetLevel()->GetMainCamera()->Transform.GetWorldPosition();
-	
+
 	if (GlobalValue::WinScale.hX() >= CameraPos.X)
 	{
 		CameraPos.X = GlobalValue::WinScale.hX();

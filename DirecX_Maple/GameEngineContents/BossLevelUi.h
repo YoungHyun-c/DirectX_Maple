@@ -29,7 +29,7 @@ private:
 	std::shared_ptr<class GameEngineSpriteRenderer> BossIcon;
 	std::shared_ptr<class GameEngineSpriteRenderer> BossHpBarRender;
 
-	std::vector<std::shared_ptr<GameEngineUIRenderer>>* BossHpUiBar = nullptr;
+	std::vector<std::shared_ptr<class GameEngineUIRenderer>> BossHpUiBar;// = nullptr;
 	std::shared_ptr<class GameEngineUIRenderer> BossHpBar;
 
 	double MainHpCal = 0;

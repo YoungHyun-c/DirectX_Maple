@@ -112,7 +112,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 		std::vector<std::shared_ptr<GameEngineSpriteRenderer>>* Vect = new std::vector<std::shared_ptr<GameEngineSpriteRenderer>>();
 		SkillPercentDam = (_SkillPercentDam / 100.0f);
 		SkillFinalDamage = (_SkillFinalDamage / 100.0f);
-
+		//플레이어 능력치 계산
 		PlayerDamageCal();
 
 		CriticalRan.SetSeed(time(nullptr));
@@ -126,7 +126,7 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 		}
 		Critical = ((CriticalRandomDam + CriticalDam) / 100.0f);
 		
-		
+		// 데미지 계산
 		OneLineDamage = static_cast<unsigned long long>(((Str * 4) + Dex) * AllAttack * WeaponConstant * AdeleCorrection * SkillPercentDam * Critical * OffensePower * DamagePower *
 			DefenseCal * LevelCorrection * ArcaneCorrection * Proficiency * SkillFinalDamage);
 
@@ -196,7 +196,6 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 		{
 			_Object->GetParentObject()->GetDynamic_Cast_This<class MonsterFunction>()->Hit(OneLineDamage, true);
 		}
-		//_Object->GetDynamic_Cast_This<MonsterFunction>()->Hit(OneLineDamage, true);
 
 		int NumArr[15] = { 0, };
 		int Digit;
@@ -208,34 +207,22 @@ void DamageRenderer::PushDamage(GameEngineObject* _Object, int _HitCount, int _S
 		}
 
 		Vect->reserve(Digit);
-
-		//float LastNumYPos;
-		/*if (DamageRenderList.size() > 0)
+		
+		for (int i = Digit; i > 0; i--)
 		{
-			LastNumYPos = (*DamageRenderList.back())[0]->Transform.GetLocalPosition().Y;
+			std::string TextureName = "CriticalNum_" + std::to_string(NumArr[i - 1]) + ".png";
+
+			NewNumberRender = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);
+			NewNumberRender->SetSprite(TextureName);
+			NewNumberRender->Transform.SetWorldPosition({ (_Object->Transform.GetWorldPosition().X + 150.0f - (i - 1) * 32.0f),
+				_Object->Transform.GetWorldPosition().Y + LastNumYPos + 150.0f });
+			Vect->push_back(NewNumberRender);
 		}
-		else
-		{
-			LastNumYPos = 0.0f;
-		}*/
-
-
-		//for (int k = 0; k < _HitCount; j++)
-		{
-			for (int i = Digit; i > 0; i--)
-			{
-				std::string TextureName = "CriticalNum_" + std::to_string(NumArr[i - 1]) + ".png";
-
-				NewNumberRender = CreateComponent<GameEngineSpriteRenderer>(ContentsObjectType::DamageRender);
-				NewNumberRender->SetSprite(TextureName);
-				NewNumberRender->Transform.SetWorldPosition({ (_Object->Transform.GetWorldPosition().X + 150.0f - (i - 1) * 32.0f), _Object->Transform.GetWorldPosition().Y + LastNumYPos + 150.0f });
-				Vect->push_back(NewNumberRender);
-			}
-			LastNumYPos += 32.0f;
-		}
+		LastNumYPos += 32.0f;
+		
 		DamageRenderList.push_back(Vect);
 	}
-	int a = 0;
+	
 	GlobalValue::GetNeedGlobalValue()->AddHitCount(_HitCount);
 }
 

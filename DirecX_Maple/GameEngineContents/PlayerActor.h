@@ -93,6 +93,6 @@ private:
 	std::string DebugMapName;
 	std::shared_ptr<GameEngineTexture> DebugMap;
 
-	float CameraSpeed = 2.0f;
+	float CameraSpeed = 3.0f;
 };
 

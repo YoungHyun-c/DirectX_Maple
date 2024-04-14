@@ -40,30 +40,6 @@ void DropItem::MoveDropItem(float _Delta)
 		return;
 	}
 
-	//if (isGet == true)
-	//{
-	//	//플레이어로 다가가는 모션
-	//	float4 CurPos = Transform.GetLocalPosition();
-
-	//	if (DropItemCollision->IsUpdate() == false)
-	//	{
-	//		Transform.AddLocalPosition({ 0, -140.0f * _Delta});
-
-	//		if (abs(CurPos.Y - StartPos.Y) >= 10.0f)
-	//		{
-	//			DropItemCollision->On();
-	//		}
-	//	}
-	//	else
-	//	{
-	//		float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
-	//		//float4 GetDir = { PlayerPos.X - CurPos.X , PlayerPos.Y - CurPos.Y + 15.0f };
-	//		//GetDir.Normalize();
-
-	//		Transform.SetLocalPosition(PlayerPos * _Delta);
-	//	}
-	//}
-
 	if (isGround == true)
 	{
 		DropItemCollision->On();
@@ -102,9 +78,7 @@ void DropItem::MoveDropItem(float _Delta)
 			GetDir.Normalize();
 
 			Transform.AddLocalPosition(GetDir * 600.0f * _Delta);
-			//float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
 
-			//float4 UiPos = { 600.0f, 90.0f };
 			EventParameter Droptrue;
 			Droptrue.Enter = [](GameEngineCollision* _this, GameEngineCollision* _Other)
 				{
@@ -115,16 +89,17 @@ void DropItem::MoveDropItem(float _Delta)
 					}
 				};
 			DropItemCollision->CollisionEvent(ContentsCollisionType::Player, Droptrue);
-			{
-				//Death();
-			}
-			//DropItemRender->Transform.AddWorldPosition(UiPos * _Delta);
-			//Death();
 		}
 
 		return;
 	}
 
+	ItemCheckGround(_Delta);
+	DropItemRender->Transform.AddLocalRotation({ 0.0f, 0.0f, -Dir * 360.0f * _Delta });
+}
+
+void DropItem::ItemCheckGround(float _Delta)
+{
 	float4 NextPos;
 	float4 CurPos = Transform.GetLocalPosition();
 
@@ -134,8 +109,8 @@ void DropItem::MoveDropItem(float _Delta)
 	float4 MapSize = ColMap->GetScale();
 
 	float4 ColorPos;
-	ColorPos.X = + NextPos.X;
-	ColorPos.Y = - NextPos.Y;
+	ColorPos.X = +NextPos.X;
+	ColorPos.Y = -NextPos.Y;
 
 	GameEngineColor Color = { 255, 0, 0, 255 };
 	GameEngineColor MapColor = ColMap->GetColor(ColorPos, DefaultGroundColor);
@@ -151,8 +126,8 @@ void DropItem::MoveDropItem(float _Delta)
 		NextPos.Y = Coefficient * (NextPos.X - StartPos.X) * (NextPos.X - Xintercept) + StartPos.Y;
 	}
 
-	ColorPos.X = + NextPos.X;
-	ColorPos.Y = - NextPos.Y;
+	ColorPos.X = +NextPos.X;
+	ColorPos.Y = -NextPos.Y;
 	MapColor = ColMap->GetColor(ColorPos, DefaultGroundColor);
 
 	if (Color == MapColor)
@@ -167,14 +142,13 @@ void DropItem::MoveDropItem(float _Delta)
 
 		int ConvertYtoInt = static_cast<int>(NextPos.Y);
 
-		Transform.SetLocalPosition({ NextPos.X, NextPos.Y + 20.0f});
+		Transform.SetLocalPosition({ NextPos.X, NextPos.Y + 20.0f });
 		DropItemRender->Transform.SetLocalRotation({ 0, 0, 0 });
 		isGround = true;
 		return;
 	}
 
 	Transform.SetLocalPosition(NextPos);
-	DropItemRender->Transform.AddLocalRotation({ 0.0f, 0.0f, -Dir * 360.0f * _Delta });
 }
 
 void DropItem::SetDropItemInfo(const std::string_view& _ItemName, int _ItemType)
