@@ -22,7 +22,6 @@
 #include "Mouse.h"
 
 #include "JinHillaBoss.h"
-#include "BossSkillManager.h"
 
 #include "CravingMonster.h"
 #include "GhostSwoo.h"
@@ -376,10 +375,10 @@ void BossLevel::LevelStart(GameEngineLevel* _PrevLevel)
 		BossJin->SetDebugMap("BossDebugMap.Png");
 		BossJin->CallRegen();
 	}
-	if (nullptr ==  BossJinSkill)
+	/*if (nullptr ==  BossJinSkill)
 	{
 		BossJinSkill = CreateActor<BossSkillManager>();
-	}
+	}*/
 	// 보스레벨 Ui
 	if (nullptr == BossUi)
 	{
@@ -491,15 +490,14 @@ void BossLevel::LevelEnd(GameEngineLevel* _NextLevel)
 		Map = nullptr;
 	}
 
-	if (nullptr != BossJin)
+	/*if (nullptr != BossJin)
 	{
 		BossJin->Death();
 		BossJin = nullptr;
 
 		BossJinSkill->Death();
 		BossJinSkill = nullptr;
-
-	}
+	}*/
 
 	if (nullptr != PlayerSkill)
 	{

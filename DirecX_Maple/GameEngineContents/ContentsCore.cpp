@@ -103,7 +103,7 @@ void ContentsCore::Start()
 	GameEngineCore::CreateLevel<BossRewardLevel>("9.BossRewardLevel");
 	GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
 
-	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
+	//GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
 	//GameEngineCore::ChangeLevel("0.TestLevel");
 	 
 	GameEngineCore::ChangeLevel("1.TitleLevel");

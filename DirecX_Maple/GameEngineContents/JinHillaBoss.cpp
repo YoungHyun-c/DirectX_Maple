@@ -161,6 +161,8 @@ void JinHillaBoss::Start()
 		FormBindEffect = GetLevel()->CreateActor<BossFormerEffect>(ContentsObjectType::FrontSkill);
 		FormBindEffect->Off();
 	}
+
+	BossSkill = GetLevel()->CreateActor<BossSkillManager>();
 }
 
 void JinHillaBoss::Update(float _Delta)
@@ -376,7 +378,6 @@ void JinHillaBoss::LevelEnd(GameEngineLevel* _NextLevel)
 		DarkRenderer = nullptr;
 	}
 
-	DarkRenderer->GetColorData().MulColor.A = 0;
 	ChangeTime = 0.0f;
 	Death();
 }
@@ -388,7 +389,7 @@ void JinHillaBoss::SkillAnimation()
 	{
 		MonsterRenderer->SetFrameEvent("Attack", 14, [&](GameEngineSpriteRenderer*)
 			{
-				BossSkillManager::BossSkillEffectManager->SkillUseKey('G');
+				BossSkillManager::BossSkillEffectManager->SkillUseKey(SkillsName::GreenSkill);
 			}
 		);
 	}
@@ -396,7 +397,7 @@ void JinHillaBoss::SkillAnimation()
 	{
 		MonsterRenderer->SetFrameEvent("Attack2", 14, [&](GameEngineSpriteRenderer*)
 			{
-				BossSkillManager::BossSkillEffectManager->SkillUseKey('P');
+				BossSkillManager::BossSkillEffectManager->SkillUseKey(SkillsName::PurPleSkill);
 			}
 		);
 	}
@@ -439,7 +440,7 @@ void JinHillaBoss::SkillAnimation()
 		// Attack5
 		MonsterRenderer->SetFrameEvent("Attack5", 18, [&](GameEngineSpriteRenderer*)
 			{
-				BossSkillManager::BossSkillEffectManager->SkillUseKey('B');
+				BossSkillManager::BossSkillEffectManager->SkillUseKey(SkillsName::BallSkill);
 				JinHillSideSlapSkillCol->On();
 			}
 		);

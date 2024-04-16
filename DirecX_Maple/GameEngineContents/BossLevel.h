@@ -35,7 +35,7 @@ private:
 
 	//////// 진힐라 관련////////////
 	std::shared_ptr<class JinHillaBoss> BossJin = nullptr;
-	std::shared_ptr<class BossSkillManager> BossJinSkill = nullptr;
+	//std::shared_ptr<class BossSkillManager> BossJinSkill = nullptr;
 
 
 	/////////// HandAttack ///////////

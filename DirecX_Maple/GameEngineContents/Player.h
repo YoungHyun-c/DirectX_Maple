@@ -1,7 +1,6 @@
 #pragma once
 #include <GameEngineCore/GameEngineState.h>
 
-
 // 게임내에서 등장하는 모든 
 // 선생님한테 스킬을 만들라고 하면 고려하는 것들.
 // class SkillDataManager {
@@ -287,4 +286,5 @@ private:
 	float MaestroTime = 0.0f;
 	float MaestroEndTime = 9.0f;
 	bool MaestroUse = false;
+
 };

@@ -125,7 +125,7 @@ private:
 	std::shared_ptr<GameEngineCollision> JinHillSideSlapSkillCol;
 	std::shared_ptr<GameEngineCollision> JinHillChoppingSkillCol;
 
-	std::shared_ptr<class BossSkillEffect> BossEffect;
+	std::shared_ptr<class BossSkillManager> BossSkill;
 
 	bool CallMob = false;
 	bool IsAttack = false;

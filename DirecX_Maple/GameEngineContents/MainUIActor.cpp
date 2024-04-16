@@ -47,6 +47,7 @@ void MainUIActor::Start()
 		}
 		GameEngineSprite::CreateSingle("LWGaugeUI_background.Png");
 		GameEngineSprite::CreateSingle("LWGaugeUI.gauge.png");
+		GameEngineSprite::CreateSingle("LWGaugeBar.Png");
 		GameEngineSprite::CreateSingle("ExpBar.Png");
 		GameEngineSprite::CreateSingle("ExpMax.Png");
 		GameEngineSprite::CreateSingle("ErdaGauge.Png");

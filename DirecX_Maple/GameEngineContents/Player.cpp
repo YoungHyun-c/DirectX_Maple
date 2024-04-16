@@ -5,7 +5,6 @@
 #include "BackGroundMap.h"
 #include "Monster.h"
 #include "SkillManager.h"
-#include "BossSkillEffect.h"
 
 #include "DropItem.h"
 #include "InvinCibilityEffect.h"

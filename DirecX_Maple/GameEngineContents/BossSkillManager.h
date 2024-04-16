@@ -2,6 +2,14 @@
 #include <GameEngineCore/GameEngineActor.h>
 #include <GameEngineCore/GameEngineState.h>
 
+enum SkillsName
+{
+	GreenSkill,
+	PurPleSkill,
+	BallSkill,
+	Max,
+};
+
 // Ό³Έν :
 class BossSkillManager : public GameEngineActor
 {
@@ -18,7 +26,7 @@ public:
 	BossSkillManager& operator = (const BossSkillManager& _Other) = delete;
 	BossSkillManager& operator = (BossSkillManager&& _Other) noexcept = delete;
 
-	void SkillUseKey(const char& _Value);
+	void SkillUseKey(SkillsName _Name);
 	bool SkillUseCheck();
 
 	void Update(float _Delta) override;
@@ -27,34 +35,29 @@ protected:
 	void LevelStart(class GameEngineLevel* _PrevLevel) override;
 	void Start() override;
 
+	void CreateGreenSkill();
+	void CreatePurpleSkill();
+	void CreateBallSkill();
 private:
-
-	class Skill
+	class Skills
 	{
 	public:
-		bool IsControll;
+		bool SkillControl;
 		float MaxCoolTime;
 		float CurCoolTime;
 		float4 SkillUsePos;
 		ActorDir SkillUseDir = ActorDir::Max;
 		int TargetCollisionOrder;
-		GameEngineState StateTest;
+		GameEngineState SkillState;
 
 		void Update(float _Delta)
 		{
-			StateTest.Update(_Delta);
+			SkillState.Update(_Delta);
 		}
 	};
 
-	Skill* CurSkill = nullptr;
-	std::map<const char, Skill> SkillState;
-
-	int Green = 0;
-	int Purple = 2;
-
-	bool GreenAttack = false;
-	bool PurpleAttack = false;
-	
-	bool BallAttack = false;
+	Skills* CurSkill = nullptr;
+	SkillsName SkillNameValue = SkillsName::Max;
+	std::map<const SkillsName, Skills> BossSkill;
 };
 
