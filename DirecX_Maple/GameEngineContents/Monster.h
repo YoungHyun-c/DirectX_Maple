@@ -3,7 +3,7 @@
 #include "MonsterFunction.h"
 
 // Ό³Έν :
-class Monster : public MonsterFunction //GameEngineActor
+class Monster : public MonsterFunction 
 {
 public:
 	static Monster* Monsters;
@@ -43,6 +43,7 @@ public:
 	}
 
 	void Hit(long long _Damage, bool _Attack) override;
+
 
 protected:
 	void Start() override;

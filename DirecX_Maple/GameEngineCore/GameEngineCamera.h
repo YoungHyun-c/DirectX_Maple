@@ -45,6 +45,7 @@ public:
 
 	void AddZoomValue(float _Value)
 	{
+		ZoomValue = std::clamp(ZoomValue, 0.1f, 2.0f);
 		ZoomValue += _Value;
 	}
 

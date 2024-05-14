@@ -18,8 +18,22 @@ Mouse::~Mouse()
 
 void Mouse::Start()
 {
+	if (nullptr == GameEngineSprite::Find("Cursor"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("FolderTexture");
+		Dir.MoveChild("UITexture");
 
-	GameEngineSprite::CreateSingle("Cursor.png");
+		std::vector<GameEngineFile> Files = Dir.GetAllFile();
+		for (GameEngineFile& pFiles : Files)
+		{
+			GameEngineTexture::Load(pFiles.GetStringPath());
+			GameEngineSprite::CreateSingle(pFiles.GetFileName());
+		}
+	}
+
 	Cursor = CreateComponent<GameEngineUIRenderer>(ContentsObjectType::Mouse);
 	Cursor->SetSprite("Cursor.png");
 

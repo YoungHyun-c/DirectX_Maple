@@ -41,11 +41,6 @@ public:
 class CharEditorTab : public Tab
 {
 public:
-	std::string DefSavePath;
-	std::string SavePath;
-	std::string LoadPath;
-	std::string InputPath;
-
 	int HpInput = 0;
 
 	std::shared_ptr<class PlayerValue> PlayerStat;
@@ -85,6 +80,26 @@ public:
 	LevelChangeTab(std::string_view _Name)
 		: Tab(_Name)
 	{
+	}
+};
+
+class MapEditorTab : public Tab
+{
+public :
+	std::string DefSavePath;
+	std::string SavePath;
+	std::string LoadPath;
+	std::string InputPath;
+
+	char BackGroundName[256] = { 0, };
+
+	void OnGUI(GameEngineLevel* _Level, float _Delta);
+
+public:
+	MapEditorTab(std::string_view _Name)
+		: Tab(_Name)
+	{
+
 	}
 };
 

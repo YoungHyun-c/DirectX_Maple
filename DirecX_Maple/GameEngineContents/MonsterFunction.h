@@ -28,8 +28,8 @@ enum class MonsterState
 	Max,
 };
 
-
-class MonsterFunction : public BasicFunction
+#include <GameEngineBase/GameEngineSerializer.h>
+class MonsterFunction : public BasicFunction, public GameEngineSerializerObject
 {
 public:
 	static MonsterFunction* MonsterFunc;
@@ -108,12 +108,14 @@ public:
 		return IsGround;
 	}
 
+	void Serializer(GameEngineSerializer& _Data) override;
+	void DeSerializer(GameEngineSerializer& _Data) override;
 
 protected:
 	int MyName = 0;
 	virtual void Spawn(float _Delta);
 
-	MonsterSpawnZone* GetMyZone()
+	class MonsterSpawnZone* GetMyZone()
 	{
 		return MyZone;
 	}

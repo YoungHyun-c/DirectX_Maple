@@ -1,6 +1,4 @@
 #pragma once
-#include <GameEngineCore/GameEngineLevel.h>
-#include <GameEngineCore/GameEngineGUI.h>
 
 // Ό³Έν :
 class MapEditorLevel : public GameEngineLevel
@@ -18,6 +16,10 @@ public:
 
 	std::shared_ptr<GameEngineActor> BackGroundActor;
 	std::shared_ptr<GameEngineSpriteRenderer> BackGroundRenderer;
+	std::shared_ptr<GameEngineActor> BackDebugActor;
+	std::shared_ptr<GameEngineSpriteRenderer> BackDebugRenderer;
+
+	void SwitchMap();
 
 protected:
 	void Start() override;
@@ -28,6 +30,8 @@ protected:
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
 private:
+	bool SwitchRenderValue = true;
+	std::shared_ptr<class Mouse> MouseObject;
 
 };
 

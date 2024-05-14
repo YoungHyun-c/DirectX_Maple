@@ -1,11 +1,16 @@
 #include "PreCompile.h"
 #include "ContentsControlWindow.h"
 #include "MapEditorLevel.h"
-#include "Monster.h"
 #include "PlayerValue.h"
 #include "ContentsTimer.h"
 
 #include "DamageRenderer.h"
+
+
+#include "Monster.h"
+#include "MonsterFunction.h"
+#include "CraneMonster.h"
+
 void CharEditorTab::Start()
 {
 }
@@ -146,55 +151,6 @@ void CharEditorTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		GameEngineLevel::IsDebug = !GameEngineLevel::IsDebug;
 	}
 
-	//if (ImGui::Button("Save"))
-	//{
-	//	GameEngineDirectory Dir;
-	//	Dir.MoveParentToExistsChild("ContentsResources");
-	//	Dir.MoveChild("ContentsResources");
-	//	Dir.MoveChild("PlayerData");
-
-	//	OPENFILENAMEA OFN;
-	//	char filePathName[100] = "";
-	//	char lpstrFile[100] = "";
-	//	static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
-
-	//	std::string Path = Dir.GetStringPath();
-
-	//	memset(&OFN, 0, sizeof(OPENFILENAME));
-	//	OFN.lStructSize = sizeof(OPENFILENAME);
-	//	OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
-	//	OFN.lpstrFilter = filter;
-	//	OFN.lpstrFile = lpstrFile;
-	//	OFN.nMaxFile = 100;
-	//	OFN.lpstrDefExt = "GameData";
-	//	OFN.lpstrInitialDir = Path.c_str();
-
-	//	if (GetSaveFileNameA(&OFN) != 0) {
-	//		SavePath = OFN.lpstrFile;
-	//	}
-	//}
-
-	//if ("" != SavePath)
-	//{
-	//	ImGui::Text(SavePath.c_str());
-
-	//	if (ImGui::Button("MapDataSave"))
-	//	{
-	//		GameEngineSerializer BinSer;
-
-	//		std::vector<std::shared_ptr<Monster>> ObjectType = _Level->GetObjectGroupConvert<Monster>(ContentsObjectType::Monster);
-	//		BinSer << static_cast<unsigned int>(ObjectType.size());
-	//		for (size_t i = 0; i < ObjectType.size(); i++)
-	//		{
-	//			ObjectType[i]->Serializer(BinSer);
-	//		}
-
-	//		GameEngineFile File = SavePath;
-	//		File.Open(FileOpenType::Write, FileDataType::Binary);
-	//		File.Write(BinSer);
-
-	//	}
-	//}
 }
 
 void TestTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
@@ -286,6 +242,7 @@ void ContentsControlWindow::Start()
 	CurTab = Tabs[0];
 	Tabs.push_back(std::make_shared<CharEditorTab>("CharEditor"));
 	Tabs.push_back(std::make_shared<TestTab>("BossTab"));
+	Tabs.push_back(std::make_shared<MapEditorTab>("MapEditor"));
 }
 
 void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
@@ -297,6 +254,124 @@ void LevelChangeTab::OnGUI(GameEngineLevel* _Level, float _DeltaTime)
 		if (ImGui::Button(Pair.first.c_str()))
 		{
 			GameEngineCore::ChangeLevel(Pair.first);
+		}
+	}
+}
+
+
+void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _Delta)
+{
+	if (ImGui::Button("Save"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("MapDataFile");
+
+		OPENFILENAMEA OFN;
+		char filePathName[100] = "";
+		char lpstrFile[100] = "";
+		static char filter[] = "모든 파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
+
+		std::string Path = Dir.GetStringPath();
+
+		memset(&OFN, 0, sizeof(OPENFILENAME));
+		OFN.lStructSize = sizeof(OPENFILENAME);
+		OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
+		OFN.lpstrFilter = filter;
+		OFN.lpstrFile = lpstrFile;
+		OFN.nMaxFile = 100;
+		OFN.lpstrDefExt = "MapData";
+		OFN.lpstrInitialDir = Path.c_str();
+
+		if (GetSaveFileNameA(&OFN) != 0) {
+			SavePath = OFN.lpstrFile;
+		}
+	}
+
+	MapEditorLevel* MapLevel = dynamic_cast<MapEditorLevel*>(_Level);
+
+	if ("" != SavePath)
+	{
+		ImGui::Text(SavePath.c_str());
+
+		if (ImGui::Button("MapDataSave"))
+		{
+			GameEngineSerializer BinSer;
+			BinSer << MapLevel->BackGroundRenderer->GetSprite()->GetName();
+			std::vector<std::shared_ptr<CraneMonster>> ObjectType = _Level->GetObjectGroupConvert<CraneMonster>(ContentsObjectType::Monster);
+			BinSer << static_cast<unsigned int>(ObjectType.size());
+			for (size_t i = 0; i < ObjectType.size(); i++)
+			{
+				ObjectType[i]->Serializer(BinSer);
+			}
+
+			GameEngineFile File = SavePath;
+			File.Open(FileOpenType::Write, FileDataType::Binary);
+			File.Write(BinSer);
+
+		}
+	}
+
+	if (ImGui::Button("Load"))
+	{
+		GameEngineDirectory Dir;
+		Dir.MoveParentToExistsChild("ContentsResources");
+		Dir.MoveChild("ContentsResources");
+		Dir.MoveChild("MapDataFile");
+
+		OPENFILENAMEA OFN;
+		char FilePathNam[100] = "";
+		char LpStrFile[100] = "";
+		static char Filter[] = "모든파일\0*.*\0텍스트 파일\0*.txt\0fbx 파일\0*.fbx";
+
+		std::string Path = Dir.GetStringPath();
+
+		memset(&OFN, 0, sizeof(OPENFILENAME));
+		OFN.lStructSize = sizeof(OPENFILENAME);
+		OFN.hwndOwner = GameEngineCore::MainWindow.GetHWND();
+		OFN.lpstrFilter = Filter;
+		OFN.lpstrFile = LpStrFile;
+		OFN.nMaxFile = 100;
+		OFN.lpstrDefExt = "MapData";
+		OFN.lpstrInitialDir = Path.c_str();
+
+		if (GetOpenFileNameA(&OFN) != 0)
+		{
+			LoadPath = OFN.lpstrFile;
+		}
+	}
+
+	if (LoadPath != "")
+	{
+		ImGui::Text(LoadPath.c_str());
+
+		if (ImGui::Button("MapDataLoad"))
+		{
+			GameEngineSerializer BinSer;
+
+			GameEngineFile File = LoadPath;
+			File.Open(FileOpenType::Read, FileDataType::Binary);
+			File.DataAllRead(BinSer);
+
+			std::vector<std::shared_ptr<CraneMonster>> ObjectType = _Level->GetObjectGroupConvert<CraneMonster>(ContentsObjectType::Monster);
+
+			for (size_t i = 0; i < ObjectType.size(); i++)
+			{
+				ObjectType[i]->Death();
+			}
+
+			std::string BackFileName;
+			BinSer >> BackFileName;
+			unsigned int MonsterCount = 0;
+			BinSer >> MonsterCount;
+
+			for (size_t i = 0; i < MonsterCount; i++)
+			{
+				std::shared_ptr<CraneMonster> Object = _Level->CreateActor<CraneMonster>(ContentsObjectType::Monster);
+				Object->DeSerializer(BinSer);
+				Object->SetDebugMap("HuntDebugMap.png");
+			}
 		}
 	}
 }

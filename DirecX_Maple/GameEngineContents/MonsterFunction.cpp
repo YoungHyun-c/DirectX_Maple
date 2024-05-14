@@ -471,3 +471,41 @@ void MonsterFunction::InsideLockMap()
 		return;
 	}
 }
+
+void MonsterFunction::Serializer(GameEngineSerializer& _Data)
+{
+	{
+		const TransformData& Data = Transform.GetConstTransformDataRef();
+		_Data.Write(&Data, sizeof(Data));
+	}
+
+	{
+		const TransformData& Data = MonsterRenderer->Transform.GetConstTransformDataRef();
+		_Data.Write(&Data, sizeof(Data));
+	}
+
+	{
+		const TransformData& Data = MonsterCollision->Transform.GetConstTransformDataRef();
+		_Data.Write(&Data, sizeof(Data));
+	}
+}
+
+void MonsterFunction::DeSerializer(GameEngineSerializer& _Data)
+{
+	TransformData Data;
+
+	{
+		_Data.Read(&Data, sizeof(Data));
+		Transform.SetTransformData(Data);
+	}
+
+	{
+		_Data.Read(&Data, sizeof(Data));
+		MonsterRenderer->Transform.SetTransformData(Data);
+	}
+
+	{
+		_Data.Read(&Data, sizeof(Data));
+		MonsterCollision->Transform.SetTransformData(Data);
+	}
+}
