@@ -3,12 +3,11 @@
 
 #include "Player.h"
 
-std::list<CravingMonster*> CravingMonster::CravingMonsters;
+CravingMonster* CravingMonster::CravingMonsters;
 
 CravingMonster::CravingMonster()
 {
-	MonsterName = static_cast<int>(MonstersName::CarvingMonster);
-	CravingMonsters.push_back(this);
+
 }
 
 CravingMonster::~CravingMonster()
@@ -252,6 +251,10 @@ void CravingMonster::CallDie()
 	ChangeState(MonsterState::Die);
 }
 
+void CravingMonster::LevelStart(GameEngineLevel* PrevLevel)
+{
+	MonsterName = static_cast<int>(MonstersName::CarvingMonster);
+}
 void CravingMonster::LevelEnd(GameEngineLevel* _NextLevel)
 {
 	Death();

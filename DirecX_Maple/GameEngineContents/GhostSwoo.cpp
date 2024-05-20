@@ -181,7 +181,12 @@ void GhostSwoo::Skill_1After()
 
 	ChangeAnimationState("Skill1After");
 	DirCheck();
-	float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	if (Player::GetMainPlayer() != nullptr)
+	{
+		float4 PlayerPos = Player::GetMainPlayer()->Transform.GetWorldPosition();
+	}
+	float4 PlayerPos = GetLevel()->GetMainCamera()->GetWorldMousePos2D();
+
 	if (PlayerPos.X <= LeftCheck + 100.0f)
 	{
 		Transform.SetWorldPosition({ PlayerPos.X + LeftCheck + 100.0f, -650.0f });

@@ -101,6 +101,12 @@ public:
 	{
 
 	}
+
+private:
+	class MonsterFunction* SelectActor = nullptr;
+
+	std::vector<std::string> ActorNames;
+	std::vector<const char*> ObjectNames;
 };
 
 

@@ -18,7 +18,7 @@
 class CravingMonster : public MonsterFunction
 {
 public:
-	static std::list<CravingMonster*> CravingMonsters;
+	static CravingMonster* CravingMonsters;
 public:
 	// constructer destructer
 	CravingMonster();
@@ -46,7 +46,8 @@ public:
 	void CallDie();
 
 protected:
-	void LevelEnd(GameEngineLevel* NexLevel) override;
+	void LevelStart(GameEngineLevel* PrevLevel) override;
+	void LevelEnd(GameEngineLevel* NextLevel) override;
 
 	void Start() override;
 	void Update(float _Delta) override;

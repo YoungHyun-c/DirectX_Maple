@@ -5,6 +5,8 @@
 #include "BackGroundMap.h"
 #include "Player.h"
 
+#include "Mouse.h"
+
 MonsterFunction* MonsterFunction::MonsterFunc = nullptr;
 
 MonsterFunction::MonsterFunction()
@@ -68,7 +70,14 @@ void MonsterFunction::MoveUpdate(float _Delta)
 	float4 MoveDir = float4::ZERO;
 
 	MonsterDirX = Transform.GetWorldPosition().X;
-	PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
+	if (Player::GetMainPlayer() == nullptr)
+	{
+		PlayerDirX = GetLevel()->GetMainCamera()->GetWorldMousePos2D().X;
+	}
+	else
+	{
+		PlayerDirX = Player::GetMainPlayer()->GetPlayerPos().X;
+	}
 
 	float4 CompareDir = PlayerDirX - MonsterDirX + 10.0f;
 	CompareDir.Normalize();
@@ -359,6 +368,11 @@ void MonsterFunction::ChangeState(MonsterState _State)
 
 void MonsterFunction::StateUpdate(float _Delta)
 {
+	if (MonsterRenderer == nullptr)
+	{
+		return;
+	}
+
 	switch (State)
 	{
 	case MonsterState::Regen:
@@ -425,7 +439,15 @@ GameEngineColor MonsterFunction::CheckSideColor(float4 CheckPos)
 
 void MonsterFunction::DirCheck()
 {
-	PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
+	if (Player::GetMainPlayer() == nullptr)
+	{
+		PlayerDirX = GetLevel()->GetMainCamera()->GetWorldMousePos2D().X;
+	}
+	else
+	{
+		PlayerDirX = Player::GetMainPlayer()->Transform.GetWorldPosition().X;
+	}
+
 	MonsterDirX = MonsterRenderer->Transform.GetWorldPosition().X;
 
 	if (PlayerDirX >= MonsterDirX)
@@ -454,7 +476,11 @@ void MonsterFunction::DirCheck()
 
 void MonsterFunction::InsideLockMap()
 {
-	//GlobalValue::CurMonsterPos = MonsterRenderer->Transform.GetWorldPosition();
+	if (MonsterRenderer == nullptr)
+	{
+		return;
+	}
+
 	MonsterPos = MonsterRenderer->Transform.GetWorldPosition();
 	if (Transform.GetWorldPosition().X < LeftCheck)
 	{

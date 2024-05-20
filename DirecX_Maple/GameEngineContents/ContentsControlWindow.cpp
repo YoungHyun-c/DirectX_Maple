@@ -374,6 +374,55 @@ void MapEditorTab::OnGUI(GameEngineLevel* _Level, float _Delta)
 			}
 		}
 	}
+
+	// 몬스터 목록
+	if (true == ObjectNames.empty())
+	{
+		const std::list<std::shared_ptr<GameEngineObject>>& AllMonster = _Level->GetObjectGroupInt(static_cast<int>(ContentsObjectType::Monster));
+
+		ObjectNames.reserve(AllMonster.size());
+		ActorNames.reserve(AllMonster.size());
+		int Cnt = 0;
+
+		for (const std::shared_ptr<GameEngineObject>& Object : AllMonster)
+		{
+			std::string ObjectName = Object->GetName();
+			if (ObjectName.empty())
+			{
+				continue;
+			}
+
+			ActorNames.push_back(ObjectName);
+			ObjectNames.push_back(ActorNames[Cnt].c_str());
+			Cnt++;
+		}
+
+	}
+
+	if (ObjectNames.empty())
+	{
+		return;
+	}
+
+	static int SelectActorIndex = 0;
+
+	if (ImGui::ListBox("ActorList", &SelectActorIndex, &ObjectNames[0], static_cast<int>(ObjectNames.size())))
+	{
+		std::string ActorName = ObjectNames[SelectActorIndex];
+		if (true == ActorName.empty())
+		{
+			return;
+		}
+
+		const std::vector<std::shared_ptr<MonsterFunction>>& ObjectGroup = _Level->GetObjectGroupConvert<MonsterFunction>(ContentsObjectType::Monster);
+		for (const std::shared_ptr<MonsterFunction>& Object : ObjectGroup)
+		{
+			if (ObjectNames[SelectActorIndex] == Object->GetName())
+			{
+				SelectActor = Object.get();
+			}
+		}
+	}
 }
 
 

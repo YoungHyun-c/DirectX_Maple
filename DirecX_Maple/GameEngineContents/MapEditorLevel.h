@@ -29,6 +29,9 @@ protected:
 	void LevelStart(GameEngineLevel* _PrevLevel) override;
 	void LevelEnd(GameEngineLevel* _NextLevel) override;
 
+	void MoveCam(float _Delta);
+
+	void Resource();
 private:
 	bool SwitchRenderValue = true;
 	std::shared_ptr<class Mouse> MouseObject;

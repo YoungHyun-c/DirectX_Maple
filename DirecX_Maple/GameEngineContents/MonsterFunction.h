@@ -57,7 +57,7 @@ public:
 	
 	virtual void Hit(long long _Damge, bool _Attack) = 0 {};
 
-	void SetMyZone(class MonsterSpawnZone* _Zone, std::function<void(MonsterSpawnZone&, int)> _StartFunc)
+	void SetMyZone(class MonsterSpawnZone* _Zone, std::function<void(class MonsterSpawnZone&, int)> _StartFunc)
 	{
 		if (_Zone == nullptr)
 		{
