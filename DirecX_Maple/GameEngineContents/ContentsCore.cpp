@@ -88,38 +88,38 @@ void ContentsCore::Start()
 	// 기본적으로 SpriteRenderer를 만들 때 넣어줄 샘플러를 지정한다.
 	GameEngineSound::SetGlobalVolume(0.3f);
 
-	//GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
-	//GameEngineCore::CreateLevel<TownLevel>("2.TownLevel");
-	//GameEngineCore::CreateLevel<CrossLoadLevel>("3.CrossLoadLevel");
-	//GameEngineCore::CreateLevel<HuntLevel>("3_1.HuntLevel");
+	GameEngineCore::CreateLevel<TitleLevel>("1.TitleLevel");
+	GameEngineCore::CreateLevel<TownLevel>("2.TownLevel");
+	GameEngineCore::CreateLevel<CrossLoadLevel>("3.CrossLoadLevel");
+	GameEngineCore::CreateLevel<HuntLevel>("3_1.HuntLevel");
 
 
 
-	//GameEngineCore::CreateLevel<FormerLevel>("4.FormerLevel");
-	//GameEngineCore::CreateLevel<PracticeLevel>("5.PracticeLevel");
-	//
-	//GameEngineCore::CreateLevel<BossEntranceLevel>("6.BossEntranceLevel");
-	//GameEngineCore::CreateLevel<BossEnterAniLevel>("7.BossEnterAniLevel");
-	//GameEngineCore::CreateLevel<BossLevel>("8.BossLevel");
-	//GameEngineCore::CreateLevel<BossRewardLevel>("9.BossRewardLevel");
-	//GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
+	GameEngineCore::CreateLevel<FormerLevel>("4.FormerLevel");
+	GameEngineCore::CreateLevel<PracticeLevel>("5.PracticeLevel");
+	
+	GameEngineCore::CreateLevel<BossEntranceLevel>("6.BossEntranceLevel");
+	GameEngineCore::CreateLevel<BossEnterAniLevel>("7.BossEnterAniLevel");
+	GameEngineCore::CreateLevel<BossLevel>("8.BossLevel");
+	GameEngineCore::CreateLevel<BossRewardLevel>("9.BossRewardLevel");
+	GameEngineCore::CreateLevel<LiberationLevel>("9_2.LiberationLevel");
 
-	//GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
+	GameEngineCore::CreateLevel<TestLevel>("0.TestLevel");
 	//GameEngineCore::ChangeLevel("0.TestLevel");
 	 
-	//GameEngineCore::ChangeLevel("1.TitleLevel");
-	//GameEngineCore::ChangeLevel("2.TownLevel");
-	//GameEngineCore::ChangeLevel("3_1.HuntLevel");
-	//GameEngineCore::ChangeLevel("4.FormerLevel");
-	//GameEngineCore::ChangeLevel("5.PracticeLevel");
+	GameEngineCore::ChangeLevel("1.TitleLevel");
+	/*GameEngineCore::ChangeLevel("2.TownLevel");
+	GameEngineCore::ChangeLevel("3_1.HuntLevel");
+	GameEngineCore::ChangeLevel("4.FormerLevel");
+	GameEngineCore::ChangeLevel("5.PracticeLevel");
 
-	//GameEngineCore::ChangeLevel("6.BossEntranceLevel");
-	//GameEngineCore::ChangeLevel("9_2.LiberationLevel");
+	GameEngineCore::ChangeLevel("6.BossEntranceLevel");
+	GameEngineCore::ChangeLevel("9_2.LiberationLevel");*/
 
 
 	// 맵 에디터 테스트
-	GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
-	GameEngineCore::ChangeLevel("MapEditor");
+	//GameEngineCore::CreateLevel<MapEditorLevel>("MapEditor");
+	//GameEngineCore::ChangeLevel("MapEditor");
 }
 
 void ContentsCore::Update(float _Delta)
